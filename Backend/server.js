@@ -5,6 +5,9 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
+//Use routs
+//http:localhost:8070/employees
+app.use('/employee',require('./routs/employeeRouts.js'));
 
 const PORT = process.env.PORT || 8070;
 
@@ -13,11 +16,8 @@ app.use(express.json());
 
 const URL = process.env.MONGODB_URL;
 
-mongoose.connect(URL, {
-  
+mongoose.connect(URL, { 
   useNewUrlParser: true,
-
-  
 });
 
 const connection = mongoose.connection;
