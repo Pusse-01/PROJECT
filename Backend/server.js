@@ -1,25 +1,31 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const config = require("config");
 require("dotenv").config();
-
-//Use routs
-//http:localhost:8070/employees
-app.use('/employee',require('./routs/employeeRouts.js'));
-
-const PORT = process.env.PORT || 8070;
 
 app.use(cors());
 app.use(express.json());
 
-const URL = process.env.MONGODB_URL;
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+const PORT = process.env.PORT || 8070;
+
+//Use routs
+//http://localhost:8070/employee
+app.use('/employee',require('./routs/employeeRouts.js'));
+//app.use('/employee/register',require('./routs/employeeRouts.js'));
+
+const URL = config.get("MONGODB_URI");
 
 mongoose.connect(URL, { 
   useNewUrlParser: true,
 });
 
+
+//Connecting DB
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("Mongodb Connection success!");

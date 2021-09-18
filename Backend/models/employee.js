@@ -6,8 +6,20 @@ const EmployeeSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    position: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 })
 
 //Document name: 'employee'
-module.export = mongoose.model('employee',EmployeeSchema);
+module.exports = Employee = mongoose.model('employee',EmployeeSchema);
