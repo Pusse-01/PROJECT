@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 //Create Schema: ProjectSchema
 const ProjectSchema = new Schema({
-    projectName: { type: String, required: true},
-    key: { type: String, required: true, unique: true },
-    members: { type: [{ type: String, unique: true }] },
-    administrators: { type: [{ type: String, unique: true }] },
+    name: { type: String, required: true, unique: true},
+    members: { type: [{ type: String, required: true }] },
+    administrators: { type: [{ type: String, required: true }]},
+    discription: {type: String}
 
 })
 
-//Document name: 'employee'
-module.exports = Employee = mongoose.model('project',ProjectSchema);
+//Document name: 'project'
+module.exports = Project = mongoose.model('project',ProjectSchema);
