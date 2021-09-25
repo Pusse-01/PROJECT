@@ -16,6 +16,11 @@ const calendarTaskBackLogSchema = new mongoose.Schema({
         type: Date, 
         required: [true, 'End date is required!'],
     },
+
+    createdBy:{
+        type: String,
+        required: [true, 'created By is required' ],
+    }
 },
     {
         timestamps: true,

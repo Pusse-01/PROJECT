@@ -1,9 +1,19 @@
 const { CalendarTaskBackLog } = require("../models/Calendar");
+const Employee = require("../models/employee");
+
+
 
 //create
 const createCalendarTaskBlackLog = async (req, res) => {
     try {
-        const calendertaskbacklog = await CalendarTaskBackLog.create(req.body);
+        
+        const user =await Employee.findById(req.params.id)
+        const calendertaskbacklog = await CalendarTaskBackLog.create({
+            title:req.body.title,
+            startDate:req.body.startDate,
+            endDate:req.body.endDate,
+            createdBy:user.name,
+        });
         console.log("okay");
         res.json(calendertaskbacklog);
     } catch (error) {
@@ -45,6 +55,7 @@ const updateCalendarTaskBacklogOne = async (req, res) => {
             title: req.body.title,
             startDate: req.body.startDate,
             endDate: req.body.endDate,
+            createdBy:req.body.createdBy,
         },
             {
                 new: true,
@@ -54,6 +65,7 @@ const updateCalendarTaskBacklogOne = async (req, res) => {
         console.log("okay");
         res.json(calendertaskbacklog);
     } catch (error) {
+        console.log("oops");
         res.json(error);
     }
 }
@@ -62,8 +74,17 @@ module.exports = {
     fetchCalendarTaskBlackLog,
     fetchCalendarTaskBacklogOne,
     updateCalendarTaskBacklogOne,
+    //fetchcurretuser,
 };
 
 
 //            startDate: {$gte:moment(req.query.start).toDate()},
 //endDate: {$lte:moment(req.query.end).toDate()},
+
+/*
+        const currentuser =await Employee.findById(req.params.id);
+        const updatecalendertaskbacklog = await CalendarTaskBackLog.findByIdAndUpdate(req.params.id,{
+            createdBy:currentuser.createdBy,
+        })
+*/
+
