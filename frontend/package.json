@@ -6,6 +6,10 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+<<<<<<< HEAD
+=======
+    "node-sass": "^6.0.1",
+>>>>>>> 6d4a992deb5cfa5e22706e3ca43da2d4ce149878
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",

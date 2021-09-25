@@ -18,10 +18,15 @@ const PORT = process.env.PORT || 8070;
 //http://localhost:8070/employee
 app.use('/employee',require('./routs/employeeRouts.js'));
 
+
 //calendar task backlog
 //Router
 app.use('/api', route);
 //app.use('/employee/register',require('./routs/employeeRouts.js'));
+
+app.use('/employee',require('./routs/projectRouts.js'));
+app.use('/dashboard',require('./routs/workrouts.js'));
+
 
 app.use('/employee',require('./routs/projectRouts.js'));
 app.use('/dashboard',require('./routs/workrouts.js'));
