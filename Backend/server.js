@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8070;
 //http://localhost:8070/employee
 app.use('/employee',require('./routs/employeeRouts.js'));
 app.use('/employee',require('./routs/projectRouts.js'));
+app.use('/dashboard',require('./routs/workrouts.js'));
 
 const URL = config.get("MONGODB_URI");
 
