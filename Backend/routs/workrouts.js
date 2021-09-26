@@ -56,26 +56,18 @@ router.put("/update/:id", (req, res) => {
 
 router.get("/total/:email", (req, res) => {
   const email = req.params.email;//get email
-  let totalhours = 0,totalminutes = 0,totalseconds = 0;
+  let totalhours = 0,totalminutes = 0,totalseconds = 0,single=0;
   Workingproject.find({ email: email }).then((work) => {//findall matching email in workings
     if (work) {
       let iter = work.values();
       for (let times of iter) {
-        let single = times.Etime.getTime() - times.Stime.getTime();//calculate total time worked
+         single += times.Etime.getTime() - times.Stime.getTime();//calculate total time worked
+      }
         totalhours += Math.trunc(single / 3600000);
         single = single % 3600000;
         totalminutes += Math.trunc(single / 60000);
         single = single % 60000;
         totalseconds += Math.trunc(single / 1000);
-        if (totalseconds >= 60) {
-          totalminutes += Math.trunc(totalseconds / 60);
-          totalseconds = totalseconds % 60;
-        }
-        if (totalminutes >= 60) {
-          totalhours += Math.trunc(totalminutes / 60);
-          totalminutes = totalminutes % 60;
-        }
-      }
       console.log(totalhours + ":" + totalminutes + ":" + totalseconds);
       return res.json(work);
     }
