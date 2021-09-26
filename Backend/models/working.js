@@ -3,9 +3,6 @@ const Schema = mongoose.Schema;
 
 //Create Schema: EmployeeSchema
 const workingprojectSchema = new Schema({
-  name: {
-    type: String,
-  },
   email: {
     type: String,
     required: true,
@@ -31,7 +28,4 @@ const workingprojectSchema = new Schema({
 });
 
 //Document name: 'workingproject'
-module.exports = Workingproject = mongoose.model(
-  "working",
-  workingprojectSchema
-);
+module.exports = Workingproject = mongoose.model("working",workingprojectSchema);
