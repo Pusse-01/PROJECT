@@ -68,8 +68,12 @@ router.get("/total/:email", (req, res) => {
         totalminutes += Math.trunc(single / 60000);
         single = single % 60000;
         totalseconds += Math.trunc(single / 1000);
-      console.log(totalhours + ":" + totalminutes + ":" + totalseconds);
-      return res.json(work);
+        
+      return res.json({
+        totalhours:totalhours,
+        totalminutes:totalminutes,
+        totalseconds:totalseconds
+      });
     }
   });
 });
