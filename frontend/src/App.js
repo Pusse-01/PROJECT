@@ -1,17 +1,13 @@
-<<<<<<< HEAD
-import logo from './logo.svg';
-=======
->>>>>>> 6d4a992deb5cfa5e22706e3ca43da2d4ce149878
+import React from 'react';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Hello Pusse!
-      </header>
+<h1>Hello</h1>
     </div>
   );
 }
 
 export default App;
+  

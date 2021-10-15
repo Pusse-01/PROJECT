@@ -14,10 +14,11 @@ const createCalendarTaskBlackLog = async (req, res) => {
             endDate:req.body.endDate,
             createdBy:user.name,
         });
-        console.log("okay");
+        console.log("New log added by", user.name, "@", Date());
+        calendertaskbacklog.save();
         res.json(calendertaskbacklog);
     } catch (error) {
-        console.log("oops");
+        console.log(error);
         res.json(error.message);
     }
 };

@@ -2,14 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const{route} = require('./routs/calendarTaskBackLogRoute');
 const cors = require("cors");
-const app = express();
 const config = require("config");
 require("dotenv").config();
-
 const TaskRouts = require('./routs/taskRouts')
 
-app.use(cors());
+const app = express();
+
 app.use(express.json());
+app.use(cors());
+
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
