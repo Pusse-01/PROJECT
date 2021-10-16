@@ -10,7 +10,7 @@ const Employee = require('../models/employee');
 // @route POST employee/register
 // @desc Register employee
 // @access Public
-router.get ('/register',(req, res)=>{
+router.post ('/register',(req, res)=>{
     const{name,email,position,password}=req.body;
 
     //Validation
