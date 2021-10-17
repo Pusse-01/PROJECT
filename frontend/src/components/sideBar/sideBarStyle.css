@@ -1,0 +1,13 @@
+.mainComponent {
+    position: absolute;
+    top: 0px;
+    right :0px;
+    height:100%;
+    width : 30%;
+    z-index: 1;
+    background-color: #2f3640;
+}
+
+.title {
+    color : white;
+}

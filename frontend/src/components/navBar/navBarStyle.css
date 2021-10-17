@@ -1,0 +1,33 @@
+.navbar{
+    width: 70%;
+    background: #1e272e;
+    padding : 10px;
+    display : grid;
+    grid-template-columns: 30% 70%;
+}
+
+.logoContainer{
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
+}
+.logo{
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.logoRed {
+    color: red;
+}
+
+a:hover{
+    color: red;
+}
+
+.collapse navbar-collapse > ul>li>a{
+    background-color: #61dafb;
+}
+
+
