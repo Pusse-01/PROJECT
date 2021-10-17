@@ -14,8 +14,10 @@ function SignUp({Login,Logerror,error,check}) {
             position:signupdetails.position,
             password:signupdetails.password
         }).then(function(response){
-          const data=response.data.employee
-            Login(data)
+          const data=response.data
+          
+          localStorage.setItem('user',JSON.stringify(data))
+          Login(data)
         }).catch(function(err){
           Logerror("User already Exists")
         });

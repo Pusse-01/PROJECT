@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./App.css";
 import LoginForm from "./components/LoginForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./components/SignUp";
 
+
 function App() {
-  const [user,setUser]=useState({name:"",email:""});
+  const [user,setUser]=useState({name:"",email:"",token:""});
   const [error,setError]=useState("")
   const[logorcreate,setLogorCreate]=useState(false);
+  
   const Login=(data)=>{
-    setUser({name:data.name,email:data.email});
+    setUser({name:data.employee.name,email:data.employee.email,token:data.token});
   }
   const Logout=()=>{
     setUser({name:"",email:""})
     setError("")
     setLogorCreate(false)
+    localStorage.clear();
   }
   const Logerror=err=>{
     setError(err)
@@ -27,6 +30,13 @@ function App() {
   }
   setError("")
   }
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+        const founduser=JSON.parse(loggedInUser)
+        setUser({name:founduser.employee.name,email:founduser.employee.email,token:founduser.token});
+    }
+  }, []);
 
   
  
@@ -38,7 +48,7 @@ function App() {
         <button onClick={Logout}>Logout</button>
         </div>
       ):( (logorcreate==true)?(<div>
-          <SignUp Login={Login} Logerror={Logerror} error={error} check={Logorcreate}/>
+          <SignUp Login={Login} Logerror={Logerror} error={error} check={Logorcreate} />
       </div>):(
         <div>
            <LoginForm Login={Login} Logerror={Logerror} error={error} check={Logorcreate}/>

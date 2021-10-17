@@ -13,8 +13,11 @@ function LoginForm({Login,Logerror,error,check}) {
             email:logindetails.email,
             password:logindetails.password
     }).then(function(response){
-      const data=response.data.employee
+      
+      const data=response.data;
+      localStorage.setItem('user',JSON.stringify(data))
       Login(data)
+      
     }).catch(function(err){
       Logerror("User Not Exists")
     });}
