@@ -3,6 +3,8 @@ import "./App.css";
 import LoginForm from "./components/LoginForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./components/SignUp";
+import Navbar from "./components/navBar/Navbar";
+import Sidebar from "./components/sideBar/sideBar";
 
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
     <div>
       {(user.email!=="")?(
         <div>
+          <Navbar/>
+          <Sidebar/>
         <h2>Welcome {user.name}</h2>
         <button onClick={Logout}>Logout</button>
         </div>

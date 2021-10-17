@@ -2,10 +2,24 @@
     position: absolute;
     top: 0px;
     right :0px;
-    height:100%;
+    bottom: 0px;
+    padding-top: 80px;
     width : 30%;
-    z-index: 1;
+    z-index: -1;
     background-color: #2f3640;
+}
+
+@media only screen and (max-width: 991px) {
+    .mainComponent{
+        position: absolute;
+        top: 250px;
+        right :0px;
+        bottom: 0px;
+        padding-top: 10px;
+        width : 30%;
+        z-index: -1;
+        background-color: #2f3640;
+    }
 }
 
 .title {

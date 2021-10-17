@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import "./navBarStyle.css"
 
-// **** Import this file and use it in each component ********
 export default class Navbar extends Component{
     constructor() {
         super();
