@@ -1,0 +1,27 @@
+
+
+.table {
+    color:rgb(255, 255, 255);
+    position: static;
+    top: 80px;
+    left :0px;
+    bottom: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 110px;
+    width : 70%;
+    z-index: -1;
+    background-color: #111924;
+    font-family:serif;
+}
+
+h2{
+  color: beige;
+
+}
+
+.datepicker {
+    color:beige;
+    font:antiquewhite;
+}
