@@ -53,7 +53,7 @@ export default class Navbar extends Component{
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassTasks} href="#" onClick={this.changeColorTasks.bind(this)}>Tasks</a>
+                                <a className={linkClassTasks} href="/tasks" onClick={this.changeColorTasks.bind(this)}>Tasks</a>
                             </li>
                             <li className="nav-item">
                                 <a className={linkClassCalendar} href="/api/taskBackLog" onClick={this.changeColorCalendar.bind(this)}>Calendar</a>

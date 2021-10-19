@@ -9,6 +9,7 @@ import Sidebar from "./components/sideBar/sideBar";
 import React from 'react';
 import {BrowserRouter as Router, Route } from 'react-router-dom'; //this will provide ability to navigate among pages
 import ShowTaskBackLog from "./components/taskBacklog/view"
+import Tasks from "./components/tasks/tasks";
 
 function App() {
   const [user,setUser]=useState({name:"",email:"",token:""});
@@ -74,6 +75,9 @@ function App() {
    <Route path='/api/taskBackLog'>
    <ShowTaskBackLog />
    </Route>
+        <Route path='/tasks'>
+            <Tasks/>
+        </Route>
    </Router>
   );
 }
