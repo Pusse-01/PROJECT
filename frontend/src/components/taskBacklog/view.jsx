@@ -1,67 +1,76 @@
-import DatePicker from 'react-date-picker'
-import React, { useState } from 'react';
+import * as React from 'react';
 import "./view.css"
+import Paper from '@material-ui/core/Paper';
+import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+  Scheduler,
+  WeekView,
+  Appointments,
+  Toolbar,
+  ViewSwitcher,
+  MonthView,
+  DayView,
+} from '@devexpress/dx-react-scheduler-material-ui';
+import { appointments } from './appointments';
+import Calendar from 'react-calendar';
+//import 'react-calendar/dist/Calendar.css';
 
-function ShowTaskBackLog(){
-    const [value, onChange] = useState(new Date());
+
+export default class Demo extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: appointments,
+      currentViewName: 'work-week',
+    };
+    this.currentViewNameChange = (currentViewName) => {
+      this.setState({ currentViewName });
+    };
+  }
+
+
+  
+  render() {
+    const { data, currentViewName } = this.state;
+
     return (
-        <body class='table'>
-        <div>
-            <h2>
-                T A S K B A C K L O G
-            </h2>
-            </div>    
+      <div>
+      <div className="mainComponent">
+                <Calendar/>
+      </div>
+      <Paper class="Paper">
+        <Scheduler
+          data={data}
+          height={660}
+        >
+          <ViewState
+            defaultCurrentDate="2018-07-25"
+            currentViewName={currentViewName}
+            onCurrentViewNameChange={this.currentViewNameChange}
+          />
 
-        <div>
+          <WeekView
+            startDayHour={10}
+            endDayHour={19}
+          />
+          <WeekView
+            name="work-week"
+            displayName="Work Week"
+            excludedDays={[0, 6]}
+            startDayHour={9}
+            endDayHour={19}
+          />
+          <MonthView />
+          <DayView />
 
-        <div class='datepicker'>
-      <DatePicker
-        onChange={onChange}
-        value={value}
-      />
-    </div>
+          <Toolbar />
+          <ViewSwitcher />
+          <Appointments />
+        </Scheduler>
+      </Paper>
 
-   <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Task</th>
-      <th scope="col">Start Time</th>
-      <th scope="col">End Time</th>
-      <th scope="col">Total Hours</th>
-      <th scope="col">Memo</th>
-      <th scope="col">Who Logged</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-  </tbody>
-</table>
-        </div>
-        </body>
-    )
+      </div>
+    );
+  }
 }
-
-export default ShowTaskBackLog;
