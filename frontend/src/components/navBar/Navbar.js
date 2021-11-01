@@ -20,7 +20,7 @@ export default class Navbar extends Component{
 
     render(){
 
-        let linkClassHome = this.state.selectedHome ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassHome = this.state.selectedHome ? "nav-link text-danger " : "nav-link text-light";
         let linkClassProjects = this.state.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
         let linkClassTasks = this.state.selectedTasks ? "nav-link text-danger" : "nav-link text-light";
         let linkClassCalendar = this.state.selectedCalendar? "nav-link text-danger" : "nav-link text-light";
@@ -46,8 +46,8 @@ export default class Navbar extends Component{
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <a  className={linkClassHome} aria-current="page" href="#" onClick={this.changeColorHome.bind(this)}>Home</a>
+                            <li className=" nav-item active">
+                            <a  className={linkClassHome} aria-current="page" href="/Dashboard" onClick={this.changeColorHome.bind(this)}>Home</a>
                             </li>
                             <li className="nav-item" >
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>

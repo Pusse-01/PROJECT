@@ -22,7 +22,7 @@ router.post("/record/:email", (req, res) => {
     taskname: req.body.taskname,
     memo: req.body.memo,
     Stime: starttime,
-    Etime: null,
+    Etime: starttime,
   });
 
   newwork

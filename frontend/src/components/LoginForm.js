@@ -35,8 +35,8 @@ function LoginForm({Login,Logerror,error,check}) {
         <input className="form-control" onChange={e => setDetails({...logindetails,password:e.target.value})} value={logindetails.password} type="password" placeholder="Password"/>
         </div>
         <br />
-        <input type="submit" className="btn btn-success col-2 offset-5" value="Login" />
-        <input type="button" className="btn btn-success col-2 offset-5 mt-3" value="Create New Account" onClick={check}/>
+        <input type="submit" className="btn btn-dark col-2 offset-5" value="Login" />
+        <input type="button" className="btn btn-outline-dark col-2 offset-5 mt-3" value="Create New Account" onClick={check}/>
       </form>
     )
 
