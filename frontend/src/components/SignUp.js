@@ -43,9 +43,9 @@ function SignUp({Login,Logerror,error,check}) {
        <input className="form-control" onChange={e => setDetails({...signupdetails,password:e.target.value})} value={signupdetails.password} type="password" placeholder="Password"/>
        </div>
        <br />
-       <input type="submit" className="btn btn-success col-2 offset-5" value="Sign Up" />
+       <input type="submit" className="btn btn-outline-dark col-2 offset-5" value="Sign Up" />
        
-       <input type="button"className="btn btn-outline-success mt-3 col-2 offset-5" value ="Already a User? Login" onClick={check}/>
+       <input type="button"className="btn btn-dark mt-3 col-2 offset-5" value ="Already a User? Login" onClick={check}/>
      </form>
     )
 }
