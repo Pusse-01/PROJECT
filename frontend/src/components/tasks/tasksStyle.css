@@ -7,7 +7,7 @@
     padding-top: 80px;
     width : 100%;
     z-index: -1;
-    background-color: #2f3640;
+    background-color: #1e272e;
 }
 
 .tasksSubComponent {
@@ -29,34 +29,42 @@
 
 .table_head {
     width : 20%;
-    color: white ;
+    color: #a4b0be;
     background-color: #2f3640;
+    font-weight: bolder;
 }
 
 .table_data_odd{
-
     width: 20%;
     background-color: #1e272e;
     color: white ;
 }
 .table_data_even{
-    border-left: 1px solid #dcdde1;
-    border-right: 1px solid #dcdde1;
     width: 20%;
     background-color: #2f3640;
     color: white ;
 
 }
-
-/******************************* SIDE BAR ***********************************/
-.sideBarComponent {
-    position: absolute;
-    top: 80px;
-    right :0px;
-    bottom: 0px;
-    width : 30%;
-    z-index: -1;
-    background-color: #2f3640;
+.table_header_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+.table_header_column_more{
+    border-left: 1px solid #57606f;
+    text-align: center;
+}
+.table_data_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+.table_data_column_more {
+    border-left: 1px solid #57606f;
+}
+.moreButton {
+    background-color: red;
+    color: white;
+    margin: 5px;
+    text-align: center;
 }
 
 @media only screen and (max-width: 991px) {
@@ -68,17 +76,34 @@
         padding-top: 80px;
         width : 100%;
         z-index: -1;
-        background-color: #2f3640;
+        background-color: #1e272e;
     }
 
+    .tasksSubComponent {
+        position: static;
+        width : 100%;
+        z-index: -1;
+        background-color: #1e272e;
+    }
+}
 
+
+/******************************* SIDE BAR ***********************************/
+.sideBarComponent {
+    position: absolute;
+    top: 00px;
+    right :0px;
+    bottom: 0px;
+    width : 30%;
+    z-index: -1;
+    background-color: #2f3640;
+}
+
+@media only screen and (max-width: 991px) {
     .sideBarComponent{
         position: absolute;
-        top: 250px;
-        right :0px;
-        bottom: 0px;
+        width: 100%;
         padding-top: 10px;
-        width : 30%;
         z-index: -1;
         background-color: #2f3640;
     }

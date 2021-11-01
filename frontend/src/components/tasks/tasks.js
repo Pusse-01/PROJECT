@@ -6,56 +6,55 @@ export default class Tasks extends Component{
     render(){
         return(
             <div className="tasksMainComponent">
+                <Sidebar/>
                 <div className="tasksSubComponent">
                     <h5>This is the tasks component</h5>
                         <table className="tasksTable">
                             <tr className="table_head">
-                                <th>Task</th>
-                                <th>Project</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>More</th>
+                                <th className="table_header_column">Task</th>
+                                <th className="table_header_column">Project</th>
+                                <th className="table_header_column">Due Date</th>
+                                <th className="table_header_column">Status</th>
+                                <th className="table_header_column_more">More</th>
                             </tr>
                             <tr className="table_data_odd">
-                                <td>Task 1</td>
-                                <td>Project 1</td>
-                                <td>21st of October 2021</td>
-                                <td>Pending</td>
-                                <td><Button>More</Button></td>
+                                <td className="table_data_column">Task 1</td>
+                                <td className="table_data_column">Project 1</td>
+                                <td className="table_data_column">21st of October 2021</td>
+                                <td className="table_data_column">Pending</td>
+                                <td className="table_data_column_more"><div className="moreButton">More</div></td>
                             </tr>
                             <tr className="table_data_even">
-                                <td>Task 1</td>
-                                <td>Project 1</td>
-                                <td>21st of October 2021</td>
-                                <td>Pending</td>
-                                <td><Button>More</Button></td>
+                                <td className="table_data_column">Task 1</td>
+                                <td className="table_data_column">Project 1</td>
+                                <td className="table_data_column">21st of October 2021</td>
+                                <td className="table_data_column">Pending</td>
+                                <td className="table_data_column_more"><div className="moreButton">More</div></td>
                             </tr>
                             <tr className="table_data_odd">
-                                <td>Task 1</td>
-                                <td>Project 1</td>
-                                <td>21st of October 2021</td>
-                                <td>Pending</td>
-                                <td><Button>More</Button></td>
+                                <td className="table_data_column">Task 1</td>
+                                <td className="table_data_column">Project 1</td>
+                                <td className="table_data_column">21st of October 2021</td>
+                                <td className="table_data_column">Pending</td>
+                                <td className="table_data_column_more"><div className="moreButton">More</div></td>
                             </tr>
                             <tr className="table_data_even">
-                                <td>Task 1</td>
-                                <td>Project 1</td>
-                                <td>21st of October 2021</td>
-                                <td>Pending</td>
-                                <td><Button>More</Button></td>
+                                <td className="table_data_column">Task 1</td>
+                                <td className="table_data_column">Project 1</td>
+                                <td className="table_data_column">21st of October 2021</td>
+                                <td className="table_data_column">Pending</td>
+                                <td className="table_data_column_more"><div className="moreButton">More</div></td>
                             </tr>
                             <tr className="table_data_odd">
-                                <td>Task 1</td>
-                                <td>Project 1</td>
-                                <td>21st of October 2021</td>
-                                <td>Pending</td>
-                                <td><Button>More</Button></td>
+                                <td className="table_data_column">Task 1</td>
+                                <td className="table_data_column">Project 1</td>
+                                <td className="table_data_column">21st of October 2021</td>
+                                <td className="table_data_column">Pending</td>
+                                <td className="table_data_column_more"><div className="moreButton">More</div></td>
                             </tr>
                         </table>
                 </div>
-                <Sidebar/>
             </div>
-
         )
     }
 }
