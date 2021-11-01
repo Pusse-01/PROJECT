@@ -1,0 +1,89 @@
+/*!******************************* MAIN COMPONENT *******************************!*/
+.tasksMainComponent {
+    position: absolute;
+    top: 80px;
+    left :0px;
+    bottom: 0px;
+    padding-top: 80px;
+    width : 100%;
+    z-index: -1;
+    background-color: #2f3640;
+}
+
+.tasksSubComponent {
+    position: absolute;
+    top: 0px;
+    left :0px;
+    bottom: 0px;
+    width : 70%;
+    z-index: -1;
+    background-color: #1e272e;
+}
+
+.tasksTable{
+    align-items: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.table_head {
+    width : 20%;
+    color: white ;
+    background-color: #2f3640;
+}
+
+.table_data_odd{
+
+    width: 20%;
+    background-color: #1e272e;
+    color: white ;
+}
+.table_data_even{
+    border-left: 1px solid #dcdde1;
+    border-right: 1px solid #dcdde1;
+    width: 20%;
+    background-color: #2f3640;
+    color: white ;
+
+}
+
+/******************************* SIDE BAR ***********************************/
+.sideBarComponent {
+    position: absolute;
+    top: 80px;
+    right :0px;
+    bottom: 0px;
+    width : 30%;
+    z-index: -1;
+    background-color: #2f3640;
+}
+
+@media only screen and (max-width: 991px) {
+    .tasksMainComponent {
+        position: absolute;
+        top: 250px;
+        left :0px;
+        bottom: 0px;
+        padding-top: 80px;
+        width : 100%;
+        z-index: -1;
+        background-color: #2f3640;
+    }
+
+
+    .sideBarComponent{
+        position: absolute;
+        top: 250px;
+        right :0px;
+        bottom: 0px;
+        padding-top: 10px;
+        width : 30%;
+        z-index: -1;
+        background-color: #2f3640;
+    }
+}
+
+.title {
+    color : white;
+}

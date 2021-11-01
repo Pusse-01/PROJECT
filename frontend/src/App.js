@@ -51,7 +51,7 @@ function App() {
     <Router>
       <Route>
       <Navbar/>
-      <Sidebar/>
+      {/*<Sidebar/>*/}
       </Route>
       <Route path='/' exact>
       <div>
