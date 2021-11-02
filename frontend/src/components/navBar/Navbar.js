@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import "./navBarStyle.css"
+import { withRouter } from "react-router-dom";
 
-export default class Navbar extends Component{
+class Navbar extends Component{
     constructor() {
         super();
         this.state = {
@@ -12,11 +13,56 @@ export default class Navbar extends Component{
             selectedTimeLogs : false
         }
     }
-    changeColorHome(){this.setState({selectedHome:true, selectedProjects:false,selectedTasks:false,selectedCalendar:false,selectedTimeLogs:false})}
-    changeColorProjects(){this.setState({selectedHome:false, selectedProjects:true,selectedTasks:false,selectedCalendar:false,selectedTimeLogs:false})}
-    changeColorTasks(){this.setState({selectedHome:false, selectedProjects:false,selectedTasks:true,selectedCalendar:false,selectedTimeLogs:false})}
-    changeColorCalendar(){this.setState({selectedHome:false, selectedProjects:false,selectedTasks:false,selectedCalendar:true,selectedTimeLogs:false})}
-    changeColorTimeLogs(){this.setState({selectedHome:false, selectedProjects:false,selectedTasks:false,selectedCalendar:false,selectedTimeLogs:true})}
+    changeColorHome(){
+        this.setState({
+            selectedHome:true,
+            selectedProjects:false,
+            selectedTasks:false,
+            selectedCalendar:false,
+            selectedTimeLogs:false
+        })
+        this.props.history.push("/Dashboard");
+    }
+    changeColorProjects(){
+        this.setState({
+            selectedHome:false,
+            selectedProjects:true,
+            selectedTasks:false,
+            selectedCalendar:false,
+            selectedTimeLogs:false
+        })
+        this.props.history.push("#")
+    }
+    changeColorTasks(){
+        this.setState({
+            selectedHome:false,
+            selectedProjects:false,
+            selectedTasks:true,
+            selectedCalendar:false,
+            selectedTimeLogs:false
+        })
+        this.props.history.push("/tasks");
+    }
+    changeColorCalendar(){
+        this.setState({
+            selectedHome:false,
+            selectedProjects:false,
+            selectedTasks:false,
+            selectedCalendar:true,
+            selectedTimeLogs:false
+        })
+        this.props.history.push("/api/taskBackLog");
+    }
+    changeColorTimeLogs(){
+        this.setState({
+            selectedHome:false,
+            selectedProjects:false,
+            selectedTasks:false,
+            selectedCalendar:false,
+            selectedTimeLogs:true
+        })
+        this.props.history.push("#");
+    }
 
     render(){
 
@@ -47,16 +93,16 @@ export default class Navbar extends Component{
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className=" nav-item active">
-                            <a  className={linkClassHome} aria-current="page" href="/Dashboard" onClick={this.changeColorHome.bind(this)}>Home</a>
+                            <a  className={linkClassHome} aria-current="page" href="#" onClick={this.changeColorHome.bind(this)}>Home</a>
                             </li>
                             <li className="nav-item" >
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassTasks} href="/tasks" onClick={this.changeColorTasks.bind(this)}>Tasks</a>
+                                <a className={linkClassTasks} href="#" onClick={this.changeColorTasks.bind(this)}>Tasks</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassCalendar} href="/api/taskBackLog" onClick={this.changeColorCalendar.bind(this)}>Calendar</a>
+                                <a className={linkClassCalendar} href="#" onClick={this.changeColorCalendar.bind(this)}>Calendar</a>
                             </li>
                             <li className="nav-item">
                                 <a className={linkClassTimeLogs} href="#" onClick={this.changeColorTimeLogs.bind(this)}>Time Logs</a>
@@ -69,3 +115,5 @@ export default class Navbar extends Component{
     }
 
 }
+
+export default withRouter(Navbar);
