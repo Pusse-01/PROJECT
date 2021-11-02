@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom"; //this will p
 import ShowTaskBackLog from "./components/taskBacklog/view";
 import Tasks from "./components/tasks/tasks";
 import { Redirect } from "react-router-dom";
+import TasksMore from "./components/tasksMore/tasksMore";
+import TasksBoard from "./components/tasksBoard/tasksBoard";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "" });
@@ -88,6 +90,12 @@ function App() {
             </Route>
             <Route path="/tasks">
               <Tasks />
+            </Route>
+            <Route path="/tasksMore">
+              <TasksMore/>
+            </Route>
+            <Route path="/tasksBoard">
+              <TasksBoard/>
             </Route>
           </div>
         ) : logorcreate === true ? (

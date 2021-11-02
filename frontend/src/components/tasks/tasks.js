@@ -1,16 +1,24 @@
 import React, {Component} from 'react'
 import "./tasksStyle.css"
 import Sidebar from "./sideBar";
-import {Button} from "@material-ui/core";
-export default class Tasks extends Component{
+import { withRouter } from "react-router-dom";
+
+class Tasks extends Component{
+
+    clickMore = () => {
+        this.props.history.push("/tasksMore");
+    }
+
+    goTaskBoard = () => {
+        this.props.history.push("/tasksBoard");
+    }
     render(){
         return(
             <div className="tasksMainComponent">
                 <Sidebar/>
                 <div className="tasksSubComponent">̵
-
                     <div className="searchBar">
-                        <div className="blankColumn"><h5 className="searchText"></h5></div>
+                        <div className="blankColumn"></div>
                         <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
                         <h5 className="searchText">Search</h5>
                     </div>
@@ -28,39 +36,44 @@ export default class Tasks extends Component{
                             <td className="table_data_column">Project 1</td>
                             <td className="table_data_column">21st of October 2021</td>
                             <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton">More</div></td>
+                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                         <tr className="table_data_even">
                             <td className="table_data_column">Task 1</td>
                             <td className="table_data_column">Project 1</td>
                             <td className="table_data_column">21st of October 2021</td>
                             <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton">More</div></td>
+                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                         <tr className="table_data_odd">
                             <td className="table_data_column">Task 1</td>
                             <td className="table_data_column">Project 1</td>
                             <td className="table_data_column">21st of October 2021</td>
                             <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton">More</div></td>
+                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                         <tr className="table_data_even">
                             <td className="table_data_column">Task 1</td>
                             <td className="table_data_column">Project 1</td>
                             <td className="table_data_column">21st of October 2021</td>
                             <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton">More</div></td>
+                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                         <tr className="table_data_odd">
                             <td className="table_data_column">Task 1</td>
                             <td className="table_data_column">Project 1</td>
                             <td className="table_data_column">21st of October 2021</td>
                             <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton">More</div></td>
+                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                     </table>
+                    <div className="taskBoardButton" onClick={this.clickMore}>
+                        <h6 className="taskBoardText">TASK BOARD</h6>
+                    </div>
                 </div>
             </div>
         )
     }
 }
+
+export default withRouter(Tasks);

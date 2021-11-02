@@ -6,7 +6,17 @@ export default class Sidebar extends Component{
     render(){
         return(
             <div className="sideBarComponent">
-                <h1 className="title">This is the Side Bar</h1>
+                <div className="sideBarElement">
+                    <div className="outCircle"><div className="innerCircle"></div></div>
+                    <h6 className="elementText">Tasks Assigned</h6></div>
+                <div className="sideBarElement">
+                    <div className="outCircle"><div className="innerCircle"></div></div>
+                    <h6 className="elementText">Tasks Overdue</h6>
+                </div>
+                <div className="sideBarElement">
+                    <div className="outCircle"><div className="innerCircle"></div></div>
+                    <h6 className="elementText">Completed</h6>
+                </div>
             </div>
         )
     }
