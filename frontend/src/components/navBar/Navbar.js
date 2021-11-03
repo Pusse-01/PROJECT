@@ -3,8 +3,8 @@ import "./navBarStyle.css"
 import { withRouter } from "react-router-dom";
 
 class Navbar extends Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             selectedHome : false,
             selectedProjects :false,
@@ -13,13 +13,18 @@ class Navbar extends Component{
             selectedTimeLogs : false
         }
     }
+
+    logOut(){
+        this.props.logout();
+    }
     changeColorHome(){
         this.setState({
             selectedHome:true,
             selectedProjects:false,
             selectedTasks:false,
             selectedCalendar:false,
-            selectedTimeLogs:false
+            selectedTimeLogs:false,
+            selectedLogout:false
         })
         this.props.history.push("/Dashboard");
     }
@@ -29,7 +34,8 @@ class Navbar extends Component{
             selectedProjects:true,
             selectedTasks:false,
             selectedCalendar:false,
-            selectedTimeLogs:false
+            selectedTimeLogs:false,
+            selectedLogout:false
         })
         this.props.history.push("#")
     }
@@ -39,7 +45,8 @@ class Navbar extends Component{
             selectedProjects:false,
             selectedTasks:true,
             selectedCalendar:false,
-            selectedTimeLogs:false
+            selectedTimeLogs:false,
+            selectedLogout:false
         })
         this.props.history.push("/tasks");
     }
@@ -49,7 +56,8 @@ class Navbar extends Component{
             selectedProjects:false,
             selectedTasks:false,
             selectedCalendar:true,
-            selectedTimeLogs:false
+            selectedTimeLogs:false,
+            selectedLogout:false
         })
         this.props.history.push("/api/taskBackLog");
     }
@@ -59,7 +67,8 @@ class Navbar extends Component{
             selectedProjects:false,
             selectedTasks:false,
             selectedCalendar:false,
-            selectedTimeLogs:true
+            selectedTimeLogs:true,
+            selectedLogout:false
         })
         this.props.history.push("#");
     }
@@ -71,7 +80,7 @@ class Navbar extends Component{
         let linkClassTasks = this.state.selectedTasks ? "nav-link text-danger" : "nav-link text-light";
         let linkClassCalendar = this.state.selectedCalendar? "nav-link text-danger" : "nav-link text-light";
         let linkClassTimeLogs = this.state.selectedTimeLogs ? "nav-link text-danger" : "nav-link text-light";
-
+        let linkClassLogout = this.state.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
         return (
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="logoContainer">
@@ -106,6 +115,9 @@ class Navbar extends Component{
                             </li>
                             <li className="nav-item">
                                 <a className={linkClassTimeLogs} href="#" onClick={this.changeColorTimeLogs.bind(this)}>Time Logs</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className={linkClassLogout} href="#" onClick={this.logOut.bind(this)}>Logout</a>
                             </li>
                         </ul>
                     </div>
