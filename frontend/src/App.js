@@ -64,7 +64,6 @@ function App() {
           <div>
             <Route>
               <Navbar logout = {Logout} />
-              <Sidebar />
             </Route>
             <div className="row">
               <div className="col-sm-3 offset-md-4">
