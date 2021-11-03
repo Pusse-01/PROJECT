@@ -14,6 +14,8 @@ function Clockin({email,show,workdetails,setstatus}) {
           .then(function (response) {
             const workdata=response.data;
             localStorage.setItem('workdata',JSON.stringify(workdata));
+            localStorage.setItem('stime',new Date());
+            console.log(workdata);
             workdetails(workdata);
             setstatus(true);
             setwork({

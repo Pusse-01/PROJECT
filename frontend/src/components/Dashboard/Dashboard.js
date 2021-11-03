@@ -6,13 +6,16 @@ const axios = require("axios").default;
 
 function Dashboard({ email }) {
   const [Time, Settime] = useState({ Hours: "", Minutes: "", seconds: "" });
-  const [workdetals,Setworkdetails]=useState({id:"",projectname:"",taskname:"",memo:"",starttime:Date()})
+  const [workdetals,Setworkdetails]=useState({id:"",projectname:"",taskname:"",memo:"",starttime:new Date()})
+  const [timeLeft, setTimeLeft] = useState({Hours:"00", Minutes: "00", seconds: "00"});
   const [showform, Setvisible] = useState(false);
   const[isworking,setstatus]=useState(false);
+
   async function stopwork(){
     const response=await axios.put("http://localhost:8070/dashboard/update/"+workdetals.id).then(function(response){
         setstatus(false);
         localStorage.removeItem('workdata');
+        localStorage.removeItem('stime');
         Setvisible(false);
         window.location.reload(false);
     })
@@ -21,16 +24,62 @@ function Dashboard({ email }) {
     const response = await axios
       .get("http://localhost:8070/dashboard/total/" + email)
       .then(function (response) {
+        let h="",m="",s="";
+        if(response.data.totalhours.toString().length<2){
+          h=("0"+response.data.totalhours.toString());
+        }else{
+          h=response.data.totalhours.toString();
+        }
+        if(response.data.totalminutes.toString().length<2){
+          m="0"+response.data.totalminutes.toString();
+        }else{
+          m=response.data.totalminutes.toString();
+        }
+        if(response.data.totalseconds.toString().length<2){
+          s=("0"+response.data.totalseconds.toString());
+        }else{
+          s=response.data.totalseconds.toString();
+        }
         Settime({
-          Hours: response.data.totalhours,
-          Minutes: response.data.totalminutes,
-          seconds: response.data.totalseconds,
+          Hours: h,
+          Minutes: m,
+          seconds: s,
         });
       });
   }
   function work(workdata){
-      Setworkdetails({id:workdata._id,projectname:workdata.projectname,taskname:workdata.taskname,memo:workdata.memo,starttime:workdata.starttime})
+      Setworkdetails({id:workdata._id,projectname:workdata.projectname,taskname:workdata.taskname,memo:workdata.memo,starttime:new Date()})
   }
+  
+    const calculatetime=()=>{
+        let current=new Date();
+        let difference=current.getTime()- workdetals.starttime.getTime();
+      
+        let timepassed={};
+        let h="",m="",s="";
+        if(Math.floor((difference / (1000 * 60 * 60)) % 24).toString().length<2){
+          h=("0"+Math.floor((difference / (1000 * 60 * 60)) % 24).toString());
+        }else{
+          h=Math.floor((difference / (1000 * 60 * 60)) % 24).toString();
+        }
+        if(Math.floor(Math.floor((difference / 1000 / 60) % 60)).toString().length<2){
+          m="0"+Math.floor((difference / 1000 / 60) % 60).toString();
+        }else{
+          m=Math.floor((difference / 1000 / 60) % 60).toString();
+        }
+        if(Math.floor((difference / 1000) % 60).toString().length<2){
+          s=("0"+Math.floor((difference / 1000) % 60).toString());
+        }else{
+          s=Math.floor((difference / 1000) % 60).toString();
+        }
+        timepassed = {
+            Hours:h,
+            Minutes:m,
+            seconds: s
+        };
+        return timepassed;
+
+    }
 
   const containerstyle = {
     position: "relative",
@@ -62,13 +111,20 @@ function Dashboard({ email }) {
       Setvisible(true);
     }
   }
-
+  useEffect(() => {
+    if(isworking){
+    const timer = setTimeout(() => {
+      setTimeLeft(calculatetime());
+    }, 1000);
+  }
+  });
   useEffect(() => {
     totaltime();
     const workingdetails=localStorage.getItem("workdata");
-    if (workingdetails) {
+    const timedetails=localStorage.getItem("stime");
+    if (workingdetails&& timedetails) {
         const foundwork=JSON.parse(workingdetails)
-        Setworkdetails({id:foundwork._id,projectname:foundwork.projectname,taskname:foundwork.taskname,memo:foundwork.memo})
+        Setworkdetails({id:foundwork._id,projectname:foundwork.projectname,taskname:foundwork.taskname,memo:foundwork.memo,starttime:new Date(timedetails)})
         setstatus(true);
         
     }
@@ -83,12 +139,20 @@ function Dashboard({ email }) {
             animate={{ rotate: 360 }}
             transition={spinTransisiton}
           />
+          {!isworking ?(
           <p className="text">
             Total Time Worked
             <br />
-            {Time.Hours}:{Time.Minutes}:{Time.seconds}
+            {Time.Hours}:{Time.Minutes}:{Time.seconds} 
             <br />
-          </p>
+            </p>
+          ):( 
+            <p className="text">
+               Time Worked
+          <br />
+            {timeLeft.Hours}:{timeLeft.Minutes}:{timeLeft.seconds}
+            <br />
+            </p>)} 
         </div>
         <div>
           {showform ? (
@@ -97,6 +161,7 @@ function Dashboard({ email }) {
               Clock out
             </button>
               <Clockin email={email} show={show} workdetails={work} setstatus={setstatus}/>
+              
             </div>
           ) : (
               isworking ?(<div> <button className="btn btn-danger col-3 mt-5" onClick={stopwork}>
