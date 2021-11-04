@@ -73,12 +73,13 @@ function App() {
                 <h2 className="text-dark">Penawa Previous components {user.name}</h2>
               </div>
               <div className="col-md-2 mt-2 ">
-                <button 
+                {/*<button 
                   onClick={Logout}
                   className="btn  btn-dark col-sm-3 col-md-7"
                 >
                   Logout
-                </button>
+                </button>*/}
+                
 
                 {/*<h2 className="text-dark">Welcome {user.name}</h2>*/}
 
