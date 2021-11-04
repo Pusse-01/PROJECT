@@ -6,7 +6,7 @@ class Navbar extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            selectedHome : false,
+            selectedHome : true,
             selectedProjects :false,
             selectedTasks : false,
             selectedCalendar : false,
@@ -37,7 +37,7 @@ class Navbar extends Component{
             selectedTimeLogs:false,
             selectedLogout:false
         })
-        this.props.history.push("#")
+        this.props.history.push("/projects")
     }
     changeColorTasks(){
         this.setState({
