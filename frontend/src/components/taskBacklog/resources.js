@@ -1,6 +1,16 @@
+
+
 import {
   pink, purple, teal, amber, deepOrange,
 } from '@material-ui/core/colors';
+
+/*
+    exDate = calendarLogs[i].exDate;
+    createdBy = calendarLogs[i].createdBy;
+    updatedAt = calendarLogs[i].updatedAt;
+
+*/
+
 
 export const appointments = [
   {

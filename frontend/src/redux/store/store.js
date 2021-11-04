@@ -1,13 +1,13 @@
 import {createStore,combineReducers,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import {createTaskBackLogReducer} from '../reducers/TaskBackLog/createTaskBacklogReducer';
+import {createBookReducer} from '../reducers/TaskBackLog/calendarReducer';
 import {userReducer} from '../reducers/Users/userAuthReducer';
 
 const middlewares =[thunk];
 
 const reducer = combineReducers({
-    taskLogcreated:createTaskBackLogReducer,
+    taskLogcreated:createBookReducer,
     userRegister:userReducer,
 });
 

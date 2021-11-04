@@ -1,4 +1,4 @@
-const { CalendarTaskBackLog } = require("../models/Calendar");
+const { CalendarTaskBackLog } = require("../models/calendar");
 const Employee = require("../models/employee");
 
 
@@ -9,7 +9,12 @@ const createCalendarTaskBlackLog = async (req, res) => {
         
         const user =await Employee.findById(req.params.id)
         const calendertaskbacklog = await CalendarTaskBackLog.create({
+            id: req.body.id,
+            roomId:req.body.roomId,
+            exDate:req.body.exDate,
             title:req.body.title,
+            rRule:req.body.rRule,
+            members:req.body.members,
             startDate:req.body.startDate,
             endDate:req.body.endDate,
             createdBy:user.name,
@@ -53,10 +58,15 @@ const fetchCalendarTaskBacklogOne = async (req, res) => {
 const updateCalendarTaskBacklogOne = async (req, res) => {
     try {
         const calendertaskbacklog = await CalendarTaskBackLog.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            createdBy:req.body.createdBy,
+            id: req.body.id,
+            roomId:req.body.roomId,
+            exDate:req.body.exDate,
+            title:req.body.title,
+            rRule:req.body.rRule,
+            members:req.body.members,
+            startDate:req.body.startDate,
+            endDate:req.body.endDate,
+            createdBy:user.name,
         },
             {
                 new: true,

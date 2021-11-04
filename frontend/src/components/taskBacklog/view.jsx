@@ -18,23 +18,13 @@ import {
   TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { owners } from './tasks';
-import { appointments, resourcesData } from './resources';
+import {resourcesData } from './resources';
+import {appointments } from './resources';
 import "./view.css"
-import { useState } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import axios from 'axios';
 
-function ReactCalendar() {
-  const [value, onChange] = useState(new Date());
-  return (
-    <div>
-      <Calendar
-        onChange={onChange}
-        value={value}
-      />
-    </div>
-  );
-}
+
 
 
 const styles = theme => ({
@@ -49,14 +39,12 @@ const styles = theme => ({
   },
 });
 
-
-
-export default class Demo extends React.PureComponent {
+export default class Calendar extends React.PureComponent {
   
   constructor(props) {
     super(props);
     this.state = {
-      data: appointments,
+      data:appointments ,
       resources: [
         {
           fieldName: 'roomId',
@@ -81,6 +69,20 @@ export default class Demo extends React.PureComponent {
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
+        const Log ={
+          id:data[startingAddedId].id,
+          title:data[startingAddedId].title,
+          roomId:data[startingAddedId].roomId,
+          members:data[startingAddedId].members,
+          startDate:data[startingAddedId].startDate,
+          endDate:data[startingAddedId].endDate,
+          rRule:data[startingAddedId].rRule,
+          exDate:data[startingAddedId].exDate,
+        }
+        window.alert(data[startingAddedId].roomId);
+        const ID = "616d5ba262a39205d8b4612a";
+        axios.post('http://localhost:8070/api/calendarTaskBackLog/'+ID, Log)
+
       }
       if (changed) {
         data = data.map(appointment => (
@@ -89,20 +91,19 @@ export default class Demo extends React.PureComponent {
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
       }
+
       return { data };
     });
   }
 
+
+
+
   render() {
     const { data, resources } = this.state;
 
-
-
     return (
       <div>
-        <div className="mainComponent">
-          <ReactCalendar/>
-        </div>
  <Paper class="Paper">
         <Scheduler
           data={data}
