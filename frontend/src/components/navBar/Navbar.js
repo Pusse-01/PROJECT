@@ -31,7 +31,7 @@ class Navbar extends Component{
             selectedCalendar:false,
             selectedTimeLogs:false
         })
-        this.props.history.push("#")
+        this.props.history.push("/projects")
     }
     changeColorTasks(){
         this.setState({

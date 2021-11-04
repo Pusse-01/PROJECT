@@ -14,6 +14,8 @@ import Tasks from "./components/tasks/tasks";
 import { Redirect } from "react-router-dom";
 import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
+import Projects from "./components/projects/projects";
+import ProjectsDetails from "./components/projects/projectsDetails";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "" });
@@ -87,6 +89,12 @@ function App() {
             </Route>
             <Route path="/api/taskBackLog">
               <ShowTaskBackLog />
+            </Route>
+            <Route path="/projects">
+              <Projects />
+            </Route>
+            <Route path="/projectsDetails">
+              <ProjectsDetails/>
             </Route>
             <Route path="/tasks">
               <Tasks />
