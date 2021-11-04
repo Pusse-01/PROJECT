@@ -67,7 +67,7 @@ class Tasks extends Component{
                             <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
                         </tr>
                     </table>
-                    <div className="taskBoardButton" onClick={this.clickMore}>
+                    <div className="taskBoardButton" onClick={this.goTaskBoard}>
                         <h6 className="taskBoardText">TASK BOARD</h6>
                     </div>
                 </div>
