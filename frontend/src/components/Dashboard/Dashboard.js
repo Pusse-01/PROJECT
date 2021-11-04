@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./Dashboard.css";
 import Clockin from "./Clockin";
+import Timelines from "./Timelines";
+import Sidebar from "../sideBar/sideBar";
 const axios = require("axios").default;
 
 function Dashboard({ email }) {
@@ -87,12 +89,23 @@ function Dashboard({ email }) {
     height: "300px",
     borderRadius: "50%",
   };
-  const circlestyle = {
+  const circlestyleon = {
     dispay: "block",
     width: "300px",
     height: "300px",
-    border: "10px solid #e9e9e9",
-    borderTop: "10px solid #FF5349",
+    border: "10px solid #FF5349",
+    borderTop: "10px solid #8B0000 ",
+    borderRadius: "50%",
+    position: "absolute",
+    boxSizing: "border-box",
+    top: 0,
+    left: 0,
+  };
+  const circlestyleoff = {
+    dispay: "block",
+    width: "300px",
+    height: "300px",
+    border: "10px solid  #FF5349",
     borderRadius: "50%",
     position: "absolute",
     boxSizing: "border-box",
@@ -129,16 +142,22 @@ function Dashboard({ email }) {
         
     }
   }, []);
+  console.log(email)
   return (
     
     <div>
-      <div className="row mt-3 row-cols-2">
+      <Sidebar/>
+      <div className="row col-9 mt-3 row-cols-2">
         <div style={containerstyle} className="bg-dark bg-gradient col-sm-3 ms-5">
-          <motion.span
-            style={circlestyle}
+          {isworking?( <motion.span
+            style={circlestyleon}
             animate={{ rotate: 360 }}
             transition={spinTransisiton}
-          />
+          />):( <motion.span
+            style={circlestyleoff}
+           
+          />)}
+         
           {!isworking ?(
           <p className="text">
             Total Time Worked
@@ -157,14 +176,14 @@ function Dashboard({ email }) {
         <div>
           {showform ? (
               <div>
-            <button className="btn btn-danger col-3 mt-5" onClick={show}>
-              Clock out
+            <button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={show}>
+              Clock in
             </button>
               <Clockin email={email} show={show} workdetails={work} setstatus={setstatus}/>
               
             </div>
           ) : (
-              isworking ?(<div> <button className="btn btn-danger col-3 mt-5" onClick={stopwork}>
+              isworking ?(<div> <button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={stopwork}>
               Clock out
             </button>
             <ul>
@@ -172,12 +191,17 @@ function Dashboard({ email }) {
                <li>Task  name:{workdetals.taskname}</li>
                <li>Memo: {workdetals.memo}</li>
             </ul>
-            </div>):(<button className="btn btn-danger col-3 mt-5" onClick={show}>
+            </div>):(<button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={show}>
               Clock In
             </button>)
             
           )}
         </div>
+      </div>
+      
+      <div className="col-sm-5 col-md-8 mt-5 ms-md-3 mr-md-6">
+      <Timelines email={email}/>
+      
       </div>
     </div>
   );

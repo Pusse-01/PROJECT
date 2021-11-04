@@ -77,4 +77,22 @@ router.get("/total/:email", (req, res) => {
     }
   });
 });
+router.get("/summery/:email", (req, res) => {
+  const email = req.params.email;//get email
+ 
+  Workingproject.find({ email:email }).then((work) => {//findall matching id in workings
+    if (work) {
+      let summery=[]
+      let iter=work.values();
+      for (let times of iter) {
+      
+       let obj=[times.projectname,times.taskname,times.memo,times.Stime.toString().substring(0,24),times.Etime.toString().substring(0,24)];
+        summery.push(obj);
+      }
+      return res.json({
+        summery
+      });
+    }
+  });
+});
 module.exports = router;
