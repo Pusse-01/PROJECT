@@ -3,10 +3,11 @@ import "./projectsStyle.css"
 import Sidebar from "./sideBar";
 import { withRouter } from "react-router-dom";
 
+
 class Projects extends Component{
 
     clickMore = () => {
-        this.props.history.push("/ProjectsDetails");
+        this.props.history.push("/projectsDetails");
     }
     render(){
         return(

@@ -6,7 +6,7 @@ class Navbar extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            selectedHome : false,
+            selectedHome : true,
             selectedProjects :false,
             selectedTasks : false,
             selectedCalendar : false,

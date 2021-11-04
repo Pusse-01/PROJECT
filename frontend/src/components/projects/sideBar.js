@@ -8,14 +8,14 @@ export default class Sidebar extends Component{
             <div className="sideBarComponent">
                 <div className="sideBarElement">
                     <div className="outCircle"><div className="innerCircle"></div></div>
-                    <h10 className="elementText">Total Projects</h10></div>
-                <div className="sideBarElement">
-                    <div className="outCircle"><div className="innerCircle"></div></div>
-                    <h10 className="elementText">Projects Overdue</h10>
-                </div>
+                    <h10 className="elementText">Pending</h10></div>
                 <div className="sideBarElement">
                     <div className="outCircle"><div className="innerCircle"></div></div>
                     <h10 className="elementText">Not Started</h10>
+                </div>
+                <div className="sideBarElement">
+                    <div className="outCircle"><div className="innerCircle"></div></div>
+                    <h10 className="elementText">Ongoing</h10>
                 </div>
                 <div className="sideBarElement">
                     <div className="outCircle"><div className="innerCircle"></div></div>
@@ -23,7 +23,7 @@ export default class Sidebar extends Component{
                 </div>
                 <div className="sideBarElement">
                     <div className="outCircle"><div className="innerCircle"></div></div>
-                    <h10 className="elementText">In Progress</h10>
+                    <h10 className="elementText">Over Due</h10>
                 </div>
                 <div className="sideBarElement">
                     <div className="outCircle"><div className="innerCircle"></div></div>
