@@ -1,0 +1,18 @@
+.scroll{
+    height: 500px;
+    overflow: scroll;
+   
+}
+
+.hides::-webkit-scrollbar {
+    display: none;
+}
+
+
+.hides {
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+}
+.table{
+    font-size: 12px;
+  }
