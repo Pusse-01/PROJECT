@@ -1,4 +1,9 @@
-
+.dashMainComponent {
+   position: absolute;
+   width : 100%;
+   z-index: -1;
+   background-color: #1e272e;
+}
 .text{
    text-align:center;
    padding-top: 100px;

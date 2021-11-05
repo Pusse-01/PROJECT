@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 const axios=require('axios').default;
 
-function Clockin({email,show,workdetails,setstatus}) {
+function Clockin({email,id,show,workdetails,setstatus}) {
     const [work, setwork] = useState({ projectname: "", taskname: "", memo: "" });
     const[error,seterror]=useState("");
     const [projects,setprojects]=useState([""]);
@@ -14,7 +14,7 @@ function Clockin({email,show,workdetails,setstatus}) {
           seterror("Please Fill all parts");
         }else{
         const response = await axios
-          .post("http://localhost:8070/dashboard/record/" + email,{
+          .post("http://localhost:8070/dashboard/record/" + id,{
               projectname:work.projectname,
               taskname:work.taskname,
               memo:work.memo
@@ -59,7 +59,7 @@ function Clockin({email,show,workdetails,setstatus}) {
               <label for="name">Project Name :</label>
               <select className="form-select"  onChange={(e) =>
                   setwork({ ...work, projectname: e.target.value })} >
-                    <option disabled  defaultvalue selected> -- Select a Project -- </option>
+                    <option disabled  defaultValue selected> -- Select a Project -- </option>
               {projects.map(item => {
                 return (<option  key={item} value={item}>{item}</option>);
               })}

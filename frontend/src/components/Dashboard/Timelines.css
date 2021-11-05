@@ -1,7 +1,12 @@
 .scroll{
-    height: 500px;
+    height: 400px;
     overflow: scroll;
    
+}
+.scroll2{
+  height: 333px;
+  overflow: scroll;
+ 
 }
 
 .hides::-webkit-scrollbar {
@@ -15,4 +20,13 @@
 }
 .table{
     font-size: 12px;
-  }
+}
+
+.dropdownbg{
+    background-color:#FF5349;
+    border-color: #FF5349;
+    color:azure;
+ }
+ .theader{
+  color:azure;
+ }

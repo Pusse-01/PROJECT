@@ -18,19 +18,20 @@ import Projects from "./components/projects/projects";
 import ProjectsDetails from "./components/projects/projectsDetails";
 
 function App() {
-  const [user, setUser] = useState({ name: "", email: "", token: "" });
+  const [user, setUser] = useState({ name: "", email: "", token: "",id:"" });
   const [error, setError] = useState("");
   const [logorcreate, setLogorCreate] = useState(false);
 
   const Login = (data) => {
     setUser({
       name: data.employee.name,
-      email: data.employee.email,
+      email: data.employee.email, 
       token: data.token,
+      id    : data.employee.id
     });
   };
   const Logout = () => {
-    setUser({ name: "", email: "" });
+    setUser({ name: "", email: "",token:"",id:"" });
     setError("");
     setLogorCreate(false);
     localStorage.clear();
@@ -55,20 +56,21 @@ function App() {
         name: founduser.employee.name,
         email: founduser.employee.email,
         token: founduser.token,
+        id:founduser.employee.id,
       });
     }
   }, []);
 
   return (
     <Router>
-      <div>
-        {user.email !== "" ? (
+      <div >
+        {user.id !== "" ? (
           <div>
             <Route>
               <Navbar logout = {Logout} />
             </Route>
             <div className="row">
-              <div className="col-md-2 mt-2 ">
+              <div className="col-md-2 ">
                 {/*<button 
                   onClick={Logout}
                   className="btn  btn-dark col-sm-3 col-md-7"
@@ -93,7 +95,7 @@ function App() {
               <Redirect to="/Dashboard" />
             </Route>
             <Route path="/Dashboard">
-              <Dashboard email={user.email} />
+              <Dashboard id={user.id} email={user.email} />
             </Route>
             <Route path="/api/taskBackLog">
               <ShowTaskBackLog />
