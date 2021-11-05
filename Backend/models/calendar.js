@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
-
-const calendarTaskBackLogSchema = new mongoose.Schema({
+const subcalendarTaskBackLogSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: [true, 'ID is required!'],
@@ -24,11 +22,6 @@ const calendarTaskBackLogSchema = new mongoose.Schema({
         type: Date, 
         required: [true, 'End date is required!'],
     },
-
-    createdBy:{
-        type: String,
-        required: [true, 'created By is required' ],
-    },
     roomId: {
         type: Number,
         required: [false, 'Room ID is required!'],
@@ -41,6 +34,16 @@ const calendarTaskBackLogSchema = new mongoose.Schema({
         type: Array,
         required: [false, 'Members is required!'],
     },
+})
+
+const calendarTaskBackLogSchema = new mongoose.Schema({
+    createdByID:{
+        type: String,
+        required: [true, 'created By is required' ],
+    },
+    calendarlog:{
+        type:subcalendarTaskBackLogSchema
+    }
 },
     {
         timestamps: true,
