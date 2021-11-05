@@ -20,13 +20,15 @@ useEffect(()=> {
           console.log(res.json)
           return res.json();
       }
-  }).then(jsonRes => setLogs(jsonRes));
+  }).then(jsonRes => setLogs(jsonRes.title));
 })
 
-console.log(logs[0].id);
-
-
-
+return(
+  <div>
+    <h1>Ammo ammo</h1>
+  
+  </div>
+)
 }
 
 

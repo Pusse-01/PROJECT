@@ -167,11 +167,12 @@ const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ..
 
 
 export default class Calendar extends React.PureComponent {
-  
+
   constructor(props) {
+
     super(props);
     this.state = {
-      data:appointments ,
+      data:appointments,
       resources: [
         {
           fieldName: 'roomId',
@@ -193,6 +194,7 @@ export default class Calendar extends React.PureComponent {
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       let { data } = state;
+      let hold =data;
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
@@ -212,12 +214,50 @@ export default class Calendar extends React.PureComponent {
       }
       if (changed) {
         data = data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment
+          ));
+        let Index =-1;
+          for(var i = 0; i < data.length; i++) {
+            if(!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
+               data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate && 
+               data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate)) {
+              window.alert(data[i].title , data[i].id)
+              window.alert(hold[i].title , hold[i].id)
+
+              Index = i;
+            }
+          }
+
+          const LogPut ={
+            id:data[Index].id,
+            title:data[Index].title,
+            roomId:data[Index].roomId,
+            members:data[Index].members,
+            startDate:data[Index].startDate,
+            endDate:data[Index].endDate,
+            rRule:data[Index].rRule,
+            exDate:data[Index].exDate,
+          }
+          axios.put('http://localhost:8070/api/calendarTaskBackLog/'+hold[Index].id, LogPut)
+  
+
       }
       if (deleted !== undefined) {
-        data = data.filter(appointment => appointment.id !== deleted);
-      }
+        data = data.filter(appointment => (appointment.id !== deleted));
 
+        let Index =hold.length-1;
+        for(var i = 0; i < data.length; i++) {
+          //for(var j = i; i < data.length; j++) {
+          if(!(data[i].id === hold[i].id))
+          {
+            Index = i;
+            window.alert(data[Index].id)
+          }
+        }
+        axios.delete('http://localhost:8070/API/calendarTaskBackLog/'+hold[Index].id, "")
+
+      //}
+    }
       return { data };
     });
   }
@@ -239,6 +279,7 @@ export default class Calendar extends React.PureComponent {
           />
           <EditingState
             onCommitChanges={this.commitChanges}
+            
           />
           <EditRecurrenceMenu />
 

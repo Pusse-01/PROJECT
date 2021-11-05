@@ -6,20 +6,19 @@ const Employee = require("../models/employee");
 //create
 const createCalendarTaskBlackLog = async (req, res) => {
     try {
-        
-        const user =await Employee.findById(req.params.id)
         const calendertaskbacklog = await CalendarTaskBackLog.create({
-            id: req.body.id,
-            roomId:req.body.roomId,
-            exDate:req.body.exDate,
-            title:req.body.title,
-            rRule:req.body.rRule,
-            members:req.body.members,
-            startDate:req.body.startDate,
-            endDate:req.body.endDate,
-            createdBy:user.name,
+            createdByID: req.params.id,
+            calendarlog: {
+                id: req.body.id,
+                roomId: req.body.roomId,
+                exDate: req.body.exDate,
+                title: req.body.title,
+                rRule: req.body.rRule,
+                members: req.body.members,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+            },
         });
-        console.log("New log added by", user.name, "@", Date());
         calendertaskbacklog.save();
         res.json(calendertaskbacklog);
     } catch (error) {
@@ -41,13 +40,14 @@ const fetchCalendarTaskBlackLog = async (req, res) => {
         res.json(error.message);
     }
 };
+// / items: { $elemMatch: { id: req.params.id } } 
 
 const fetchCalendarTaskBacklogOne = async (req, res) => {
     try {
-        const calendertaskbacklog = await CalendarTaskBackLog.findById(
-            req.params.id
-        );
+        let myID = parseInt(req.params.id);
+        const calendertaskbacklog = await CalendarTaskBackLog.findOne({ "calendarlog.id": myID }, { _id: 0, calendarlog: { $elemMatch: { id: myID } } });
         console.log("okay");
+        console.log(req.params.id);
         res.json(calendertaskbacklog);
     } catch (error) {
         console.log("oops");
@@ -57,34 +57,51 @@ const fetchCalendarTaskBacklogOne = async (req, res) => {
 
 const updateCalendarTaskBacklogOne = async (req, res) => {
     try {
-        const calendertaskbacklog = await CalendarTaskBackLog.findByIdAndUpdate(req.params.id, {
-            id: req.body.id,
-            roomId:req.body.roomId,
-            exDate:req.body.exDate,
-            title:req.body.title,
-            rRule:req.body.rRule,
-            members:req.body.members,
-            startDate:req.body.startDate,
-            endDate:req.body.endDate,
-            createdBy:user.name,
+        let myID = parseInt(req.params.id);
+        const calendertaskbacklog = await CalendarTaskBackLog.updateOne({ "calendarlog.id"  : { $ne:  myID  }} , {
+            calendarlog: {
+                id: req.body.id,
+                roomId: req.body.roomId,
+                exDate: req.body.exDate,
+                title: req.body.title,
+                rRule: req.body.rRule,
+                members: req.body.members,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+            },
         },
             {
                 new: true,
-                runValidators: true
+                runValidators: false
             }
         );
         console.log("okay");
         res.json(calendertaskbacklog);
     } catch (error) {
-        console.log("oops");
+        console.log("oops Update");
         res.json(error);
     }
 }
+
+const deleteCalendarTaskBacklogOne = async (req, res) => {
+    try {
+        let myID = parseInt(req.params.id);
+        const calendertaskbacklog = await CalendarTaskBackLog.deleteOne({ "calendarlog.id": myID }, { _id: 0, calendarlog: { $elemMatch: { id: myID } } });
+        console.log("okay");
+        console.log(req.params.id);
+        res.json("");
+    } catch (error) {
+        console.log("oops");
+        res.json(error.message);
+    }
+};
+
 module.exports = {
     createCalendarTaskBlackLog,
     fetchCalendarTaskBlackLog,
     fetchCalendarTaskBacklogOne,
     updateCalendarTaskBacklogOne,
+    deleteCalendarTaskBacklogOne,
     //fetchcurretuser,
 };
 
