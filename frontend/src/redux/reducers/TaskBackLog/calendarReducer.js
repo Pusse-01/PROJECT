@@ -1,6 +1,6 @@
 
 
-const createTaskBackLogReducer = (state={}, action) =>{
+const createBookReducer = (state={}, action) =>{
     switch(action.type){
         case 'CREATE_TASK-REQUEST':
             return{
@@ -20,4 +20,4 @@ const createTaskBackLogReducer = (state={}, action) =>{
 
     } 
 }
-export {createTaskBackLogReducer}
+export {createBookReducer}

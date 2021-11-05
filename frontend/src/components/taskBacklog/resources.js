@@ -1,6 +1,16 @@
+
+
 import {
   pink, purple, teal, amber, deepOrange,
 } from '@material-ui/core/colors';
+
+/*
+    exDate = calendarLogs[i].exDate;
+    createdBy = calendarLogs[i].createdBy;
+    updatedAt = calendarLogs[i].updatedAt;
+
+*/
+
 
 export const appointments = [
   {
@@ -8,16 +18,16 @@ export const appointments = [
     title: 'Watercolor Landscape',
     roomId: 1,
     members: [1],
-    startDate: new Date(2017, 4, 1, 9, 30),
-    endDate: new Date(2017, 4, 1, 11),
+    startDate: new Date(2018, 4, 1, 9, 30),
+    endDate: new Date(2018, 4, 1, 11),
     rRule: 'FREQ=WEEKLY;BYDAY=TU,FR;COUNT=10',
   }, {
     id: 1,
     title: 'Oil Painting for Beginners',
     roomId: 2,
     members: [2],
-    startDate: new Date(2017, 4, 1, 9, 30),
-    endDate: new Date(2017, 4, 1, 11),
+    startDate: new Date(2018, 4, 1, 9, 30),
+    endDate: new Date(2018, 4, 1, 11),
     rRule: 'FREQ=WEEKLY;BYDAY=MO,TH;COUNT=10',
   }, {
     id: 2,
