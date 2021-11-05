@@ -7,19 +7,24 @@
     grid-template-columns: 20% 50% 30%;
 }
 .logOut{
-    color: white;
-    background: red;
-    border: 3px solid red;
+    color: #57606f;
+    background: #1e272e;
+    border-top: 1px solid #57606f;
+    border-bottom: 3px solid #2f3640;
     padding: 5px;
-    width: 80px;
+    width: 100px;
     text-align: center;
     top:20px;
     cursor: pointer;
     margin-left: 50px;
+    border-radius: 50px;
 }
 
 .logOut:hover {
     opacity: 0.7;
+    /*border-top: 1px solid #d63031;*/
+    /*border-bottom: 3px solid #b33939;*/
+    /*color: red;*/
 }
 .user{
     position: absolute;
@@ -57,6 +62,20 @@
 @media only screen and (max-width: 991px) {
     .navbar{
         height: 250px;
+    }
+    .logOut{
+        color: #57606f;
+        background: #1e272e;
+        border-top: 1px solid #57606f;
+        border-bottom: 3px solid #2f3640;
+        padding: 5px;
+        width: 100px;
+        text-align: center;
+        top:20px;
+        cursor: pointer;
+        margin-left: 0px;
+        margin-top: 10px;
+        border-radius: 50px;
     }
 }
 

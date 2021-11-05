@@ -20,13 +20,17 @@
     background-color: #1e272e;
 }
 
-.tasksTable{
-    position: absolute;
-    top : 80px;
-    align-items: center;
+.scroll {
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
+    height: 50%;
+    margin-top: 30px;
+    overflow: scroll;
+}
+.tasksTable{
+    align-items: center;
+    width: 100%;
 }
 
 .table_head {
@@ -38,11 +42,13 @@
 
 .table_data_odd{
     width: 20%;
+    height: 50px;
     background-color: #1e272e;
     color: white ;
 }
 .table_data_even{
     width: 20%;
+    height: 50px;
     background-color: #2f3640;
     color: white ;
 
@@ -101,21 +107,29 @@
     margin: 5px;
     height: 25px;
 }
-.taskBoardButton {
+.goToTaskBoardButton{
     position: absolute;
-    bottom: 100px;
-    right: 50px;
-    background-color: red;
-    width: 200px;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
     color: white;
     text-align: center;
     cursor: pointer;
-    padding: 5px;
+    padding: 10px;
+    background: #2f3640;
+    border-radius: 100px;
+    border: 2px solid #57606f;
+    padding-top: 20px;
+}
+.goToTaskBoardButton:hover{
+    border: 2px solid red;
 }
 .taskBoardText{
-    margin: 0px;
     height: 100%;
     margin: 0px;
+    text-align: center;
+    font-size: 15px;
 }
 
 @media only screen and (max-width: 991px) {
@@ -156,16 +170,21 @@
         position: unset;
     }
 
-    .taskBoardButton {
+    .goToTaskBoardButton{
         position: unset;
-        bottom: unset;
-        right: unset;
-        background-color: red;
-        width: 200px;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
         color: white;
         text-align: center;
-        padding : 5px;
-        margin: 40px;
+        cursor: pointer;
+        padding: 10px;
+        background: #2f3640;
+        border-radius: 100px;
+        border: 2px solid #57606f;
+        padding-top: 20px;
+        margin:20px;
     }
 
 }
