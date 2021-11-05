@@ -6,7 +6,7 @@ const Workingproject = require("../models/working");
 const Employee = require("../models/employee");
 const { Router } = require("express");
 
-router.post("/record/:email", (req, res) => {
+router.post("/record/:id", (req, res) => {
   const { projectname, taskname, memo } = req.body;
   const starttime = new Date();
 
@@ -15,9 +15,9 @@ router.post("/record/:email", (req, res) => {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
-  let email = req.params.email;
+  let id = req.params.id;
   const newwork = new Workingproject({
-    email: email,
+    id:id,
     projectname: req.body.projectname,
     taskname: req.body.taskname,
     memo: req.body.memo,
@@ -54,10 +54,10 @@ router.put("/update/:id", (req, res) => {
 });
 
 
-router.get("/total/:email", (req, res) => {
-  const email = req.params.email;//get email
+router.get("/total/:id", (req, res) => {
+  const id = req.params.id;//get email
   let totalhours = 0,totalminutes = 0,totalseconds = 0,single=0;
-  Workingproject.find({ email: email }).then((work) => {//findall matching email in workings
+  Workingproject.find({ id:id }).then((work) => {//findall matching email in workings
     if (work) {
       let iter = work.values();
       for (let times of iter) {
@@ -77,17 +77,38 @@ router.get("/total/:email", (req, res) => {
     }
   });
 });
-router.get("/summery/:email", (req, res) => {
-  const email = req.params.email;//get email
+router.get("/summery/:id", (req, res) => {
+  const id = req.params.id;//get email
  
-  Workingproject.find({ email:email }).then((work) => {//findall matching id in workings
+  Workingproject.find({ id:id }).then((work) => {//findall matching id in workings
     if (work) {
       let summery=[]
       let iter=work.values();
       for (let times of iter) {
       
-       let obj=[times.projectname,times.taskname,times.memo,times.Stime.toString().substring(0,24),times.Etime.toString().substring(0,24)];
+       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24)];
         summery.push(obj);
+      }
+      return res.json({
+        summery
+      });
+    }
+  });
+});
+
+router.get("/projectsummery", (req, res) => {
+  
+  let id=req.query.id;
+  let projectn=req.query.projectname
+  Workingproject.find({ id:id}).then((work) => {//findall matching id in workings
+    if (work) {
+      let summery=[]
+      let iter=work.values();
+      for (let times of iter) {
+        if(times.projectname==projectn){
+       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24)];
+        summery.push(obj);
+        }
       }
       return res.json({
         summery

@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import "./Dashboard.css";
 import Clockin from "./Clockin";
 import Timelines from "./Timelines";
-import Sidebar from "../sideBar/sideBar";
+import Sidebar from "./sideBar";
+import Overdue from "./Overdue";
 const axios = require("axios").default;
 
-function Dashboard({ email }) {
+function Dashboard({ id , email}) {
   const [Time, Settime] = useState({ Hours: "", Minutes: "", seconds: "" });
   const [workdetals,Setworkdetails]=useState({id:"",projectname:"",taskname:"",memo:"",starttime:new Date()})
   const [timeLeft, setTimeLeft] = useState({Hours:"00", Minutes: "00", seconds: "00"});
@@ -24,7 +25,7 @@ function Dashboard({ email }) {
 }
   async function totaltime() {
     const response = await axios
-      .get("http://localhost:8070/dashboard/total/" + email)
+      .get("http://localhost:8070/dashboard/total/" + id)
       .then(function (response) {
         let h="",m="",s="";
         if(response.data.totalhours.toString().length<2){
@@ -142,68 +143,97 @@ function Dashboard({ email }) {
         
     }
   }, []);
-  console.log(email)
+  
   return (
-    
-    <div>
-      <Sidebar/>
-      <div className="row col-9 mt-3 row-cols-2">
-        <div style={containerstyle} className="bg-dark bg-gradient col-sm-3 ms-5">
-          {isworking?( <motion.span
-            style={circlestyleon}
-            animate={{ rotate: 360 }}
-            transition={spinTransisiton}
-          />):( <motion.span
-            style={circlestyleoff}
-           
-          />)}
-         
-          {!isworking ?(
-          <p className="text">
-            Total Time Worked
-            <br />
-            {Time.Hours}:{Time.Minutes}:{Time.seconds} 
-            <br />
-            </p>
-          ):( 
+   
+     
+   
+    <div className="dashMainComponent">
+       <Sidebar />
+      
+      <div className="row">
+        <div className="col-md-4 col-sm-12">
+        <div
+          style={containerstyle}
+          className="bg-dark bg-gradient mt-3  ms-5"
+        >
+          {isworking ? (
+            <motion.span
+              style={circlestyleon}
+              animate={{ rotate: 360 }}
+              transition={spinTransisiton}
+            />
+          ) : (
+            <motion.span style={circlestyleoff} />
+          )}
+
+          {!isworking ? (
             <p className="text">
-               Time Worked
-          <br />
-            {timeLeft.Hours}:{timeLeft.Minutes}:{timeLeft.seconds}
-            <br />
-            </p>)} 
-        </div>
-        <div>
+              Total Time Worked
+              <br />
+              {Time.Hours}:{Time.Minutes}:{Time.seconds}
+              <br />
+            </p>
+          ) : (
+            <p className="text">
+              Time Worked
+              <br />
+              {timeLeft.Hours}:{timeLeft.Minutes}:{timeLeft.seconds}
+              <br />
+            </p>
+          )}
+          </div>
+          <div className=" col-7 ms-5 ">
           {showform ? (
-              <div>
-            <button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={show}>
-              Clock in
-            </button>
-              <Clockin email={email} show={show} workdetails={work} setstatus={setstatus}/>
-              
+            <div>
+              <button
+                className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1"
+                onClick={show}
+              >
+                Clock in
+              </button>
+              <Clockin
+              email={email}
+                id={id}
+                show={show}
+                workdetails={work}
+                setstatus={setstatus}
+              />
+            </div>
+          ) : isworking ? (
+            <div>
+              {" "}
+              <button
+                className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1 "
+                onClick={stopwork}
+              >
+                Clock out
+              </button>
             </div>
           ) : (
-              isworking ?(<div> <button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={stopwork}>
-              Clock out
-            </button>
-            <ul>
-               <li>Project name :{workdetals.projectname}</li> 
-               <li>Task  name:{workdetals.taskname}</li>
-               <li>Memo: {workdetals.memo}</li>
-            </ul>
-            </div>):(<button className="btn btn-danger bg-gradient col-sm-12 col-md-3 mt-5 ms-3" onClick={show}>
+            <button
+              className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1"
+              onClick={show}
+            >
               Clock In
-            </button>)
-            
+            </button>
           )}
+         
         </div>
+        </div>
+        <div className="bg-danger col-md-4 col-sm-12">
+       
+          <Overdue/>
+       
+        </div>
+ 
+        
+         
       </div>
-      
-      <div className="col-sm-5 col-md-8 mt-5 ms-md-3 mr-md-6">
-      <Timelines email={email}/>
-      
-      </div>
+        <Timelines id={id} email={email} />
     </div>
+    
+   
   );
 }
 

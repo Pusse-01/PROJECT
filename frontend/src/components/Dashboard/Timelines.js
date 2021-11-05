@@ -3,38 +3,103 @@ import React, { useState, useEffect } from "react";
 import "./Timelines.css";
 const axios = require("axios").default;
 
-function Timelines(email) {
-  const [data,setdata] = useState([]);
-  async function summery(){
-    const response=await axios.get("http://localhost:8070/Dashboard/summery/"+email.email).then(function(response){
-          setdata(response.data.summery);
+function Timelines({id , email}) {
+  const [data, setdata] = useState([]);
+  const [projectdata, setprojecttimeline] = useState([]);
+  const[pselected,setptimeline]=useState([])
+  const [projectselected, setproject] = useState("");
+  async function summery() {
+    const response = await axios
+      .get("http://localhost:8070/Dashboard/summery/" + id)
+      .then(function (response) {
+        setdata(response.data.summery);
+      });
+  }
+
+  async function projectsummery(){
+    const response=await axios.get("http://localhost:8070/Dashboard/projectsummery?id="+ id+"&"+"projectname="+projectselected).then(function(response){
+      setptimeline(response.data.summery)
         })
   }
+   async function getprojects(){
+        const response=await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
+         
+       
+         if (response.data.length>0){
+           setprojecttimeline(response.data.map(project=>project.name))
+         }
+
+        })
+      }
   useEffect(() => {
     summery();
-   }, []);
+    getprojects();
+    projectsummery();
+    
+  }, [projectselected]);
   return (
-    <div className="scroll hides">
-    <table className="table table-dark table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Project Name</th>
-          <th scope="col">Task name</th>
-          <th scope="col">Memo</th>
-          <th scope="col">Start time</th>
-          <th scope="col">End time</th>
-        </tr>
-      </thead>
-      <tbody >
-      {data.map((numList, i) => (
-          <tr   key={i}>
-            {numList.map((num, j) => (
-              <td key={j}>{num}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="row">
+      <div className="col-sm-12 col-md-4 mt-5 ms-md-3 mr-md-6">
+        <div className="scroll hides">
+        <h4 className="text-center bg theader"> User Activity Timeline</h4>
+          <table className="table table-dark table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" className="text-center">Project Name</th>
+                <th scope="col" className="text-center">Task name</th>
+                <th scope="col" className="text-center">Start time</th>
+                <th scope="col" className="text-center">End time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((numList, i) => (
+                <tr key={i}>
+                  {numList.map((num, j) => (
+                    <td  className="text-center" key={j}>{num}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="col-sm-12 ms-4 col-md-4 mt-5 ">
+      <h4 className="text-center theader"> View Project Activity Timeline</h4>
+      <select className="form-select form-select-sm dropdownbg "  onChange={(e) =>
+                  setproject( e.target.value)} >
+                    <option disabled  defaultValue selected> -- Select a Project -- </option>
+              {projectdata.map(item => {
+                return (<option  key={item} value={item}>{item}</option>);
+              })}
+            </select>
+          
+      <div className="scroll2 hides">
+          <table className="table table-dark table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col"  className="text-center">Project Name</th>
+                <th scope="col"  className="text-center">Task name</th>
+                <th scope="col" className="text-center">Start time</th>
+                <th scope="col" className="text-center">End time</th>
+              </tr>
+            </thead>
+            {projectselected!=""?( <tbody>
+              {pselected.map((numList, i) => (
+                <tr key={i}>
+                  {numList.map((num, j) => (
+                    <td  className="text-center" key={j}>{num}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>):(
+              <tbody>
+             
+            </tbody>
+            )}
+           
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
