@@ -16,10 +16,11 @@ import {
   DragDropProvider,
   DateNavigator,
   TodayButton,
+  CurrentTimeIndicator,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { owners } from './tasks';
-import {resourcesData } from './resources';
-import {appointments } from './resources';
+//import { owners } from './tasks';
+import { resourcesData } from './resources';
+import { appointments } from './resources';
 import "./view.css"
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
@@ -27,15 +28,21 @@ import { withStyles } from '@material-ui/core/styles';
 import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
+import {
+  indigo,
+} from "@material-ui/core/colors";
+import Grid from "@material-ui/core/Grid";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+//{/*#8a99a5;*/}
 
-const getBorder = theme => (`0px solid ${
-  theme.palette.type === 'main'
+
+const getBorder = theme => (`0px solid ${theme.palette.type === 'main'
     ? lighten(fade(theme.palette.divider, 1), 0.88)
     : darken(fade(theme.palette.divider, 1), 0.68)
-}`);
+  }`);
 
 const DayScaleCell = props => (
-  <MonthView.DayScaleCell {...props} style={{ textAlign: 'center', fontWeight: 'bold'}} />
+  <MonthView.DayScaleCell {...props} style={{ textAlign: 'center', fontWeight: 'bold' }} />
 );
 
 const styles = theme => ({
@@ -47,22 +54,7 @@ const styles = theme => ({
     padding: 0,
     height: 100,
     borderLeft: getBorder(theme),
-    '&:first-child': {
-      borderLeft: 'none',
-    },
-    '&:last-child': {
-      paddingRight: 0,
-    },
-    'tr:last-child &': {
-      borderBottom: 'none',
-    },
-    '&:hover': {
-      backgroundColor: 'white',
-    },
-    '&:focus': {
-      backgroundColor: fade(theme.palette.primary.main, 0.15),
-      outline: 0,
-    },
+
   },
   content: {
     display: 'flex',
@@ -76,13 +68,10 @@ const styles = theme => ({
     padding: '0.5em',
     textAlign: 'center',
   },
-  opacity: {
-    opacity: '0.8',
-  },
+
   appointment: {
-    fontWeight: 'bold',
-    opacity: .4,
-    backgroundColor: '#000080',
+    opacity: .9,
+    backgroundColor: '#4b5ccd',
     borderRadius: '6px',
     '&:hover': {
       opacity: 0.5,
@@ -92,6 +81,7 @@ const styles = theme => ({
     '&>div>div': {
       whiteSpace: 'normal !important',
       lineHeight: 1.2,
+      color: '#FFFFFF'
     },
   },
   flexibleSpace: {
@@ -144,7 +134,6 @@ const styles = theme => ({
 });
 
 
-
 const Appointment = withStyles(styles, { name: 'Appointment' })(({ classes, ...restProps }) => (
   <Appointments.Appointment
     {...restProps}
@@ -152,18 +141,62 @@ const Appointment = withStyles(styles, { name: 'Appointment' })(({ classes, ...r
   />
 ));
 
-const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(({ classes, ...restProps }) => (
-  <Appointments.AppointmentContent {...restProps} className={classes.apptContent} />
+const AppointmentContent = withStyles(styles, {
+  name: "AppointmentContent"
+})(({ classes, ...restProps }) => (
+  <Appointments.AppointmentContent
+    {...restProps}
+    className={classes.apptContent}
+    style={{ whiteSpace: "normal !important", lineHeight: 1.2 }}
+  />
 ));
+
+const ToolBar = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restProps }) => (
+<Toolbar.RootProps {...restProps} className={classes.flexibleSpace}>
+<div className={classes.flexContainer}>
+      <CalendarTodayTwoTone fontSize="large" htmlColor="#FFFFFF" />
+      <Typography variant="subtitle2" style={{
+        marginLeft: '10px', marginRight: '20px', font: "25px Georgia",
+        color: "#f9a825"
+      }}>C A L E N D A R</Typography>
+    </div>
+</Toolbar.RootProps>
+))
+
 
 const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restProps }) => (
   <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
     <div className={classes.flexContainer}>
-      <CalendarTodayTwoTone fontSize="large" htmlColor="#000080" />
-      <Typography variant="h5" style={{ marginLeft: '10px', marginRight: '20px' }}>C A L E N D A R</Typography>
+      <CalendarTodayTwoTone fontSize="large" htmlColor="#f9a825" />
+      <Typography variant="subtitle2" style={{
+        marginLeft: '10px', marginRight: '20px', font: "25px Georgia",
+        color: "#f9a825"
+      }}>C  A  L  E  N  D A  R</Typography>
     </div>
   </Toolbar.FlexibleSpace>
 ));
+
+const Content = withStyles({ name: "Content" })(
+  ({ children, appointmentData, classes, ...restProps }) => (
+    <AppointmentTooltip.Content
+      {...restProps}
+      appointmentData={appointmentData}
+    >
+      <Grid
+        container
+        alignItems="stretch"
+        direction="column"
+        justify="flex-start"
+      >
+        <Grid item xs={2} className={classes.textCenter}></Grid>
+      </Grid>
+    </AppointmentTooltip.Content>
+  )
+);
+
+
+const theme = createTheme({ palette: { type: "dark", primary: indigo } });
+
 
 
 export default class Calendar extends React.PureComponent {
@@ -172,18 +205,12 @@ export default class Calendar extends React.PureComponent {
 
     super(props);
     this.state = {
-      data:appointments,
+      data: appointments,
       resources: [
         {
           fieldName: 'roomId',
-          title: 'Room',
+          title: 'Project',
           instances: resourcesData,
-        },
-        {
-          fieldName: 'members',
-          title: 'Members',
-          instances: owners,
-          allowMultiple: true,
         },
       ],
     };
@@ -194,70 +221,69 @@ export default class Calendar extends React.PureComponent {
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       let { data } = state;
-      let hold =data;
+      let hold = data;
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        const Log ={
-          id:data[startingAddedId].id,
-          title:data[startingAddedId].title,
-          roomId:data[startingAddedId].roomId,
-          members:data[startingAddedId].members,
-          startDate:data[startingAddedId].startDate,
-          endDate:data[startingAddedId].endDate,
-          rRule:data[startingAddedId].rRule,
-          exDate:data[startingAddedId].exDate,
+        const Log = {
+          id: data[startingAddedId].id,
+          title: data[startingAddedId].title,
+          roomId: data[startingAddedId].roomId,
+          members: data[startingAddedId].members,
+          startDate: data[startingAddedId].startDate,
+          endDate: data[startingAddedId].endDate,
+          rRule: data[startingAddedId].rRule,
+          exDate: data[startingAddedId].exDate,
         }
         const ID = "616d5ba262a39205d8b4612a";
-        axios.post('http://localhost:8070/api/calendarTaskBackLog/'+ID, Log)
+        axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
 
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment
-          ));
-        let Index =-1;
-          for(var i = 0; i < data.length; i++) {
-            if(!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
-               data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate && 
-               data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate)) {
-              window.alert(data[i].title , data[i].id)
-              window.alert(hold[i].title , hold[i].id)
+        ));
+        let Index = -1;
+        for (var i = 0; i < data.length; i++) {
+          if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
+            data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
+            data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate)) {
+            window.alert(data[i].title, data[i].id)
+            window.alert(hold[i].title, hold[i].id)
 
-              Index = i;
-            }
+            Index = i;
           }
+        }
 
-          const LogPut ={
-            id:data[Index].id,
-            title:data[Index].title,
-            roomId:data[Index].roomId,
-            members:data[Index].members,
-            startDate:data[Index].startDate,
-            endDate:data[Index].endDate,
-            rRule:data[Index].rRule,
-            exDate:data[Index].exDate,
-          }
-          axios.put('http://localhost:8070/api/calendarTaskBackLog/'+hold[Index].id, LogPut)
-  
+        const LogPut = {
+          id: data[Index].id,
+          title: data[Index].title,
+          roomId: data[Index].roomId,
+          members: data[Index].members,
+          startDate: data[Index].startDate,
+          endDate: data[Index].endDate,
+          rRule: data[Index].rRule,
+          exDate: data[Index].exDate,
+        }
+        axios.put('http://localhost:8070/api/calendarTaskBackLog/' + hold[Index].id, LogPut)
+
 
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => (appointment.id !== deleted));
 
-        let Index =hold.length-1;
-        for(var i = 0; i < data.length; i++) {
+        let Index = hold.length - 1;
+        for (var i = 0; i < data.length; i++) {
           //for(var j = i; i < data.length; j++) {
-          if(!(data[i].id === hold[i].id))
-          {
+          if (!(data[i].id === hold[i].id)) {
             Index = i;
             window.alert(data[Index].id)
           }
         }
-        axios.delete('http://localhost:8070/API/calendarTaskBackLog/'+hold[Index].id, "")
+        axios.delete('http://localhost:8070/API/calendarTaskBackLog/' + hold[Index].id, "")
 
-      //}
-    }
+        //}
+      }
       return { data };
     });
   }
@@ -269,47 +295,68 @@ export default class Calendar extends React.PureComponent {
     const { data, resources } = this.state;
 
     return (
-      <div zindex="10">
- <Paper class="Paper">
-        <Scheduler class="hidescrollbar"
-          data={data}
-        >
-          <ViewState
 
-          />
-          <EditingState
-            onCommitChanges={this.commitChanges}
+
+      <div className>
+        <div class="mainComponent">
             
-          />
-          <EditRecurrenceMenu />
+        </div>
+            <MuiThemeProvider theme={theme}>
+        <Paper class="Paper"> 
+          <Scheduler style={{ backgroundColor: "red" }}
+            data={data}
+          >
+            <ViewState
 
-          <MonthView 
-                      dayScaleCellComponent={DayScaleCell}/>
-          <WeekView dayScaleCellComponent={DayScaleCell}/>
-          <DayView dayScaleCellComponent={DayScaleCell} />
-          <Toolbar flexibleSpaceComponent={FlexibleSpace}/>
-          <ViewSwitcher />
-          <DateNavigator />
-          <TodayButton />
-          <Appointments class="appointment"
-                      appointmentComponent={Appointment}
-                      appointmentContentComponent={AppointmentContent}/>
-          <AppointmentTooltip
-                        showCloseButton
-                        showDeleteButton
-                        showOpenButton
-          />
-          <AppointmentForm />
+            />
+            <EditingState
+              onCommitChanges={this.commitChanges}
 
-          <Resources
-            data={resources}
-            mainResourceName="roomId"
+            />
+            <EditRecurrenceMenu />
+
+            <MonthView
+              dayScaleCellComponent={DayScaleCell} />
+            <WeekView dayScaleCellComponent={DayScaleCell} />
+            <WeekView dayScaleCellComponent={DayScaleCell}
+            name="work-week"
+            displayName="Work Week"
+            excludedDays={[0, 6]}
+            startDayHour={9}
+            endDayHour={19}
           />
-          <DragDropProvider />
-        </Scheduler>
-      </Paper>
+            <DayView dayScaleCellComponent={DayScaleCell} />
+            <Toolbar flexibleSpaceComponent={FlexibleSpace} toolbarComponent={ToolBar}/>
+            <ViewSwitcher />
+            <DateNavigator />
+            <TodayButton />
+            <Appointments class="appointment"
+              appointmentComponent={Appointment}
+              appointmentContentComponent={AppointmentContent} />
+            <AppointmentTooltip
+              contentComponent={Content}
+              showCloseButton
+              showDeleteButton
+              showOpenButton
+            />
+            <AppointmentForm />
+
+
+            <Resources
+              data={resources}
+              mainResourceName="roomId"
+            />
+            <DragDropProvider />
+            <CurrentTimeIndicator
+            shadePreviousCells={true}
+            shadePreviousAppointments={true}
+            updateInterval={10000}
+          />
+          </Scheduler>
+        </Paper>
+        </MuiThemeProvider>
       </div>
-     
+
     );
   }
 }

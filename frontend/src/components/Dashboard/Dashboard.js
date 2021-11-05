@@ -95,7 +95,7 @@ function Dashboard({ id , email}) {
     width: "300px",
     height: "300px",
     border: "10px solid #FF5349",
-    borderTop: "10px solid #8B0000 ",
+    borderTop: "10px solid #1e272e",
     borderRadius: "50%",
     position: "absolute",
     boxSizing: "border-box",
