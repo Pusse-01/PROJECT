@@ -5,12 +5,15 @@ import { withRouter } from "react-router-dom";
 class Navbar extends Component{
     constructor(props) {
         super(props);
+        const loggedInUser = localStorage.getItem("user");
+        const founduser = JSON.parse(loggedInUser);
         this.state = {
-            selectedHome : true,
-            selectedProjects :false,
-            selectedTasks : false,
-            selectedCalendar : false,
-            selectedTimeLogs : false
+            selectedHome: true,
+            selectedProjects: false,
+            selectedTasks: false,
+            selectedCalendar: false,
+            selectedTimeLogs: false,
+            name: founduser.employee.name
         }
     }
 
@@ -116,12 +119,21 @@ class Navbar extends Component{
                             <li className="nav-item">
                                 <a className={linkClassTimeLogs} href="#" onClick={this.changeColorTimeLogs.bind(this)}>Time Logs</a>
                             </li>
-                            <li className="nav-item">
-                                <a className={linkClassLogout} href="#" onClick={this.logOut.bind(this)}>Logout</a>
-                            </li>
+                            <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
+                                <h7>Log out</h7>
+                            </div>
                         </ul>
                     </div>
                 </div>
+                <div className="user">
+                    <img className="notification" src={require('../../assests/images/notifications.png').default}/>
+                    <div className="userText">
+                        <h7 className="userNameText">{this.state.name}</h7>
+                        <p>Assistant Manager</p>
+                    </div>
+                    <img className="avatar" src={require('../../assests/images/avatar.jpeg').default}/>
+                </div>
+
             </nav>
         )
     }
