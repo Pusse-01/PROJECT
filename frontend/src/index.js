@@ -8,7 +8,7 @@ import GetCalendarLogs from './components/taskBacklog/calendar'
 
 ReactDOM.render(
   <Provider store={store}>
-   <div><App /><GetCalendarLogs/></div> 
+   <div><App /></div> 
   </Provider>,
   document.getElementById('root')
 );

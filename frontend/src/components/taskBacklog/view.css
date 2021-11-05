@@ -1,27 +1,18 @@
-
-body{
-  text-decoration: solid;
-  background-color:#2f3640;
-  z-index: -1;
-  border-color: aqua;
-}
-table{
-  background-image: linear-gradient(#2f3640,#1e272e);
-  border-color: aqua;
-  z-index: 0;
-}
-.toolbar-container{
-  border-color: aqua;
-  background-color:#a15813;
-}
 .Paper {
-    position: absolute;
-    top: 80px;
-    bottom: 0px;
-    width : 70%;
-    z-index: 0;
-    font-family:sans-serif;
+  position: absolute;
+  top: 80px;
+  bottom: 0px;
+  width : 82%;
+  z-index: 0;
+  font-family:sans-serif;
+  background-color: #8a99a5;
+}
+body{
+  background-color: #8a99a5;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+
 }
 
-
-
+table{
+  background-image: radial-gradient(#a3a8ac,#98a1a8,#8a99a5);
+}

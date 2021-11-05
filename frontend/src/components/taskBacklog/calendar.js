@@ -23,14 +23,9 @@ useEffect(()=> {
   }).then(jsonRes => setLogs(jsonRes));
 })
 
-console.log(logs.body);
+console.log(logs[0].id);
 
-return (
-    <div zindex="0">
-        <h1>Hello get request</h1>
-        {logs.map(log=><li></li>)}
-    </div>
-)
+
 
 }
 
