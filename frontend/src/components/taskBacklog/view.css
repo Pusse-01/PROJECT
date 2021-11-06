@@ -2,17 +2,47 @@
   position: absolute;
   top: 80px;
   bottom: 0px;
+  left: 65px;
   width : 82%;
   z-index: 0;
   font-family:sans-serif;
-  background-color: #8a99a5;
+  background-color: #1e272e;
 }
 body{
-  background-color: #8a99a5;
+  background-color: #1e272e;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 
 }
 
 table{
-  background-image: radial-gradient(#a3a8ac,#98a1a8,#8a99a5);
+  background-color: #1e272e;
+}
+
+
+.mainComponent {
+  position: absolute;
+  top: 0px;
+  right :0px;
+  bottom: 0px;
+  padding-top: 80px;
+  width : 30%;
+  z-index: -1;
+  background-color: #1e272e;
+}
+
+@media only screen and (max-width: 991px) {
+  .mainComponent{
+      position: absolute;
+      top: 450px;
+      right :0px;
+      bottom: 0px;
+      padding-top: 10px;
+      width : 30%;
+      z-index: -1;
+      background-color: #1e272e;
+  }
+}
+
+.title {
+  color : white;
 }
