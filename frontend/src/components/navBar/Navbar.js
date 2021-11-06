@@ -14,7 +14,8 @@ class Navbar extends Component{
             selectedCalendar: false,
             selectedTimeLogs: false,
             name: founduser.employee.name,
-            id:founduser.employee.id
+            id:founduser.employee.id,
+
         }
     }
 
@@ -129,8 +130,8 @@ class Navbar extends Component{
                 <div className="user">
                     <img className="notification" src={require('../../assests/images/notifications.png').default}/>
                     <div className="userText">
-                        <h7 className="userNameText">{this.state.id}</h7>
-                        <p>Assistant Manager</p>
+                        <h7 className="userNameText">Welcome {this.state.name}</h7>
+                        <p></p>
                     </div>
                     <img className="avatar" src={require('../../assests/images/avatar.jpeg').default}/>
                 </div>

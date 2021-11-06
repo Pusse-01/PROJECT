@@ -68,4 +68,16 @@ Project.find({members: email}).then(projects=>{
 
   })
 });
+
+// @route GET project/projects
+// @desc displays about projects
+// @access Public
+router.get ('/projects/projectsDetails:name',(req, res)=>{
+    let name = req.params.name;
+   //Check for existing user
+   Project.find({name: name}).then(projects=>{
+      if (projects) 
+      return res.json(projects);  
+     })
+   });
 module.exports = router;

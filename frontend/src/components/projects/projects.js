@@ -31,7 +31,9 @@ class Projects extends Component{
         this.props.history.push("/projectsDetails");
     }
     render(){ 
+        
         const {projects, isLoaded} = this.state;
+        
         return(
 
             <div className="projectsMainComponent">
@@ -45,21 +47,26 @@ class Projects extends Component{
                     
                     <table className="projectsTable">
                         <tr className="table_head">
-                            <th className="table_header_column">Project ID</th>
+                            
                             <th className="table_header_column">Project Name</th>
+                            <th className="table_header_column">Project Discription</th>
+                            <th className="table_header_column">Members</th>
                             <th className="table_header_column">Due Date</th>
                             <th className="table_header_column">Status</th>
-                            <th className="table_header_column_more">More</th>
+                            <th className="table_header_column">Special Notes</th>
                         </tr>
                         
                         { (projects.length > 0) ? projects.map( (projects, index) => {
+                            
            return (
                         <tr className="table_data_odd">
-                            <td className="table_data_column">001</td>
+                            
                             <td className="table_data_column">{projects.name}</td>
+                            <td className="table_data_column">{projects.discription}</td>
+                            <td className="table_data_column">{[projects.members.join("/\n")]}</td>
                             <td className="table_data_column">{projects.overdue}</td>
                             <td className="table_data_column">{projects.status}</td>
-                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
+                            <td className="table_data_column">{projects.notes}</td>
                         </tr>
       
       )
