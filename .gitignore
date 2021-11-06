@@ -1,4 +1,5 @@
 frontend/node_modules
+Backend/node_modules
 .DS_Store
 .idea/
 frontend/.DS_Store
