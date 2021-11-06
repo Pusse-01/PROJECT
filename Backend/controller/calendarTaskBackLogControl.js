@@ -13,6 +13,7 @@ const createCalendarTaskBlackLog = async (req, res) => {
                 roomId: req.body.roomId,
                 exDate: req.body.exDate,
                 title: req.body.title,
+                description: req.body.description,
                 rRule: req.body.rRule,
                 members: req.body.members,
                 startDate: req.body.startDate,
@@ -58,17 +59,18 @@ const fetchCalendarTaskBacklogOne = async (req, res) => {
 const updateCalendarTaskBacklogOne = async (req, res) => {
     try {
         let myID = parseInt(req.params.id);
-        const calendertaskbacklog = await CalendarTaskBackLog.updateOne({ "calendarlog.id"  : { $ne:  myID  }} , {
+        const calendertaskbacklog = await CalendarTaskBackLog.update({ "calendarlog.id"  :  myID} , {$set: {
             calendarlog: {
                 id: req.body.id,
                 roomId: req.body.roomId,
                 exDate: req.body.exDate,
                 title: req.body.title,
+                description: req.body.description,
                 rRule: req.body.rRule,
                 members: req.body.members,
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
-            },
+        }},
         },
             {
                 new: true,
