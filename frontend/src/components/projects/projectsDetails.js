@@ -4,14 +4,35 @@ import { withRouter } from "react-router-dom";
 import "./projectsStyle.css"
 
 class ProjectsDetails extends Component{
+    constructor(props) {
+        super(props);
+        const loggedInUser = localStorage.getItem("user");
+        const founduser = JSON.parse(loggedInUser);
+        this.state = {
+            projects: [],
+            name: founduser.employee.name,
+            id: founduser.employee.id,
+            email: founduser.employee.email
+        }
+    }
+      componentDidMount() {
+        fetch('http://localhost:8070/employee/projects/'+ this.state.email)
+          .then(response => response.json())
+          .then((response) => this.setState({ 
+            isLoaded: true,
+            projects : response, 
+               
+        }));
+    }
     render(){
+        const {projects, isLoaded} = this.state;
         return(
-            <div className="tasksMainComponent">
+            <div className="projectsMainComponent">
                 <Sidebar/>
-                <div className="tasksSubComponent">̵
+                <div className="projectsSubComponent">̵
                     
 
-                    <table className="tasksTable">
+                    <table className="projectsTable">
                         <tr className="table_head">
                         <th className="table_header_column">Project Discription</th>
                             <th className="table_header_column">Members</th>
@@ -20,15 +41,18 @@ class ProjectsDetails extends Component{
                             <th className="table_header_column">Charts</th>
                             <th className="table_header_column">Special Notes</th>
                         </tr>
+                        { (projects.length > 0) ? projects.map( (projects, index) => {
+           return (
                         <tr className="table_data_odd">
-                            <td className="table_data_column">SE Project</td>
-                            <td className="table_data_column">Pusse</td>
-                            <td className="table_data_column">21st of October 2021</td>
-                            <td className="table_data_column">On going</td>
+                            <td className="table_data_column">{projects.discription}</td>
+                            <td className="table_data_column">{[projects.members]}</td>
+                            <td className="table_data_column">{projects.overdue}</td>
+                            <td className="table_data_column">{projects.status}</td>
                             <td className="table_data_column"></td>
-                            <td className="table_data_column">Wada krpn</td>
+                            <td className="table_data_column">{projects.notes}</td>
                         </tr>
-                        
+                     )}) : <tr><td colSpan="5">Loading...</td></tr> }
+                    
                     </table>
                 </div>
             </div>

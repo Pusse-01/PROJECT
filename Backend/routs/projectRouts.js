@@ -10,7 +10,7 @@ const Employee = require('../models/employee');
 // @desc displays about projects
 // @access Public
 router.post ('/projects',(async(req, res)=>{
-    const{name,members,administrators,discription}=req.body;
+    const{name,members,administrators,discription,notes}=req.body;
     //res.status(201).json({ msg: 'Projects'});
 
  //Check for existing user
@@ -21,7 +21,8 @@ router.post ('/projects',(async(req, res)=>{
        name,
        members,
        administrators,
-       discription
+       discription,
+       notes
     });
 
     newProject.save()
@@ -32,7 +33,8 @@ router.post ('/projects',(async(req, res)=>{
             name: project.name,
             members: project.members,
             administrators: project.administrators,
-            discription: project.discription
+            discription: project.discription,
+            notes: project.notes,
         }
      });
    })

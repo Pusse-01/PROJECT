@@ -6,7 +6,8 @@ const ProjectSchema = new Schema({
     name: { type: String, required: true, unique: true},
     members: { type: [{ type: String, required: true }] },
     administrators: { type: [{ type: String, required: true }]},
-    discription: {type: String}
+    discription: {type: String},
+    notes:{type: String}
 
 })
 
