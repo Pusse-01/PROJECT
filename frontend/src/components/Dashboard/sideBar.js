@@ -5,9 +5,9 @@ import "./sideBarStyle.css"
 export default class Sidebar extends Component{
     render(){
         return(
-            <div className="mainComponent">
+           
                 <h1 className="title">This is the Side Bar</h1>
-            </div>
+           
         )
     }
 }

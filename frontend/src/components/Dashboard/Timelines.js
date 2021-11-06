@@ -39,9 +39,10 @@ function Timelines({id , email}) {
   }, [projectselected]);
   return (
     <div className="row">
-      <div className="col-sm-12 col-md-4 mt-5 ms-md-3 mr-md-6">
+      <div className="col-sm-12 col-md-4 mt-5   ms-md-5 mr-md-5">
+      <h4 className="text-center bg theader"> User Activity Timeline</h4>
         <div className="scroll hides">
-        <h4 className="text-center bg theader"> User Activity Timeline</h4>
+        
           <table className="table table-dark table-striped table-bordered">
             <thead>
               <tr>
@@ -63,9 +64,9 @@ function Timelines({id , email}) {
           </table>
         </div>
       </div>
-      <div className="col-sm-12 ms-4 col-md-4 mt-5 ">
+      <div className="col-sm-12 col-md-4 mt-5   ms-md-5 mr-md-5">
       <h4 className="text-center theader"> View Project Activity Timeline</h4>
-      <select className="form-select form-select-sm dropdownbg "  onChange={(e) =>
+      <select className="form-select form-select-sm dropdownbg mt-4 "  onChange={(e) =>
                   setproject( e.target.value)} >
                     <option disabled  defaultValue selected> -- Select a Project -- </option>
               {projectdata.map(item => {

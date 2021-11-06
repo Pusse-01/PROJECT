@@ -4,6 +4,8 @@ const router = express.Router();
 //work model
 const Workingproject = require("../models/working");
 const Employee = require("../models/employee");
+const Task = require('../models/task');
+const Project = require('../models/projects');
 const { Router } = require("express");
 
 router.post("/record/:id", (req, res) => {
@@ -116,4 +118,54 @@ router.get("/projectsummery", (req, res) => {
     }
   });
 });
+
+router.get("/gettasksbyprojectandemployee",(req,res)=>{
+  let id=req.query.id;
+  let projectn=req.query.pid;
+  Task.find({assigned_to:id}).then((work)=>{
+    if(work){
+      let tasksummery=[]
+      let iter=work.values();
+      for (let times of iter) {
+        if(times.project_id==projectn){
+      
+        tasksummery.push(times.task_name);
+        }
+      }
+      return res.json({
+        tasksummery
+      });
+    }
+  })
+});
+
+router.get("/getpid/:projectname",(req,res)=>{
+  const projectname=req.params.projectname;
+  Project.findOne({name:projectname}).then((pro)=>{
+    if(pro){
+      return res.json(pro._id);
+    }
+  })
+})
+
+router.get("/getoverduetasks/:id",(req,res)=>{
+  const id=req.params.id;
+  Task.find({assigned_to:id}).then((overdue)=>{
+    let overdued=[]
+    let count=1;
+    if(overdue){
+      let iter=overdue.values()
+      
+      for(let times of iter){
+        if(times.due_date<new Date()){
+          let obj=[count.toString()+". "+times.task_name+" Due date was on  "+ times.due_date.toString().substring(3,15)];
+          overdued.push(obj);
+          count++;
+        }
+      }
+
+    }
+    return res.json(overdued)
+  })
+})
 module.exports = router;

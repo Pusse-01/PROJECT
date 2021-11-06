@@ -5,12 +5,13 @@ function Clockin({email,id,show,workdetails,setstatus}) {
     const [work, setwork] = useState({ projectname: "", taskname: "", memo: "" });
     const[error,seterror]=useState("");
     const [projects,setprojects]=useState([""]);
-    const[tasks,settasks]=useState(["",1]);
+    const[tasks,settasks]=useState([""]);
+    const [pid,setpid]=useState([""]);
   
     
     async function startwork(event) {
         event.preventDefault();
-        if(work.projectname===""||work.taskname===""||work.memo===""){
+        if(work.projectname==""||work.taskname==""||work.memo==""){
           seterror("Please Fill all parts");
         }else{
         const response = await axios
@@ -37,17 +38,43 @@ function Clockin({email,id,show,workdetails,setstatus}) {
       }
       async function getprojects(){
         const response=await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
-         
-       
          if (response.data.length>0){
            setprojects(response.data.map(project=>project.name))
+         }
+         
+        })
+      }
+      async function getpids(){
+        const getid=await axios.get("http://localhost:8070/dashboard/getpid/"+work.projectname).then(function(getid){
+        const pidof=getid.data;
+         setpid(pidof);
+         })
+      }
+      async function gettasks(){
+        const response=await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
+         if (response.data.tasksummery.length>0){
+           settasks(response.data.tasksummery);
          }
 
         })
       }
       useEffect(() => {
-       getprojects();
-      }, []);
+        let mounted=true;
+        if(mounted){
+        getprojects();
+        
+        if(work.projectname!=""){
+          settasks([""]);
+          getpids();
+          gettasks();
+        }
+      }
+      return () => {
+        mounted = false
+     };
+       
+    }, [pid,work.projectname,work.taskname]);
+      
       
     return (
         
@@ -58,7 +85,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
             <div className="form-group mt-3 col-sm-auto col-md-10 ">
               <label for="name">Project Name :</label>
               <select className="form-select"  onChange={(e) =>
-                  setwork({ ...work, projectname: e.target.value })} >
+                  setwork({ ...work, projectname: e.target.value }) }>
                     <option disabled  defaultValue selected> -- Select a Project -- </option>
               {projects.map(item => {
                 return (<option  key={item} value={item}>{item}</option>);

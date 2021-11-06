@@ -4,9 +4,13 @@
    
 }
 .scroll2{
-  height: 333px;
+  height: 420px;
   overflow: scroll;
  
+}
+.scrolloverdue{
+  height: 300px;
+  overflow: scroll;
 }
 
 .hides::-webkit-scrollbar {
@@ -29,4 +33,13 @@
  }
  .theader{
   color:azure;
+ }
+ .overdueheader{
+   color:#FF5349;
+ }
+ 
+ 
+ .overduefc{
+   color: azure;
+   font-size: 15px;
  }

@@ -94,8 +94,8 @@ function Dashboard({ id , email}) {
     dispay: "block",
     width: "300px",
     height: "300px",
-    border: "10px solid #FF5349",
-    borderTop: "10px solid #1e272e",
+    border: "10px solid #1e272e",
+    borderTop: "10px solid #FF5349 ",
     borderRadius: "50%",
     position: "absolute",
     boxSizing: "border-box",
@@ -149,10 +149,11 @@ function Dashboard({ id , email}) {
      
    
     <div className="dashMainComponent">
+      <div className="mainComponent">
        <Sidebar />
-      
+       </div>
       <div className="row">
-        <div className="col-md-4 col-sm-12">
+        <div className="col-md-3 col-sm-12  ">
         <div
           style={containerstyle}
           className="bg-dark bg-gradient mt-3  ms-5"
@@ -183,7 +184,7 @@ function Dashboard({ id , email}) {
             </p>
           )}
           </div>
-          <div className=" col-7 ms-5 ">
+          <div className=" col-7  offset-2 ">
           {showform ? (
             <div>
               <button
@@ -196,6 +197,7 @@ function Dashboard({ id , email}) {
               email={email}
                 id={id}
                 show={show}
+                
                 workdetails={work}
                 setstatus={setstatus}
               />
@@ -221,9 +223,9 @@ function Dashboard({ id , email}) {
          
         </div>
         </div>
-        <div className="bg-danger col-md-4 col-sm-12">
+        <div className="col-sm-12 col-md-3  mt-5  ">
        
-          <Overdue/>
+          <Overdue id={id}/>
        
         </div>
  
