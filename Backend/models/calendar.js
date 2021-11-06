@@ -9,6 +9,10 @@ const subcalendarTaskBackLogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Title is required!'],
     },
+    description: {
+        type: String,
+        required: [false, 'Description is required!'],
+    },
     exDate: {
         type: String,
         required: [false, 'ExDate is required!'],

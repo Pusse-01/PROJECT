@@ -18,7 +18,7 @@ import {
   TodayButton,
   CurrentTimeIndicator,
 } from '@devexpress/dx-react-scheduler-material-ui';
-//import { owners } from './tasks';
+import { owners } from './tasks';
 import { resourcesData } from './resources';
 import { appointments } from './resources';
 import "./view.css"
@@ -33,6 +33,7 @@ import {
 } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import Room from '@material-ui/icons/Room';
 //{/*#8a99a5;*/}
 
 
@@ -134,6 +135,72 @@ const styles = theme => ({
 });
 
 
+/*
+const TextEditor = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (props.type === "multilineTextEditor") {
+    return null;
+  }
+  if (props.placeholder === "Title") {
+    return null;
+  }
+  return <AppointmentForm.TextEditor {...props} />;
+};
+
+const BooleanEditor = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (props.label === "All Day" || props.label === "Repeat") {
+    return null;
+  }
+  return <AppointmentForm.BooleanEditor {...props} />;
+};
+const messages = {
+  moreInformationLabel: ""
+};
+const Label = (props) => {
+  if (props.text === "Details") {
+    return null;
+  }
+  return <AppointmentForm.Label {...props} />;
+};
+
+
+let newTitle = "";
+const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
+  const onNameFieldChange = (nextValue) => {
+    newTitle = nextValue;
+    onFieldChange({ customField: nextValue });
+  };
+  const onPhoneFieldChange = (nextValue) => {
+    onFieldChange({ phoneField: nextValue });
+  };
+
+  return (
+    <AppointmentForm.BasicLayout
+      appointmentData={appointmentData}
+      onFieldChange={onFieldChange}
+      {...restProps}
+    >
+      <AppointmentForm.Label text="Customer Name" type="title" />
+      <AppointmentForm.TextEditor
+        value={appointmentData.customField}
+        onValueChange={onNameFieldChange}
+        placeholder="Customer name"
+      />
+      <AppointmentForm.Label text="Customer Phone" type="title" />
+      <AppointmentForm.TextEditor
+        value={appointmentData.phoneField}
+        onValueChange={onPhoneFieldChange}
+        type="numberEditor"
+        placeholder="Customer Phone"
+      />
+    </AppointmentForm.BasicLayout>
+  );
+};
+*/
+/////
+
+////
 const Appointment = withStyles(styles, { name: 'Appointment' })(({ classes, ...restProps }) => (
   <Appointments.Appointment
     {...restProps}
@@ -188,12 +255,14 @@ const Content = withStyles({ name: "Content" })(
         direction="column"
         justify="flex-start"
       >
-        <Grid item xs={2} className={classes.textCenter}></Grid>
+        <Grid item xs={2} className={classes.textCenter}>
+        </Grid>
+        <span><br></br>{appointmentData.notes}</span>
       </Grid>
     </AppointmentTooltip.Content>
   )
 );
-
+//{appointmentData.notes}
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
 
@@ -222,12 +291,14 @@ export default class Calendar extends React.PureComponent {
     this.setState((state) => {
       let { data } = state;
       let hold = data;
+      let value = true;
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
         const Log = {
           id: data[startingAddedId].id,
           title: data[startingAddedId].title,
+          description: data[startingAddedId].notes,
           roomId: data[startingAddedId].roomId,
           members: data[startingAddedId].members,
           startDate: data[startingAddedId].startDate,
@@ -235,6 +306,8 @@ export default class Calendar extends React.PureComponent {
           rRule: data[startingAddedId].rRule,
           exDate: data[startingAddedId].exDate,
         }
+        window.alert(data[startingAddedId].notes)
+        value= false;
         const ID = "616d5ba262a39205d8b4612a";
         axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
 
@@ -244,20 +317,28 @@ export default class Calendar extends React.PureComponent {
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment
         ));
         let Index = -1;
-        for (var i = 0; i < data.length; i++) {
-          if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
-            data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
-            data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate)) {
-            window.alert(data[i].title, data[i].id)
-            window.alert(hold[i].title, hold[i].id)
-
-            Index = i;
+        if(value === true) {
+          for (var i = 0; i < data.length; i++) {
+            if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
+              data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
+              data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
+              Index = i;
+            }
           }
         }
-
+        else {
+          for (var i = 0; i < data.length-1; i++) {
+            if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
+              data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
+              data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
+              Index = i;
+            }
+          }
+        }
         const LogPut = {
           id: data[Index].id,
           title: data[Index].title,
+          description: data[Index].notes,
           roomId: data[Index].roomId,
           members: data[Index].members,
           startDate: data[Index].startDate,
@@ -315,8 +396,7 @@ export default class Calendar extends React.PureComponent {
             />
             <EditRecurrenceMenu />
 
-            <MonthView
-              dayScaleCellComponent={DayScaleCell} />
+            <MonthView dayScaleCellComponent={DayScaleCell} />
             <WeekView dayScaleCellComponent={DayScaleCell} />
             <WeekView dayScaleCellComponent={DayScaleCell}
             name="work-week"

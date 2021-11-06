@@ -18,8 +18,9 @@ export const appointments = [
     title: 'Watercolor Landscape',
     roomId: 1,
     members: [1],
-    startDate: new Date(2018, 4, 1, 9, 30),
-    endDate: new Date(2018, 4, 1, 11),
+    startDate: new Date(2021, 11, 1, 9, 30),
+    notes:"Creted",
+    endDate: new Date(2021, 11, 2, 11),
     rRule: 'FREQ=WEEKLY;BYDAY=TU,FR;COUNT=10',
   }, {
     id: 1,
@@ -75,8 +76,8 @@ export const appointments = [
     title: 'Open Day',
     roomId: 5,
     members: [1, 3, 5],
-    startDate: new Date(2017, 4, 1, 9, 30),
-    endDate: new Date(2017, 4, 1, 13),
+    startDate: new Date(2021, 11, 4, 9, 30),
+    endDate: new Date(2021, 11, 10, 13),
     rRule: 'FREQ=YEARLY;BYYEARDAY=148',
   },
 ];
