@@ -10,7 +10,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
     
     async function startwork(event) {
         event.preventDefault();
-        if(work.projectname==""||work.taskname==""||work.memo==""){
+        if(work.projectname===""||work.taskname===""||work.memo===""){
           seterror("Please Fill all parts");
         }else{
         const response = await axios

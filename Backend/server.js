@@ -27,7 +27,7 @@ app.use('/employee',require('./routs/employeeRouts.js'));
 app.use('/api', route);
 //app.use('/employee/register',require('./routs/employeeRouts.js'));
 
-app.use('/employee',require('./routs/projectRouts.js'));
+app.use('/',require('./routs/projectRouts.js'));
 app.use('/dashboard',require('./routs/workrouts.js'));
 
 

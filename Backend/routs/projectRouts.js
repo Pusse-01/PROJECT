@@ -10,7 +10,7 @@ const Employee = require('../models/employee');
 // @desc displays about projects
 // @access Public
 router.post ('/projects',(async(req, res)=>{
-    const{name,members,administrators,discription,notes}=req.body;
+    const{name,members,projectStatus, overdue, administrators,discription,notes}=req.body;
     //res.status(201).json({ msg: 'Projects'});
 
  //Check for existing user
@@ -20,6 +20,8 @@ router.post ('/projects',(async(req, res)=>{
     const newProject = new Project({
        name,
        members,
+       projectStatus,
+       overdue,  
        administrators,
        discription,
        notes
@@ -32,6 +34,8 @@ router.post ('/projects',(async(req, res)=>{
         Project: {
             name: project.name,
             members: project.members,
+            projectStatus: project.projectStatus,
+            overdue: project.overdue,
             administrators: project.administrators,
             discription: project.discription,
             notes: project.notes,
