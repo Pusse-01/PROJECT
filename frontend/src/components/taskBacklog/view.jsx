@@ -22,6 +22,7 @@ import {
 //import { resourcesData } from './resources';
 //import { appointments } from './resources';
 import "./view.css"
+//import "./background.css"
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
@@ -34,7 +35,6 @@ import {
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
-
 //{/*#8a99a5;*/}
 
 
@@ -295,7 +295,10 @@ export default class Calendar extends React.PureComponent {
     this.commitChanges = this.commitChanges.bind(this);
   }
 
-
+componentWillMount(){
+  this.getCalendarLogs();
+  this.getProjecLogs();
+}
   componentDidMount() {
     this.interval = setInterval(this.getCalendarLogs(), 15000);
     this.interval = setInterval(this.getProjecLogs(), 15000);
@@ -369,16 +372,19 @@ export default class Calendar extends React.PureComponent {
         var color
         for (var i = 0; i < response.data.length; i++) {
           console.log(response.data[i].name)
-          if (i % 4 === 0) {
+          if (i % 7 === 0) {
             color = amber;
-          } else if (i % 3 === 0) {
+          } else if (i % 5 === 0) {
             color = teal;
           }
+          else if (i % 3 === 0) {
+            color = pink;
+          }
           else if (i % 2 === 0) {
-            color = deepOrange;
+            color = purple;
           }
           else {
-            color = teal
+            color = deepOrange
           }
 
 
@@ -506,12 +512,36 @@ export default class Calendar extends React.PureComponent {
 
 
       <div>
-        <div zindex="0">
+        <div >
+          <ul class="background">
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+</ul>
 
+<ul class="background1">
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+</ul>
         </div>
         <MuiThemeProvider theme={theme}>
           <Paper class="Paper">
-            <Scheduler
+            <Scheduler class="Scheduler"
               data={data}
             >
               <ViewState
