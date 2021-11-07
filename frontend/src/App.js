@@ -4,7 +4,7 @@ import LoginForm from "./components/LoginForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/navBar/Navbar";
-import Sidebar from "./components/sideBar/sideBar";
+//import Sidebar from "./components/sideBar/sideBar";
 import Dashboard from "./components/Dashboard/Dashboard";
 //18th oct
 import React from "react";

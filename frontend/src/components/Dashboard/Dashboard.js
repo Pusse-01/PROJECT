@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "./Dashboard.css";
 import Clockin from "./Clockin";
 import Timelines from "./Timelines";
-import Sidebar from "./SideBar";
+import Sidebar from "./sideBar";
 import Overdue from "./Overdue";
 const axios = require("axios").default;
 

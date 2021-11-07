@@ -18,9 +18,9 @@ import {
   TodayButton,
   CurrentTimeIndicator,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { owners } from './tasks';
-import { resourcesData } from './resources';
-import { appointments } from './resources';
+//import { owners } from './tasks';
+//import { resourcesData } from './resources';
+//import { appointments } from './resources';
 import "./view.css"
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
@@ -33,17 +33,18 @@ import {
 } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import Room from '@material-ui/icons/Room';
+import { pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
+
 //{/*#8a99a5;*/}
 
 
 const getBorder = theme => (`0px solid ${theme.palette.type === 'main'
-    ? lighten(fade(theme.palette.divider, 1), 0.88)
-    : darken(fade(theme.palette.divider, 1), 0.68)
+  ? lighten(fade(theme.palette.divider, 1), 0.88)
+  : darken(fade(theme.palette.divider, 1), 0.68)
   }`);
 
 const DayScaleCell = props => (
-  <MonthView.DayScaleCell {...props} style={{ textAlign: 'center', fontWeight: 'bold' }} />
+  <WeekView.DayScaleCell {...props} style={{ textAlign: 'center', fontWeight: 'bold' }} />
 );
 
 const styles = theme => ({
@@ -219,15 +220,15 @@ const AppointmentContent = withStyles(styles, {
 ));
 
 const ToolBar = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restProps }) => (
-<Toolbar.RootProps {...restProps} className={classes.flexibleSpace}>
-<div className={classes.flexContainer}>
+  <Toolbar.RootProps {...restProps} className={classes.flexibleSpace}>
+    <div className={classes.flexContainer}>
       <CalendarTodayTwoTone fontSize="large" htmlColor="#FFFFFF" />
       <Typography variant="subtitle2" style={{
         marginLeft: '10px', marginRight: '20px', font: "25px Georgia",
         color: "#f9a825"
       }}>C A L E N D A R</Typography>
     </div>
-</Toolbar.RootProps>
+  </Toolbar.RootProps>
 ))
 
 
@@ -266,26 +267,147 @@ const Content = withStyles({ name: "Content" })(
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
 
+////
 
 
+///
 export default class Calendar extends React.PureComponent {
 
   constructor(props) {
 
     super(props);
     this.state = {
-      data: appointments,
+      currentViewName: 'work-week',
+      increasing: false,
+      data: [],
       resources: [
         {
           fieldName: 'roomId',
           title: 'Project',
-          instances: resourcesData,
+          instances: [],
         },
       ],
-    };
+    }
 
+    this.currentViewNameChange = (currentViewName) => {
+      this.setState({ currentViewName });
+    };
     this.commitChanges = this.commitChanges.bind(this);
   }
+
+
+  componentDidMount() {
+    this.interval = setInterval(this.getCalendarLogs(), 15000);
+    this.interval = setInterval(this.getProjecLogs(), 15000);
+
+  }
+
+  getCalendarLogs = () => {
+    axios.get('http://localhost:8070/api/calendarTaskBackLog')
+      .then((response => {
+        const data = response.data;
+        /*
+        console.log('data recieved')
+        console.log(response.data.length)
+        console.log(response.data[0].calendarlog.title)
+        console.log(response.data[1].calendarlog.title)
+        console.log((parseInt((response.data[1].calendarlog.startDate).slice(0, 4))))
+        console.log((parseInt((response.data[1].calendarlog.startDate).slice(5, 7))))
+        console.log((parseInt((response.data[1].calendarlog.startDate).slice(8, 10))))
+        console.log((parseInt((response.data[1].calendarlog.startDate).slice(11, 13))))
+        console.log((parseInt((response.data[1].calendarlog.startDate).slice(14, 16))))
+        */
+        var tempData = []
+        var Rule;
+        for (var i = 0; i < response.data.length; i++) {
+          if ((response.data[i].calendarlog.rRule === undefined)) {
+            Rule = null;
+          }
+          else {
+            Rule = response.data[i].calendarlog.rRule;
+          }
+          var tempOne = [
+
+            {
+              id: response.data[i].calendarlog.id,
+              title: response.data[i].calendarlog.title,
+              roomId: response.data[i].calendarlog.roomId,
+              members: response.data[i].calendarlog.members,
+              startDate: new Date((parseInt((response.data[i].calendarlog.startDate).slice(0, 4))),
+                (parseInt((response.data[i].calendarlog.startDate).slice(5, 7))) - 1,
+                (parseInt((response.data[i].calendarlog.startDate).slice(8, 10))),
+                (parseInt((response.data[i].calendarlog.startDate).slice(11, 13))),
+                (parseInt((response.data[i].calendarlog.startDate).slice(14, 16)))),
+              notes: response.data[i].calendarlog.description,
+              endDate: new Date(
+                (parseInt((response.data[i].calendarlog.endDate).slice(0, 4))),
+                (parseInt((response.data[i].calendarlog.endDate).slice(5, 7)) - 1),
+                (parseInt((response.data[i].calendarlog.endDate).slice(8, 10))),
+                (parseInt((response.data[i].calendarlog.endDate).slice(11, 13))),
+                (parseInt((response.data[i].calendarlog.endDate).slice(14, 16)))),
+              rRule: Rule,
+            }
+          ]
+          tempData.push(tempOne[0])
+
+        }
+        this.setState({
+          data: tempData
+        })
+      })).catch(() => {
+        alert('error');
+      })
+
+
+  }
+
+  getProjecLogs = () => {
+    axios.get('http://localhost:8070/employee/projects/yasodhyapereras@gmail.com')
+      .then((response => {
+        const data = response;
+        var resources = [];
+        var color
+        for (var i = 0; i < response.data.length; i++) {
+          console.log(response.data[i].name)
+          if (i % 4 === 0) {
+            color = amber;
+          } else if (i % 3 === 0) {
+            color = teal;
+          }
+          else if (i % 2 === 0) {
+            color = deepOrange;
+          }
+          else {
+            color = teal
+          }
+
+
+          var resourcesData = [
+            {
+              text: response.data[i].name,
+              id: i,
+              color: color,
+            }
+          ]
+          resources.push(resourcesData[0]);
+        }
+
+        this.setState({
+          resources: [
+            {
+              fieldName: 'roomId',
+              title: 'Project',
+              instances: resources,
+            },
+          ],
+        })
+      })).catch(() => {
+        alert('error');
+      })
+  }
+
+
+
 
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
@@ -295,6 +417,7 @@ export default class Calendar extends React.PureComponent {
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
+        console.log(data[startingAddedId].startDate)
         const Log = {
           id: data[startingAddedId].id,
           title: data[startingAddedId].title,
@@ -306,18 +429,22 @@ export default class Calendar extends React.PureComponent {
           rRule: data[startingAddedId].rRule,
           exDate: data[startingAddedId].exDate,
         }
-        window.alert(data[startingAddedId].notes)
-        value= false;
-        const ID = "616d5ba262a39205d8b4612a";
-        axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
 
+        value = false;
+        if (data[startingAddedId].startDate == data[startingAddedId].endDate) {
+          window.alert('h,,,,')
+        }
+        else {
+          const ID = "616d5ba262a39205d8b4612a";
+          axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
+        }
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment
         ));
         let Index = -1;
-        if(value === true) {
+        if (value === true) {
           for (var i = 0; i < data.length; i++) {
             if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
               data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
@@ -327,7 +454,7 @@ export default class Calendar extends React.PureComponent {
           }
         }
         else {
-          for (var i = 0; i < data.length-1; i++) {
+          for (var i = 0; i < data.length - 1; i++) {
             if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
               data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
               data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
@@ -373,67 +500,68 @@ export default class Calendar extends React.PureComponent {
 
 
   render() {
-    const { data, resources } = this.state;
+    const { data, resources,currentViewName } = this.state;
 
     return (
 
 
-      <div className>
-        <div class="mainComponent">
-            
+      <div>
+        <div zindex="0">
+
         </div>
-            <MuiThemeProvider theme={theme}>
-        <Paper class="Paper"> 
-          <Scheduler style={{ backgroundColor: "red" }}
-            data={data}
-          >
-            <ViewState
+        <MuiThemeProvider theme={theme}>
+          <Paper class="Paper">
+            <Scheduler
+              data={data}
+            >
+              <ViewState
+                currentViewName={currentViewName}
+                onCurrentViewNameChange={this.currentViewNameChange}
+              />
+              <EditingState
+                onCommitChanges={this.commitChanges}
 
-            />
-            <EditingState
-              onCommitChanges={this.commitChanges}
+              />
+              <EditRecurrenceMenu />
+              <WeekView />
+              <MonthView />
 
-            />
-            <EditRecurrenceMenu />
-
-            <MonthView dayScaleCellComponent={DayScaleCell} />
-            <WeekView dayScaleCellComponent={DayScaleCell} />
-            <WeekView dayScaleCellComponent={DayScaleCell}
-            name="work-week"
-            displayName="Work Week"
-            excludedDays={[0, 6]}
-            startDayHour={9}
-            endDayHour={19}
-          />
-            <DayView dayScaleCellComponent={DayScaleCell} />
-            <Toolbar flexibleSpaceComponent={FlexibleSpace} toolbarComponent={ToolBar}/>
-            <ViewSwitcher />
-            <DateNavigator />
-            <TodayButton />
-            <Appointments class="appointment"
-              appointmentComponent={Appointment}
-              appointmentContentComponent={AppointmentContent} />
-            <AppointmentTooltip
-              contentComponent={Content}
-              showCloseButton
-              showDeleteButton
-              showOpenButton
-            />
-            <AppointmentForm />
+              <WeekView dayScaleCellComponent={DayScaleCell}
+                name="work-week"
+                displayName="Work Week"
+                excludedDays={[0, 6]}
+                startDayHour={0}
+                endDayHour={24}
+              />
+              <DayView dayScaleCellComponent={DayScaleCell} />
+              <Toolbar flexibleSpaceComponent={FlexibleSpace} toolbarComponent={ToolBar} />
+              <ViewSwitcher />
+              <DateNavigator />
+              <TodayButton />
+              <Appointments class="appointment"
+                appointmentComponent={Appointment}
+                appointmentContentComponent={AppointmentContent} />
+              <AppointmentTooltip
+                contentComponent={Content}
+                showCloseButton
+                showDeleteButton
+                showOpenButton
+              />
+              <AppointmentForm />
 
 
-            <Resources
-              data={resources}
-              mainResourceName="roomId"
-            />
-            <DragDropProvider />
-            <CurrentTimeIndicator
-            shadePreviousCells={true}
-            shadePreviousAppointments={true}
-            updateInterval={10000}
-          />
-          </Scheduler>
-        </Paper>
+              <Resources
+                data={resources}
+                mainResourceName="roomId"
+              />
+              <DragDropProvider />
+              <CurrentTimeIndicator
+                shadePreviousCells={true}
+                shadePreviousAppointments={true}
+                updateInterval={10000}
+              />
+            </Scheduler>
+          </Paper>
         </MuiThemeProvider>
       </div>
 
