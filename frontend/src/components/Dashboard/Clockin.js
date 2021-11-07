@@ -53,6 +53,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
       async function gettasks(){
         const response=await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
          if (response.data.tasksummery.length>0){
+           settasks([""]);
            settasks(response.data.tasksummery);
          }
 
@@ -61,10 +62,10 @@ function Clockin({email,id,show,workdetails,setstatus}) {
       useEffect(() => {
         let mounted=true;
         if(mounted){
+        settasks([""]);
         getprojects();
-        
         if(work.projectname!=""){
-          settasks([""]);
+          
           getpids();
           gettasks();
         }
@@ -73,7 +74,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         mounted = false
      };
        
-    }, [pid,work.projectname,work.taskname]);
+    }, [pid,work]);
       
       
     return (
@@ -97,6 +98,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
               <label for="email">Task Name :</label>
               <select className="form-select"  onChange={(e) =>
                   setwork({ ...work, taskname: e.target.value })} >
+                   
                     <option disabled defaultValue selected> -- Select a Task -- </option>
               {tasks.map(item => {
                 return (<option  key={item} value={item}>{item}</option>);

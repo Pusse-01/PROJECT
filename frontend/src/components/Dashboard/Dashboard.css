@@ -1,6 +1,7 @@
 .dashMainComponent {
    position: absolute;
    width : 100%;
+   height: auto;
    z-index: -1;
    background-color: #1e272e;
 }

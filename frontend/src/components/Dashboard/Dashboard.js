@@ -101,6 +101,7 @@ function Dashboard({ id , email}) {
     boxSizing: "border-box",
     top: 0,
     left: 0,
+    boxShadow: "0px 3px 10px 1px rgb(250, 12, 4)"
   };
   const circlestyleoff = {
     dispay: "block",
@@ -112,6 +113,7 @@ function Dashboard({ id , email}) {
     boxSizing: "border-box",
     top: 0,
     left: 0,
+   
   };
   const spinTransisiton = {
     loop: Infinity,
@@ -146,12 +148,13 @@ function Dashboard({ id , email}) {
   
   return (
    
-     
    
     <div className="dashMainComponent">
-      <div className="mainComponent">
-       <Sidebar />
-       </div>
+    <div className="col-12">
+    <div className="d-sm-none d-md-block">
+    <Sidebar/>
+    </div>
+    <div className="col-sm-12 col-md-9">
       <div className="row">
         <div className="col-md-3 col-sm-12  ">
         <div
@@ -188,7 +191,7 @@ function Dashboard({ id , email}) {
           {showform ? (
             <div>
               <button
-                className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1"
+                className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4"
                 onClick={show}
               >
                 Clock in
@@ -206,7 +209,7 @@ function Dashboard({ id , email}) {
             <div>
               {" "}
               <button
-                className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1 "
+                className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4 "
                 onClick={stopwork}
               >
                 Clock out
@@ -214,7 +217,7 @@ function Dashboard({ id , email}) {
             </div>
           ) : (
             <button
-              className="btn btn-danger bg-gradient  col-sm-6 col-md-9 mt-5 ms-1"
+              className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4"
               onClick={show}
             >
               Clock In
@@ -223,19 +226,19 @@ function Dashboard({ id , email}) {
          
         </div>
         </div>
-        <div className="col-sm-12 col-md-3  mt-5  ">
+        <div className="col-sm-12 col-md-9 col-lg-3 offset-1  mt-5  ">
        
           <Overdue id={id}/>
        
         </div>
- 
         
-         
+        
+      </div>  
       </div>
         <Timelines id={id} email={email} />
     </div>
-    
-   
+    </div>
+  
   );
 }
 

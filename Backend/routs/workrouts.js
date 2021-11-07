@@ -157,7 +157,7 @@ router.get("/getoverduetasks/:id",(req,res)=>{
       let iter=overdue.values()
       
       for(let times of iter){
-        if(times.due_date<new Date()){
+        if(times.due_date<new Date()&&times.task_status!="Done"){
           let obj=[count.toString()+". "+times.task_name+" Due date was on  "+ times.due_date.toString().substring(3,15)];
           overdued.push(obj);
           count++;
