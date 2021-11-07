@@ -55,6 +55,8 @@ function Clockin({email,id,show,workdetails,setstatus}) {
          if (response.data.tasksummery.length>0){
            settasks([""]);
            settasks(response.data.tasksummery);
+         }else{
+          settasks([""]);
          }
 
         })

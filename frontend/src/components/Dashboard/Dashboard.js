@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "./Dashboard.css";
 import Clockin from "./Clockin";
 import Timelines from "./Timelines";
-import Sidebar from "./sideBar";
+import Sidebar from "./SideBar";
 import Overdue from "./Overdue";
 const axios = require("axios").default;
 
@@ -152,7 +152,7 @@ function Dashboard({ id , email}) {
     <div className="dashMainComponent">
     <div className="col-12">
     <div className="d-sm-none d-md-block">
-    <Sidebar/>
+    <Sidebar email={email} id={id}/>
     </div>
     <div className="col-sm-12 col-md-9">
       <div className="row">

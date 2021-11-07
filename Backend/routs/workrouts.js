@@ -127,7 +127,7 @@ router.get("/gettasksbyprojectandemployee",(req,res)=>{
       let tasksummery=[]
       let iter=work.values();
       for (let times of iter) {
-        if(times.project_id==projectn){
+        if(times.project_id==projectn&& times.task_status!="Done"){
       
         tasksummery.push(times.task_name);
         }
@@ -168,4 +168,46 @@ router.get("/getoverduetasks/:id",(req,res)=>{
     return res.json(overdued)
   })
 })
+router.get("/totaltasks/:id",(req,res)=>{
+  const id=req.params.id;
+  let totaltask=0;
+  Task.find({assigned_to:id ,task_status:"Done"}).then((totalcompletedtasks)=>{
+    if(totalcompletedtasks){
+    totaltask=totalcompletedtasks.length;
+    res.json({totaltask});
+    }
+  })
+  
+ 
+})
+router.get("/pendingtasks/:id",(req,res)=>{
+  const id=req.params.id;
+  let pendingtasks=0
+  Task.find({assigned_to:id}).then((notcompletedtasks)=>{
+    if(notcompletedtasks){
+      let iter=notcompletedtasks.values();
+      for(let times of iter){
+        if(times.task_status!="Done"){
+          pendingtasks++;
+        
+        }
+      }
+      res.json({pendingtasks});
+    }
+  })
+
+})
+router.get("/completedprojects/:email",(req,res)=>{
+  const email=req.params.email;
+  let completedp=0;
+  Project.find({members:email,projectStatus:"completed"}).then((completed=>{
+    if(completed){
+      completedp=completed.length;
+      
+    }
+    res.json({completedp});
+  }))
+
+})
+
 module.exports = router;

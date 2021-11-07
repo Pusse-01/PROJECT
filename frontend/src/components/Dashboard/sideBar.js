@@ -1,29 +1,53 @@
-import React from 'react'
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import "./sideBarStyle.css"
 
-function sideBar() {
+function SideBar({id,email}) {
+  const[totalcompletedtasks,setcompletedt]=useState();
+  const[totalcompletedprojects,setcompletedp]=useState();
+  const[totalpending,setpending]=useState();
+
+  async function getdetails(){
+  const response1=await axios.get("http://localhost:8070/dashboard/completedprojects/"+email).then(function(response1){
+      setcompletedp(response1.data.completedp);
+    })
+  
+  const response2=await axios.get("http://localhost:8070/dashboard/pendingtasks/"+id).then(function(response2){
+      setpending(response2.data.pendingtasks);
+    })
+    const response3=await axios.get("http://localhost:8070/dashboard/totaltasks/"+id).then(function(response3){
+      setcompletedt(response3.data.totaltask);
+    })
+  }
+  useEffect(()=>{
+    getdetails();
+},[])
     function myFunction() {
         alert("I am an alert box!");
       }
     return (
         <div className="dashboardmainComponent title">
             <div className="ps-3 pe-3  mt-3">
-            <button className="cpbutton col-12 " onClick={myFunction}>
-              Completed Projects
-          </button>
+            <div className="cpbutton col-12 " >
+              Total Completed Projects
+              <div className="siderbarfont">{totalcompletedprojects}</div>
+              
+          </div>
           </div>
           <div className="ps-3 pe-3  mt-3">
-            <button className="ptbutton col-12 " onClick={myFunction}>
-              Pending tasks
-          </button>
+            <div className="ptbutton col-12 ">
+              Total Pending tasks
+              <div className="siderbarfont">{totalpending}</div>
+              </div>
           </div>
           <div className="ps-3 pe-3  mt-3">
-            <button className="ctbutton col-12 " onClick={myFunction}>
-              Completed Tasks
-          </button>
+            <div className="ctbutton col-12 ">
+              Total Completed Tasks
+              <div className="siderbarfont">{totalcompletedtasks}</div>
+              </div>
           </div>
         </div>
     )
 }
 
-export default sideBar
+export default SideBar
