@@ -76,7 +76,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         mounted = false
      };
        
-    }, [pid,work]);
+    }, [pid,work.projectname,work.taskname]);
       
       
     return (
