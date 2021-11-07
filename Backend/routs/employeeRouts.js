@@ -11,10 +11,10 @@ const Employee = require('../models/employee');
 // @desc Register employee
 // @access Public
 router.post ('/register',(req, res)=>{
-    const{name,email,position,password}=req.body;
+    const{name,email,position,password,role}=req.body;
 
     //Validation
-   if(!name || !email || !position || !password){
+   if(!name || !email || !position || !password || !role){
       return res.status(400).json({ msg: 'Please enter all fields'});
    }
 
@@ -26,7 +26,8 @@ router.post ('/register',(req, res)=>{
          name,
          email,
          position,
-         password
+         password,
+         role
       });
 
       //Create salt & hash
@@ -52,7 +53,8 @@ router.post ('/register',(req, res)=>{
                            id: employee.id,
                            name: employee.name,
                            email: employee.email,
-                           position: employee.position
+                           position: employee.position,
+                           role: employee.role
                         }
                      });
                   }
@@ -97,7 +99,8 @@ router.post ('/auth',(req, res)=>{
                      id: employee.id,
                      name: employee.name,
                      email: employee.email,
-                     position: employee.position
+                     position: employee.position,
+                     role: employee.role
                   }
                });
             }
