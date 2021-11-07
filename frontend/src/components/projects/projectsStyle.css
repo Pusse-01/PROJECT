@@ -15,7 +15,7 @@
     top: 0px;
     left :0px;
     bottom: 0px;
-    width : 70%;
+    width : 82%;
     z-index: -1;
     background-color: #1e272e;
 }
@@ -157,18 +157,6 @@
         position: unset;
     }
 
-    .projectsBoardButton {
-        position: unset;
-        bottom: unset;
-        right: unset;
-        background-color: red;
-        width: 200px;
-        color: white;
-        text-align: center;
-        padding : 5px;
-        border-radius: 50px;
-        margin: 40px;
-    }
 
 }
 
@@ -179,7 +167,7 @@
     top: 00px;
     right :0px;
     bottom: 0px;
-    width : 30%;
+    width : 18%;
     z-index: -1;
     background-color: #2f3640;
 }
