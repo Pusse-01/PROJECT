@@ -16,8 +16,8 @@ import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
 import Projects from "./components/projects/projects";
 import ProjectsDetails from "./components/projects/projectsDetails";
-import WeatherApp from "./components/taskBacklog/calendar/weatherApp";
-
+//import WeatherApp from "./components/taskBacklog/calendar/weatherApp";
+// <WeatherApp/>
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "",id:"" });
@@ -101,7 +101,7 @@ function App() {
             </Route>
             <Route path="/api/taskBackLog">
               <ShowTaskBackLog />
-      <WeatherApp/>
+     
             </Route>
             <Route path="/projects">
               <Projects />
