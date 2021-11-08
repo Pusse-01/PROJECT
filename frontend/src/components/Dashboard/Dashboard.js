@@ -131,7 +131,7 @@ function Dashboard({ id, email }) {
 
   //added by Malaka, will change your project page title - delete after read :)
   useEffect(() => {
-    document.title = "PROJECT HOME"
+    document.title = "PROJECT"
   }, [])
 
   useEffect(() => {

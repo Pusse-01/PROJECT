@@ -16,9 +16,10 @@ import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
 import Projects from "./components/projects/projects";
 import ProjectsDetails from "./components/projects/projectsDetails";
+import AdminPanel from "./components/adminPanel/adminDashboard";
 
 function App() {
-  const [user, setUser] = useState({ name: "", email: "", token: "",id:"" });
+  const [user, setUser] = useState({ name: "", email: "", token: "",id:"", role:"" });
   const [error, setError] = useState("");
   const [logorcreate, setLogorCreate] = useState(false);
 
@@ -27,7 +28,8 @@ function App() {
       name: data.employee.name,
       email: data.employee.email, 
       token: data.token,
-      id    : data.employee.id
+      id    : data.employee.id,
+      role: data.employee.role
     });
   };
   const Logout = () => {
@@ -35,7 +37,9 @@ function App() {
     setError("");
     setLogorCreate(false);
     localStorage.clear();
-    <Redirect to="/"/>
+    <Route exact path="/">
+      <Redirect to="/" />
+    </Route>
   };
   const Logerror = (err) => {
     setError(err);
@@ -57,6 +61,7 @@ function App() {
         email: founduser.employee.email,
         token: founduser.token,
         id:founduser.employee.id,
+        role:founduser.employee.role,
       });
     }
   }, []);
@@ -66,31 +71,11 @@ function App() {
       <div >
         {user.id !== "" ? (
           <div>
+          {user.role === 0 ?(
+          <div>
             <Route>
               <Navbar logout = {Logout} />
             </Route>
-            <div className="row">
-              <div className="col-md-2 ">
-                {/*<button 
-                  onClick={Logout}
-                  className="btn  btn-dark col-sm-3 col-md-7"
-                >
-                  Logout
-                </button>*/}
-                
-
-                {/*<h2 className="text-dark">Welcome {user.name}</h2>*/}
-
-              </div>
-              {/*<div className="col-md-2 mt-2 ">*/}
-              {/*  <button*/}
-              {/*    onClick={Logout}*/}
-              {/*    className="btn  btn-dark col-sm-3 col-md-7"*/}
-              {/*  >*/}
-              {/*    Logout*/}
-              {/*  </button>*/}
-              {/*</div>*/}
-            </div>
             <Route exact path="/">
               <Redirect to="/Dashboard" />
             </Route>
@@ -116,6 +101,20 @@ function App() {
             <Route path="/tasksBoard">
               <TasksBoard/>
             </Route>
+          </div>
+            ):<div>
+            
+           {/*Admin panel components*/} 
+            <Route>
+              <Navbar logout = {Logout} />
+            </Route>            
+            <Route exact path="/">
+              <Redirect to="/adminPanel" />
+            </Route>
+            <Route path="/adminPanel">
+              <AdminPanel/>
+            </Route>
+          </div>   }
           </div>
         ) : logorcreate === true ? (
           <div>

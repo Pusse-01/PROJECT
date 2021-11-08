@@ -20,6 +20,7 @@ class Navbar extends Component{
     }
 
     logOut(){
+        this.props.history.push("/");
         this.props.logout();
     }
     changeColorHome(){

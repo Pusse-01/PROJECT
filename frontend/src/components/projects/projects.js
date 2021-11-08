@@ -26,7 +26,7 @@ class Projects extends Component {
 
             }));
         //added by Malaka, will change your project page title - delete after read :)
-        document.title = "PROJECT PROJECTS"
+        document.title = "PROJECT"
     }
 
     clickMore = () => {
