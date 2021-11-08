@@ -61,7 +61,7 @@ class Projects extends Component {
                         {(projects.length > 0) ? projects.map((projects, index) => {
 
                             return (
-                                <tr className="table_data_odd">
+                                <tr className="table_data_odd" key={index}>
 
                                     <td className="table_data_column">{projects.name}</td>
                                     <td className="table_data_column">{projects.discription}</td>

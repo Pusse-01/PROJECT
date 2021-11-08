@@ -2,8 +2,37 @@ import React, {Component} from 'react'
 import "./tasksStyle.css"
 import Sidebar from "./sideBar";
 import { withRouter } from "react-router-dom";
+import axios from 'axios';
 
 class Tasks extends Component{
+
+    constructor(props) {
+        super(props);
+        const loggedInUser = localStorage.getItem("user");
+        const founduser = JSON.parse(loggedInUser);
+        this.state = {
+            tasks: [],
+            error:"",
+            name: founduser.employee.name,
+            id: founduser.employee.id,
+            email: founduser.employee.email
+        }
+    }
+
+    async componentDidMount() {
+        // POST request using fetch with async/await
+        console.log(this.state.id);
+        axios.post('http://localhost:8070/task/getTaskByAssignedTo/',{'assigned_to':this.state.id})
+            .then((res)=>{
+                this.setState({
+                    tasks :res.data.response,
+                    error:"error"
+                });
+                console.log(this.state.tasks)
+
+            })
+            .catch(error=>{console.log(error)})
+    }
 
     clickMore = () => {
         this.props.history.push("/tasksMore");
@@ -13,9 +42,9 @@ class Tasks extends Component{
         this.props.history.push("/tasksBoard");
     }
     render(){
+        const {tasks} = this.state;
         return(
             <div className="tasksMainComponent">
-
                 <Sidebar/>
                 <div className="tasksSubComponent">̵
                     <div className="searchBar">
@@ -33,139 +62,41 @@ class Tasks extends Component{
                                 <th className="table_header_column">Status</th>
                                 <th className="table_header_column_more">More</th>
                             </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_even">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_even">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr> <tr className="table_data_odd">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">Project 1</td>
-                            <td className="table_data_column">21st of October 2021</td>
-                            <td className="table_data_column">Pending</td>
-                            <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                        </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
-                            <tr className="table_data_odd">
-                                <td className="table_data_column">Task 1</td>
-                                <td className="table_data_column">Project 1</td>
-                                <td className="table_data_column">21st of October 2021</td>
-                                <td className="table_data_column">Pending</td>
-                                <td className="table_data_column_more"><div className="moreButton" onClick={this.clickMore}>More</div></td>
-                            </tr>
 
+                            {(tasks.length > 0) ? tasks.map((task, index) => {
+                                if(index%2==0){
+                                    let status ="";
+                                    if(task.task_status=="toDo"){status="To do"}
+                                    else if(task.task_status=="inProgress"){status="In Progress"}
+                                    else if(task.task_status=="done"){status="Done"}
+                                    else if(task.task_status=="bugs"){status="Bugs / Issues"}
+                                    else if(task.task_status=="toDo"){status="Review"}
+                                    return (
+                                        <tr className="table_data_odd" key={index}>
+
+                                            <td className="table_data_column">{task.task_name}</td>
+                                            <td className="table_data_column">{task.project_id}</td>
+                                            <td className="table_data_column">{task.due_date}</td>
+                                            <td className="table_data_column">{task.task_status}</td>
+                                            <td className="table_data_column"><div className="moreButton" onClick={this.clickMore}>More</div></td>
+                                        </tr>
+
+                                    )
+                                }else{
+                                }
+                                return (
+                                    <tr className="table_data_even">
+
+                                        <td className="table_data_column">{task.task_name}</td>
+                                        <td className="table_data_column">{task.project_id}</td>
+                                        <td className="table_data_column">{task.due_date}</td>
+                                        <td className="table_data_column">{task.task_status}</td>
+                                        <td className="table_data_column"><div className="moreButton" onClick={this.clickMore}>More</div></td>
+                                    </tr>
+
+                                )
+                            }) : <tr><td colSpan="5">Loading...</td></tr>
+                            }
                         </table>
                     </div>
                     
