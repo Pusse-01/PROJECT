@@ -22,7 +22,7 @@ import {
 //import { resourcesData } from './resources';
 //import { appointments } from './resources';
 import "./view.css"
-//import "./background.css"
+import "./background.css"
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,6 +35,8 @@ import {
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
+import WeatherApp from "./calendar/weatherApp";
+
 //{/*#8a99a5;*/}
 
 
@@ -295,10 +297,11 @@ export default class Calendar extends React.PureComponent {
     this.commitChanges = this.commitChanges.bind(this);
   }
 
-componentWillMount(){
-  this.getCalendarLogs();
-  this.getProjecLogs();
-}
+  componentWillMount() {
+    document.title = "PROJECT CALENDAR"
+    this.getCalendarLogs();
+    this.getProjecLogs();
+  }
   componentDidMount() {
     this.interval = setInterval(this.getCalendarLogs(), 15000);
     this.interval = setInterval(this.getProjecLogs(), 15000);
@@ -506,38 +509,42 @@ componentWillMount(){
 
 
   render() {
-    const { data, resources,currentViewName } = this.state;
+    const { data, resources, currentViewName } = this.state;
 
     return (
 
 
       <div>
-        <div >
-          <ul class="background">
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-</ul>
 
-<ul class="background1">
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-</ul>
+        <div >
+          <div>
+            
+          </div>
+          <ul class="background">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+
+          <ul class="background1">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
         </div>
         <MuiThemeProvider theme={theme}>
           <Paper class="Paper">

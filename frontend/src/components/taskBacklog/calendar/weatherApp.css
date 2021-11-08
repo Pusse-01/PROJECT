@@ -1,12 +1,4 @@
-html,
-body,
-#root {
-  font: 0.9rem sans-serif;
-  background: #1e272e;
-  color: #1e2432;
-  height: 80%;
-  margin: 0;
-}
+
 
 #close {
     float:right;

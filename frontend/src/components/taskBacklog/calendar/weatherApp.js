@@ -24,7 +24,9 @@ function togglediv(id){
 }
 
     return (
-        <div className="main-container">
+        <div id="root1">
+
+<div className="main-container">
             <input type="text"className="search"placeholder="Search for location..."value={query}onChange={(e) => setQuery(e.target.value)}onKeyPress={search}/>
             <button onclick="togglediv('sectiontohide');"></button>
             <div id="sectiontohide">
@@ -47,6 +49,10 @@ function togglediv(id){
             </div>
 
         </div>
+
+
+        </div>
+       
     );
 }
 

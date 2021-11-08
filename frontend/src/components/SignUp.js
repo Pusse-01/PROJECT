@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const axios=require('axios').default;
 
 function SignUp({Login,Logerror,error,check}) {
@@ -23,6 +23,11 @@ function SignUp({Login,Logerror,error,check}) {
         });
       }
       }
+
+              //added by Malaka, will change your project page title - delete after read :)
+  useEffect(() => {
+    document.title = "PROJECT SIGN UP"
+  }, [])
     return (
         <form className="col-12 " onSubmit={Register}>
         <div className="col-2 offset-5  text-danger">{error}</div>

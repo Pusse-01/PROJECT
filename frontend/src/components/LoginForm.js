@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 const axios=require('axios').default;
 
 
@@ -22,7 +22,10 @@ function LoginForm({Login,Logerror,error,check}) {
       Logerror("User Not Exists")
     });}
   }
-      
+        //added by Malaka, will change your project page title - delete after read :)
+  useEffect(() => {
+    document.title = "PROJECT LOG IN"
+  }, [])
     return (
         <form className="col-12 " onSubmit={Auth}>
         <div className="col-2 offset-5  text-danger">{error}</div>

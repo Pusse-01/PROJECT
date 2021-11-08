@@ -15,6 +15,7 @@ class Tasks extends Component{
     render(){
         return(
             <div className="tasksMainComponent">
+
                 <Sidebar/>
                 <div className="tasksSubComponent">̵
                     <div className="searchBar">
