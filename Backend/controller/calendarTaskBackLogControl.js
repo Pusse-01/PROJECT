@@ -33,9 +33,8 @@ const fetchCalendarTaskBlackLog = async (req, res) => {
     try {
         const calendertaskbacklog = await CalendarTaskBackLog.find();
         res.json(calendertaskbacklog)
-        // res.send(calendertaskbacklog);
+        console.log(calendertaskbacklog)
         console.log("okay");
-        // res.json(calendertaskbacklog);
     } catch (error) {
         console.log("oops");
         res.json(error.message);
@@ -48,7 +47,6 @@ const fetchCalendarTaskBacklogOne = async (req, res) => {
         let myID = parseInt(req.params.id);
         const calendertaskbacklog = await CalendarTaskBackLog.findOne({ "calendarlog.id": myID }, { _id: 0, calendarlog: { $elemMatch: { id: myID } } });
         console.log("okay");
-        console.log(req.params.id);
         res.json(calendertaskbacklog);
     } catch (error) {
         console.log("oops");
@@ -98,12 +96,26 @@ const deleteCalendarTaskBacklogOne = async (req, res) => {
     }
 };
 
+const deleteCalendarTaskBacklog = async (req, res) => {
+    try {
+        let myID = (req.params.id);
+        const calendertaskbacklog = await CalendarTaskBackLog.deleteMany({createdByID:myID});
+        console.log("okay");
+        console.log(req.params.id);
+        res.json("");
+    } catch (error) {
+        console.log("oops");
+        res.json(error.message);
+    }
+};
+
 module.exports = {
     createCalendarTaskBlackLog,
     fetchCalendarTaskBlackLog,
     fetchCalendarTaskBacklogOne,
     updateCalendarTaskBacklogOne,
     deleteCalendarTaskBacklogOne,
+    deleteCalendarTaskBacklog
     //fetchcurretuser,
 };
 

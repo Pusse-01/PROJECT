@@ -80,4 +80,21 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
       return res.json(projects);  
      })
    });
+
+
+   //added by malaka
+   //to get project by its name
+   const fetchProjects = async (req, res) => {
+      try {
+          const projectlist = await Project.findOne({name: "iii"});
+          res.json(projectlist)
+          console.log("okay");
+      } catch (error) {
+          console.log("oops");
+          res.json(error.message);
+      }
+  };
+   router.get ('/projects/list/:id', fetchProjects);
+
+
 module.exports = router;
