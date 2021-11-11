@@ -17,6 +17,7 @@ import {
   DateNavigator,
   TodayButton,
   CurrentTimeIndicator,
+  AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
 //import { owners } from './tasks';
 //import { resourcesData } from './resources';
@@ -28,11 +29,9 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
-import {indigo,} from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import { pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
-
+import {indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
 
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
@@ -135,6 +134,17 @@ const AppointmentContent = withStyles(styles, {
   />
 ));
 
+
+const TextEditor = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (props.placeholder === "Title") {
+    if(props.title === null || props.title === "") {
+        
+    }
+  }
+  return <AppointmentForm.TextEditor {...props} />;
+};
+
 export default class Demo extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -155,8 +165,16 @@ export default class Demo extends React.PureComponent {
 
     this.currentViewNameChange = (currentViewName) => {
       this.setState({ currentViewName });
+
+
     };
+
   }
+
+
+
+
+
 
   componentDidMount() {
     document.title = "PROJECT Calendar"
@@ -290,10 +308,17 @@ export default class Demo extends React.PureComponent {
       let { data } = state;
       let hold = data;
       let success = false;
+
+
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        if (!(changed || deleted)) {
+
+        if (data[startingAddedId].title === "") {
+          alert('Title required!');
+        }
+
+        else if (!(changed || deleted)) {
           success = true;
           const Log = {
             id: data[startingAddedId].id,
@@ -358,27 +383,34 @@ export default class Demo extends React.PureComponent {
       if ((success === false) && (changed || added || deleted)) {
         var ID = this.state.id;
         var holddata = data;
-        axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/'+ID, "deleted");
-        for (i = 0; i < holddata.data.length; i++) {
-          const Log = {
-            id: holddata[i].id,
-            title: holddata[i].title,
-            description: holddata[i].notes,
-            roomId: holddata[i].roomId,
-            members: holddata[i].members,
-            startDate: holddata[i].startDate,
-            endDate: holddata[i].endDate,
-            rRule: holddata[i].rRule,
-            exDate: holddata[i].exDate
+        axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted");
+        if(holddata.length === 0){
+          for (i = 0; i < holddata.length; i++) {
+            try {
+              const Log = {
+                id: holddata[i].id,
+                title: holddata[i].title,
+                description: holddata[i].notes,
+                roomId: holddata[i].roomId,
+                members: holddata[i].members,
+                startDate: holddata[i].startDate,
+                endDate: holddata[i].endDate,
+                rRule: holddata[i].rRule,
+                exDate: holddata[i].exDate
+              }
+              const ID = this.state.id;
+              axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
+            } catch (error) {
+              alert('Error occurred while posting.\nPlease delete the appointment at once.')
+            }
+  
           }
-          const ID = this.state.id;
-          axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
         }
+
       }
       return { data };
     });
   }
-
 
 
   render() {
@@ -435,6 +467,7 @@ export default class Demo extends React.PureComponent {
               />
               <EditRecurrenceMenu />
 
+
               <MonthView />
               <WeekView />
               <DayView />
@@ -448,16 +481,18 @@ export default class Demo extends React.PureComponent {
                 showOpenButton
               />
               <AppointmentForm />
-
+              
               <Resources
                 data={resources}
               />
+              <AllDayPanel />
               <DragDropProvider />
               <CurrentTimeIndicator
                 shadePreviousCells={true}
                 shadePreviousAppointments={true}
                 updateInterval={10000}
               />
+
             </Scheduler>
 
           </Paper>

@@ -29,7 +29,8 @@ function SignUp({Login,Logerror,error,check}) {
     document.title = "PROJECT SIGN UP"
   }, [])
     return (
-        <form className="col-12 " onSubmit={Register}>
+      <div>
+   <form className="col-12 " onSubmit={Register}>
         <div className="col-2 offset-5  text-danger">{error}</div>
         <div className="form-group mt-3 col-2 offset-5">
        <label for="name">Username :</label>
@@ -52,6 +53,8 @@ function SignUp({Login,Logerror,error,check}) {
        
        <input type="button"className="btn btn-dark mt-3 col-2 offset-5" value ="Already a User? Login" onClick={check}/>
      </form>
+      </div>
+     
     )
 }
 
