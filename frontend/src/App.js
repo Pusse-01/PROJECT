@@ -9,7 +9,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 //18th oct
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom"; //this will provide ability to navigate among pages
-import ShowTaskBackLog from "./components/taskBacklog/view";
+import ShowTaskBackLog from "./components/calendar/calendar";
 import Tasks from "./components/tasks/tasks";
 import { Redirect } from "react-router-dom";
 import TasksMore from "./components/tasksMore/tasksMore";
