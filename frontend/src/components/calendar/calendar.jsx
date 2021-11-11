@@ -21,21 +21,22 @@ import {
 //import { owners } from './tasks';
 //import { resourcesData } from './resources';
 //import { appointments } from './resources';
-import "./view.css"
-import "./background.css"
+import "./calendarStyles.css"
+import "./calendarAnimatedbackground.css"
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
-import {
-  indigo,
-} from "@material-ui/core/colors";
+import {indigo,} from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import { pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
+
+
+
+const theme = createTheme({ palette: { type: "dark", primary: indigo } });
+
 
 //theme style of schedular components
 const styles = theme => ({
@@ -121,7 +122,6 @@ const Content = withStyles({ name: "Content" })(
     </AppointmentTooltip.Content>
   )
 );
-
 /**********************************************
 Function: Appointment view customization
 **********************************************/
@@ -135,21 +135,11 @@ const AppointmentContent = withStyles(styles, {
   />
 ));
 
-
-/**********************************************
-Function: theme of the component
-**********************************************/
-const theme = createTheme({ palette: { type: "dark", primary: indigo } });
-
-//getting current date
-const currentDate = Date.now();
-
-
 export default class Demo extends React.PureComponent {
   constructor(props) {
+    super(props);
     const loggedInUser = localStorage.getItem("user");
     const founduser = JSON.parse(loggedInUser);
-    super(props);
     this.state = {
       currentViewName: 'Month',
       shadePreviousCells: true,
@@ -159,31 +149,20 @@ export default class Demo extends React.PureComponent {
       email: founduser.employee.email,
       data: [],
       resources: [],
+      currentDate: Date.now(),
     };
+    this.commitChanges = this.commitChanges.bind(this);
 
     this.currentViewNameChange = (currentViewName) => {
       this.setState({ currentViewName });
     };
-
-    this.commitChanges = this.commitChanges.bind(this);
-  }
-
- 
-
-  componentWillMount() { 
-    this.getCalendarLogs();
-    this.getProjecLogs();
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.setState({time:Date.now()}), 2000);
-    this.getCalendarLogs();
-    this.getProjecLogs();
+    document.title = "PROJECT Calendar"
+    this.getCalendarLogs()
+    this.getProjecLogs()
   }
-componentWillUnmount(){
-  clearInterval(this.interval);
-}
-  //getting appointments data from data base
 
   getCalendarLogs = () => {
     axios.get('http://localhost:8070/api/calendarTaskBackLog')
@@ -306,10 +285,6 @@ componentWillUnmount(){
       })
   }
 
-
-
-
-
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       let { data } = state;
@@ -318,7 +293,8 @@ componentWillUnmount(){
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        if(!(changed || deleted)) {
+        if (!(changed || deleted)) {
+          success = true;
           const Log = {
             id: data[startingAddedId].id,
             title: data[startingAddedId].title,
@@ -332,42 +308,41 @@ componentWillUnmount(){
           }
           const ID = this.state.id;
           axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
-          success = true;
         }
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-          let Index = hold.length - 1;
-          if(!(added || deleted)) {
-            for (var i = 0; i < data.length; i++) {
-              if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
-                data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
-                data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
-                  Index = i;
-                  const LogPut = {
-                    id: data[Index].id,
-                    title: data[Index].title,
-                    description: data[Index].notes,
-                    roomId: data[Index].roomId,
-                    members: data[Index].members,
-                    startDate: data[Index].startDate,
-                    endDate: data[Index].endDate,
-                    rRule: data[Index].rRule,
-                    exDate: data[Index].exDate,
-                  }
-                  axios.put('http://localhost:8070/api/calendarTaskBackLog/' + hold[Index].id, LogPut)
-                  success = true;
-                }
+        let Index = hold.length - 1;
+        if (!(added || deleted)) {
+          success = true;
+          for (var i = 0; i < data.length; i++) {
+            if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
+              data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
+              data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
+              Index = i;
+              const LogPut = {
+                id: data[Index].id,
+                title: data[Index].title,
+                description: data[Index].notes,
+                roomId: data[Index].roomId,
+                members: data[Index].members,
+                startDate: data[Index].startDate,
+                endDate: data[Index].endDate,
+                rRule: data[Index].rRule,
+                exDate: data[Index].exDate,
               }
-          }else if((added && deleted)){
+              axios.put('http://localhost:8070/api/calendarTaskBackLog/' + hold[Index].id, LogPut)
 
+            }
           }
+        }
 
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
-        if(!(changed || added)) {
+        if (!(changed || added)) {
+          success = true;
           let Index = hold.length - 1;
           for (var i = 0; i < data.length; i++) {
             //for(var j = i; i < data.length; j++) {
@@ -375,36 +350,39 @@ componentWillUnmount(){
               Index = i;
             }
           }
-          axios.delete('http://localhost:8070/API/calendarTaskBackLog/'+ hold[Index].id, "");
+          axios.delete('http://localhost:8070/API/calendarTaskBackLog/' + hold[Index].id, "");
 
-          success = true;
+
         }//http://localhost:8070/api/calendarTaskBackLogdelete
       }
-      if(success ===false){
-        var ID =this.state.id;
+      if ((success === false) && (changed || added || deleted)) {
+        var ID = this.state.id;
+        var holddata = data;
         axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/'+ID, "deleted");
-        for(var i = 0; i < data.data.length; i++){
+        for (i = 0; i < holddata.data.length; i++) {
           const Log = {
-            id: data[i].id,
-            title: data[i].title,
-            description: data[i].notes,
-            roomId: data[i].roomId,
-            members: data[i].members,
-            startDate: data[i].startDate,
-            endDate: data[i].endDate,
-            rRule: data[i].rRule,
-            exDate: data[i].exDate
+            id: holddata[i].id,
+            title: holddata[i].title,
+            description: holddata[i].notes,
+            roomId: holddata[i].roomId,
+            members: holddata[i].members,
+            startDate: holddata[i].startDate,
+            endDate: holddata[i].endDate,
+            rRule: holddata[i].rRule,
+            exDate: holddata[i].exDate
+          }
+          const ID = this.state.id;
+          axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
         }
-        const ID = this.state.id;
-        axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
-      }
       }
       return { data };
     });
   }
 
+
+
   render() {
-    const { data, resources,  currentViewName } = this.state;
+    const { data, currentViewName, resources, currentDate } = this.state;
 
     return (
       <div>
@@ -442,7 +420,7 @@ componentWillUnmount(){
               data={data}
             >
               <ViewState
-              
+
                 defaultCurrentDate={currentDate}
                 currentViewName={currentViewName}
                 onCurrentViewNameChange={this.currentViewNameChange}
@@ -461,7 +439,8 @@ componentWillUnmount(){
               <WeekView />
               <DayView />
               <Appointments className="appointment"
-                appointmentContentComponent={AppointmentContent} />
+                appointmentContentComponent={AppointmentContent}
+              />
               <AppointmentTooltip
                 contentComponent={Content}
                 showCloseButton
