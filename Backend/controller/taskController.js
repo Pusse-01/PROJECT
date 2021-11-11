@@ -1,4 +1,6 @@
 const Task = require('../models/task')
+const Project = require('../models/projects')
+const Employee = require('../models/employee')
 
 // ==============================================================
 // ===================== FOR THE EMPLOYEES ======================
@@ -58,7 +60,7 @@ const updateStatus = (req,res) => {
         })
     }else{
 
-        if(status == "To do" || status == "In Progress" ||status == "Done" ||
+        if(status == "To Do" || status == "In Progress" ||status == "Done" ||
         status == "Bugs/Issues" || status == "Review" ){
             let updated_task = {
                 task_status : req.body.task_status
@@ -151,26 +153,27 @@ const getTasksOfProject = (req,res) => {
 const addTask = (req,res) => {
     let task_name = req.body.task_name;
     let due_date = req.body.due_date;
-    let more_details = req.body.more_details;
     let task_status = req.body.task_status;
     let project_id = req.body.project_id;
     let action = req.body.action
     let assigned_to = req.body.assigned_to;
 
-    if(task_name==null||due_date==null||more_details==null||task_status==null||
+    // Check whether the employee is existing
+
+    // Check whether the project is existing
+    if(task_name==null||due_date==null||task_status==null||
     project_id==null||action==null||assigned_to==null){
         res.json({
             message : "One or more of request paramaters are empty."
         })
     }else{
 
-        if(task_status == "To do" || task_status == "In Progress" || task_status == "Done" ||
+        if(task_status == "To Do" || task_status == "In Progress" || task_status == "Done" ||
             task_status == "Bugs/Issues" || task_status == "Review" ){
 
             let task = new Task({
                 task_name : task_name,
                 due_date : due_date,
-                more_details : more_details,
                 task_status : task_status,
                 project_id : project_id,
                 action : action,
@@ -201,7 +204,6 @@ const update = (req,res) => {
     let task_id = req.body.task_id;
     let task_name = req.body.task_name;
     let due_date = req.body.due_date;
-    let more_details = req.body.more_details;
     let task_status = req.body.task_status;
     let project_id = req.body.project_id;
     let action = req.body.action
@@ -212,12 +214,11 @@ const update = (req,res) => {
             message : "One or more of request parameters are empty."
         })
     }else{
-        if(task_status == "To do" || task_status == "In Progress" ||task_status == "Done" ||
+        if(task_status == "To Do" || task_status == "In Progress" ||task_status == "Done" ||
             task_status == "Bugs/Issues" || task_status == "Review" ){
             let updated_task = {
                 task_name : task_name,
                 due_date : due_date,
-                more_details : more_details,
                 task_status : task_status,
                 project_id : project_id,
                 action : action,

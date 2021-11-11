@@ -4,25 +4,27 @@ const Schema = mongoose.Schema;
 // Create Schema for Task
 const taskSchema = new Schema({
     task_name : {
-        type : String
+        type : String,
+        required: true
     },
     due_date : {
-        type : Date
-    },
-    more_details : {
-        type : String
+        type : Date,
+        required: true
     },
     task_status : {
-        type : String
+        type : String,
+        required: true
     },
     project_id : {
-        type : String
+        type : String,
+        required: true
     },
     action : {
-        type : String
+        type : String,
+        required: true
     },
     assigned_to : {
-        type : String
+        type : [{type:String,required: true }]
     }
 });
 
