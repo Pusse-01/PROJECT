@@ -19,6 +19,10 @@ const taskSchema = new Schema({
         type : String,
         required: true
     },
+    project_name : {
+        type : String,
+        required: true
+    },
     action : {
         type : String,
         required: true

@@ -48,7 +48,6 @@ const getTasksByAssignedTo = (req,res) => {
             })
     }
 }
-
 // **************** Update a task status  ***********************
 const updateStatus = (req,res) => {
     let status = req.body.task_status
@@ -155,14 +154,15 @@ const addTask = (req,res) => {
     let due_date = req.body.due_date;
     let task_status = req.body.task_status;
     let project_id = req.body.project_id;
-    let action = req.body.action
+    let project_name= req.body.project_name;
+    let action = req.body.action;
     let assigned_to = req.body.assigned_to;
 
     // Check whether the employee is existing
 
     // Check whether the project is existing
     if(task_name==null||due_date==null||task_status==null||
-    project_id==null||action==null||assigned_to==null){
+    project_id==null||action==null||assigned_to==null||project_name==null){
         res.json({
             message : "One or more of request paramaters are empty."
         })
@@ -176,6 +176,7 @@ const addTask = (req,res) => {
                 due_date : due_date,
                 task_status : task_status,
                 project_id : project_id,
+                project_name : project_name,
                 action : action,
                 assigned_to : assigned_to
             })
@@ -206,6 +207,7 @@ const update = (req,res) => {
     let due_date = req.body.due_date;
     let task_status = req.body.task_status;
     let project_id = req.body.project_id;
+    let project_name = req.body.project_name;
     let action = req.body.action
     let assigned_to = req.body.assigned_to;
 
@@ -221,6 +223,7 @@ const update = (req,res) => {
                 due_date : due_date,
                 task_status : task_status,
                 project_id : project_id,
+                project_name : project_name,
                 action : action,
                 assigned_to : assigned_to
             }
