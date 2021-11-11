@@ -3,6 +3,7 @@ import "./tasksStyle.css"
 import Sidebar from "./sideBar";
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
+import store from '../../redux/store/store'
 
 class Tasks extends Component{
 
@@ -34,8 +35,12 @@ class Tasks extends Component{
             .catch(error=>{console.log(error)})
     }
 
-    clickMore = () => {
-        this.props.history.push("/tasksMore");
+    clickMore = (task) => {
+        this.props.history.push({
+            pathname:"/tasksMore",
+            search: '?query=abc',
+            state: { detail: task}
+        })
     }
 
     goTaskBoard = () => {
@@ -78,20 +83,34 @@ class Tasks extends Component{
                                             <td className="table_data_column">{task.project_id}</td>
                                             <td className="table_data_column">{task.due_date}</td>
                                             <td className="table_data_column">{task.task_status}</td>
-                                            <td className="table_data_column"><div className="moreButton" onClick={this.clickMore}>More</div></td>
+                                            <td className="table_data_column">
+                                                <div
+                                                    className="moreButton"
+                                                    onClick ={()=>this.clickMore(task)}
+                                                >
+                                                    More
+                                                </div>
+                                            </td>
                                         </tr>
 
                                     )
                                 }else{
                                 }
                                 return (
-                                    <tr className="table_data_even">
+                                    <tr className="table_data_even" key={index}>
 
                                         <td className="table_data_column">{task.task_name}</td>
                                         <td className="table_data_column">{task.project_id}</td>
                                         <td className="table_data_column">{task.due_date}</td>
                                         <td className="table_data_column">{task.task_status}</td>
-                                        <td className="table_data_column"><div className="moreButton" onClick={this.clickMore}>More</div></td>
+                                        <td className="table_data_column">
+                                            <div
+                                                className="moreButton"
+                                                onClick ={()=>this.clickMore(task)}
+                                            >
+                                                More
+                                            </div>
+                                        </td>
                                     </tr>
 
                                 )
