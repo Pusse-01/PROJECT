@@ -4,6 +4,8 @@ const router = express.Router();
 //Project model
 const Project = require('../models/projects');
 const Employee = require('../models/employee');
+const TaskController = require("../controller/taskController");
+const Task = require("../models/task");
 
 
 // @route POST project/projects
@@ -96,5 +98,26 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
   };
    router.get ('/projects/list/:id', fetchProjects);
 
+// ************************************** GET PROJECT BY ID *****************************************
+const getProjectById = (req,res,next) => {
+    if(req.body.project_id==null){
+        res.json({
+            message : "The Project id is empty"
+        })
+    }else{
+        Project.findById(req.body.project_id)
+            .then(response => {
+                res.json({
+                    response
+                })
+            })
+            .catch(error => {
+                res.json({
+                    message : 'An error occurred!'
+                })
+            })
+    }
+}
+router.post('/projects/getProjectById',getProjectById)
 
 module.exports = router;
