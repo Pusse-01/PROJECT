@@ -3,25 +3,36 @@ import { withRouter } from "react-router-dom";
 import "./taskBoardStyles.css"
 import Sidebar from "./sideBar";
 import {red} from "@material-ui/core/colors";
+import axios from "axios";
 class TasksBoard extends Component{
-    state = {
-        tasks: [
-            {taskName:"task1",project:"project",status:"toDo",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task2",project:"project",status:"toDo",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task3",project:"project",status:"inProgress",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task4",project:"project",status:"toDo",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task5",project:"project",status:"inProgress",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task6",project:"project",status:"toDo",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task7",project:"project",status:"done",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task8",project:"project",status:"done",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task9",project:"project",status:"bugs",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task10",project:"project",status:"bugs",dueDate:"1st November",action:"",assignedTo:""},
-            {taskName:"task11",project:"project",status:"review",dueDate:"1st November",action:"",assignedTo:""}
-        ]
+
+    constructor(props) {
+        super(props);
+        const loggedInUser = localStorage.getItem("user");
+        const founduser = JSON.parse(loggedInUser);
+        this.state = {
+            tasks2:[],
+            error:"",
+            name: founduser.employee.name,
+            id: founduser.employee.id,
+            email: founduser.employee.email
+        }
+    }
+
+    async componentDidMount() {
+        // POST request using fetch with async/await
+        axios.post('http://localhost:8070/task/getTaskByAssignedTo/',{'assigned_to':this.state.id})
+            .then((res)=>{
+                this.setState({
+                    tasks2 :res.data.response,
+                    error:"error"
+                });
+
+            })
+            .catch(error=>{console.log(error)})
     }
 
     onDragStart = (ev, id) => {
-        console.log('dragstart:',id);
         ev.dataTransfer.setData("id", id);
     }
 
@@ -29,12 +40,18 @@ class TasksBoard extends Component{
         ev.preventDefault();
     }
 
-    onDrop = (ev, stat) => {
+    async onDrop(ev, stat){
         let id = ev.dataTransfer.getData("id");
 
-        let tasks = this.state.tasks.filter((task) => {
-            if (task.taskName == id) {
-                task.status = stat;
+        let tasks = this.state.tasks2.filter((task) => {
+            if (task._id == id) {
+                task.task_status = stat;
+                console.log(task)
+                axios.post('http://localhost:8070/task/updateStatus',{'task_status':stat,'task_id':task._id})
+                    .then((res)=>{
+                         console.log(res)
+                    })
+                    .catch(error=>{console.log(error)})
             }
             return task;
         });
@@ -54,17 +71,60 @@ class TasksBoard extends Component{
             review:[]
         }
 
-        this.state.tasks.forEach ((t) => {
-            tasks[t.status].push(
-                <div key={t.taskName}
-                     onDragStart = {(e) => this.onDragStart(e, t.taskName)}
-                     draggable
-                     className={t.status}
-                >
-                    <h7>{t.taskName}</h7>
-                    <h7>{t.project}</h7>
-                </div>
-            );
+        this.state.tasks2.forEach ((t) => {
+            if(t.task_status=="To Do"){
+                tasks["toDo"].push(
+                    <div key={t._id}
+                         onDragStart = {(e) => this.onDragStart(e, t._id)}
+                         draggable
+                         className="toDo"
+                    >
+                        <h7>{t.task_name}</h7>
+                    </div>
+                );
+            }else if(t.task_status=="In Progress"){
+                tasks["inProgress"].push(
+                    <div key={t._id}
+                         onDragStart = {(e) => this.onDragStart(e, t._id)}
+                         draggable
+                         className="inProgress"
+                    >
+                        <h7>{t.task_name}</h7>
+                    </div>
+                );
+
+            }else if(t.task_status=="Done"){
+                tasks["done"].push(
+                    <div key={t._id}
+                         onDragStart = {(e) => this.onDragStart(e, t._id)}
+                         draggable
+                         className="done"
+                    >
+                        <h7>{t.task_name}</h7>
+                    </div>
+                );
+            }else if(t.task_status=="Bugs/Issues"){
+                tasks["bugs"].push(
+                    <div key={t._id}
+                         onDragStart = {(e) => this.onDragStart(e, t._id)}
+                         draggable
+                         className="bugs"
+                    >
+                        <h7>{t.task_name}</h7>
+                    </div>
+                );
+            }else if(t.task_status=="Review"){
+                tasks["review"].push(
+                    <div key={t._id}
+                         onDragStart = {(e) => this.onDragStart(e, t._id)}
+                         draggable
+                         className="review"
+                    >
+                        <h7>{t.task_name}</h7>
+                    </div>
+                );
+            }
+
         });
 
         return(
@@ -80,7 +140,7 @@ class TasksBoard extends Component{
                             className="statusBar"
                             id="toDo"
                             onDragOver={(e)=>this.onDragOver(e)}
-                            onDrop={(e)=>{this.onDrop(e, "toDo")}}
+                            onDrop={(e)=>{this.onDrop(e, "To Do")}}
                         >
                             <h6 className="statusBarTitle">To do</h6>
                             {tasks.toDo}
@@ -89,7 +149,7 @@ class TasksBoard extends Component{
                             className="statusBar"
                             id="inProgress"
                             onDragOver={(e)=>this.onDragOver(e)}
-                            onDrop={(e)=>{this.onDrop(e, "inProgress")}}>
+                            onDrop={(e)=>{this.onDrop(e, "In Progress")}}>
                             <h6 className="statusBarTitle">In Progress</h6>
                             {tasks.inProgress}
                         </div>
@@ -97,7 +157,7 @@ class TasksBoard extends Component{
                             className="statusBar"
                             id="done"
                             onDragOver={(e)=>this.onDragOver(e)}
-                            onDrop={(e)=>{this.onDrop(e, "done")}}
+                            onDrop={(e)=>{this.onDrop(e, "Done")}}
                         >
                             <h6 className="statusBarTitle">Done</h6>
                             {tasks.done}
@@ -106,7 +166,7 @@ class TasksBoard extends Component{
                             className="statusBar"
                             id="bugs"
                             onDragOver={(e)=>this.onDragOver(e)}
-                            onDrop={(e)=>{this.onDrop(e, "bugs")}}
+                            onDrop={(e)=>{this.onDrop(e, "Bugs/Issues")}}
                         >
                             <h6 className="statusBarTitle">Bugs / Issues</h6>
                             {tasks.bugs}
@@ -115,9 +175,9 @@ class TasksBoard extends Component{
                             className="statusBar"
                             id="review"
                             onDragOver={(e)=>this.onDragOver(e)}
-                            onDrop={(e)=>{this.onDrop(e, "review")}}
+                            onDrop={(e)=>{this.onDrop(e, "Review")}}
                         >
-                            <h6 className="statusBarTitle">In Progress</h6>
+                            <h6 className="statusBarTitle">Review</h6>
                             {tasks.review}
                         </div>
                     </div>
