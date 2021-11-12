@@ -1,24 +1,5 @@
 /*!******************************* MAIN COMPONENT *******************************!*/
-.projectsMainComponent {
-    position: absolute;
-    top: 80px;
-    left :0px;
-    bottom: 0px;
-    padding-top: 80px;
-    width : 100%;
-    z-index: -1;
-    background-color: #1e272e;
-}
 
-.projectsSubComponent {
-    position: absolute;
-    top: 0px;
-    left :0px;
-    bottom: 0px;
-    width : 82%;
-    z-index: -1;
-    background-color: #1e272e;
-}
 .reportsMainComponent {
     position: absolute;
     width : 100%;
@@ -44,7 +25,7 @@
 
 
 
-.projectsTable{
+.reportsProjectsTable{
     position: static;
     align-items: center;
     width: 70%;
@@ -52,40 +33,40 @@
     margin-right: 5%;
 }
 
-.table_head {
+.reportstable_head {
     width : 20%;
     color: #a4b0be;
     background-color: #2f3640;
     font-weight: bolder;
 }
 
-.table_data_odd{
+.reportstable_data_odd{
     width: 20%;
     background-color: #1e272e;
     color: white ;
 }
-.table_data_even{
+.reportstable_data_even{
     width: 20%;
     background-color: #2f3640;
     color: white ;
 
 }
-.table_header_column {
+.reportstable_header_column {
     border-right: 1px solid #57606f;
     text-align: center;
 }
-.table_header_column_more{
+.reportstable_header_column_more{
     border-left: 1px solid #57606f;
     text-align: center;
 }
-.table_data_column {
+.reportstable_data_column {
     border-right: 1px solid #57606f;
     text-align: center;
 }
-.table_data_column_more {
+.reportstable_data_column_more {
     border-left: 1px solid #57606f;
 }
-.moreButton {
+.reportsmoreButton {
     background-color: red;
     color: white;
     margin: 5px;
@@ -143,7 +124,7 @@
         width: 90%;
     }
 
-    .projectsTable {
+    .reportsprojectsTable {
         position: unset;
     }
 
@@ -152,7 +133,7 @@
 
 
 /******************************* SIDE BAR ***********************************/
-.sideBarComponent {
+.reportssideBarComponent {
     position: absolute;
     top: 00px;
     right :0px;
@@ -163,7 +144,7 @@
 }
 
 @media only screen and (max-width: 991px) {
-    .sideBarComponent{
+    .reportssideBarComponent{
         position: unset;
         bottom: unset;
         width: 100%;
@@ -174,6 +155,6 @@
     }
 }
 
-.title {
+.reportstitle {
     color : white;
 }

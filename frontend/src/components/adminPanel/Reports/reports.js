@@ -126,47 +126,47 @@ render(){
         </div>
         </div>
         <div>
-        <table className="projectsTable">
-                        <tr className="table_head">
+        <table className="reportsProjectsTable">
+                        <tr className="reportstable_head">
 
-                            <th className="table_header_column">Employee ID</th>
-                            <th className="table_header_column">Name</th>
-                            <th className="table_header_column">Designation</th>
-                            <th className="table_header_column">Email</th>
-                            <th className="table_header_column">Projects Assigned</th>
-                            <th className="table_header_column">Special Notes</th>
-                            <th className="table_header_column">More Details</th>
+                            <th className="reportstable_header_column">Employee ID</th>
+                            <th className="reportstable_header_column">Name</th>
+                            <th className="reportstable_header_column">Designation</th>
+                            <th className="reportstable_header_column">Email</th>
+                            <th className="reportstable_header_column">Projects Assigned</th>
+                            <th className="reportstable_header_column">Special Notes</th>
+                            <th className="reportstable_header_column">More Details</th>
 
                         </tr>                      
                            return (
-                                <tr className="table_data_odd">
+                                <tr className="reportstable_data_odd">
 
-                                    <td className="table_data_column">001</td>
-                                    <td className="table_data_column">Yaso</td>
-                                    <td className="table_data_column">SE</td>
-                                    <td className="table_data_column">yaso@project.com</td>
-                                    <td className="table_data_column">PROJECTS</td>
-                                    <td className="table_data_column">Waddek thmai</td>
-                                    <td className="table_data_column">
+                                    <td className="reportstable_data_column">001</td>
+                                    <td className="reportstable_data_column">Yaso</td>
+                                    <td className="reportstable_data_column">SE</td>
+                                    <td className="reportstable_data_column">yaso@project.com</td>
+                                    <td className="reportstable_data_column">PROJECTS</td>
+                                    <td className="reportstable_data_column">Waddek thmai</td>
+                                    <td className="reportstable_data_column">
                                                 <div
-                                                    className="moreButton"
+                                                    className="reportsmoreButton"
                                                     onClick ={()=>this.clickMore()}
                                                 >
                                                     More
                                                 </div>
                                             </td>
                                 </tr>
-                                <tr className="table_data_odd">
+                                <tr className="reportstable_data_odd">
 
-                                    <td className="table_data_column">001</td>
-                                    <td className="table_data_column">Yaso</td>
-                                    <td className="table_data_column">SE</td>
-                                    <td className="table_data_column">yaso@project.com</td>
-                                    <td className="table_data_column">PROJECTS</td>
+                                    <td className="reportstable_data_column">001</td>
+                                    <td className="reportstable_data_column">Yaso</td>
+                                    <td className="reportstable_data_column">SE</td>
+                                    <td className="reportstable_data_column">yaso@project.com</td>
+                                    <td className="reportstable_data_column">PROJECTS</td>
                                     <td className="table_data_column">Waddek thmai</td>
-                                    <td className="table_data_column">
+                                    <td className="reportstable_data_column">
                                                 <div
-                                                    className="moreButton"
+                                                    className="reportsmoreButton"
                                                     onClick ={()=>this.clickMore()}
                                                 >
                                                     More
