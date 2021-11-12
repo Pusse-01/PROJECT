@@ -78,10 +78,6 @@ const ToolBar = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restP
   <Toolbar.RootProps {...restProps} className={classes.flexibleSpace}>
     <div className={classes.flexContainer}>
       <CalendarTodayTwoTone fontSize="large" htmlColor="#FFFFFF" />
-      <Typography variant="subtitle2" style={{
-        marginLeft: '10px', marginRight: '20px', font: "25px Georgia",
-        color: "#f9a825"
-      }}>C A L E N D A R</Typography>
     </div>
   </Toolbar.RootProps>
 ))
@@ -90,10 +86,10 @@ const ToolBar = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restP
 const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restProps }) => (
   <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
     <div className={classes.flexContainer}>
-      <CalendarTodayTwoTone fontSize="large" htmlColor="#f9a825" />
+      <CalendarTodayTwoTone fontSize="large" htmlColor="#FFFFFF" />
       <Typography variant="subtitle2" style={{
-        marginLeft: '10px', marginRight: '20px', font: "25px Georgia",
-        color: "#f9a825"
+        marginLeft: '10px', marginRight: '20px', font: "10px",
+        color: "#FFFFFF"
       }}>C  A  L  E  N  D A  R</Typography>
     </div>
   </Toolbar.FlexibleSpace>
@@ -135,16 +131,6 @@ const AppointmentContent = withStyles(styles, {
 ));
 
 
-const TextEditor = (props) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.placeholder === "Title") {
-    if (props.title === null || props.title === "") {
-
-    }
-  }
-  return <AppointmentForm.TextEditor {...props} />;
-};
-
 export default class Demo extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -154,37 +140,44 @@ export default class Demo extends React.PureComponent {
       currentViewName: 'Month',
       shadePreviousCells: true,
       shadePreviousAppointments: true,
+      data: [],
+      resources: [],
+
       name: founduser.employee.name,
       id: founduser.employee.id,
       email: founduser.employee.email,
-      data: [],
-      resources: [],
       currentDate: Date.now(),
-      logs: []
     };
     this.commitChanges = this.commitChanges.bind(this);
+
+    if (this.commitChanges && this.state.data.length > 0) {
+      this.savesession();
+    }
 
     this.currentViewNameChange = (currentViewName) => {
       this.setState({ currentViewName });
 
-
     };
 
   }
 
-
-
-
-
-
   componentDidMount() {
     document.title = "PROJECT Calendar"
+    this.interval = setInterval(() => this.setState({ currentDate: Date.now() }), 60000);
     this.getCalendarLogs()
     this.getProjecLogs()
   }
 
+
+  componentWillUnmount() {
+    //if data connection lost after long session no data will be saved
+     this.savesession();
+     clearInterval(this.interval);
+  }
+
   getCalendarLogs = () => {
-    axios.get('http://localhost:8070/api/calendarTaskBackLog')
+    const userID = this.state.id;
+    axios.get('http://localhost:8070/api/calendarTaskBackLog/' + userID)
       .then((response => {
         var tempData = []
         var Rule;
@@ -218,10 +211,10 @@ export default class Demo extends React.PureComponent {
             }
           ]
           tempData.push(tempOne[0])
-
+          var val = tempData[0].title;
         }
         this.setState({
-          data: tempData
+          data: tempData,
         })
       })).catch(() => {
         alert('error');
@@ -270,15 +263,11 @@ export default class Demo extends React.PureComponent {
           axios.get('http://localhost:8070/projects/list/' + resources[j].text) //http://localhost:8070/projects/list/'+userEamil
             .then((response) => {
               for (var i = 1; i < response.data.members.length; i++) {
-                console.log(response.data.members[i])
                 var member = [{
                   id: i,
                   text: response.data.members[i],
                 }]
-
-                console.log(typeof response.data.members[i])
                 memberslist.push(member[0]);
-                console.log(member[0].text)
               }
 
               this.setState({
@@ -295,7 +284,6 @@ export default class Demo extends React.PureComponent {
                     instances: memberslist,
                   },
                 ],
-                logs: resources,
               })
             })
         }
@@ -305,25 +293,17 @@ export default class Demo extends React.PureComponent {
       })
   }
 
-
-
   commitChanges({ added, changed, deleted }) {
+    var i = 0;
     this.setState((state) => {
+      const ID = this.state.id;
       let { data } = state;
-      let hold = data;
-      let success = false;
-
-
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
+        console.log('added');
 
-        if (data[startingAddedId].title === "") {
-          alert('Title required!');
-        }
-
-        else if (!(changed || deleted)) {
-          success = true;
+        if ((!(changed || deleted)) && added && i === 0) {
           const Log = {
             id: data[startingAddedId].id,
             title: data[startingAddedId].title,
@@ -335,90 +315,67 @@ export default class Demo extends React.PureComponent {
             rRule: data[startingAddedId].rRule,
             exDate: data[startingAddedId].exDate,
           }
-          const ID = this.state.id;
+          i++;
           axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
+            .then((response) => {
+              if (!(response)) {
+                alert('Missing Data')
+              }
+            })
         }
+
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-        let Index = hold.length - 1;
-        if (!(added || deleted)) {
-          success = true;
-          for (var i = 0; i < data.length; i++) {
-            if (!(data[i].id === hold[i].id && data[i].title === hold[i].title && data[i].members === hold[i].members &&
-              data[i].roomId === hold[i].roomId && data[i].rRule === hold[i].rRule && data[i].startDate === hold[i].startDate &&
-              data[i].endDate === hold[i].endDate && data[i].exDate === hold[i].exDate && data[i].notes === hold[i].notes)) {
-              Index = i;
-              const LogPut = {
-                id: data[Index].id,
-                title: data[Index].title,
-                description: data[Index].notes,
-                roomId: data[Index].roomId,
-                members: data[Index].members,
-                startDate: data[Index].startDate,
-                endDate: data[Index].endDate,
-                rRule: data[Index].rRule,
-                exDate: data[Index].exDate,
-              }
-              axios.put('http://localhost:8070/api/calendarTaskBackLog/' + hold[Index].id, LogPut)
-
-            }
-          }
-        }
-
+        console.log('change');
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
-        if (!(changed || added)) {
-          success = true;
-          let Index = hold.length - 1;
-          for (var i = 0; i < data.length; i++) {
-            //for(var j = i; i < data.length; j++) {
-            if (!(data[i].id === hold[i].id)) {
-              Index = i;
-            }
-          }
-          axios.delete('http://localhost:8070/API/calendarTaskBackLog/' + hold[Index].id, "");
-
-
-        }//http://localhost:8070/api/calendarTaskBackLogdelete
+        console.log('delete');
       }
-      if ((success === false) && (changed || added || deleted)) {
-        var ID = this.state.id;
-        var holddata = data;
-        axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted");
-        if (holddata.length === 0) {
-          for (i = 0; i < holddata.length; i++) {
-            try {
-              const Log = {
-                id: holddata[i].id,
-                title: holddata[i].title,
-                description: holddata[i].notes,
-                roomId: holddata[i].roomId,
-                members: holddata[i].members,
-                startDate: holddata[i].startDate,
-                endDate: holddata[i].endDate,
-                rRule: holddata[i].rRule,
-                exDate: holddata[i].exDate
-              }
-              const ID = this.state.id;
-              axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
-            } catch (error) {
-              alert('Error occurred while posting.\nPlease delete the appointment at once.')
-            }
 
-          }
-        }
 
-      }
       return { data };
     });
   }
 
 
+  //save session moved to constructor
+  savesession = () => {
+    const ID = this.state.id;
+    const data = this.state.data;
+    axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted")
+      .then(() => {
+        try {
+          for (var i = 0; i < data.length; i++) {
+            const Log = {
+              id: data[i].id,
+              title: data[i].title,
+              description: data[i].notes,
+              roomId: data[i].roomId,
+              members: data[i].members,
+              startDate: data[i].startDate,
+              endDate: data[i].endDate,
+              rRule: data[i].rRule,
+              exDate: data[i].exDate
+            }
+            axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
+              .then(() => {
+                console.log('session succesfully ended.')
+              })
+          }
+        } catch (error) {
+          alert('Error occurred while saving new data.')
+        }
+
+      });
+
+  }
+
+
   render() {
-    const { data, currentViewName, resources, currentDate, logs } = this.state;
+    const { data, currentViewName, resources, currentDate} = this.state;
 
     return (
       <div>
@@ -451,21 +408,6 @@ export default class Demo extends React.PureComponent {
         </div>
 
         <div>
-          <table>
-            <tr>
-              <td></td>
-              {(logs.length > 0) ? logs.map((log, index) => {
-                return (
-                  <div>
-                    <tr className="table_data_odd" key={index}>
-
-                      <td className="table_data_column">{log.title}</td>
-                    </tr>
-                  </div>
-                )
-              }) : <tr><td colSpan="5">Loading...</td></tr>}
-            </tr>
-          </table>
         </div>
         <MuiThemeProvider theme={theme}>
           <Paper class="Paper">
