@@ -16,7 +16,8 @@ import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
 import Projects from "./components/projects/projects";
 import ProjectsDetails from "./components/projects/projectsDetails";
-import AdminPanel from "./components/adminPanel/adminDashboard";
+import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
+import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "",id:"", role:"" });
@@ -106,7 +107,7 @@ function App() {
             
            {/*Admin panel components*/} 
             <Route>
-              <Navbar logout = {Logout} />
+              <AdminNavBar logout = {Logout} />
             </Route>            
             <Route exact path="/">
               <Redirect to="/adminPanel" />
