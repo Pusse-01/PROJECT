@@ -19,12 +19,35 @@
     z-index: -1;
     background-color: #1e272e;
 }
+.reportsMainComponent {
+    position: absolute;
+    width : 100%;
+    height: auto;
+    z-index: -1;
+    background-color: #1e272e;
+ }
+
+.projectsChart  {
+    display: grid;
+    grid-template-columns: 450px 450px; 
+    grid-column-gap: 120px;
+    width: max-content;
+    padding: 30px;
+  }
+
+.name{
+    text-align:center;
+    padding-top: 0px;
+    font-size:xx-large;
+    color:white ;   
+ }
+
+
 
 .projectsTable{
-    position: absolute;
-    top : 80px;
+    position: static;
     align-items: center;
-    width: 100%;
+    width: 70%;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -101,43 +124,10 @@
     margin: 5px;
     height: 25px;
 }
-.taskBoardButton {
-    position: absolute;
-    bottom: 100px;
-    right: 50px;
-    background-color: red;
-    width: 200px;
-    color: white;
-    text-align: center;
-    border-radius: 50px;
-    cursor: pointer;
-    padding: 5px;
-}
-.taskBoardText{
-    margin: 0px;
-    height: 100%;
-    margin: 0px;
-}
+
 
 @media only screen and (max-width: 991px) {
-    .projectsMainComponent {
-        position: absolute;
-        top: 250px;
-        left :0px;
-        bottom: 0px;
-        padding-top: 80px;
-        width : 100%;
-        z-index: -1;
-        background-color: #1e272e;
-    }
 
-    .projectsSubComponent {
-        position: static;
-        width : 100%;
-        z-index: -1;
-        background-color: #1e272e;
-        padding-bottom: 20px;
-    }
 
     .searchBar {
         position: unset;
@@ -172,37 +162,6 @@
     background-color: #2f3640;
 }
 
-.sideBarElement {
-    width: 100%;
-    height : 15%;
-    /*justify-content: center;*/
-    /*text-align: center;*/
-    color: white;
-    padding-top: 50px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    align-content: center;
-}
-.outCircle {
-    width :20px;
-    height: 20px;
-    justify-self: center;
-    border-radius: 20px;
-    border: 1px solid red;
-}
-.innerCircle{
-    width: 10px;
-    height: 10px;
-    justify-self: center;
-    margin-left: 4px;
-    margin-top: 4px;
-    border-radius: 10px;
-    background-color: red;
-    border: 1px solid red;
-}
-.elementtext {
-
-}
 @media only screen and (max-width: 991px) {
     .sideBarComponent{
         position: unset;

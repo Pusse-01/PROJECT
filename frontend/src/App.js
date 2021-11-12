@@ -19,6 +19,7 @@ import ProjectsDetails from "./components/projects/projectsDetails";
 import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
 import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
+import Reports from "./components/adminPanel/Reports/reports";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -115,6 +116,9 @@ function App() {
             </Route>
             <Route path="/adminPanel">
               <AdminPanel/>
+            </Route>
+            <Route path="/reports">
+              <Reports/>
             </Route>
           </div>   }
           </div>
