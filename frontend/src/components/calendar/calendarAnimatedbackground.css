@@ -12,7 +12,7 @@
 }
 
 .background {
-  z-index: 50;
+  z-index: 1;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -20,7 +20,7 @@
   right: 0px;
   bottom: 0px;
   padding-top: 80px;
-  width: 15.5%;
+  width: 17.1%;
   margin: 0;
   padding: 0;
   opacity: 0.08;
@@ -118,7 +118,7 @@
     left: 0px;
     bottom: 0px;
     padding-top: 80px;
-    width: 2.5%;
+    width: 2%;
     margin: 0;
     padding: 0;
     opacity: 0.08;

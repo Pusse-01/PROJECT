@@ -2,8 +2,8 @@
   position: absolute;
   top: 80px;
   bottom: 0px;
-  left: 35px;
-  width : 82%;
+  left: 28px;
+  width : 80.7%;
   z-index: 0;
   font-family:sans-serif;
   background-color: #1e272e;
@@ -11,6 +11,11 @@
 body{
   background-color: #1e272e;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.tabledata{
+  z-index: 50;
+  color: #ffffff;
 }
 
 .Shedular{

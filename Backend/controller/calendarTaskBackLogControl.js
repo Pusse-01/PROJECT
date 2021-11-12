@@ -33,10 +33,8 @@ const fetchCalendarTaskBlackLog = async (req, res) => {
     try {
         const calendertaskbacklog = await CalendarTaskBackLog.find();
         res.json(calendertaskbacklog)
-        console.log(calendertaskbacklog)
-        console.log("okay");
     } catch (error) {
-        console.log("oops");
+        console.log("error while fetching");
         res.json(error.message);
     }
 };
@@ -49,7 +47,7 @@ const fetchCalendarTaskBacklogOne = async (req, res) => {
         console.log("okay");
         res.json(calendertaskbacklog);
     } catch (error) {
-        console.log("oops");
+        console.log("error while fetching asingle document.");
         res.json(error.message);
     }
 };
@@ -78,7 +76,7 @@ const updateCalendarTaskBacklogOne = async (req, res) => {
         console.log("okay");
         res.json(calendertaskbacklog);
     } catch (error) {
-        console.log("oops Update");
+        console.log("error while updating Update");
         res.json(error);
     }
 }
