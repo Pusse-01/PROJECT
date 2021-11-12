@@ -8,14 +8,35 @@ class Navbar extends Component{
         const loggedInUser = localStorage.getItem("user");
         const founduser = JSON.parse(loggedInUser);
         this.state = {
-            selectedHome: true,
-            selectedProjects: false,
-            selectedTasks: false,
-            selectedCalendar: false,
-            selectedTimeLogs: false,
+            nav:{
+                selectedHome: true,
+                selectedProjects: false,
+                selectedTasks: false,
+                selectedCalendar: false,
+                selectedTimeLogs: false,
+            },
             name: founduser.employee.name,
             id:founduser.employee.id,
 
+        }
+    }
+
+    componentDidMount() {
+        const nav = localStorage.getItem("Nav");
+        const data = JSON.parse(nav);
+        if(data!=null){
+            this.setState({
+                nav:{
+                    selectedHome:data.selectedHome,
+                    selectedProjects:data.selectedProjects,
+                    selectedTasks:data.selectedTasks,
+                    selectedCalendar:data.selectedCalendar,
+                    selectedTimeLogs:data.selectedTimeLogs,
+                    selectedLogout:data.selectedLogout
+                }
+            },function (){
+                console.log("Reloaded Nav ",this.state.nav)
+            })
         }
     }
 
@@ -25,68 +46,89 @@ class Navbar extends Component{
     }
     changeColorHome(){
         this.setState({
-            selectedHome:true,
-            selectedProjects:false,
-            selectedTasks:false,
-            selectedCalendar:false,
-            selectedTimeLogs:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:true,
+                selectedProjects:false,
+                selectedTasks:false,
+                selectedCalendar:false,
+                selectedTimeLogs:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/Dashboard");
         })
-        this.props.history.push("/Dashboard");
     }
     changeColorProjects(){
         this.setState({
-            selectedHome:false,
-            selectedProjects:true,
-            selectedTasks:false,
-            selectedCalendar:false,
-            selectedTimeLogs:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                selectedProjects:true,
+                selectedTasks:false,
+                selectedCalendar:false,
+                selectedTimeLogs:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/projects")
         })
-        this.props.history.push("/projects")
+
     }
     changeColorTasks(){
         this.setState({
-            selectedHome:false,
-            selectedProjects:false,
-            selectedTasks:true,
-            selectedCalendar:false,
-            selectedTimeLogs:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                selectedProjects:false,
+                selectedTasks:true,
+                selectedCalendar:false,
+                selectedTimeLogs:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/tasks");
         })
-        this.props.history.push("/tasks");
     }
     changeColorCalendar(){
         this.setState({
-            selectedHome:false,
-            selectedProjects:false,
-            selectedTasks:false,
-            selectedCalendar:true,
-            selectedTimeLogs:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                selectedProjects:false,
+                selectedTasks:false,
+                selectedCalendar:true,
+                selectedTimeLogs:false,
+                selectedLogout:false
+            }
+        },function(){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/api/taskBackLog");
         })
-        this.props.history.push("/api/taskBackLog");
     }
     changeColorTimeLogs(){
         this.setState({
-            selectedHome:false,
-            selectedProjects:false,
-            selectedTasks:false,
-            selectedCalendar:false,
-            selectedTimeLogs:true,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                selectedProjects:false,
+                selectedTasks:false,
+                selectedCalendar:false,
+                selectedTimeLogs:true,
+                selectedLogout:false
+            }
+        },function(){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("#");
         })
-        this.props.history.push("#");
     }
 
     render(){
 
-        let linkClassHome = this.state.selectedHome ? "nav-link text-danger " : "nav-link text-light";
-        let linkClassProjects = this.state.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassTasks = this.state.selectedTasks ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassCalendar = this.state.selectedCalendar? "nav-link text-danger" : "nav-link text-light";
-        let linkClassTimeLogs = this.state.selectedTimeLogs ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassLogout = this.state.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassHome = this.state.nav.selectedHome ? "nav-link text-danger " : "nav-link text-light";
+        let linkClassProjects = this.state.nav.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassTasks = this.state.nav.selectedTasks ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassCalendar = this.state.nav.selectedCalendar? "nav-link text-danger" : "nav-link text-light";
+        let linkClassTimeLogs = this.state.nav.selectedTimeLogs ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassLogout = this.state.nav.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
         return (
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="logoContainer">

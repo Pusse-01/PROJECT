@@ -78,9 +78,6 @@ class TasksBoard extends Component{
                             }
                         })
                         localStorage.setItem('TaskBoardUpdatedStatus', JSON.stringify(this.state.changed))
-                        const updatedStatus = localStorage.getItem("TaskBoardUpdatedStatus");
-                        const data = JSON.parse(updatedStatus);
-                        console.log("Data1",data);
                     })
                     .catch(error=>{console.log(error)})
             }
