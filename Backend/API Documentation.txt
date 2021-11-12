@@ -10,7 +10,8 @@
 	"due_date" : "2021-09-22",
 	"action" : "Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails",
 	"task_status" : "Review",
-	"project_id" : "ChanukaProject2",
+	"project_id" : "61894749025c067551f67960",
+	"project_name" : "ChanukaProject2",
 	"assigned_to" : ["616c0f21ed8a2f5dedb2a989"]
 }
 
@@ -26,7 +27,8 @@
 	"due_date" : "2021-09-22",
 	"action" : "Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails Details DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails",
 	"task_status" : "Review",
-	"project_id" : "ChanukaProject2",
+	"project_id" : "61894749025c067551f67960",
+    "project_name" : "ChanukaProject2",
 	"assigned_to" : ["616c0f21ed8a2f5dedb2a989"]
 }
 
@@ -58,4 +60,3 @@
 	"task_status" :"Done",
 	"task_id" : "618c9bfb1faf20c663e28a93"
 }
-

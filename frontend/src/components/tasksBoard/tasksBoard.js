@@ -33,17 +33,21 @@ class TasksBoard extends Component{
             .then((res)=>{
                 this.setState({
                     tasks2 :res.data.response,
-                    error:"error",
-                    changed :{
-                        changedTask:data.changedTask,
-                        projectOfChangedTask:data.projectOfChangedTask,
-                        previousStatus:data.previousStatus,
-                        updatedStatus:data.updatedStatus
-                    },
+                    error:"error"
                 });
 
             })
             .catch(error=>{console.log(error)})
+        if(data!=null){
+            this.setState({
+                changed :{
+                    changedTask:data.changedTask,
+                    projectOfChangedTask:data.projectOfChangedTask,
+                    previousStatus:data.previousStatus,
+                    updatedStatus:data.updatedStatus
+                },
+            })
+        }
     }
 
     onDragStart = (ev, id,prevStatus) => {
