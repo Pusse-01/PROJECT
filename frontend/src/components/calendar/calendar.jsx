@@ -31,7 +31,7 @@ import Typography from '@material-ui/core/Typography';
 import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import {indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
+import { indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
 
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
@@ -138,8 +138,8 @@ const AppointmentContent = withStyles(styles, {
 const TextEditor = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
   if (props.placeholder === "Title") {
-    if(props.title === null || props.title === "") {
-        
+    if (props.title === null || props.title === "") {
+
     }
   }
   return <AppointmentForm.TextEditor {...props} />;
@@ -160,6 +160,7 @@ export default class Demo extends React.PureComponent {
       data: [],
       resources: [],
       currentDate: Date.now(),
+      logs: []
     };
     this.commitChanges = this.commitChanges.bind(this);
 
@@ -284,7 +285,7 @@ export default class Demo extends React.PureComponent {
                 resources: [
                   {
                     fieldName: 'roomId', //built in field name - just used as it is
-                    title: 'Project',
+                    title: 'Projects',
                     instances: resources,
                   },
                   {
@@ -294,6 +295,7 @@ export default class Demo extends React.PureComponent {
                     instances: memberslist,
                   },
                 ],
+                logs: resources,
               })
             })
         }
@@ -302,6 +304,8 @@ export default class Demo extends React.PureComponent {
         alert('error');
       })
   }
+
+
 
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
@@ -384,7 +388,7 @@ export default class Demo extends React.PureComponent {
         var ID = this.state.id;
         var holddata = data;
         axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted");
-        if(holddata.length === 0){
+        if (holddata.length === 0) {
           for (i = 0; i < holddata.length; i++) {
             try {
               const Log = {
@@ -403,7 +407,7 @@ export default class Demo extends React.PureComponent {
             } catch (error) {
               alert('Error occurred while posting.\nPlease delete the appointment at once.')
             }
-  
+
           }
         }
 
@@ -414,7 +418,7 @@ export default class Demo extends React.PureComponent {
 
 
   render() {
-    const { data, currentViewName, resources, currentDate } = this.state;
+    const { data, currentViewName, resources, currentDate, logs } = this.state;
 
     return (
       <div>
@@ -444,6 +448,24 @@ export default class Demo extends React.PureComponent {
             <li></li>
             <li></li>
           </ul>
+        </div>
+
+        <div>
+          <table>
+            <tr>
+              <td></td>
+              {(logs.length > 0) ? logs.map((log, index) => {
+                return (
+                  <div>
+                    <tr className="table_data_odd" key={index}>
+
+                      <td className="table_data_column">{log.title}</td>
+                    </tr>
+                  </div>
+                )
+              }) : <tr><td colSpan="5">Loading...</td></tr>}
+            </tr>
+          </table>
         </div>
         <MuiThemeProvider theme={theme}>
           <Paper class="Paper">
@@ -481,7 +503,7 @@ export default class Demo extends React.PureComponent {
                 showOpenButton
               />
               <AppointmentForm />
-              
+
               <Resources
                 data={resources}
               />

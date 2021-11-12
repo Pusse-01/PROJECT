@@ -3,7 +3,7 @@ import "./tasksStyle.css"
 import Sidebar from "./sideBar";
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
-import store from '../../redux/store/store'
+
 
 class Tasks extends Component{
 
