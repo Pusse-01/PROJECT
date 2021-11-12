@@ -16,16 +16,9 @@ import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
 import Projects from "./components/projects/projects";
 import ProjectsDetails from "./components/projects/projectsDetails";
-<<<<<<< HEAD
 import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
-=======
-
 import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
-
-
-
->>>>>>> 033d2a2813d8a047dfbc54746f2e80a3a6680a84
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -80,7 +73,6 @@ function App() {
       <div >
         {user.id !== "" ? (
           <div>
-<<<<<<< HEAD
           {user.role === 0 ?(
           <div>
             <Route>
@@ -93,9 +85,9 @@ function App() {
               <Dashboard id={user.id} email={user.email} />
             </Route>
             <Route path="/api/taskBackLog">
-              <ShowTaskBackLog />
-     
-            </Route>
+                  <ShowTaskBackLog />
+                  <WeatherApp />
+                </Route>
             <Route path="/projects">
               <Projects />
             </Route>
@@ -125,52 +117,6 @@ function App() {
               <AdminPanel/>
             </Route>
           </div>   }
-=======
-            {user.role === 0 ? (
-              <div>
-                <Route>
-                  <Navbar logout={Logout} />
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/Dashboard" />
-                </Route>
-                <Route path="/Dashboard">
-                  <Dashboard id={user.id} email={user.email} />
-                </Route>
-                <Route path="/api/taskBackLog">
-                  <ShowTaskBackLog />
-                  <WeatherApp />
-                </Route>
-                <Route path="/projects">
-                  <Projects />
-                </Route>
-                <Route path="/projectsDetails">
-                  <ProjectsDetails />
-                </Route>
-                <Route path="/tasks">
-                  <Tasks />
-                </Route>
-                <Route path="/tasksMore">
-                  <TasksMore />
-                </Route>
-                <Route path="/tasksBoard">
-                  <TasksBoard />
-                </Route>
-              </div>
-            ) : <div>
-
-              {/*Admin panel components*/}
-              <Route>
-                <Navbar logout={Logout} />
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/adminPanel" />
-              </Route>
-              <Route path="/adminPanel">
-                <AdminPanel />
-              </Route>
-            </div>}
->>>>>>> 033d2a2813d8a047dfbc54746f2e80a3a6680a84
           </div>
         ) : logorcreate === true ? (
           <div>
