@@ -37,3 +37,10 @@
 .dashboard{
    background-color: #1e272e;
 }
+.buttonclock{
+position: static;
+width: 200px;
+}
+.overdue{
+   position: static;
+}

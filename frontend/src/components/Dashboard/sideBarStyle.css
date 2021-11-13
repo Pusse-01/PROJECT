@@ -38,7 +38,7 @@
     height: 28vh;
     color: azure;
     box-shadow: 0px 5px 10px 1px rgb(250, 12, 4);
-    font-size: 25px;
+    font-size: 3vh;
   }
   .ptbutton{
     background-color: #1e272e;
@@ -52,8 +52,8 @@
     border-radius: 20px;
     height: 28vh;
     color: azure;
-    box-shadow: 0px 5px 10px 1px rgb(125, 3, 240);
-    font-size: 25px;
+    box-shadow: 0px 5px 10px 1px rgb(101, 59, 141);
+    font-size: 3vh;
   }
 
   .ctbutton{
@@ -69,9 +69,9 @@
     height: 28vh;
     color: azure;
     box-shadow: 0px 5px 10px 1px rgb(248, 171, 4);
-    font-size: 25px;
+    font-size: 3vh;
   }
   .siderbarfont{
-    font-size: 100px;
+    font-size: 10vh;
     
   }

@@ -161,12 +161,13 @@ function Dashboard({ id, email }) {
         <div className="d-sm-none d-md-block">
           <Sidebar email={email} id={id} />
         </div>
-        <div className="col-sm-12 col-md-9">
+        <div className="col-sm-12 col-md-8">
           <div className="row">
-            <div className="col-md-3 col-sm-12  ">
-              <div
+            <div className="col-md-4 col-sm-12  ">
+              
+              <div 
                 style={containerstyle}
-                className="bg-dark bg-gradient mt-3  ms-5"
+                className="bg-dark bg-gradient mt-3  ms-4"
               >
                 {isworking ? (
                   <motion.span
@@ -194,11 +195,13 @@ function Dashboard({ id, email }) {
                   </p>
                 )}
               </div>
-              <div className=" col-7  offset-2 ">
+             
+              <div className="row ">
+              <div className="ms-5 mt-5 ">
                 {showform ? (
                   <div>
                     <button
-                      className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4"
+                      className="btn btn-danger bg-gradient  buttonclock  ms-3 "
                       onClick={show}
                     >
                       Clock in
@@ -216,7 +219,7 @@ function Dashboard({ id, email }) {
                   <div>
                     {" "}
                     <button
-                      className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4 "
+                      className="btn btn-danger bg-gradient  buttonclock ms-3"
                       onClick={stopwork}
                     >
                       Clock out
@@ -224,7 +227,7 @@ function Dashboard({ id, email }) {
                   </div>
                 ) : (
                   <button
-                    className="btn btn-danger bg-gradient  col-sm-6 col-md-12  mt-5 ms-4"
+                    className="btn btn-danger bg-gradient buttonclock ms-3"
                     onClick={show}
                   >
                     Clock In
@@ -233,7 +236,8 @@ function Dashboard({ id, email }) {
 
               </div>
             </div>
-            <div className="col-sm-12 col-md-9 col-lg-3 offset-1  mt-5  ">
+            </div>
+            <div className="col-sm-12 col-md-9 col-lg-3 offset-3 overdue mt-5  ">
 
               <Overdue id={id} />
 
