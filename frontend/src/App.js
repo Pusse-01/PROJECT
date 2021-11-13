@@ -15,6 +15,7 @@ import { Redirect } from "react-router-dom";
 import TasksMore from "./components/tasksMore/tasksMore";
 import TasksBoard from "./components/tasksBoard/tasksBoard";
 import Projects from "./components/projects/projects";
+import TimeLogs from "./components/timeLogs/timeLogs";
 import ProjectsDetails from "./components/projects/projectsDetails";
 import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
@@ -104,6 +105,9 @@ function App() {
             <Route path="/tasksBoard">
               <TasksBoard/>
             </Route>
+            <Route path="/timeLogs">
+              <TimeLogs/>
+            </Route>
           </div>
             ):<div>
             
@@ -120,6 +124,7 @@ function App() {
             <Route path="/reports">
               <Reports/>
             </Route>
+            
           </div>   }
           </div>
         ) : logorcreate === true ? (
