@@ -117,7 +117,7 @@ class Navbar extends Component{
             }
         },function(){
             localStorage.setItem('Nav', JSON.stringify(this.state.nav))
-            this.props.history.push("#");
+            this.props.history.push("/timeLogs");
         })
     }
 

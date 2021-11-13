@@ -84,7 +84,9 @@ const updateCalendarTaskBacklogOne = async (req, res) => {
 const deleteCalendarTaskBacklogOne = async (req, res) => {
     try {
         let myID = parseInt(req.params.id);
-        const calendertaskbacklog = await CalendarTaskBackLog.deleteOne({ "calendarlog.id": myID }, { _id: 0, calendarlog: { $elemMatch: { id: myID } } });
+        let myID2 = parseInt(req.params.id2);
+        console.log(myID2);
+        const calendertaskbacklog = await CalendarTaskBackLog.deleteOne({"createdByID":req.params.id2, "calendarlog.id": myID });
         console.log("okay");
         console.log(req.params.id);
         res.json("");
@@ -92,7 +94,7 @@ const deleteCalendarTaskBacklogOne = async (req, res) => {
         console.log("oops");
         res.json(error.message);
     }
-};
+};//{ "calendarlog.id": myID }, { _id: 0, calendarlog: { $elemMatch: { id: myID } } }
 
 const deleteCalendarTaskBacklog = async (req, res) => {
     try {
