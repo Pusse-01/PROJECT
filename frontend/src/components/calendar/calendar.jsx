@@ -86,10 +86,10 @@ const ToolBar = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restP
 const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ...restProps }) => (
   <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
     <div className={classes.flexContainer}>
-      <CalendarTodayTwoTone fontSize="large" htmlColor="#FFFFFF" />
+      <CalendarTodayTwoTone fontSize="large" htmlColor="#ffffff" />
       <Typography variant="subtitle2" style={{
-        marginLeft: '10px', marginRight: '20px', font: "10px",
-        color: "#FFFFFF"
+        marginLeft: '10px', marginRight: '20px', font: "10px Georgia",
+        color: "#f9a825"
       }}>C  A  L  E  N  D A  R</Typography>
     </div>
   </Toolbar.FlexibleSpace>
@@ -142,17 +142,16 @@ export default class Demo extends React.PureComponent {
       shadePreviousAppointments: true,
       data: [],
       resources: [],
-
       name: founduser.employee.name,
       id: founduser.employee.id,
       email: founduser.employee.email,
       currentDate: Date.now(),
-    };
-    this.commitChanges = this.commitChanges.bind(this);
 
-    if (this.commitChanges && this.state.data.length > 0) {
-      this.savesession();
-    }
+
+    };
+
+
+    this.commitChanges = this.commitChanges.bind(this);
 
     this.currentViewNameChange = (currentViewName) => {
       this.setState({ currentViewName });
@@ -160,19 +159,24 @@ export default class Demo extends React.PureComponent {
     };
 
   }
-
-  componentDidMount() {
-    document.title = "PROJECT Calendar"
-    this.interval = setInterval(() => this.setState({ currentDate: Date.now() }), 60000);
+  componentWillMount() {
     this.getCalendarLogs()
     this.getProjecLogs()
+  }
+  componentDidMount() {
+    document.title = "PROJECT Calendar"
+    this.getCalendarLogs()
+    this.getProjecLogs()
+    window.onbeforeunload = function(){
+      return 'Are you sure you want to leave?';
+    };
   }
 
 
   componentWillUnmount() {
-    //if data connection lost after long session no data will be saved
-     this.savesession();
-     clearInterval(this.interval);
+    //if data connection lost after long session no new data will be saved
+    this.savesession();
+
   }
 
   getCalendarLogs = () => {
@@ -211,7 +215,6 @@ export default class Demo extends React.PureComponent {
             }
           ]
           tempData.push(tempOne[0])
-          var val = tempData[0].title;
         }
         this.setState({
           data: tempData,
@@ -294,48 +297,21 @@ export default class Demo extends React.PureComponent {
   }
 
   commitChanges({ added, changed, deleted }) {
-    var i = 0;
     this.setState((state) => {
-      const ID = this.state.id;
       let { data } = state;
       if (added) {
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        console.log('added');
-
-        if ((!(changed || deleted)) && added && i === 0) {
-          const Log = {
-            id: data[startingAddedId].id,
-            title: data[startingAddedId].title,
-            description: data[startingAddedId].notes,
-            roomId: data[startingAddedId].roomId,
-            members: data[startingAddedId].members,
-            startDate: data[startingAddedId].startDate,
-            endDate: data[startingAddedId].endDate,
-            rRule: data[startingAddedId].rRule,
-            exDate: data[startingAddedId].exDate,
-          }
-          i++;
-          axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
-            .then((response) => {
-              if (!(response)) {
-                alert('Missing Data')
-              }
-            })
-        }
 
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-        console.log('change');
+
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
-        console.log('delete');
       }
-
-
       return { data };
     });
   }
@@ -345,37 +321,40 @@ export default class Demo extends React.PureComponent {
   savesession = () => {
     const ID = this.state.id;
     const data = this.state.data;
-    axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted")
-      .then(() => {
-        try {
-          for (var i = 0; i < data.length; i++) {
-            const Log = {
-              id: data[i].id,
-              title: data[i].title,
-              description: data[i].notes,
-              roomId: data[i].roomId,
-              members: data[i].members,
-              startDate: data[i].startDate,
-              endDate: data[i].endDate,
-              rRule: data[i].rRule,
-              exDate: data[i].exDate
+    if (data.length > 0) {
+      axios.delete('http://localhost:8070/api/calendarTaskBackLogdelete/' + ID, "deleted")
+        .then(() => {
+          try {
+            for (var i = 0; i < data.length; i++) {
+              const Log = {
+                id: data[i].id,
+                title: data[i].title,
+                description: data[i].notes,
+                roomId: data[i].roomId,
+                members: data[i].members,
+                startDate: data[i].startDate,
+                endDate: data[i].endDate,
+                rRule: data[i].rRule,
+                exDate: data[i].exDate
+              }
+              axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
+                .then(() => {
+                  console.log('session succesfully ended.')
+                })
             }
-            axios.post('http://localhost:8070/api/calendarTaskBackLog/' + ID, Log)
-              .then(() => {
-                console.log('session succesfully ended.')
-              })
+          } catch (error) {
+            alert('Error occurred while saving new data.')
           }
-        } catch (error) {
-          alert('Error occurred while saving new data.')
-        }
 
-      });
+        });
+
+    }
 
   }
 
 
   render() {
-    const { data, currentViewName, resources, currentDate} = this.state;
+    const { data, currentViewName, resources, currentDate } = this.state;
 
     return (
       <div>

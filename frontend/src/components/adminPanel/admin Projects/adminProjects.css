@@ -1,0 +1,95 @@
+.bodyappear1 {
+  z-index: 10;
+  position: absolute;
+  bottom: 0px;
+  left:0px;
+  top: 100px;
+}
+
+.bodyappear2 {
+  z-index: 10;
+  position: absolute;
+  left: 272px;
+  bottom: 0px;
+  top: 80px;
+}
+
+.bodyappear3 {
+  z-index: 10;
+  position: absolute;
+  left: 544px;
+  bottom: 0px;
+  top: 80px;
+}
+
+.bodyappear4 {
+  z-index: 10;
+  position: absolute;
+  left: 815px;
+  bottom: 0px;
+  top: 80px;
+}
+
+.bodyappear5 {
+  z-index: 10;
+  position: absolute;
+  left: 1087px;
+  bottom: 0px;
+  top: 80px;
+}
+.button1 {
+  color: rgb(196, 166, 36);
+  box-sizing: content-box;
+  height: 80px;
+  background: #1c1f4b;
+  content: center;
+  text-align: center;
+  font-size: 28px;
+  width: 50px;
+  padding: 30px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 15px;
+  border: none;
+}
+
+.button {
+  color: rgb(219, 192, 38);
+  box-sizing: content-box;
+  height: 380px;
+  background: #1c1f4b;
+  content: center;
+  text-align: center;
+  font-size: 28px;
+  width: 65px;
+  padding: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 15px;
+  border: none;
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.button:hover {
+  background-color: #1c1f4b;
+  opacity: 0.5;
+}
+.button:hover span {
+  padding-right: 25px;
+}
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}

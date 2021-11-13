@@ -20,6 +20,8 @@ import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
 import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
 import Reports from "./components/adminPanel/Reports/reports";
+import ProjectAdmin from './components//adminPanel/admin Projects/adminProjects'
+
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -119,6 +121,11 @@ function App() {
             </Route>
             <Route path="/reports">
               <Reports/>
+            </Route>
+            <Route path="/projects">
+              <ProjectAdmin/>
+            </Route>
+            <Route path="/projects/account">
             </Route>
           </div>   }
           </div>

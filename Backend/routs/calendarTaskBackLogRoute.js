@@ -9,7 +9,7 @@ route.post('/calendarTaskBackLog/:id', createCalendarTaskBlackLog);
 route.get('/calendarTaskBackLog/:id', fetchCalendarTaskBlackLog);
 route.get('/calendarTaskBackLog/:id', fetchCalendarTaskBacklogOne);
 route.put('/calendarTaskBackLog/:id', updateCalendarTaskBacklogOne);
-route.delete('/calendarTaskBackLog/:id', deleteCalendarTaskBacklogOne);
+route.delete('/calendarTaskBackLog/:id/:id2', deleteCalendarTaskBacklogOne);
 route.delete('/calendarTaskBackLogdelete/:id', deleteCalendarTaskBacklog);
 //route.get('/employees/:id', fetchcurretuser);
 
