@@ -31,7 +31,7 @@ const createCalendarTaskBlackLog = async (req, res) => {
 //Fetch
 const fetchCalendarTaskBlackLog = async (req, res) => {
     try {
-        const calendertaskbacklog = await CalendarTaskBackLog.find();
+        const calendertaskbacklog = await CalendarTaskBackLog.find({createdByID:req.params.id});
         res.json(calendertaskbacklog)
     } catch (error) {
         console.log("error while fetching");
