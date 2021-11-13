@@ -15,16 +15,12 @@ class TasksMore extends Component{
     render(){
         return(
             <div className="tasksMoreMainComponent">
-                <Sidebar/>
+                <Sidebar task={this.state.task}/>
                 <div className="tasksMoreSubComponent">
-                    ̵<h4 className="header">{this.state.task.task_name}</h4>
+                    <h3 className="taskTitle">{this.state.task.task_name}</h3>
                     <div className="taskDetails">
-                        <h4 className="header">Action</h4>
-                        <h7 className="header">{this.state.task.action}</h7>
-                    </div>
-                    <div className="assignedTo">
-                        <h4 className="header">Assigned To</h4>
-                        <h7 className="header">{this.state.task.assigned_to}</h7>
+                        <h4 className="taskMoreHeader">Deatils</h4>
+                        <h7 className="taskMoreDetails">{this.state.task.action}</h7>
                     </div>
                 </div>
 
