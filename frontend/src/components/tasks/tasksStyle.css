@@ -107,7 +107,10 @@
     margin: 5px;
     height: 25px;
     background: #2f3640;
-    border: 2px solid #57606f;
+    border: 0px solid #57606f;
+}
+.taskSearchBox:focus {
+    outline: none;
 }
 .goToTaskBoardButton{
     position: absolute;
