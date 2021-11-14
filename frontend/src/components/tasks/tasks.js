@@ -82,24 +82,24 @@ class Tasks extends Component{
             <div className="tasksMainComponent">
                 <Sidebar filterTasks={this.filterTasks}/>
                 <div className="tasksSubComponent">̵
-                    <div className="searchBar">
-                        <div className="blankColumn"></div>
-                        <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
-                        <input type="text" placeholder="Search by Project or Task" className="taskSearchBox" onChange={event =>{
+                    <div className="tasks_searchBar">
+                        <div className="tasks_blankColumn"></div>
+                        <img className="tasks_searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
+                        <input type="text" placeholder="Search by Project or Task" className="tasks_taskSearchBox" onChange={event =>{
                             this.setState({
                                 searchTerm:event.target.value
                             },()=>{console.log(this.state.searchTerm)})
                         }}/>
                     </div>
 
-                    <div className="scroll hides">
+                    <div className="tasksScroll hides">
                         <table className="tasksTable">
-                            <tr className="table_head">
-                                <th className="table_header_column">Task</th>
-                                <th className="table_header_column">Project</th>
-                                <th className="table_header_column">Due Date</th>
-                                <th className="table_header_column">Status</th>
-                                <th className="table_header_column_more">More</th>
+                            <tr className="tasks_table_head">
+                                <th className="tasks_table_header_column">Task</th>
+                                <th className="tasks_table_header_column">Project</th>
+                                <th className="tasks_table_header_column">Due Date</th>
+                                <th className="tasks_table_header_column">Status</th>
+                                <th className="tasks_table_header_column_more">More</th>
                             </tr>
 
                             {(tasks.length > 0) ? tasks.filter((val)=>{
@@ -119,13 +119,13 @@ class Tasks extends Component{
                                     else if(task.task_status=="bugs"){status="Bugs / Issues"}
                                     else if(task.task_status=="toDo"){status="Review"}
                                     return (
-                                        <tr className="table_data_odd" key={index}>
+                                        <tr className="tasks_table_data_odd" key={index}>
 
-                                            <td className="table_data_column">{task.task_name}</td>
-                                            <td className="table_data_column">{task.project_name}</td>
-                                            <td className="table_data_column">{task.due_date}</td>
-                                            <td className="table_data_column">{task.task_status}</td>
-                                            <td className="table_data_column">
+                                            <td className="tasks_table_data_column">{task.task_name}</td>
+                                            <td className="tasks_table_data_column">{task.project_name}</td>
+                                            <td className="tasks_table_data_column">{task.due_date}</td>
+                                            <td className="tasks_table_data_column">{task.task_status}</td>
+                                            <td className="tasks_table_data_column_more">
                                                 <div
                                                     className="moreButton"
                                                     onClick ={()=>this.clickMore(task)}
@@ -139,15 +139,15 @@ class Tasks extends Component{
                                 }else{
                                 }
                                 return (
-                                    <tr className="table_data_even" key={index}>
+                                    <tr className="tasks_table_data_even" key={index}>
 
-                                        <td className="table_data_column">{task.task_name}</td>
-                                        <td className="table_data_column">{task.project_name}</td>
-                                        <td className="table_data_column">{task.due_date}</td>
-                                        <td className="table_data_column">{task.task_status}</td>
-                                        <td className="table_data_column">
+                                        <td className="tasks_table_data_column">{task.task_name}</td>
+                                        <td className="tasks_table_data_column">{task.project_name}</td>
+                                        <td className="tasks_table_data_column">{task.due_date}</td>
+                                        <td className="tasks_table_data_column">{task.task_status}</td>
+                                        <td className="tasks_table_data_column_more">
                                             <div
-                                                className="moreButton"
+                                                className="tasks_moreButton"
                                                 onClick ={()=>this.clickMore(task)}
                                             >
                                                 More
@@ -161,8 +161,8 @@ class Tasks extends Component{
                         </table>
                     </div>
                     
-                    <div className="goToTaskBoardButton" onClick={this.goTaskBoard}>
-                        <h6 className="taskBoardText">TASK BOARD</h6>
+                    <div className="tasks_goToTaskBoardButton" onClick={this.goTaskBoard}>
+                        <h6 className="tasks_taskBoardText">TASK BOARD</h6>
                     </div>
                 </div>
             </div>

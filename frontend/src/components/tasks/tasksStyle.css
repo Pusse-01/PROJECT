@@ -20,7 +20,7 @@
     background-color: #1e272e;
 }
 
-.scroll {
+.tasksScroll {
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
@@ -28,47 +28,50 @@
     margin-top: 30px;
     overflow: scroll;
 }
+.tasksScroll ::-webkit-scrollbar {
+    display: none;
+}
 .tasksTable{
     align-items: center;
     width: 100%;
 }
 
-.table_head {
+.tasks_table_head {
     width : 20%;
     color: #a4b0be;
     background-color: #2f3640;
     font-weight: bolder;
 }
 
-.table_data_odd{
+.tasks_table_data_odd{
     width: 20%;
     height: 50px;
     background-color: #1e272e;
     color: white ;
 }
-.table_data_even{
+.tasks_table_data_even{
     width: 20%;
     height: 50px;
     background-color: #2f3640;
     color: white ;
 
 }
-.table_header_column {
+.tasks_table_header_column {
     border-right: 1px solid #57606f;
     text-align: center;
 }
-.table_header_column_more{
+.tasks_table_header_column_more{
     border-left: 1px solid #57606f;
     text-align: center;
 }
-.table_data_column {
+.tasks_table_data_column {
     border-right: 1px solid #57606f;
     text-align: center;
 }
-.table_data_column_more {
-    border-left: 1px solid #57606f;
+.tasks_table_data_column_more {
+    border-right: 0px solid #57606f;
 }
-.moreButton {
+.tasks_moreButton {
     background-color: red;
     color: white;
     margin: 5px;
@@ -76,7 +79,7 @@
     cursor: pointer;
 }
 
-.searchBar {
+.tasks_searchBar {
     align-items: center;
     border-color: #1e272e;
     display: grid;
@@ -87,11 +90,11 @@
     padding: 0;
     width: 90%;
 }
-.blankColumn {
+.tasks_blankColumn {
     height: 100%;
     background-color: #1e272e;
 }
-.searchIcon {
+.tasks_searchIcon {
     width :25px;
     height :25px;
     justify-content: center;
@@ -100,7 +103,7 @@
     align-self: center;
     margin: 5px;
 }
-.taskSearchBox{
+.tasks_taskSearchBox{
     color: white;
     justify-content: center;
     align-self: center;
@@ -109,10 +112,10 @@
     background: #2f3640;
     border: 0px solid #57606f;
 }
-.taskSearchBox:focus {
+.tasks_taskSearchBox:focus {
     outline: none;
 }
-.goToTaskBoardButton{
+.tasks_goToTaskBoardButton{
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -128,7 +131,7 @@
     padding-top: 20px;
     box-shadow: 0px 1px 1px red;
 }
-.goToTaskBoardButton:hover{
+.tasks_goToTaskBoardButton:hover{
     border: 2px solid red;
     box-shadow: 0px 5px 20px red;
 }
