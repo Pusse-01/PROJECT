@@ -85,6 +85,38 @@ const updateStatus = (req,res) => {
 
 }
 
+// ****************** Get members of a task *********************
+function getMember(empId){
+ return new Promise((resolve,reject) => {
+     Employee.findById(empId,(err,pat) => resolve(pat))
+ })
+}
+
+const getMembersOfTask = (req,res) => {
+    if(req.body.task_id==null){
+        res.json({
+            message : "The task id is empty"
+        })
+    }else{
+        Task.findById(req.body.task_id)
+            .then(response => {
+                let members = response.assigned_to
+                Promise.all(members.map(id=>getMember(id)))
+                    .then(arr=>{
+                        res.json(
+                            {
+                                "details": arr
+                            }
+                        )
+                    })
+            })
+            .catch(error => {
+                res.json({
+                    message : 'An error occurred!'
+                })
+            })
+    }
+}
 // ==============================================================
 // ================== FOR THE ADMIN PANEL =======================
 // ==============================================================
@@ -278,5 +310,6 @@ module.exports = {
     getTasksByName,
     addTask,
     update,
-    deleteTask
+    deleteTask,
+    getMembersOfTask
 }

@@ -80,7 +80,7 @@ class Tasks extends Component{
                                         <tr className="table_data_odd" key={index}>
 
                                             <td className="table_data_column">{task.task_name}</td>
-                                            <td className="table_data_column">{task.project_id}</td>
+                                            <td className="table_data_column">{task.project_name}</td>
                                             <td className="table_data_column">{task.due_date}</td>
                                             <td className="table_data_column">{task.task_status}</td>
                                             <td className="table_data_column">
@@ -100,7 +100,7 @@ class Tasks extends Component{
                                     <tr className="table_data_even" key={index}>
 
                                         <td className="table_data_column">{task.task_name}</td>
-                                        <td className="table_data_column">{task.project_id}</td>
+                                        <td className="table_data_column">{task.project_name}</td>
                                         <td className="table_data_column">{task.due_date}</td>
                                         <td className="table_data_column">{task.task_status}</td>
                                         <td className="table_data_column">
