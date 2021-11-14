@@ -42,16 +42,16 @@ constructor(props) {
 
     render(){
         return(
-            <div className="tasksMainComponent">
+            <div className="timeLogsMainComponent">
                  <Timelogssidebar/>
-                <div className="tasksSubComponent">̵
+                <div className="timeLogsSubComponent">̵
                     <div className="searchBar">
                         <div className="blankColumn"></div>
                         <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
                         <h5 className="searchText">Search</h5>
                     </div>
 
-                    <table className="tasksTable">
+                    <table className="timeLogsTable">
                         <tr className="table_head">
                             <th className="table_header_column">Task</th>
                             <th className="table_header_column">Start Time</th>

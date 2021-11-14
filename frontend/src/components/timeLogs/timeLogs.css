@@ -1,5 +1,5 @@
 /*!******************************* MAIN COMPONENT *******************************!*/
-.tasksMainComponent {
+.timeLogsMainComponent {
     position: absolute;
     top: 80px;
     left :0px;
@@ -10,7 +10,7 @@
     background-color: #1e272e;
   }
   
-  .tasksSubComponent {
+  .timeLogsSubComponent {
     position: absolute;
     top: 0px;
     left :0px;
@@ -20,7 +20,7 @@
     background-color: #1e272e;
   }
   
-  .tasksTable{
+  .timeLogsTable{
     position: absolute;
     top : 80px;
     align-items: center;
@@ -109,7 +109,7 @@
   }
   
   @media only screen and (max-width: 991px) {
-    .tasksMainComponent {
+    .timeLogsMainComponent {
         position: absolute;
         top: 250px;
         left :0px;
@@ -120,7 +120,7 @@
         background-color: #1e272e;
     }
   
-    .tasksSubComponent {
+    .timeLogsSubComponent {
         position: static;
         width : 100%;
         z-index: -1;
@@ -142,7 +142,7 @@
         width: 90%;
     }
   
-    .tasksTable {
+    .timeLogsTable {
         position: unset;
     }
   
