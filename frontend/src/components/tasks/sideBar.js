@@ -24,6 +24,13 @@ export default class Sidebar extends Component{
         let bugsStyle = this.state.selected=="Bugs/Issues" ? "tasksBugsSelected" : "tasksBugs"
         let reviewStyle = this.state.selected=="Review" ? "tasksReviewSelected" : "tasksReview"
 
+        let allInnerStyle = this.state.selected=="All" ? "tasksAllInnerSelected" : "tasksAllInner"
+        let toDoInnerStyle = this.state.selected=="To Do" ? "tasksToDoInnerSelected" : "tasksToDoInner"
+        let inProgressInnerStyle = this.state.selected=="In Progress" ? "tasksInProgressInnerSelected" : "tasksInProgressInner"
+        let doneInnerStyle = this.state.selected=="Done" ? "tasksDoneInnerSelected" : "tasksDoneInner"
+        let bugsInnerStyle = this.state.selected=="Bugs/Issues" ? "tasksBugsInnerSelected" : "tasksBugsInner"
+        let reviewInnerStyle = this.state.selected=="Review" ? "tasksReviewInnerSelected" : "tasksReviewInner"
+
         return(
             <div className="sideBarTasksComponent">
                 <h4 className="sidebarTasksHeader">Filter Status</h4>
@@ -31,31 +38,37 @@ export default class Sidebar extends Component{
                     <div className="taskElement" id={allStyle} onClick= {() => {
                         this.filterTasks("All")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={allInnerStyle}></div></div>
                         <h6 className="taskElementText">All</h6>
                     </div>
                     <div className="taskElement" id={toDoStyle} onClick= {() => {
                         this.filterTasks("To Do")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={toDoInnerStyle}></div></div>
                         <h6 className="taskElementText">To Do</h6>
                     </div>
                     <div className="taskElement" id={inProgressStyle} onClick= {() => {
                         this.filterTasks("In Progress")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={inProgressInnerStyle}></div></div>
                         <h6 className="taskElementText">In Progress</h6>
                     </div>
                     <div className="taskElement" id={doneStyle} onClick= {() => {
                         this.filterTasks("Done")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={doneInnerStyle}></div></div>
                         <h6 className="taskElementText">Done</h6>
                     </div>
                     <div className="taskElement" id={bugsStyle} onClick= {() => {
                         this.filterTasks("Bugs/Issues")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={bugsInnerStyle}></div></div>
                         <h6 className="taskElementText">Bugs / Issues</h6>
                     </div>
                     <div className="taskElement" id={reviewStyle} onClick= {() => {
                         this.filterTasks("Review")
                     }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={reviewInnerStyle}></div></div>
                         <h6 className="taskElementText">Review</h6>
                     </div>
                 </div>

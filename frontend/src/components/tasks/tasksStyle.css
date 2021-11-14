@@ -234,10 +234,12 @@
     padding:10px;
     background: #1e272e;
     margin: 10px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 20% 80%;
     height: 80px;
     justify-content: center;
+    align-content: center;
+    align-items: center;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -262,6 +264,33 @@
 #tasksDoneSelected{box-shadow: 0px 1px 1px #535c68; background:#535c68; }
 #tasksBugsSelected{box-shadow: 0px 1px 1px #8e44ad; background:#8e44ad; }
 #tasksReviewSelected{box-shadow: 0px 1px 1px red; background: red;}
+
+.tasksOutCircle {
+    width :20px;
+    height: 20px;
+    justify-self: center;
+    border-radius: 20px;
+    border: 1px solid white;
+}
+.tasksInnerCircle{
+    width: 10px;
+    height: 10px;
+    justify-self: center;
+    margin-left: 4px;
+    margin-top: 4px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid white;
+    visibility: hidden;
+}
+
+#tasksAllInnerSelected{visibility: visible;}
+#tasksToDoInnerSelected{visibility: visible;}
+#tasksInProgressInnerSelected{visibility: visible;}
+#tasksDoneInnerSelected{visibility: visible;}
+#tasksBugsInnerSelected{visibility: visible;}
+#tasksReviewInnerSelected{visibility: visible;}
+
 @media only screen and (max-width: 991px) {
     .sideBarComponent{
         position: unset;
