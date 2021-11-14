@@ -11,10 +11,10 @@ function Clockin({email,id,show,workdetails,setstatus}) {
     
     async function startwork(event) {
         event.preventDefault();
-        if(work.projectname==""||work.taskname==""||work.memo==""){
+        if(work.projectname===""||work.taskname===""||work.memo===""){
           seterror("Please Fill all parts");
         }else{
-        const response = await axios
+        await axios
           .post("http://localhost:8070/dashboard/record/" + id,{
               projectname:work.projectname,
               taskname:work.taskname,
@@ -22,8 +22,8 @@ function Clockin({email,id,show,workdetails,setstatus}) {
           })
           .then(function (response) {
             const workdata=response.data;
-            localStorage.setItem('workdata',JSON.stringify(workdata));
-            localStorage.setItem('stime',new Date());
+            sessionStorage.setItem('workdata',JSON.stringify(workdata));
+            sessionStorage.setItem('stime',new Date());
         
             workdetails(workdata);
             setstatus(true);
@@ -37,7 +37,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         }
       }
       async function getprojects(){
-        const response=await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
+        await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
          if (response.data.length>0){
            setprojects(response.data.map(project=>project.name))
          }
@@ -45,16 +45,17 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         })
       }
       async function getpids(){
-        const getid=await axios.get("http://localhost:8070/dashboard/getpid/"+work.projectname).then(function(getid){
+        await axios.get("http://localhost:8070/dashboard/getpid/"+work.projectname).then(function(getid){
         const pidof=getid.data;
          setpid(pidof);
          })
       }
       async function gettasks(){
-        const response=await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
+        await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
          if (response.data.tasksummery.length>0){
            settasks([""]);
            settasks(response.data.tasksummery);
+          
          }else{
           settasks([""]);
          }
@@ -66,7 +67,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         if(mounted){
         settasks([""]);
         getprojects();
-        if(work.projectname!=""){
+        if(work.projectname!==""){
           
           getpids();
           gettasks();
@@ -76,7 +77,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
         mounted = false
      };
        
-    }, [pid,work.projectname,work.taskname]);
+    },[pid,work.projectname,work.taskname]);
       
       
     return (

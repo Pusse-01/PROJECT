@@ -1,21 +1,34 @@
 import React, {Component} from 'react'
 import { withRouter } from "react-router-dom";
 import Sidebar from "./sideBar"
+import axios from "axios";
 
 class TasksMore extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            task:this.props.location.state.detail
+            task:this.props.location.state.detail,
+            members:[]
         }
     }
     async componentDidMount(){
-        console.log(this.props.location.state.detail)
+        let task_id = this.props.location.state.detail._id
+        axios.post('http://localhost:8070/task/getMembers',{'task_id':task_id})
+            .then((res)=>{
+                // console.log("res", res.data.details)
+                this.setState({
+                    members :res.data.details,
+                    error:"error"
+                },()=>{
+                    // console.log(this.state.members)
+                });
+            })
+            .catch(error=>{console.log(error)})
     }
     render(){
         return(
             <div className="tasksMoreMainComponent">
-                <Sidebar task={this.state.task}/>
+                <Sidebar members={this.state.members}/>
                 <div className="tasksMoreSubComponent">
                     <h3 className="taskTitle">{this.state.task.task_name}</h3>
                     <div className="taskDetails">

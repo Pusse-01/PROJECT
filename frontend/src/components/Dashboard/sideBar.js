@@ -8,14 +8,14 @@ function SideBar({id,email}) {
   const[totalpending,setpending]=useState();
 
   async function getdetails(){
-  const response1=await axios.get("http://localhost:8070/dashboard/completedprojects/"+email).then(function(response1){
+  await axios.get("http://localhost:8070/dashboard/completedprojects/"+email).then(function(response1){
       setcompletedp(response1.data.completedp);
     })
   
-  const response2=await axios.get("http://localhost:8070/dashboard/pendingtasks/"+id).then(function(response2){
+ await axios.get("http://localhost:8070/dashboard/pendingtasks/"+id).then(function(response2){
       setpending(response2.data.pendingtasks);
     })
-    const response3=await axios.get("http://localhost:8070/dashboard/totaltasks/"+id).then(function(response3){
+    await axios.get("http://localhost:8070/dashboard/totaltasks/"+id).then(function(response3){
       setcompletedt(response3.data.totaltask);
     })
   }
@@ -26,7 +26,7 @@ function SideBar({id,email}) {
         alert("I am an alert box!");
       }
     return (
-        <div className="dashboardmainComponent title">
+        <div className="dashboardsidemainComponent title">
             <div className="ps-3 pe-3  mt-3">
             <div className="cpbutton col-12 " >
               Total Completed Projects

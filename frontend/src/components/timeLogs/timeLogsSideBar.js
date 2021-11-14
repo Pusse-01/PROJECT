@@ -11,14 +11,14 @@ export default class Timelogsidebar extends Component{
             
             <div className="ps-3 pe-3  mt-3">
               
-            <button className="cpbutton col-12 " >
+            <button className="timelogcpbutton col-12 " >
   
             Total hours spent on project <p class="fs-2">4</p></button></div>
     
 
     
         <div className="ps-3 pe-3  mt-3">
-          <button className="ptbutton col-12 " >
+          <button className="timelogptbutton col-12 " >
 
 
 

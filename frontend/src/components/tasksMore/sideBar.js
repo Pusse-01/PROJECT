@@ -8,11 +8,23 @@ export default class Sidebar extends Component{
     }
 
     render(){
+        const members = this.props.members;
+        console.log(members)
         return(
             <div className="sideBarMoreComponent">
-                <div className="assignedTo">
-                    {/*<h4 className="header">Assigned To</h4>*/}
-                    <h7 className="header">{this.props.task.assigned_to}</h7>
+                <h4 className="sidebarMoreHeader">Members Assigned To The Task</h4>
+                <div className="sideBarMoreSubContainer">
+                    {
+                        this.props.members.map((member, index)=>{
+                            return (
+                                <div className="taskMoreElement">
+                                    <h7 className="taskMoreElementName">{member.name}</h7>
+                                    <h7 className="taskMoreElementPosition">{member.position}</h7>
+                                    <h7 className="taskMoreElementEmail">{member.email}</h7>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         )

@@ -7,6 +7,7 @@ const TaskController = require('../controller/taskController')
 router.post('/getTaskById',TaskController.getTaskById)
 router.post('/getTaskByAssignedTo',TaskController.getTasksByAssignedTo)
 router.post('/updateStatus',TaskController.updateStatus)
+router.post('/getMembers',TaskController.getMembersOfTask)
 
 // ROUTES FOR THE ADMIN PANEL
 router.get('/',TaskController.index)

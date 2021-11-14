@@ -14,18 +14,22 @@ function Dashboard({ id, email }) {
   const [timeLeft, setTimeLeft] = useState({ Hours: "00", Minutes: "00", seconds: "00" });
   const [showform, Setvisible] = useState(false);
   const [isworking, setstatus] = useState(false);
+  const[pinged,setpinged]=useState(false);
+
+  
 
   async function stopwork() {
-    const response = await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id).then(function (response) {
+     await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id).then(function (response) {
       setstatus(false);
-      localStorage.removeItem('workdata');
-      localStorage.removeItem('stime');
+    
+      sessionStorage.removeItem('workdata');
+      sessionStorage.removeItem('stime');
       Setvisible(false);
       window.location.reload(false);
     })
   }
   async function totaltime() {
-    const response = await axios
+     await axios
       .get("http://localhost:8070/dashboard/total/" + id)
       .then(function (response) {
         let h = "", m = "", s = "";
@@ -51,6 +55,7 @@ function Dashboard({ id, email }) {
         });
       });
   }
+ 
   function work(workdata) {
     Setworkdetails({ id: workdata._id, projectname: workdata.projectname, taskname: workdata.taskname, memo: workdata.memo, starttime: new Date() })
   }
@@ -83,6 +88,10 @@ function Dashboard({ id, email }) {
     };
     return timepassed;
 
+  
+  }
+  async function pingserver(){
+    await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id);
   }
 
   const containerstyle = {
@@ -128,35 +137,46 @@ function Dashboard({ id, email }) {
       Setvisible(true);
     }
   }
-
-  //added by Malaka, will change your project page title - delete after read :)
+  useEffect(() => {
+    totaltime();
+    const workingdetails = sessionStorage.getItem("workdata");
+    const timedetails = sessionStorage.getItem("stime");
+    if (workingdetails && timedetails) {
+      const foundwork = JSON.parse(workingdetails)
+      Setworkdetails({ id: foundwork._id, projectname: foundwork.projectname, taskname: foundwork.taskname, memo: foundwork.memo, starttime: new Date(timedetails) })
+      setstatus(true);
+    }
+  },[]);
   useEffect(() => {
     document.title = "PROJECT"
   }, [])
 
   useEffect(() => {
     if (isworking) {
-      const timer = setTimeout(() => {
+      setTimeout(() => {
+        setpinged(true);
         setTimeLeft(calculatetime());
       }, 1000);
+     
     }
   });
   useEffect(() => {
-    totaltime();
-    const workingdetails = localStorage.getItem("workdata");
-    const timedetails = localStorage.getItem("stime");
-    if (workingdetails && timedetails) {
-      const foundwork = JSON.parse(workingdetails)
-      Setworkdetails({ id: foundwork._id, projectname: foundwork.projectname, taskname: foundwork.taskname, memo: foundwork.memo, starttime: new Date(timedetails) })
-      setstatus(true);
-
+    if (isworking) {
+      setInterval(() => {
+       
+        pingserver();
+      }, 300000);
     }
-  }, []);
+  },[pinged]);
+
+  
+
+  
 
   return (
 
 
-    <div className="dashMainComponent">
+    <div className="dashMainComponent hides">
       <div className="col-12">
         <div className="d-sm-none d-md-block">
           <Sidebar email={email} id={id} />
@@ -237,13 +257,9 @@ function Dashboard({ id, email }) {
               </div>
             </div>
             </div>
-            <div className="col-sm-12 col-md-9 col-lg-3 offset-3 overdue mt-5  ">
-
+            <div className="col-sm-12 col-md-9 col-lg-4 offset-md-4 overdue mt-2 ">
               <Overdue id={id} />
-
             </div>
-
-
           </div>
         </div>
         <Timelines id={id} email={email} />
