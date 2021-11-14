@@ -100,12 +100,14 @@
     align-self: center;
     margin: 5px;
 }
-.searchText{
+.taskSearchBox{
     color: white;
     justify-content: center;
     align-self: center;
     margin: 5px;
     height: 25px;
+    background: #2f3640;
+    border: 2px solid #57606f;
 }
 .goToTaskBoardButton{
     position: absolute;

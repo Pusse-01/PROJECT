@@ -16,7 +16,8 @@ class Tasks extends Component{
             error:"",
             name: founduser.employee.name,
             id: founduser.employee.id,
-            email: founduser.employee.email
+            email: founduser.employee.email,
+            searchTerm:""
         }
     }
 
@@ -55,7 +56,11 @@ class Tasks extends Component{
                     <div className="searchBar">
                         <div className="blankColumn"></div>
                         <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
-                        <h5 className="searchText">Search</h5>
+                        <input type="text" placeholder="Search by Project or Task" className="taskSearchBox" onChange={event =>{
+                            this.setState({
+                                searchTerm:event.target.value
+                            },()=>{console.log(this.state.searchTerm)})
+                        }}/>
                     </div>
 
                     <div className="scroll hides">
@@ -68,7 +73,15 @@ class Tasks extends Component{
                                 <th className="table_header_column_more">More</th>
                             </tr>
 
-                            {(tasks.length > 0) ? tasks.map((task, index) => {
+                            {(tasks.length > 0) ? tasks.filter((val)=>{
+                                if(this.state.searchTerm==""){
+                                    return val;
+                                }else if(val.project_name.toLowerCase().includes(this.state.searchTerm.toLowerCase())){
+                                    return val;
+                                }else if(val.task_name.toLowerCase().includes(this.state.searchTerm.toLowerCase())){
+                                    return val;
+                                }
+                            }).map((task, index) => {
                                 if(index%2==0){
                                     let status ="";
                                     if(task.task_status=="toDo"){status="To do"}
