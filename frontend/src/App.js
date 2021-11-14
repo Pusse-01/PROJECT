@@ -35,7 +35,8 @@ function App() {
       email: data.employee.email,
       token: data.token,
       id: data.employee.id,
-      role: data.employee.role
+      role: data.employee.role,
+      profileImage:data.employee.profileImage
     });
   };
   const Logout = () => {
@@ -68,6 +69,7 @@ function App() {
         token: founduser.token,
         id: founduser.employee.id,
         role: founduser.employee.role,
+        profileImage:founduser.employee.profileImage
       });
     }
   }, []);

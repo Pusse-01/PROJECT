@@ -7,6 +7,7 @@ class Navbar extends Component{
         super(props);
         const loggedInUser = localStorage.getItem("user");
         const founduser = JSON.parse(loggedInUser);
+        console.log("Logged User ",founduser)
         this.state = {
             nav:{
                 selectedHome: true,
@@ -17,6 +18,7 @@ class Navbar extends Component{
             },
             name: founduser.employee.name,
             id:founduser.employee.id,
+            profileImage:"http://localhost:8070/"+founduser.employee.profileImage
 
         }
     }
@@ -176,7 +178,7 @@ class Navbar extends Component{
                         <h7 className="userNameText">Welcome {this.state.name}</h7>
                         <p></p>
                     </div>
-                    <img className="avatar" src={require('../../assests/images/avatar.jpeg').default}/>
+                    <img className="avatar" src={this.state.profileImage}/>
                 </div>
 
             </nav>
