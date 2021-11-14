@@ -126,15 +126,11 @@ function App() {
             <Route path="/reports">
               <Reports/>
             </Route>
-<<<<<<< HEAD
-            
-=======
             <Route path="/projects">
               <ProjectAdmin/>
             </Route>
             <Route path="/projects/account">
             </Route>
->>>>>>> 6b1a506a248fd5da6db491c5df160d22fdf72587
           </div>   }
           </div>
         ) : logorcreate === true ? (
