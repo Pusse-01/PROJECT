@@ -88,8 +88,8 @@ const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ..
     <div className={classes.flexContainer}>
       <CalendarTodayTwoTone fontSize="large" htmlColor="#ffffff" />
       <Typography variant="subtitle2" style={{
-        marginLeft: '10px', marginRight: '20px', font: "10px Georgia",
-        color: "#f9a825"
+        marginLeft: '10px', marginRight: '20px', font: "10px",
+        color: "#FF0000"
       }}>C  A  L  E  N  D A  R</Typography>
     </div>
   </Toolbar.FlexibleSpace>
