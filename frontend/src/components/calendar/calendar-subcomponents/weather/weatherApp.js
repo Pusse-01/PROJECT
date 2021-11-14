@@ -45,7 +45,7 @@ const WeatherApp = () => {
                                 <p>{weather.weather[0].description}</p>
                             </div>
                             <div>
-                                <button className="button" onClick={() =>setshow(false)  && setshow(true)} >Hide</button>
+                                <button className="buttonweather" onClick={() =>setshow(false)  && setshow(true)} >Hide</button>
                             </div>
                         </div>
                     )}

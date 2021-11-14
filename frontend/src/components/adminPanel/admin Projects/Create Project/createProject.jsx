@@ -399,15 +399,5 @@ getEmployees(){
 
 export default Createproject;
 /*******************************
-   this.interval = setInterval(
-      () =>
-        this.setState(() => {
-          if (navigator.onLine) {
-            this.setState({
-              loading: false,
-            });
-          }
-        }),
-      1000
-    );
+
  */
