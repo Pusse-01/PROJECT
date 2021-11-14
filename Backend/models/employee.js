@@ -22,6 +22,10 @@ const EmployeeSchema = new Schema({
     role: {
         type: Number,
         required: true
+    },
+    profileImage : {
+        type:String,
+        required:true
     }
 })
 
