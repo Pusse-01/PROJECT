@@ -15,7 +15,7 @@
   color: rgb(151, 162, 224)
 }
 
-.button {
+.buttonweather {
   display: inline-block;
   padding: 12px 20px;
   font-size: 16px;
@@ -30,9 +30,9 @@
   box-shadow: 0 5px #999;
 }
 
-.button:hover {background-color: #413d4e}
+.buttonweather:hover {background-color: #413d4e}
 
-.button:active {
+.buttonweather:active {
   background-color: #262436;
   box-shadow: 0 5px #666;
   transform: translateY(4px);

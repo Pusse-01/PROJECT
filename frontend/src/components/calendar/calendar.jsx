@@ -88,8 +88,8 @@ const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ..
     <div className={classes.flexContainer}>
       <CalendarTodayTwoTone fontSize="large" htmlColor="#ffffff" />
       <Typography variant="subtitle2" style={{
-        marginLeft: '10px', marginRight: '20px', font: "10px Georgia",
-        color: "#f9a825"
+        marginLeft: '10px', marginRight: '20px', font: "10px",
+        color: "#FF0000"
       }}>C  A  L  E  N  D A  R</Typography>
     </div>
   </Toolbar.FlexibleSpace>
@@ -146,8 +146,8 @@ export default class Demo extends React.PureComponent {
       id: founduser.employee.id,
       email: founduser.employee.email,
       currentDate: Date.now(),
-
-
+      loading: true,
+      error: false
     };
 
 
@@ -165,9 +165,25 @@ export default class Demo extends React.PureComponent {
   }
   componentDidMount() {
     document.title = "PROJECT Calendar"
+
+    this.interval = setInterval(
+      () =>
+        this.setState(() => {
+          if (navigator.onLine) {
+            this.setState({
+              loading: false,
+            });
+          } else {
+            this.setState({
+              loading: true,
+            });
+          }
+        }),
+      1000
+    );
     this.getCalendarLogs()
     this.getProjecLogs()
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
       return 'Are you sure you want to leave?';
     };
   }
@@ -218,9 +234,12 @@ export default class Demo extends React.PureComponent {
         }
         this.setState({
           data: tempData,
+          loading: false
         })
       })).catch(() => {
-        alert('error');
+        this.setState({
+         error: true
+        })
       })
   }
 
@@ -292,7 +311,9 @@ export default class Demo extends React.PureComponent {
         }
       })
       .catch(() => {
-        alert('error');
+        this.setState({
+          error: true
+         })
       })
   }
 
@@ -343,7 +364,9 @@ export default class Demo extends React.PureComponent {
                 })
             }
           } catch (error) {
-            alert('Error occurred while saving new data.')
+            this.setState({
+              error: true
+             })
           }
 
         });
@@ -355,6 +378,40 @@ export default class Demo extends React.PureComponent {
 
   render() {
     const { data, currentViewName, resources, currentDate } = this.state;
+
+    if (this.state.loading) {
+      return (
+        <div>
+          <div class="ring1">
+            Loading
+            <span class="span1"></span>
+          </div>
+          <div>
+
+            <button class="loadingbutton">
+              Please check your network connection.
+            </button>
+          </div>
+        </div>
+
+      );
+    }
+
+    if (this.state.error) {
+      return (
+        <div>
+          <div class="ring1">
+            <span class="span1"></span>
+          </div>
+          <div>
+            <button class="loadingbutton">
+              Unexpected Error occurred.<br /> Please check your network connection
+            </button>
+          </div>
+        </div>
+      );
+    }
+
 
     return (
       <div>

@@ -1,0 +1,104 @@
+body {
+  background: #b6b434;
+}
+
+h1 {
+  padding-top: 15px;
+  color: rgb(22, 23, 78);
+}
+
+.createproject {
+  z-index: 200;
+}
+
+.labels {
+  padding-top: 10px;
+}
+
+.MuiChip-root {
+  width: 130px;
+}
+
+.buttonsubmit {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgb(10, 10, 73);
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 15px;
+  padding-top: 4px;
+  width: 200px;
+  height: 40px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-bottom: 4px;
+}
+
+.buttonsubmit span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buttonsubmit span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buttonsubmit:hover span {
+  padding-right: 25px;
+}
+
+.buttonsubmit:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.closebutton {
+  position: absolute;
+  top: 110px;
+  left: 930px;
+}
+
+.closebuttonactual {
+  position: absolute;
+  top: 110px;
+  left: 890px;
+  padding: 10px;
+  background-color: transparent;
+  color: rgb(190, 33, 33);
+  z-index: 21;
+  position: absolute;
+  border: 0px;
+}
+
+
+.loadingbutton {
+    position: absolute;
+    top: 420px;
+    left: 570px;
+    padding: 10px;
+    background-color: transparent;
+    color: rgb(190, 33, 33);
+    z-index: 21;
+    position: absolute;
+    border: 0px;
+  }
+  .buttonsubmitclear{
+    position: absolute;
+    top: 140px;
+    left: 890px;
+    padding: 10px;
+    background-color: transparent;
+    color: rgb(190, 33, 33);
+    z-index: 21;
+    position: absolute;
+    border: 0px;
+  }
