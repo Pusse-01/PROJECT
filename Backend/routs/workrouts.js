@@ -119,7 +119,7 @@ router.get("/projectsummery", (req, res) => {
   });
 });
 
-router.get("/gettasksbyprojectandemployee",(req,res)=>{
+router.get("/gettasksbyprojectandemployee",(req,res)=>{//get task by project and assigned employee
   let id=req.query.id;
   let projectn=req.query.pid;
   Task.find({assigned_to:id}).then((work)=>{
@@ -139,7 +139,7 @@ router.get("/gettasksbyprojectandemployee",(req,res)=>{
   })
 });
 
-router.get("/getpid/:projectname",(req,res)=>{
+router.get("/getpid/:projectname",(req,res)=>{//get project id by name
   const projectname=req.params.projectname;
   Project.findOne({name:projectname}).then((pro)=>{
     if(pro){
@@ -148,7 +148,7 @@ router.get("/getpid/:projectname",(req,res)=>{
   })
 })
 
-router.get("/getoverduetasks/:id",(req,res)=>{
+router.get("/getoverduetasks/:id",(req,res)=>{//get overdue tasks
   const id=req.params.id;
   Task.find({assigned_to:id}).then((overdue)=>{
     let overdued=[]
@@ -168,7 +168,7 @@ router.get("/getoverduetasks/:id",(req,res)=>{
     return res.json(overdued)
   })
 })
-router.get("/totaltasks/:id",(req,res)=>{
+router.get("/totaltasks/:id",(req,res)=>{//get total tasks by id
   const id=req.params.id;
   let totaltask=0;
   Task.find({assigned_to:id ,task_status:"Done"}).then((totalcompletedtasks)=>{
@@ -180,7 +180,7 @@ router.get("/totaltasks/:id",(req,res)=>{
   
  
 })
-router.get("/pendingtasks/:id",(req,res)=>{
+router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
   const id=req.params.id;
   let pendingtasks=0
   Task.find({assigned_to:id}).then((notcompletedtasks)=>{
@@ -197,7 +197,7 @@ router.get("/pendingtasks/:id",(req,res)=>{
   })
 
 })
-router.get("/completedprojects/:email",(req,res)=>{
+router.get("/completedprojects/:email",(req,res)=>{//get completed projects by email
   const email=req.params.email;
   let completedp=0;
   Project.find({members:email,projectStatus:"completed"}).then((completed=>{
@@ -209,5 +209,13 @@ router.get("/completedprojects/:email",(req,res)=>{
   }))
 
 })
+
+
+
+
+
+//Admin Panel Componenets
+
+
 
 module.exports = router;

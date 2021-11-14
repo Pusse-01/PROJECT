@@ -9,7 +9,7 @@ function Timelines({id , email}) {
   const[pselected,setptimeline]=useState([])
   const [projectselected, setproject] = useState("");
   async function summery() {
-    const response = await axios
+     await axios
       .get("http://localhost:8070/Dashboard/summery/" + id)
       .then(function (response) {
         setdata(response.data.summery);
@@ -17,12 +17,12 @@ function Timelines({id , email}) {
   }
 
   async function projectsummery(){
-    const response=await axios.get("http://localhost:8070/Dashboard/projectsummery?id="+ id+"&"+"projectname="+projectselected).then(function(response){
+    await axios.get("http://localhost:8070/Dashboard/projectsummery?id="+ id+"&"+"projectname="+projectselected).then(function(response){
       setptimeline(response.data.summery)
         })
   }
    async function getprojects(){
-        const response=await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
+        await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
          
        
          if (response.data.length>0){

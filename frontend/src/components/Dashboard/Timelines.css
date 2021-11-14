@@ -1,5 +1,5 @@
 .scroll1{
-    height: 400px;
+    height: 380px;
     overflow: scroll;
    
 }
@@ -42,4 +42,12 @@
  .overduefc{
    color: azure;
    font-size: 15px;
+ }
+ .nooverdue{
+   color:green;
+ }
+ .nooverdueimg{
+   height: 150px;
+   width: 150px;
+   position: static;
  }

@@ -1,9 +1,10 @@
 .dashMainComponent {
    position: absolute;
    width : 100%;
-   height: auto;
+   height: 90vh;
    z-index: -1;
    background-color: #1e272e;
+   overflow:scroll;
 }
 .text{
    text-align:center;
@@ -44,3 +45,4 @@ width: 200px;
 .overdue{
    position: static;
 }
+
