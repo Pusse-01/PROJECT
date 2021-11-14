@@ -13,6 +13,7 @@ class Tasks extends Component{
         const founduser = JSON.parse(loggedInUser);
         this.state = {
             tasks: [],
+            tasks2:[], // Coppy of all the tasks
             error:"",
             name: founduser.employee.name,
             id: founduser.employee.id,
@@ -21,16 +22,44 @@ class Tasks extends Component{
         }
     }
 
+    filterTasks = (selectedType) => {
+        this.setState({
+            tasks:this.state.tasks2
+        }, () => {
+            let tempTasks = []
+            if(selectedType=="All"){
+                this.state.tasks.filter((value)=>{
+                    tempTasks.push(value)
+                })
+                console.log(tempTasks)
+            }else{
+                if(this.state.tasks.length > 0){
+                    this.state.tasks.filter((value)=>{
+                        if(value.task_status==selectedType){
+                            tempTasks.push(value)
+                        }
+                    })
+                }
+                console.log(tempTasks)
+            }
+            this.setState({
+                tasks : tempTasks
+            })
+        })
+    }
+
     async componentDidMount() {
         // POST request using fetch with async/await
-        console.log(this.state.id);
         axios.post('http://localhost:8070/task/getTaskByAssignedTo/',{'assigned_to':this.state.id})
             .then((res)=>{
                 this.setState({
                     tasks :res.data.response,
-                    error:"error"
+                    error:"error",
+                },()=>{
+                    this.setState({
+                        tasks2 : this.state.tasks
+                    })
                 });
-                console.log(this.state.tasks)
 
             })
             .catch(error=>{console.log(error)})
@@ -51,7 +80,7 @@ class Tasks extends Component{
         const {tasks} = this.state;
         return(
             <div className="tasksMainComponent">
-                <Sidebar/>
+                <Sidebar filterTasks={this.filterTasks}/>
                 <div className="tasksSubComponent">̵
                     <div className="searchBar">
                         <div className="blankColumn"></div>

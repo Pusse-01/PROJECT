@@ -198,47 +198,70 @@
 
 
 /******************************* SIDE BAR ***********************************/
-.sideBarComponent {
+.sideBarTasksComponent {
     position: absolute;
     top: 00px;
     right :0px;
     bottom: 0px;
-    width : 30%;
+    width : 18%;
     z-index: -1;
     background-color: #2f3640;
+    /*display: grid;*/
+    /*grid-template-rows: 20% 80%;*/
 }
-
-.sideBarElement {
+.sidebarTasksHeader{
+    width: 100% ;
+    color: #a4b0be;
+    font-weight: bolder;
+    font-size: 30px;
+    height: 10%;
+    margin: 0px;
+    text-align: center;
+    padding-top: 10%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.sideBarTasksSubContainer{
     width: 100%;
-    height : 30%;
-    /*justify-content: center;*/
-    /*text-align: center;*/
-    color: white;
-    padding-top: 50px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    align-content: center;
+    height: 90%;
+    padding-top: 10%;
+    overflow: scroll;
 }
-.outCircle {
-    width :20px;
-    height: 20px;
-    justify-self: center;
+.sideBarTasksSubContainer::-webkit-scrollbar{
+    display: none;
+}
+.taskElement{
+    padding:10px;
+    background: #1e272e;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: center;
     border-radius: 20px;
-    border: 1px solid red;
+    cursor: pointer;
 }
-.innerCircle{
-    width: 10px;
-    height: 10px;
-    justify-self: center;
-    margin-left: 4px;
-    margin-top: 4px;
-    border-radius: 10px;
-    background-color: red;
-    border: 1px solid red;
-}
-.elementtext {
 
+.taskElementText{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 5px;
 }
+
+#tasksAll{box-shadow: 0px 1px 1px #40739e;}
+#tasksToDo{box-shadow: 0px 1px 1px #eb4d4b;}
+#tasksInProgress{box-shadow: 0px 1px 1px #4834d4;}
+#tasksDone{box-shadow: 0px 1px 1px #535c68;}
+#tasksBugs{box-shadow: 0px 1px 1px #8e44ad;}
+#tasksReview{box-shadow: 0px 1px 1px red;}
+
+#tasksAllSelected{box-shadow: 0px 1px 1px #40739e;background: #40739e;}
+#tasksToDoSelected{box-shadow: 0px 1px 1px #eb4d4b; background:#eb4d4b;}
+#tasksInProgressSelected{box-shadow: 0px 1px 1px #4834d4;background:#4834d4; }
+#tasksDoneSelected{box-shadow: 0px 1px 1px #535c68; background:#535c68; }
+#tasksBugsSelected{box-shadow: 0px 1px 1px #8e44ad; background:#8e44ad; }
+#tasksReviewSelected{box-shadow: 0px 1px 1px red; background: red;}
 @media only screen and (max-width: 991px) {
     .sideBarComponent{
         position: unset;
