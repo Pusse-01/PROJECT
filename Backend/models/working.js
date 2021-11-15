@@ -20,11 +20,21 @@ const workingprojectSchema = new Schema({
     required: true,
   },
   Stime: {
-    type: Date,
+    type: Date
   },
   Etime: {
-    type: Date,
+    type: Date
   },
+  hours:{
+    type:Number
+  },
+  minutes:{
+    type:Number
+  },
+  seconds:{
+    type:Number
+  }
+  
 });
 
 //Document name: 'workingproject'

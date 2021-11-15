@@ -22,9 +22,7 @@ function SideBar({id,email}) {
   useEffect(()=>{
     getdetails();
 },[])
-    function myFunction() {
-        alert("I am an alert box!");
-      }
+    
     return (
         <div className="dashboardsidemainComponent title">
             <div className="ps-3 pe-3  mt-3">

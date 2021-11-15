@@ -23,7 +23,7 @@ function Overdue({ id }) {
           <h4 className="overdueheader text-center">Overdue Tasks</h4>
           <div className="scrolloverdue hides ">
             <table className="table table-dark table-striped">
-              {overdue.length !== 0 ? (
+              
                 <tbody>
                   {overdue.map((numList, i) => (
                     <tr className="overduebackgroud overduefc" key={i}>
@@ -32,10 +32,7 @@ function Overdue({ id }) {
                       ))}
                     </tr>
                   ))}
-                </tbody>
-              ) : (
-                <tbody></tbody>
-              )}
+              </tbody>
             </table>
           </div>
         </div>
@@ -43,7 +40,7 @@ function Overdue({ id }) {
         <div>
           <h1 className="overdueheader text-center nooverdue">Keep It Up
           <br/>
-          <img className="nooverdueimg  " src={require('../../assests/images/completed.png').default}/></h1>
+        <img className="nooverdueimg  " src={require('../../assests/images/completed.png').default}/></h1>
           <h2 className="text-center nooverdue">No Overdue Tasks</h2>
           
         </div>

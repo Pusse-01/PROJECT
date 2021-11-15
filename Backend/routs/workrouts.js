@@ -7,6 +7,7 @@ const Employee = require("../models/employee");
 const Task = require('../models/task');
 const Project = require('../models/projects');
 const { Router } = require("express");
+const working = require("../models/working");
 
 router.post("/record/:id", (req, res) => {
   const { projectname, taskname, memo } = req.body;
@@ -25,6 +26,9 @@ router.post("/record/:id", (req, res) => {
     memo: req.body.memo,
     Stime: starttime,
     Etime: starttime,
+    hours:0,
+    minutes:0,
+    seconds:0
   });
 
   newwork
@@ -44,7 +48,17 @@ router.put("/update/:id", (req, res) => {
   const endtime = new Date();
   Workingproject.findOne({ _id: req.params.id }).then((project) => {
     if (!project) return res.status(400).json({ msg: "No record Matching" }); //check for same ID
+    let total=(endtime.getTime()-project.Stime.getTime());
+    let hours=Math.trunc(total / 3600000);
+    total=total%3600000;
+    let minutes=Math.trunc(total / 60000);
+    total=total%60000;
+    let seconds=Math.trunc(total / 1000);
+
     project.Etime = endtime;
+    project.hours=hours;
+    project.minutes=minutes;
+    project.seconds=seconds;
     project
       .save()
       .then(console.log("Updated"))
@@ -63,14 +77,11 @@ router.get("/total/:id", (req, res) => {
     if (work) {
       let iter = work.values();
       for (let times of iter) {
-         single += times.Etime.getTime() - times.Stime.getTime();//calculate total time worked
+        totalhours += times.hours ;
+        totalminutes += times.minutes;
+        totalseconds += times.seconds;
       }
-        totalhours += Math.trunc(single / 3600000);
-        single = single % 3600000;
-        totalminutes += Math.trunc(single / 60000);
-        single = single % 60000;
-        totalseconds += Math.trunc(single / 1000);
-        
+  
       return res.json({
         totalhours:totalhours,
         totalminutes:totalminutes,
@@ -128,7 +139,6 @@ router.get("/gettasksbyprojectandemployee",(req,res)=>{//get task by project and
       let iter=work.values();
       for (let times of iter) {
         if(times.project_id==projectn&& times.task_status!="Done"){
-      
         tasksummery.push(times.task_name);
         }
       }
@@ -168,13 +178,14 @@ router.get("/getoverduetasks/:id",(req,res)=>{//get overdue tasks
     return res.json(overdued)
   })
 })
+
 router.get("/totaltasks/:id",(req,res)=>{//get total tasks by id
   const id=req.params.id;
   let totaltask=0;
   Task.find({assigned_to:id ,task_status:"Done"}).then((totalcompletedtasks)=>{
     if(totalcompletedtasks){
     totaltask=totalcompletedtasks.length;
-    res.json({totaltask});
+   return res.json({totaltask});
     }
   })
   
@@ -192,11 +203,12 @@ router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
         
         }
       }
-      res.json({pendingtasks});
+     return res.json({pendingtasks});
     }
   })
 
 })
+
 router.get("/completedprojects/:email",(req,res)=>{//get completed projects by email
   const email=req.params.email;
   let completedp=0;
@@ -205,7 +217,7 @@ router.get("/completedprojects/:email",(req,res)=>{//get completed projects by e
       completedp=completed.length;
       
     }
-    res.json({completedp});
+    return res.json({completedp});
   }))
 
 })
@@ -216,6 +228,70 @@ router.get("/completedprojects/:email",(req,res)=>{//get completed projects by e
 
 //Admin Panel Componenets
 
+router.get("/admintimeline/",(req,res)=>{//get total workings of all employees 
+  Workingproject.find({}).then((admintimeline)=>{
+    let summery=[]
+      let iter=admintimeline.values();
+      for (let times of iter) {
+        let duration="";
+        if(times.hours>=10){
+          duration+=times.hours.toString()+":";
+        }else{
+          duration+="0"+times.hours.toString()+":";
+        }
+        if(times.minutes>=10){
+          duration+=times.minutes.toString()+":"
+        }else{
+          duration+="0"+times.minutes.toString()+":"
+        }
+        if(times.seconds>=10){
+          duration+=times.seconds.toString();
+        }else{
+          duration+="0"+times.seconds.toString();
+        }
+      
+       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+        summery.push(obj);
+      
+    }
+    return res.json(summery);
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
+
+router.get("/admintimelineproject/:projectname",(req,res)=>{//get total workings of all employees projectwise
+  const projectname=req.params.projectname;
+  Workingproject.find({projectname:projectname}).then((admintimeline)=>{
+    let summery=[]
+      let iter=admintimeline.values();
+      for (let times of iter) {
+        let duration="";
+        if(times.hours>=10){
+          duration+=times.hours.toString()+":";
+        }else{
+          duration+="0"+times.hours.toString()+":";
+        }
+        if(times.minutes>=10){
+          duration+=times.minutes.toString()+":"
+        }else{
+          duration+="0"+times.minutes.toString()+":"
+        }
+        if(times.seconds>=10){
+          duration+=times.seconds.toString();
+        }else{
+          duration+="0"+times.seconds.toString();
+        }
+      
+       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+        summery.push(obj);
+      
+    }
+    return res.json(summery);
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
 
 
 module.exports = router;

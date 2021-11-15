@@ -21,7 +21,6 @@ function Dashboard({ id, email }) {
   async function stopwork() {
      await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id).then(function (response) {
       setstatus(false);
-    
       sessionStorage.removeItem('workdata');
       sessionStorage.removeItem('stime');
       Setvisible(false);
@@ -91,7 +90,15 @@ function Dashboard({ id, email }) {
   
   }
   async function pingserver(){
-    await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id);
+    await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id).then().catch(()=>{
+      console.log("can't connect to server");
+      setstatus(false);
+      sessionStorage.removeItem('workdata');
+      sessionStorage.removeItem('stime');
+      Setvisible(false);
+      window.location.reload(false);
+      
+    });
   }
 
   const containerstyle = {
