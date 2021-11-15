@@ -3,6 +3,9 @@ import { projects } from "./resources";
 import { tasks } from "./resources";
 //import Createproject from "./Create Project/createProject" 
 import "./adminProjects.css";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import Visibility from '@material-ui/icons/Visibility';
+import TrendingUp from '@material-ui/icons/TrendingUp';
 
 class ProjectAdmin extends React.Component {
   constructor(props) {
@@ -27,31 +30,46 @@ class ProjectAdmin extends React.Component {
       <div>
         <div class="bodyapper1">
           <a href="http://localhost:3000/createproject">
-            <button class="button">Create Project<br/><p class="p">create new project for the organization</p></button>
+            <button class="button"><AddCircleOutlineOutlinedIcon
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />Create Project<br/><p class="p">create your new project at glance</p></button>
           </a>
         </div>
 
         <div class="bodyappear2">
           <a href="www.google.com">
-            <button class="button">Show Project<br/><p class="p">view a summary of all the projects</p> </button>
+            <button class="button"> <Visibility
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />Show Project<br/><p class="p">view a summary of all the projects</p> </button>
           </a>
         </div>
 
         <div class="bodyappear3">
           <a href="http://localhost:3000/createtask">
-            <button class="button">Create Task<br/><p class="p">assign task for employees</p> </button>
+            <button class="button"> <AddCircleOutlineOutlinedIcon
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />Create Task<br/><p class="p">assign task for employees easily</p> </button>
           </a>
         </div>
 
         <div class="bodyappear4">
           <a href="www.google.com">
-            <button class="button">Show taskboard<br/><p class="p">view a summary of assign task for employees</p></button>
+            <button class="button"> < Visibility
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />Show taskboard<br/><p class="p">view a summary of assign task for employees</p></button>
           </a>
         </div>
 
         <div class="bodyappear5">
           <a href="www.google.com">
-            <button class="button">Status<br/><p class="p">evaluate your work</p></button>
+            <button class="button"> <TrendingUp
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />Status<br/><p class="p">evaluate your work</p></button>
           </a>
         </div>
       </div>
