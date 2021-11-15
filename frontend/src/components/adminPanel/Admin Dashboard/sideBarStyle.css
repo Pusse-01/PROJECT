@@ -1,16 +1,16 @@
-.dashboardsidemainComponent {
+.admindashboardsidemainComponent {
     position: absolute;
-    top: 0px;
+    top: 80px;
     right :0px;
     bottom: 0px;
     width : 18%;
-   
+   z-index: -1;
     background-color: #2f3640;
     
 }
 
 @media only screen and (max-width: 991px) {
-  .dashboardsidemainComponent{
+  .admindashboardsidemainComponent{
       position: static;
       top: 0px;
       left :0px;
@@ -24,7 +24,7 @@
 .title {
     color : white;
 }
-.cpbutton {
+.admincpbutton {
     
     background-color: #1e272e;
     border: none;
@@ -40,7 +40,7 @@
     box-shadow: 0px 5px 10px 1px rgb(250, 12, 4);
     font-size: 3vh;
   }
-  .ptbutton{
+  .adminptbutton{
     background-color: #1e272e;
     border: none;
     padding: 10px 20px;
@@ -56,7 +56,7 @@
     font-size: 3vh;
   }
 
-  .ctbutton{
+  .adminctbutton{
     background-color: #1e272e;
     border: none;
     padding: 10px 20px;
@@ -71,7 +71,7 @@
     box-shadow: 0px 5px 10px 1px rgb(248, 171, 4);
     font-size: 3vh;
   }
-  .siderbarfont{
+  .adminsiderbarfont{
     font-size: 10vh;
     
   }

@@ -15,7 +15,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
           seterror("Please Fill all parts");
         }else{
         await axios
-          .post("http://localhost:8070/dashboard/record/" + id,{
+          .post("http://localhost:8070/dashboard/record?id="+id+"&email="+email ,{
               projectname:work.projectname,
               taskname:work.taskname,
               memo:work.memo
