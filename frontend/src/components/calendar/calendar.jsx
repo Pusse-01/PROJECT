@@ -145,8 +145,12 @@ export default class Demo extends React.PureComponent {
       name: founduser.employee.name,
       id: founduser.employee.id,
       email: founduser.employee.email,
+      lastlog:[],
       currentDate: Date.now(),
       loading: true,
+      loadinggetlogs: true,
+      loadinggetprojects: true,
+      changes: false,
       error: false
     };
 
@@ -166,8 +170,28 @@ export default class Demo extends React.PureComponent {
   componentDidMount() {
     document.title = "PROJECT Calendar"
 
+    this.getCalendarLogs()
+    this.getProjecLogs()
+
+    if (this.state.changes) {
+      // this.savesession();
+      console.log('lol             lol            lol')
+
+    }
+
     this.interval = setInterval(
-      () =>
+      () => {
+
+        if (this.state.changes) {
+          this.savesession();
+          console.log('values updated')
+
+
+          this.setState({
+            changes: false
+          })
+        }
+
         this.setState(() => {
           if (navigator.onLine) {
             this.setState({
@@ -178,11 +202,11 @@ export default class Demo extends React.PureComponent {
               loading: true,
             });
           }
-        }),
+        })
+      },
       1000
     );
-    this.getCalendarLogs()
-    this.getProjecLogs()
+
     window.onbeforeunload = function () {
       return 'Are you sure you want to leave?';
     };
@@ -192,7 +216,7 @@ export default class Demo extends React.PureComponent {
   componentWillUnmount() {
     //if data connection lost after long session no new data will be saved
     this.savesession();
-
+    clearInterval(this.interval);
   }
 
   getCalendarLogs = () => {
@@ -215,30 +239,22 @@ export default class Demo extends React.PureComponent {
               title: response.data[i].calendarlog.title,
               roomId: response.data[i].calendarlog.roomId,
               members: response.data[i].calendarlog.members,
-              startDate: new Date((parseInt((response.data[i].calendarlog.startDate).slice(0, 4))),
-                (parseInt((response.data[i].calendarlog.startDate).slice(5, 7))) - 1,
-                (parseInt((response.data[i].calendarlog.startDate).slice(8, 10))),
-                (parseInt((response.data[i].calendarlog.startDate).slice(11, 13))),
-                (parseInt((response.data[i].calendarlog.startDate).slice(14, 16)))),
+              startDate: response.data[i].calendarlog.startDate,
               notes: response.data[i].calendarlog.description,
-              endDate: new Date(
-                (parseInt((response.data[i].calendarlog.endDate).slice(0, 4))),
-                (parseInt((response.data[i].calendarlog.endDate).slice(5, 7)) - 1),
-                (parseInt((response.data[i].calendarlog.endDate).slice(8, 10))),
-                (parseInt((response.data[i].calendarlog.endDate).slice(11, 13))),
-                (parseInt((response.data[i].calendarlog.endDate).slice(14, 16)))),
+              endDate: response.data[i].calendarlog.endDate,
               rRule: Rule,
+              exDate: response.data[i].calendarlog.exDate,
             }
           ]
           tempData.push(tempOne[0])
         }
         this.setState({
           data: tempData,
-          loading: false
+          loadinggetlogs: false
         })
       })).catch(() => {
         this.setState({
-         error: true
+          error: true
         })
       })
   }
@@ -247,6 +263,7 @@ export default class Demo extends React.PureComponent {
   getProjecLogs = () => {
     const userEamil = this.state.email;
     var resources = [];
+    var currentlog =[];
     axios.get('http://localhost:8070/employee/projects/' + userEamil)
       .then((response => {
         var color;
@@ -266,6 +283,16 @@ export default class Demo extends React.PureComponent {
             color = deepOrange
           }
 
+          if(i=== 0){
+            currentlog =[{
+              title:response.data[i].name,
+              duedate:((response.data[i].overdue).toString()).substring(0, 10),
+              note:response.data[i].projectStatus,
+            }]
+            this.setState({lastlog:currentlog});
+          }
+          console.log(this.state.lastlog)
+
 
           var resourcesData = [
             {
@@ -276,7 +303,6 @@ export default class Demo extends React.PureComponent {
           ]
           resources.push(resourcesData[0]);
         }
-        //console.log(resources)
 
       })).then(() => {
         var memberslist = []
@@ -306,6 +332,7 @@ export default class Demo extends React.PureComponent {
                     instances: memberslist,
                   },
                 ],
+                loadinggetprojects: false,
               })
             })
         }
@@ -313,7 +340,7 @@ export default class Demo extends React.PureComponent {
       .catch(() => {
         this.setState({
           error: true
-         })
+        })
       })
   }
 
@@ -321,18 +348,31 @@ export default class Demo extends React.PureComponent {
     this.setState((state) => {
       let { data } = state;
       if (added) {
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-
+        var maxID = 0;
+        if (data.length === 0) {
+          maxID = 0;
+        } else if (data.length > 0) {
+          for (var i = 0; i < data.length; i++) {
+            if (maxID < data[i].id) {
+              maxID = data[i].id
+            }
+          }
+        }
+        data = [...data, { id: maxID + 1, ...added }];
       }
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
       }
+
+
+
+      this.setState({
+        changes: true
+      })
       return { data };
     });
   }
@@ -366,18 +406,18 @@ export default class Demo extends React.PureComponent {
           } catch (error) {
             this.setState({
               error: true
-             })
+            })
           }
-
         });
-
     }
-
   }
 
 
   render() {
-    const { data, currentViewName, resources, currentDate } = this.state;
+    const { data, currentViewName, resources, currentDate, lastlog } = this.state;
+
+
+
 
     if (this.state.loading) {
       return (
@@ -388,7 +428,7 @@ export default class Demo extends React.PureComponent {
           </div>
           <div>
 
-            <button class="loadingbutton">
+            <button class="loadingbuttonmain">
               Please check your network connection.
             </button>
           </div>
@@ -401,10 +441,11 @@ export default class Demo extends React.PureComponent {
       return (
         <div>
           <div class="ring1">
+            Loading
             <span class="span1"></span>
           </div>
           <div>
-            <button class="loadingbutton">
+            <button class="loadingbuttonmain">
               Unexpected Error occurred.<br /> Please check your network connection
             </button>
           </div>
@@ -442,6 +483,23 @@ export default class Demo extends React.PureComponent {
             <li></li>
           </ul>
         </div>
+
+<div>
+<div>{lastlog.length > 0?
+  <button class="changesmain">
+  Last Assigned Project<br/><br/>
+
+  Title : {lastlog[0].title}<br/>
+  Due Date : {lastlog[0].duedate}<br/>
+  Notes : {lastlog[0].note}<br/>
+</button>: <button class="changesmain">
+  No Projects have assigned!<br/>
+</button>
+}
+      
+      </div>
+</div>
+
 
         <div>
         </div>

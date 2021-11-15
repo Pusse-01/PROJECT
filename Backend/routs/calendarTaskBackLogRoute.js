@@ -14,12 +14,12 @@ route.get('/calendarTaskBackLog/:id', fetchCalendarTaskBlackLog);
 route.get('/calendarTaskBackLog/:id', fetchCalendarTaskBacklogOne);
 
 //update particular calendar log related to logged in user -id- calendar appointment id
-route.put('/calendarTaskBackLog/:id', updateCalendarTaskBacklogOne);
+route.put('/calendarTaskBackLog/:id/:id2', updateCalendarTaskBacklogOne);
 
-//delete particular calendar log related to logged in user -id- calendar appointment id id2- user database id saved in local when logged in
+//delete a particular calendar log related to logged in user -id- calendar appointment id id2- user database id saved in local when logged in
 route.delete('/calendarTaskBackLog/:id/:id2', deleteCalendarTaskBacklogOne);
 
-//delete particular calendar logs related to logged in user -id- user database id saved in local when logged in
+//delete all particular calendar logs related to logged in user -id- user database id saved in local when logged in
 route.delete('/calendarTaskBackLogdelete/:id', deleteCalendarTaskBacklog);
 //route.get('/employees/:id', fetchcurretuser);
 

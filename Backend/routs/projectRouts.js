@@ -88,7 +88,7 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
    //to get project by its name
    const fetchProjects = async (req, res) => {
       try {
-          const projectlist = await Project.findOne({name: "iii"});
+          const projectlist = await Project.findOne({name: req.params.id});
           res.json(projectlist)
           console.log("okay");
       } catch (error) {

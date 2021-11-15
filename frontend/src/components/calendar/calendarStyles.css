@@ -69,10 +69,10 @@ table{
   color : white;
 }
 
-.loadingbutton {
+.loadingbuttonmain {
   position: absolute;
   top: 420px;
-  left: 570px;
+  left: 550px;
   padding: 10px;
   background-color: transparent;
   color: rgb(190, 33, 33);
@@ -168,3 +168,20 @@ body
     transform:rotate(405deg);
   }
 }
+
+.changesmain {
+  cursor: none;
+  text-align: left;
+  color: #7477b1;;
+  font-family: Tahoma;
+  font-size: 18px;
+  position: absolute;
+  top: 510px;
+  left: 1180px;
+  padding: 10px;
+  background-color: transparent;
+  z-index: 0;
+  position: absolute;
+  border: 0px;
+}
+
