@@ -85,7 +85,7 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
 
 
    //added by malaka
-   //to get project by its name
+   //to get project by its contributers
    const fetchProjects = async (req, res) => {
       try {
           const projectlist = await Project.findOne({name: req.params.id});
@@ -97,6 +97,20 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
       }
   };
    router.get ('/projects/list/:id', fetchProjects);
+
+   //added by malaka
+   //to get all projects
+   const fetchallProjects = async (req, res) => {
+    try {
+        const projectlist = await Project.find({});
+        res.json(projectlist)
+        console.log("okay");
+    } catch (error) {
+        console.log("oops");
+        res.json(error.message);
+    }
+};
+ router.get ('/projects', fetchallProjects);
 
 // ************************************** GET PROJECT BY ID *****************************************
 const getProjectById = (req,res,next) => {

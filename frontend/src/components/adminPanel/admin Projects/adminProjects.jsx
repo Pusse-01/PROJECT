@@ -1,7 +1,7 @@
 import React from "react";
 import { projects } from "./resources";
 import { tasks } from "./resources";
-import Createproject from "./Create Project/createProject" 
+//import Createproject from "./Create Project/createProject" 
 import "./adminProjects.css";
 
 class ProjectAdmin extends React.Component {
@@ -27,31 +27,31 @@ class ProjectAdmin extends React.Component {
       <div>
         <div class="bodyapper1">
           <a href="http://localhost:3000/createproject">
-            <button class="button">Create Project</button>
+            <button class="button">Create Project<br/><p class="p">create new project for the organization</p></button>
           </a>
         </div>
 
         <div class="bodyappear2">
           <a href="www.google.com">
-            <button class="button">Show Project </button>
+            <button class="button">Show Project<br/><p class="p">view a summary of all the projects</p> </button>
           </a>
         </div>
 
         <div class="bodyappear3">
-          <a href="www.google.com">
-            <button class="button">Create Task </button>
+          <a href="http://localhost:3000/createtask">
+            <button class="button">Create Task<br/><p class="p">assign task for employees</p> </button>
           </a>
         </div>
 
         <div class="bodyappear4">
           <a href="www.google.com">
-            <button class="button">Show taskboard</button>
+            <button class="button">Show taskboard<br/><p class="p">view a summary of assign task for employees</p></button>
           </a>
         </div>
 
         <div class="bodyappear5">
           <a href="www.google.com">
-            <button class="button">Status</button>
+            <button class="button">Status<br/><p class="p">evaluate your work</p></button>
           </a>
         </div>
       </div>
