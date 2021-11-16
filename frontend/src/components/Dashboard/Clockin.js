@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 const axios=require('axios').default;
 
-function Clockin({email,id,show,workdetails,setstatus}) {
+function Clockin({email,id,show,workdetails,setstatus,name}) {
     const [work, setwork] = useState({ projectname: "", taskname: "", memo: "" });
     const[error,seterror]=useState("");
     const [projects,setprojects]=useState([""]);
@@ -15,7 +15,7 @@ function Clockin({email,id,show,workdetails,setstatus}) {
           seterror("Please Fill all parts");
         }else{
         await axios
-          .post("http://localhost:8070/dashboard/record?id="+id+"&email="+email ,{
+          .post("http://localhost:8070/dashboard/record?id="+id+"&name="+name ,{
               projectname:work.projectname,
               taskname:work.taskname,
               memo:work.memo

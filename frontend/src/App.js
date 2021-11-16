@@ -91,7 +91,7 @@ function App() {
               <Redirect to="/Dashboard" />
             </Route>
             <Route path="/Dashboard">
-              <Dashboard id={user.id} email={user.email} />
+              <Dashboard id={user.id} email={user.email} name={user.name} />
             </Route>
             <Route path="/api/taskBackLog">
                   <ShowTaskBackLog />
