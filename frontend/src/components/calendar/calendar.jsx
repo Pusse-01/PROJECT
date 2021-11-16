@@ -147,7 +147,7 @@ export default class Demo extends React.PureComponent {
       email: founduser.employee.email,
       lastlog:[],
       currentDate: Date.now(),
-      loading: true,
+      loading: false,
       loadinggetlogs: true,
       loadinggetprojects: true,
       changes: false,
@@ -184,9 +184,6 @@ export default class Demo extends React.PureComponent {
 
         if (this.state.changes) {
           this.savesession();
-          console.log('values updated')
-
-
           this.setState({
             changes: false
           })
@@ -491,7 +488,7 @@ export default class Demo extends React.PureComponent {
 
   Title : {lastlog[0].title}<br/>
   Due Date : {lastlog[0].duedate}<br/>
-  Notes : {lastlog[0].note}<br/>
+  Status : {lastlog[0].note}<br/>
 </button>: <button class="changesmain">
   No Projects have assigned!<br/>
 </button>

@@ -1,8 +1,12 @@
+body {
+  background-color: #1e272e;
+}
+
 .bodyappear1 {
   z-index: 10;
   position: absolute;
   bottom: 0px;
-  left:0px;
+  left: 0px;
   top: 100px;
 }
 
@@ -38,10 +42,10 @@
   top: 80px;
 }
 .button1 {
-  color: rgb(196, 166, 36);
+  color: rgb(153, 28, 28);
   box-sizing: content-box;
   height: 80px;
-  background: #1c1f4b;
+  background: #1e272e;
   content: center;
   text-align: center;
   font-size: 28px;
@@ -51,13 +55,14 @@
   cursor: pointer;
   margin: 15px;
   border: none;
+  
 }
 
 .button {
-  color: rgb(219, 192, 38);
+  color: rgb(189, 27, 27);
   box-sizing: content-box;
   height: 380px;
-  background: #1c1f4b;
+  background: #252e35;
   content: center;
   text-align: center;
   font-size: 28px;
@@ -67,6 +72,8 @@
   cursor: pointer;
   margin: 15px;
   border: none;
+  text-align: center;
+  opacity: 0.8;
 }
 .button span {
   cursor: pointer;
@@ -83,7 +90,7 @@
   transition: 0.5s;
 }
 .button:hover {
-  background-color: #1c1f4b;
+  background-color: #191b3a;
   opacity: 0.5;
 }
 .button:hover span {
@@ -92,4 +99,8 @@
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.p {
+  font-size: 10px;
 }

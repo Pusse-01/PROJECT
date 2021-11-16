@@ -22,23 +22,27 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { Redirect } from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
+import FormLabel from "@material-ui/core/FormLabel";
+
+
 
 const paperStyle = {
   padding: "50px 20px",
-  width: "600px",
+  width: "700px",
   margin: "20px auto",
+  backgroundColor: "#1e272e",
 };
 const avatarStyle = {
   backgroundColor: "blue",
 };
 
 const names = [
-  { username: "Oliver Hansen" },
-  { username: "Van Henry" },
-  { username: "April Tucker" },
+  { username: "shehanmalakarodrigo@gmail.com" },
+  { username: "abeysinghechanuka@gmail.com" },
+  { username: "pusse@gmail.com" },
+  { username: "ryan.pusse@gmail.com" },
 ];
 
 const ITEM_HEIGHT = 48;
@@ -67,7 +71,7 @@ class Createproject extends React.Component {
       endDate: new Date(),
       selectedEmployees: [],
       selectedManagers: [],
-      category: "Task-Assigned",
+      category: "Pending",
       loading: false,
       error: false,
     };
@@ -82,7 +86,7 @@ class Createproject extends React.Component {
             this.setState({
               loading: false,
             });
-          }else{
+          } else {
             this.setState({
               loading: true,
             });
@@ -139,13 +143,29 @@ class Createproject extends React.Component {
     });
   };
 
-  handleClear = (event) => {
-    return;
+
+
+  setstartDate = (date) => {
+    this.setState({
+      startDate: date,
+    });
+    console.log(date);
   };
 
-  renderRedirect = () => {
-    return <Redirect to="http://localhost:3000" />;
+  setendDate = (date) => {
+    this.setState({
+      endDate: date,
+    });
   };
+
+  setCategory = (event) => {
+    this.setState({ category: event.target.value });
+  };
+
+
+  getEmployees() {
+
+  }
 
   handleClick = (event) => {
     for (var i = 0; i < this.state.selectedEmployees.length; i++) {
@@ -185,29 +205,6 @@ class Createproject extends React.Component {
     }
   };
 
-  setstartDate = (date) => {
-    this.setState({
-      startDate: date,
-    });
-    console.log(date);
-  };
-
-  setendDate = (date) => {
-    this.setState({
-      endDate: date,
-    });
-  };
-
-  setCategory = (event) => {
-    this.setState({ category: event.target.value });
-  };
-
-
-getEmployees(){
-  
-}
-
-
 
 
   render() {
@@ -217,18 +214,18 @@ getEmployees(){
     if (this.state.loading) {
       return (
         <div>
-            <div class="ring1">
-          Loading
-          <span class="span1"></span>
-        </div>
+          <div class="ring1">
+            Loading
+            <span class="span1"></span>
+          </div>
           <div>
-         
+
             <button class="loadingbutton">
               Please check your network connection.
             </button>
+          </div>
         </div>
-        </div>
-      
+
       );
     }
 
@@ -242,13 +239,14 @@ getEmployees(){
             <a href="http://localhost:3000/createproject">
               <button class="loadingbutton">
                 {" "}
-                Invalid, Please Fill all the details.
+                Invalid, Please Fill all the details.<br />
+                Click here to continue
               </button>
             </a>
           </div>
         </div>
       );
-    } 
+    }
 
 
 
@@ -256,143 +254,164 @@ getEmployees(){
       this.state;
 
     return (
-      <form>
-        <div>
-          <Grid>
-            <Paper elevation={20} style={paperStyle}>
-              <Grid align="left">
-                <div>
-                  <Avatar style={avatarStyle}>
-                    <AddCircleOutlineOutlinedIcon
-                      fontSize="large"
-                      htmlColor="#ffffff"
+      <div>
+        <form>
+          <div>
+            <Grid>
+              <Paper elevation={20} style={paperStyle}>
+                <Grid align="left">
+                  <div>
+                    <Avatar style={avatarStyle}>
+                      <AddCircleOutlineOutlinedIcon
+                        fontSize="large"
+                        htmlColor="#ffffff"
+                      />
+                    </Avatar>
+                  </div>
+
+                  <h1 class='h1'>Create project</h1>
+                  <Typography variant="caption">
+                    <p>Please fill this from to create a project</p>
+                  </Typography>
+                </Grid>
+
+                <TextField
+                  fullWidth
+                  label="Project Name"
+                  onChange={this.setProjectname}
+                ></TextField>
+
+                <FormControl class="marginedit">
+
+                  <FormLabel>Project Status</FormLabel>
+                  <RadioGroup row value={category} onChange={this.setCategory}>
+                    <FormControlLabel
+                      value="Pending"
+                      control={<Radio />}
+                      label="Pending"
                     />
-                  </Avatar>
-                </div>
-
-                <h1>Create project</h1>
-                <Typography variant="caption">
-                  <p>Please fill this from to create a project</p>
-                </Typography>
-              </Grid>
-
-              <TextField
-                fullWidth
-                label="Project Name"
-                onChange={this.setProjectname}
-              ></TextField>
-
-              <RadioGroup value={category} onChange={this.setCategory}>
-                <FormControlLabel
-                  value="Task-Assigned"
-                  control={<Radio />}
-                  label="Assign"
-                />
-                <FormControlLabel
-                  value="Task-Overdue"
-                  control={<Radio />}
-                  label="Overdue"
-                />
-                <FormControlLabel
-                  value="Task-Completed"
-                  control={<Radio />}
-                  label="Complete"
-                />
-              </RadioGroup>
-              <FormControl fullWidth label="" minWidth="300px">
-                <InputLabel>Project Contributers</InputLabel>
-                <Select MenuProps={MenuProps} onChange={this.setSelected}>
-                  {employees.map((name, index) => (
-                    <MenuItem key={index} value={name.username}>
-                      {name.username}
-                    </MenuItem>
+                    <FormControlLabel
+                      value="Not-Started"
+                      control={<Radio />}
+                      label="Not Started"
+                    />
+                    <FormControlLabel
+                      value="Ongoing"
+                      control={<Radio />}
+                      label="Ongoing"
+                    />
+                    <FormControlLabel
+                      value="Completed"
+                      control={<Radio />}
+                      label="Completed"
+                    />
+                    <FormControlLabel
+                      value="Overdue"
+                      control={<Radio />}
+                      label="Canceled"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <FormControl fullWidth label="" minWidth="300px">
+                  <InputLabel>Project Contributers</InputLabel>
+                  <Select MenuProps={MenuProps} onChange={this.setSelected}>
+                    {employees.map((name, index) => (
+                      <MenuItem key={index} value={name.username}>
+                        {name.username}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {selectedEmployees.map((selectedm, number) => (
+                    <Chip
+                      size="sizeSmall"
+                      key={number}
+                      label={selectedm.name}
+                    ></Chip>
                   ))}
-                </Select>
-                {selectedEmployees.map((selectedm, number) => (
-                  <Chip
-                    size="sizeSmall"
-                    key={number}
-                    label={selectedm.name}
-                  ></Chip>
-                ))}
-              </FormControl>
+                </FormControl>
 
-              <FormControl fullWidth label="" minWidth="300px">
-                <InputLabel>Project Managers</InputLabel>
-                <Select
-                  MenuProps={MenuProps}
-                  onChange={this.setSelectedManagers}
+                <FormControl fullWidth label="" minWidth="300px">
+                  <InputLabel>Project Managers</InputLabel>
+                  <Select
+                    MenuProps={MenuProps}
+                    onChange={this.setSelectedManagers}
+                  >
+                    {employees.map((name, index) => (
+                      <MenuItem key={index} value={name.username}>
+                        {name.username}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {selectedManagers.map((selected, number) => (
+                    <Chip
+                      size="sizeSmall"
+                      key={number}
+                      label={selected.name}
+                    ></Chip>
+                  ))}
+                </FormControl>
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    variant="inline"
+                    inputVarient="outlined"
+                    label="End Date"
+                    value={this.state.endDate}
+                    formate="MM/dd/yyy"
+                    onChange={this.setendDate}
+                  ></KeyboardDatePicker>
+                </MuiPickersUtilsProvider>
+
+                <Box
+                  component="form"
+                  sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
+                  noValidate
+                  autoComplete="off"
                 >
-                  {employees.map((name, index) => (
-                    <MenuItem key={index} value={name.username}>
-                      {name.username}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {selectedManagers.map((selected, number) => (
-                  <Chip
-                    size="sizeSmall"
-                    key={number}
-                    label={selected.name}
-                  ></Chip>
-                ))}
-              </FormControl>
-
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  variant="inline"
-                  inputVarient="outlined"
-                  label="End Date"
-                  value={this.state.endDate}
-                  formate="MM/dd/yyy"
-                  onChange={this.setendDate}
-                ></KeyboardDatePicker>
-              </MuiPickersUtilsProvider>
-
-              <Box
-                component="form"
-                sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
-                noValidate
-                autoComplete="off"
-              >
+                  <div>
+                    <TextField
+                      fullWidth
+                      label="Project Description"
+                      id="outlined-multiline-flexible"
+                      multiline
+                      maxRows={4}
+                      onChange={this.setProjectdescription}
+                    />
+                  </div>
+                </Box>
                 <div>
-                  <TextField
-                    fullWidth
-                    label="Project Description"
-                    id="outlined-multiline-flexible"
-                    multiline
-                    maxRows={4}
-                    onChange={this.setProjectdescription}
-                  />
+                  <button
+                    class="buttonsubmit"
+                    type="submit"
+                    varient="contained"
+                    color="primary"
+                    onClick={this.handleClick}
+                  >
+                    Submit and Create{" "}
+                  </button>
                 </div>
-              </Box>
-              <div>
-                <button
-                  class="buttonsubmit"
-                  type="submit"
-                  varient="contained"
-                  color="primary"
-                  onClick={this.handleClick}
-                >
-                  Submit and Create{" "}
-                </button>
-              </div>
-              <button
-                class="buttonsubmitclear"
-                type="submit"
-                varient="contained"
-                color="primary"
-                onClick={this.handleClear}
-              >
-                C L E A R{" "}
-              </button>
-              <button class="closebuttonactual" onClick={this.renderRedirect}>
-                C L O S E{" "}
-              </button>
-            </Paper>
-          </Grid>
-        </div>
-      </form>
+              </Paper>
+            </Grid>
+            <div>
+
+
+            </div>
+          </div>
+        </form>
+        <a href="http://localhost:3000/createtask">
+          <button
+            class="buttonsubmitclear"        >
+            C L E A R
+          </button>
+        </a>
+        <a href="http://localhost:3000/projects">
+          <button class="closebuttonactual">
+            C L O S E
+          </button>
+        </a>
+
+
+      </div>
     );
   }
 }

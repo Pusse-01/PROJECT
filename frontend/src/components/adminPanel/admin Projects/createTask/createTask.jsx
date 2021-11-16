@@ -1,45 +1,45 @@
-import React from "react";
+import React from "react"; // react enviroment
 import {
   Grid,
   Paper,
   Avatar,
   Typography,
-  TextField,
+  FormControl,
+  FormControlLabel,
   Select,
   MenuItem,
   InputLabel,
-  FormControl,
-  Chip,
+  TextField,
   Box,
-  FormControlLabel,
 } from "@material-ui/core";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import "./createproject.css";
-import "../loadingPage.css";
-import axios from "axios";
+import DateFnsUtils from "@date-io/date-fns";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { Redirect } from "react-router-dom";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import FormLabel from "@material-ui/core/FormLabel";
+import axios from "axios";
 
+//style class
+import "../loadingPage.css";
+import "./createtask.css";
+
+//style classes
 const paperStyle = {
   padding: "50px 20px",
-  width: "600px",
+  width: "700px",
   margin: "20px auto",
+  backgroundColor: "#1e272e",
 };
 const avatarStyle = {
-  backgroundColor: "blue",
+  backgroundColor: "black",
 };
-
-const names = [
-  { username: "Oliver Hansen" },
-  { username: "Van Henry" },
-  { username: "April Tucker" },
-];
+const radioStyle = {
+  backgroundColor: "#1e272e",
+};
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -52,63 +52,96 @@ const MenuProps = {
   },
 };
 
-class Createproject extends React.Component {
+//dummy data const
+const project = [
+  {
+    name: "Project1111",
+    members: ["ryan.pusse@gmail.com"],
+    projectStatus: "Over due",
+    overdue: new Date(),
+    administrators: ["Pusse"],
+    discription: "First Project",
+  },
+  {
+    name: "Project2222",
+    members: ["malakarodrigo@gmail.com", "en93824@sjp.ac.lk"],
+    projectStatus: "Over due",
+    overdue: new Date(),
+    administrators: ["Malaka"],
+    discription: "Second Project",
+  },
+];
+
+const selectedproject = [
+  {
+    name: "Project1111Selected",
+    members: ["ryan.pusse@gmail.com"],
+    projectStatus: "Over due",
+    overdue: new Date(),
+    administrators: ["Pusse"],
+    discription: "First Project",
+  },
+];
+
+const names = [
+  { username: "shehanmalakarodrigo@gmail.com" },
+  { username: "abeysinghechanuka@gmail.com" },
+  { username: "pusse@gmail.com" },
+  { username: "ryan.pusse@gmail.com" },
+];
+
+//React class
+export default class Createtask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       employees: names,
-
-      projectname: "",
-      adminstrsselected: [],
-      employeesselected: [],
-      description: "",
-      datenow: new Date(),
-      startDate: new Date(),
-      endDate: new Date(),
-      selectedEmployees: [],
+      projects: [],
+      selectedValue: 0,
+      selectedProject: selectedproject,
+      projectContributers: [],
       selectedManagers: [],
-      category: "Task-Assigned",
       loading: false,
-      error: false,
     };
   }
 
   componentDidMount() {
-    document.title = "PROJECT Projects";
+    this.getProjecLogs();
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  //data fetching
+  getProjecLogs = () => {
+    var resources = [];
+    axios
+      .get("http://localhost:8070/projects")
+      .then((response) => {
+        for (var i = 0; i < response.data.length; i++) {
+          const project = [
+            {
+              name: response.data[i].name,
+              members: response.data[i].members,
+              projectStatus: response.data[i].projectStatus,
+              overdue: response.data[i].overdue,
+              administrators: response.data[i].administrators,
+              discription: response.data[i].discription,
+            },
+          ];
+          resources.push(project[0]);
+          console.log(resources[i]);
+        }
 
-  setProjectname = (event) => {
-    console.log(event.target.value);
-    this.setState({
-      projectname: event.target.value,
-    });
+        this.setState({
+          projects: resources,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          error: true,
+        });
+      });
   };
 
-  setProjectdescription = (event) => {
-    this.setState({
-      description: event.target.value,
-    });
-  };
-
-  setSelected = (event) => {
-    var employeeName = [{ name: event.target.value }];
-    this.state.selectedEmployees.push(employeeName[0]);
-    var temp = [];
-    var j = 0;
-    for (var i = 0; i < this.state.employees.length; i++) {
-      if (!(this.state.employees[i].username === employeeName[0].name)) {
-        temp[j++] = this.state.employees[i];
-      }
-    }
-    this.setState({
-      employees: temp,
-    });
-  };
-
+  //setters
   setSelectedManagers = (event) => {
     var employeeName = [{ name: event.target.value }];
     this.state.selectedManagers.push(employeeName[0]);
@@ -124,254 +157,181 @@ class Createproject extends React.Component {
     });
   };
 
-  handleClear = (event) => {
-    return;
-  };
-
-  renderRedirect = () => {
-    return <Redirect to="http://localhost:3000" />;
-  };
-
-  handleClick = (event) => {
-    for (var i = 0; i < this.state.selectedEmployees.length; i++) {
-      this.state.employeesselected.push(this.state.selectedEmployees[i].name);
-    }
-
-    for (var j = 0; j < this.state.selectedManagers.length; j++) {
-      this.state.adminstrsselected.push(
-        this.state.selectedManagers[j].name
-      );
-    }
-
-    if (
-      this.state.projectname === "" ||
-      this.state.description === "" ||
-      this.state.selectedManagers.length === 0 ||
-      this.state.selectedEmployees.length === 0 ||
-      this.state.category === "" ||
-      this.state.endDate === null
-    ) {
-      this.setState({
-        error: true,
-      });
-    } else {
-      console.log(this.state.employeesselected);
-      var temp_project = {
-        name: this.state.projectname,
-        members: this.state.employeesselected,
-        projectStatus: this.state.category,
-        overdue: Date.now(),
-        administrators: this.state.adminstrsselected,
-        discription: this.state.description,
-        notes: "",
-      };
-      axios.post("http://localhost:8070/projects", temp_project);
-      console.log("created");
+  setSelectedProject = (event) => {
+    var value = event.target.value;
+    for (var i = 0; i < this.state.projects.length; i++) {
+      if (value === this.state.projects[i].name) {
+        this.setState({
+          selectedproject: this.state.projects[i].name,
+          projectContributers: this.state.projects[i].members,
+        });
+      }
     }
   };
 
-  setstartDate = (date) => {
-    this.setState({
-      startDate: date,
-    });
-    console.log(date);
-  };
-
-  setendDate = (date) => {
-    this.setState({
-      endDate: date,
-    });
-  };
-
-  setCategory = (event) => {
-    this.setState({ category: event.target.value });
-  };
-
-
-getEmployees(){
-  
-}
-
-
+  //render to web page
   render() {
+    const { projects, selectedProject, projectContributers } = this.state;
 
-
-
+    //if data didnt recieve loading is true and this will render
     if (this.state.loading) {
-      return (
-        <div class="ring1">
-          Loading
-          <span class="span1"></span>
-        </div>
-      );
-    }
-
-    if (this.state.error) {
       return (
         <div>
           <div class="ring1">
+            Loading
             <span class="span1"></span>
           </div>
           <div>
-            <a href="http://localhost:3000/createproject">
-              <button class="loadingbutton">
-                {" "}
-                Invalid, Please Fill all the details.
-              </button>
-            </a>
+            <button class="loadingbutton">
+              Please check your network connection.
+            </button>
           </div>
         </div>
       );
-    } 
-
-
-
-    const { selectedEmployees, employees, selectedManagers, category } =
-      this.state;
+    }
 
     return (
-      <form>
+      <div>
         <div>
-          <Grid>
-            <Paper elevation={20} style={paperStyle}>
-              <Grid align="left">
-                <div>
-                  <Avatar style={avatarStyle}>
-                    <AddCircleOutlineOutlinedIcon
-                      fontSize="large"
-                      htmlColor="#ffffff"
-                    />
-                  </Avatar>
-                </div>
+          <form>
+            <div>
+              <Grid>
+                <Paper elevation={20} style={paperStyle}>
+                  <Grid align="left">
+                    <div>
+                      <Avatar style={avatarStyle}>
+                        <AddCircleOutlineOutlinedIcon
+                          fontSize="large"
+                          htmlColor="#ffffff"
+                        />
+                      </Avatar>
+                    </div>
 
-                <h1>Create project</h1>
-                <Typography variant="caption">
-                  <p>Please fill this from to create a project</p>
-                </Typography>
+                    <h1 class="h1">MANAGE TASKS</h1>
+                    <Typography variant="caption">
+                      <p>Please use radio buttons to select tasks</p>
+                    </Typography>
+                  </Grid>
+                  <Grid>
+                    <FormControl fullWidth label="" minWidth="300px">
+                      <InputLabel>Project List</InputLabel>
+                      <Select
+                        value={selectedProject[0].name}
+                        MenuProps={MenuProps}
+                        onChange={this.setSelectedProject}
+                      >
+                        {projects.map((selproject, index) => (
+                          <MenuItem key={index} value={selproject.name}>
+                            {selproject.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+
+                  {projectContributers.map((projectmembers, number) => (
+                    <div>
+                      <h1>{number+1}. {projectmembers}</h1>
+                      <Grid>
+                        <TextField
+                          fullWidth
+                          label="Task Name"
+                          onChange={this.setTaskname}
+                        ></TextField>
+                      </Grid>
+                      <FormControl class="marginedit">
+                        <FormLabel>Task Status</FormLabel>
+                        <RadioGroup
+                          style={radioStyle}
+                          color="primary"
+                          row
+                          value="To Do"
+                          onChange={this.setCategory}
+                        >
+                          <FormControlLabel
+                            value="To Do"
+                            control={<Radio />}
+                            label="To Do"
+                          />
+                          <FormControlLabel
+                            value="In Progress"
+                            control={<Radio />}
+                            label="In Progress"
+                          />
+                          <FormControlLabel
+                            value="Done"
+                            control={<Radio />}
+                            label="Done"
+                          />
+                          <FormControlLabel
+                            value="Bugs/Issues"
+                            control={<Radio />}
+                            label="Bugs/Issues"
+                          />
+                          <FormControlLabel
+                            value="Review"
+                            control={<Radio />}
+                            label="Review"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          variant="inline"
+                          inputVarient="outlined"
+                          label="End Date"
+                          value={this.state.endDate}
+                          formate="MM/dd/yyy"
+                          onChange={this.setendDate}
+                        ></KeyboardDatePicker>
+                      </MuiPickersUtilsProvider>
+
+                      <Box
+                        component="form"
+                        sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <div>
+                          <TextField
+                            fullWidth
+                            label="Task Description"
+                            id="outlined-multiline-flexible"
+                            multiline
+                            maxRows={4}
+                            onChange={this.setProjectdescription}
+                          />
+                        </div>
+                      </Box>
+                    </div>
+                  ))}
+
+                  <div>
+                    <button
+                      class="buttonsubmit"
+                      type="submit"
+                      varient="contained"
+                      color="primary"
+                      onClick={this.handleClick}
+                    >
+                      Submit and Create{" "}
+                    </button>
+                  </div>
+                </Paper>
               </Grid>
-
-              <TextField
-                fullWidth
-                label="Project Name"
-                onChange={this.setProjectname}
-              ></TextField>
-
-              <RadioGroup value={category} onChange={this.setCategory}>
-                <FormControlLabel
-                  value="Task-Assigned"
-                  control={<Radio />}
-                  label="Assign"
-                />
-                <FormControlLabel
-                  value="Task-Overdue"
-                  control={<Radio />}
-                  label="Overdue"
-                />
-                <FormControlLabel
-                  value="Task-Completed"
-                  control={<Radio />}
-                  label="Complete"
-                />
-              </RadioGroup>
-              <FormControl fullWidth label="" minWidth="300px">
-                <InputLabel>Project Contributers</InputLabel>
-                <Select MenuProps={MenuProps} onChange={this.setSelected}>
-                  {employees.map((name, index) => (
-                    <MenuItem key={index} value={name.username}>
-                      {name.username}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {selectedEmployees.map((selectedm, number) => (
-                  <Chip
-                    size="sizeSmall"
-                    key={number}
-                    label={selectedm.name}
-                  ></Chip>
-                ))}
-              </FormControl>
-
-              <FormControl fullWidth label="" minWidth="300px">
-                <InputLabel>Project Managers</InputLabel>
-                <Select
-                  MenuProps={MenuProps}
-                  onChange={this.setSelectedManagers}
-                >
-                  {employees.map((name, index) => (
-                    <MenuItem key={index} value={name.username}>
-                      {name.username}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {selectedManagers.map((selected, number) => (
-                  <Chip
-                    size="sizeSmall"
-                    key={number}
-                    label={selected.name}
-                  ></Chip>
-                ))}
-              </FormControl>
-
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  variant="inline"
-                  inputVarient="outlined"
-                  label="End Date"
-                  value={this.state.endDate}
-                  formate="MM/dd/yyy"
-                  onChange={this.setendDate}
-                ></KeyboardDatePicker>
-              </MuiPickersUtilsProvider>
-
-              <Box
-                component="form"
-                sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
-                noValidate
-                autoComplete="off"
-              >
-                <div>
-                  <TextField
-                    fullWidth
-                    label="Project Description"
-                    id="outlined-multiline-flexible"
-                    multiline
-                    maxRows={4}
-                    onChange={this.setProjectdescription}
-                  />
-                </div>
-              </Box>
-              <div>
-                <button
-                  class="buttonsubmit"
-                  type="submit"
-                  varient="contained"
-                  color="primary"
-                  onClick={this.handleClick}
-                >
-                  Submit and Create{" "}
-                </button>
-              </div>
-              <button
-                class="buttonsubmitclear"
-                type="submit"
-                varient="contained"
-                color="primary"
-                onClick={this.handleClear}
-              >
-                C L E A R{" "}
-              </button>
-              <button class="closebuttonactual" onClick={this.renderRedirect}>
-                C L O S E{" "}
-              </button>
-            </Paper>
-          </Grid>
+              <div></div>
+            </div>
+          </form>
+          <a href="http://localhost:3000/createproject">
+            <button class="buttonsubmitclear">C L E A R</button>
+          </a>
+          <a href="http://localhost:3000/projects">
+            <button class="closebuttonactual">C L O S E</button>
+          </a>
         </div>
-      </form>
+      </div>
     );
   }
-}
-
-export default Createproject;
-/*******************************
-
- */
+} //end of class

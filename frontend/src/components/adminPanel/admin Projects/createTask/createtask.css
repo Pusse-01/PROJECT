@@ -1,0 +1,29 @@
+
+.h1{
+  color:red;
+  opacity:0.7
+}
+
+.buttonsubmitclear{
+  position: absolute;
+  top: 140px;
+  left: 890px;
+  padding: 10px;
+  background-color: transparent;
+  color: rgb(190, 33, 33);
+  z-index: 21;
+  position: absolute;
+  border: 0px;
+}
+
+.closebuttonactual {
+  position: absolute;
+  top: 110px;
+  left: 890px;
+  padding: 10px;
+  background-color: transparent;
+  color: rgb(190, 33, 33);
+  z-index: 21;
+  position: absolute;
+  border: 0px;
+}

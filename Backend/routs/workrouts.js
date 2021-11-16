@@ -9,7 +9,7 @@ const Project = require('../models/projects');
 const { Router } = require("express");
 const working = require("../models/working");
 
-router.post("/record/:id", (req, res) => {
+router.post("/record", (req, res) => {
   const { projectname, taskname, memo } = req.body;
   const starttime = new Date();
 
@@ -18,9 +18,11 @@ router.post("/record/:id", (req, res) => {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
-  let id = req.params.id;
+  let id=req.query.id;
+  let email=req.query.email;
   const newwork = new Workingproject({
     id:id,
+    email:email,
     projectname: req.body.projectname,
     taskname: req.body.taskname,
     memo: req.body.memo,
@@ -79,9 +81,17 @@ router.get("/total/:id", (req, res) => {
       for (let times of iter) {
         totalhours += times.hours ;
         totalminutes += times.minutes;
-        totalseconds += times.seconds;
+        totalseconds += times.seconds;   
+        if(totalseconds>59){
+          totalminutes++;
+          totalseconds-=60;
+        }
+        if(totalminutes>59){
+          totalhours++;
+          totalminutes-=60;
+        }   
       }
-  
+     
       return res.json({
         totalhours:totalhours,
         totalminutes:totalminutes,
@@ -226,7 +236,8 @@ router.get("/completedprojects/:email",(req,res)=>{//get completed projects by e
 
 
 
-//Admin Panel Componenets
+//**********************************Admin Panel Componenets
+//****************************************************************************/
 
 router.get("/admintimeline/",(req,res)=>{//get total workings of all employees 
   Workingproject.find({}).then((admintimeline)=>{
@@ -250,7 +261,7 @@ router.get("/admintimeline/",(req,res)=>{//get total workings of all employees
           duration+="0"+times.seconds.toString();
         }
       
-       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+       let obj=[times.email,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
         summery.push(obj);
       
     }
@@ -283,7 +294,7 @@ router.get("/admintimelineproject/:projectname",(req,res)=>{//get total workings
           duration+="0"+times.seconds.toString();
         }
       
-       let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
         summery.push(obj);
       
     }

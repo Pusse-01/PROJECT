@@ -24,6 +24,8 @@ import Reports from "./components/adminPanel/Reports/reports";
 import ProjectAdmin from './components//adminPanel/admin Projects/adminProjects'
 import Createproject from './components//adminPanel/admin Projects/Create Project/createProject'
 import UserReports from "./components/adminPanel/Reports/userReports";
+import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
+import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -137,8 +139,10 @@ function App() {
             </Route>
             <Route path="/createproject">
               <Createproject/>
-              </Route>
-            
+            </Route>
+            <Route path="/createtask">
+              <Createtask/>
+            </Route>
           </div>   }
           </div>
         ) : logorcreate === true ? (

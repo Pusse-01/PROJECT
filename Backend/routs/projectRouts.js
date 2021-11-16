@@ -75,7 +75,7 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
 
 
    //added by malaka
-   //to get project by its name
+   //to get project by its contributers
    const fetchProjects = async (req, res) => {
       try {
           const projectlist = await Project.findOne({name: req.params.id});
@@ -88,6 +88,9 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
   };
    router.get ('/projects/list/:id', fetchProjects);
 
+   //added by malaka
+   //to get all projects delete this function
+// removed by malaka
 // ************************************** GET PROJECT BY ID *****************************************
 const getProjectById = (req,res,next) => {
     if(req.body.project_id==null){
