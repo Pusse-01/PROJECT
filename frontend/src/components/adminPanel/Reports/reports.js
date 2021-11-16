@@ -100,7 +100,7 @@ class Reports extends Component {
     }
     clickMore = () => {
       this.props.history.push({
-          pathname:"/reportsMore",
+          pathname:"/userReports",
           search: '?query=abc',
           state: {}
       })
@@ -138,7 +138,7 @@ render(){
                             <th className="reportstable_header_column">More Details</th>
 
                         </tr>                      
-                           return (
+                           
                                 <tr className="reportstable_data_odd">
 
                                     <td className="reportstable_data_column">001</td>
@@ -174,7 +174,7 @@ render(){
                                             </td>
                                 </tr>
 
-                            )
+                            
 
                     </table>
           </div>

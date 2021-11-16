@@ -29,6 +29,7 @@ const upload =  multer({
 //Employee model
 const Employee = require('../models/employee');
 
+
 // @route POST employee/register
 // @desc Register employee
 // @access Public
@@ -135,6 +136,15 @@ router.post ('/auth',(req, res)=>{
    })
 });
 
+  router.get ('/user/:email',(req, res)=>{
+   let user = req.params.email;
+   console.log(user)
+  Employee.find({email: user}).then(user=>{
+     if (user) 
 
+     return res.json(user);
+  
+    })
+  });
 
 module.exports = router;

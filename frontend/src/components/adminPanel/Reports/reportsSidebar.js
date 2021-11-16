@@ -5,8 +5,8 @@ import "./reportsStyles.css";
 export default class Sidebar extends Component{
     render(){
         return(
-            <div className="sideBarComponent">
-                <div className="sideBarElement">
+            <div className="reportssideBarComponent">
+                <div className="reportssideBarElement">
                     <h6>mmm...</h6>
                 </div>
             </div>

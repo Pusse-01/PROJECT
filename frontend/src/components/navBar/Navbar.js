@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import "./navBarStyle.css"
 import { withRouter } from "react-router-dom";
-
 class Navbar extends Component{
     constructor(props) {
         super(props);
@@ -174,7 +173,7 @@ class Navbar extends Component{
                 </div>
                 <div className="user">
                     <img className="notification" src={require('../../assests/images/notifications.png').default}/>
-                    <div className="userText">
+                    <div >
                         <h7 className="userNameText">Welcome {this.state.name}</h7>
                         <p></p>
                     </div>

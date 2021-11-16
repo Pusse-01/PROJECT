@@ -34,7 +34,7 @@ class Projects extends Component {
     }
     render() {
 
-        const { projects, isLoaded } = this.state;
+        const { projects } = this.state;
 
         return (
 

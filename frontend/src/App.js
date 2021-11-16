@@ -23,6 +23,7 @@ import WeatherApp from "./components/calendar/calendar-subcomponents/weather/wea
 import Reports from "./components/adminPanel/Reports/reports";
 import ProjectAdmin from './components//adminPanel/admin Projects/adminProjects'
 import Createproject from './components//adminPanel/admin Projects/Create Project/createProject'
+import UserReports from "./components/adminPanel/Reports/userReports";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -36,7 +37,7 @@ function App() {
       token: data.token,
       id: data.employee.id,
       role: data.employee.role,
-      profileImage:data.employee.profileImage
+      profileImage: data.employee.profileImage
     });
   };
   const Logout = () => {
@@ -128,12 +129,16 @@ function App() {
             <Route path="/reports">
               <Reports/>
             </Route>
+            <Route path="/userReports">
+              <UserReports/>
+            </Route>
             <Route path="/projects">
               <ProjectAdmin/>
             </Route>
             <Route path="/createproject">
               <Createproject/>
-            </Route>
+              </Route>
+            
           </div>   }
           </div>
         ) : logorcreate === true ? (

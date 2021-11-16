@@ -54,20 +54,10 @@ router.post ('/projects',(async(req, res)=>{
 // @access Public
 router.get ('/projects/:email',(req, res)=>{
  let email = req.params.email;
- console.log(email)
-   //let userId = req.params.id;
-   //res.status(201).json({ msg: 'Projects'});
-
-/* Employee.find({email}).then(employee=>{
-      if(employee) return email = employee.email; */
-
 //Check for existing user
 Project.find({members: email}).then(projects=>{
    if (projects) 
-   console.log(projects);
-   console.log(projects.name);
    return res.json(projects);
-
   })
 });
 
