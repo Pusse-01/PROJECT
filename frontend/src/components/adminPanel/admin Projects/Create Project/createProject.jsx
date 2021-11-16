@@ -32,11 +32,16 @@ const paperStyle = {
   padding: "50px 20px",
   width: "700px",
   margin: "20px auto",
-  backgroundColor: "#1e272e",
+  backgroundColor: "#262c30",
 };
 const avatarStyle = {
-  backgroundColor: "blue",
+  backgroundColor: "#000000",
+  margin:"0px"
 };
+
+const calendarStyle ={
+
+}
 
 const names = [
   { username: "shehanmalakarodrigo@gmail.com" },
@@ -351,7 +356,7 @@ class Createproject extends React.Component {
                   ))}
                 </FormControl>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} >
                   <KeyboardDatePicker
                     variant="inline"
                     inputVarient="outlined"
@@ -392,23 +397,27 @@ class Createproject extends React.Component {
                 </div>
               </Paper>
             </Grid>
+
+            
             <div>
 
 
             </div>
           </div>
         </form>
-        <a href="http://localhost:3000/createtask">
+<div>
+<a href="http://localhost:3000/createproject">
           <button
-            class="buttonsubmitclear"        >
+            class="buttonsubmitclearproject"        >
             C L E A R
           </button>
         </a>
         <a href="http://localhost:3000/projects">
-          <button class="closebuttonactual">
+          <button class="closebuttonactualproject">
             C L O S E
           </button>
         </a>
+</div>
 
 
       </div>

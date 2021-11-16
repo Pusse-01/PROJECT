@@ -74,6 +74,7 @@ const project = [
 
 const selectedproject = [
   {
+    id: "111111111111111111",
     name: "Project1111Selected",
     members: ["ryan.pusse@gmail.com"],
     projectStatus: "Over due",
@@ -98,10 +99,29 @@ export default class Createtask extends React.Component {
       employees: names,
       projects: [],
       selectedValue: 0,
-      selectedProject: selectedproject,
+      selectedProject: [],
       projectContributers: [],
       selectedManagers: [],
+      taskname: "",
+      endDate: Date.now(),
+      taskstatus: "To Do",
+      description: "",
+      task: {
+        taskname: "",
+        endDate: Date.now(),
+        taskstatus: "",
+        description: "",
+      },
+      count: 0,
+      taskDetail: [],
+      customValue: "",
+      customView: false,
       loading: false,
+      showgrid: false,
+      showerror: false,
+      showend: false,
+      showsubmit: false,
+      showcustomoption: true,
     };
   }
 
@@ -118,6 +138,7 @@ export default class Createtask extends React.Component {
         for (var i = 0; i < response.data.length; i++) {
           const project = [
             {
+              id: response.data[i]._id,
               name: response.data[i].name,
               members: response.data[i].members,
               projectStatus: response.data[i].projectStatus,
@@ -127,7 +148,6 @@ export default class Createtask extends React.Component {
             },
           ];
           resources.push(project[0]);
-          console.log(resources[i]);
         }
 
         this.setState({
@@ -161,17 +181,240 @@ export default class Createtask extends React.Component {
     var value = event.target.value;
     for (var i = 0; i < this.state.projects.length; i++) {
       if (value === this.state.projects[i].name) {
+        var selected = [];
+        selected.push(this.state.projects[i]);
         this.setState({
-          selectedproject: this.state.projects[i].name,
+          selectedProject: selected,
           projectContributers: this.state.projects[i].members,
+          taskname: "",
         });
       }
+    }
+
+    this.setState({
+      showgrid: true,
+    });
+  };
+
+  setTaskname = (event) => {
+    var value = event.target.value;
+    this.setState({
+      taskname: value,
+    });
+  };
+  setCategory = (event) => {
+    var value = event.target.value;
+    this.setState({
+      taskstatus: value,
+    });
+  };
+
+  setendDate = (date) => {
+    this.setState({
+      endDate: date,
+    });
+  };
+
+  setdescription = (event) => {
+    var value = event.target.value;
+    this.setState({
+      description: value,
+    });
+  };
+
+  handleClick = (event) => {
+
+
+
+    if (this.state.customView) {
+      var contribution = []
+      var temp_task = this.state.taskDetail;
+      var temp = [
+        {
+          taskname: this.state.taskname,
+          endDate: this.state.endDate,
+          taskstatus: this.state.taskstatus,
+          description: this.state.description,
+        },
+      ];
+      temp_task.push(temp[0]);
+      this.setState({
+        taskDetail: temp_task,
+      });
+
+
+
+      for (var j = 0; j < this.state.projectContributers.length; j++) {
+        contribution.push(this.state.projectContributers[j])
+      }
+    }
+
+    if(!(this.state.customView)){
+        contribution = ['1111111111111111', '222222222222222222']
+    }
+    for (var i = 0; i < this.state.taskDetail.length; i++) {
+      var taskBody = [
+        {
+          task_name: this.state.taskDetail[i].taskname,
+          due_date: this.state.taskDetail[i].endDate,
+          action: this.state.taskDetail[i].description,
+          task_status: this.state.taskDetail[i].taskstatus, //
+          project_id: this.state.selectedProject[0].id, //
+          project_name: this.state.selectedProject[0].name, //
+          assigned_to: contribution,
+        },
+      ];
+
+      axios
+        .post("http://localhost:8070/task/addTask", taskBody[0])
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          alert("error");
+        });
+    }
+  };
+
+  handleBack = (event) => {
+    var temp_task = this.state.taskDetail;
+    var temp = [
+      {
+        taskname: this.state.taskname,
+        endDate: this.state.endDate,
+        taskstatus: this.state.taskstatus,
+        description: this.state.description,
+      },
+    ];
+    temp_task[this.state.count] = temp[0];
+
+    console.log(
+      "back " + this.state.taskDetail[this.state.taskDetail.length - 1].taskname
+    );
+    console.log(this.state.taskDetail.length);
+    console.log(this.state.count);
+
+    if (this.state.count > 0) {
+      this.setState({
+        taskname: this.state.taskDetail[this.state.count - 1].taskname,
+        endDate: this.state.taskDetail[this.state.count - 1].endDate,
+        taskstatus: this.state.taskDetail[this.state.count - 1].taskstatus,
+        description: this.state.taskDetail[this.state.count - 1].description,
+        count: this.state.count - 1,
+      });
+    } else if (this.state.count === 0) {
+      this.setState({
+        taskname: this.state.taskDetail[0].taskname,
+        endDate: this.state.taskDetail[0].endDate,
+        taskstatus: this.state.taskDetail[0].taskstatus,
+        description: this.state.taskDetail[0].description,
+        count: this.state.count,
+      });
+    }
+
+    console.log(
+      "back " + this.state.taskDetail[this.state.taskDetail.length - 1].taskname
+    );
+    console.log(this.state.taskDetail.length);
+    console.log(this.state.count);
+    console.log(temp_task);
+  };
+
+  handleNext = (event) => {
+    if (this.state.count === this.state.projectContributers.length - 1) {
+      this.setState({
+        showend: true,
+        showsubmit: true,
+      });
+    }
+    var temp_task = this.state.taskDetail;
+    var temp = [
+      {
+        taskname: this.state.taskname,
+        endDate: this.state.endDate,
+        taskstatus: this.state.taskstatus,
+        description: this.state.description,
+      },
+    ];
+
+    console.log("next 1 ");
+    console.log(this.state.taskDetail.length);
+    console.log(this.state.count);
+
+    if (this.state.taskDetail.length - 1 > this.state.count) {
+      temp_task[this.state.count] = temp[0];
+      this.setState({
+        taskname: this.state.taskDetail[this.state.count + 1].taskname,
+        endDate: this.state.taskDetail[this.state.count + 1].endDate,
+        taskstatus: this.state.taskDetail[this.state.count + 1].taskstatus,
+        description: this.state.taskDetail[this.state.count + 1].description,
+        taskDetail: temp_task,
+        count: this.state.count + 1,
+      });
+    } else if (this.state.count !== 0) {
+      temp_task.push(temp[0]);
+      this.setState({
+        taskDetail: temp_task,
+        taskname: "",
+        endDate: Date.now(),
+        taskstatus: "To Do",
+        description: "",
+        count: this.state.count + 1,
+      });
+      console.log(
+        "next 2" +
+        this.state.taskDetail[this.state.taskDetail.length - 1].taskname
+      );
+      console.log(this.state.taskDetail.length);
+      console.log(this.state.count);
+    } else if (this.state.count === 0) {
+      temp_task[this.state.count] = temp[0];
+      this.setState({
+        taskDetail: temp_task,
+        taskname: "",
+        endDate: Date.now(),
+        taskstatus: "To Do",
+        description: "",
+        count: this.state.count + 1,
+      });
+    }
+  };
+
+  setModel = (event) => {
+    var value = event.target.value;
+    this.setState({
+      customValue: value,
+    });
+    if (value === "Custom") {
+      this.setState({
+        customView: true,
+      });
+    } else {
+      this.setState({
+        customView: false,
+      });
     }
   };
 
   //render to web page
   render() {
-    const { projects, selectedProject, projectContributers } = this.state;
+    const {
+      projects,
+      selectedProject,
+      projectContributers,
+      taskname,
+      taskstatus,
+      endDate,
+      description,
+      count,
+      showgrid,
+      showerror,
+      showend,
+      showsubmit,
+      showcustomoption,
+      customValue,
+      customView,
+    } = this.state;
 
     //if data didnt recieve loading is true and this will render
     if (this.state.loading) {
@@ -189,7 +432,7 @@ export default class Createtask extends React.Component {
         </div>
       );
     }
-
+    //
     return (
       <div>
         <div>
@@ -209,14 +452,14 @@ export default class Createtask extends React.Component {
 
                     <h1 class="h1">MANAGE TASKS</h1>
                     <Typography variant="caption">
-                      <p>Please use radio buttons to select tasks</p>
+                      <p>Please use this form to create tasks</p>
                     </Typography>
                   </Grid>
                   <Grid>
                     <FormControl fullWidth label="" minWidth="300px">
                       <InputLabel>Project List</InputLabel>
                       <Select
-                        value={selectedProject[0].name}
+                        value={selectedProject.name}
                         MenuProps={MenuProps}
                         onChange={this.setSelectedProject}
                       >
@@ -227,14 +470,58 @@ export default class Createtask extends React.Component {
                         ))}
                       </Select>
                     </FormControl>
+
+                    {showcustomoption && !showgrid ? (
+                      <FormControl class="marginedit">
+                        <FormLabel>Method you need to follow</FormLabel>
+                        <RadioGroup
+                          style={radioStyle}
+                          color="primary"
+                          row
+                          value={customValue}
+                          onChange={this.setModel}
+                        >
+                          <FormControlLabel
+                            value="Custom"
+                            control={<Radio />}
+                            label="Same task for all employees"
+                          />
+                          <FormControlLabel
+                            value="Unique"
+                            control={<Radio />}
+                            label="Unique task for each employee"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    ) : null}
+
+                    <div></div>
                   </Grid>
-
-
-                  {projectContributers.map((projectmembers, number) => (
+                  {showerror && showgrid ? (
                     <div>
-                      <h1>{number+1}. {projectmembers}</h1>
+                      <br />
+                      <p>No contributers for this project.</p>
+                    </div>
+                  ) : null}
+
+                  {showend && showgrid ? (
+                    <div>
+                      <br />
+                      <p>No more contributers for this project.</p>
+                    </div>
+                  ) : null}
+
+                  {showgrid && !showend && !showerror ? (
+                    <div>
+                      {!customView ? (
+                        <h1 class="h1">
+                          {count + 1}. {projectContributers[count]}
+                        </h1>
+                      ) : null}
+
                       <Grid>
                         <TextField
+                          value={taskname}
                           fullWidth
                           label="Task Name"
                           onChange={this.setTaskname}
@@ -246,7 +533,7 @@ export default class Createtask extends React.Component {
                           style={radioStyle}
                           color="primary"
                           row
-                          value="To Do"
+                          value={taskstatus}
                           onChange={this.setCategory}
                         >
                           <FormControlLabel
@@ -282,7 +569,7 @@ export default class Createtask extends React.Component {
                           variant="inline"
                           inputVarient="outlined"
                           label="End Date"
-                          value={this.state.endDate}
+                          value={endDate}
                           formate="MM/dd/yyy"
                           onChange={this.setendDate}
                         ></KeyboardDatePicker>
@@ -299,32 +586,56 @@ export default class Createtask extends React.Component {
                             fullWidth
                             label="Task Description"
                             id="outlined-multiline-flexible"
+                            value={description}
                             multiline
                             maxRows={4}
-                            onChange={this.setProjectdescription}
+                            onChange={this.setdescription}
                           />
                         </div>
                       </Box>
+                      {!customView ? (
+                        <div class="containerbuttons">
+                          <button
+                            class="buttondir back"
+                            type="button"
+                            varient="contained"
+                            color="primary"
+                            onClick={this.handleBack}
+                          >
+                            <span color="primary"> PREV</span>
+                          </button>
+                          <button
+                            class="buttondir forward"
+                            type="button"
+                            varient="contained"
+                            color="primary"
+                            onClick={this.handleNext}
+                          >
+                            <span color="primary"> NEXT</span>
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
-                  ))}
+                  ) : null}
 
-                  <div>
-                    <button
-                      class="buttonsubmit"
-                      type="submit"
-                      varient="contained"
-                      color="primary"
-                      onClick={this.handleClick}
-                    >
-                      Submit and Create{" "}
-                    </button>
+                  <div class="containerbuttons">
+                    {(showsubmit || customView) && showgrid ? (
+                      <button
+                        class="buttonsubmittask"
+                        type="button"
+                        varient="contained"
+                        color="primary"
+                        onClick={this.handleClick}
+                      >
+                        <span color="primary">SUBMIT</span>
+                      </button>
+                    ) : null}
                   </div>
                 </Paper>
               </Grid>
-              <div></div>
             </div>
           </form>
-          <a href="http://localhost:3000/createproject">
+          <a href="http://localhost:3000/createtask">
             <button class="buttonsubmitclear">C L E A R</button>
           </a>
           <a href="http://localhost:3000/projects">
@@ -335,3 +646,69 @@ export default class Createtask extends React.Component {
     );
   }
 } //end of class
+
+/*******************************
+
+                  {projectContributers.map((projectmembers, number) => (
+
+                  ))}
+
+
+                      this.setState({
+      taskname: "",
+      endDate: Date.now(),
+      taskstatus: "To Do",
+      description: "",
+    });
+
+    if (
+      this.state.projectContributers.length === this.state.taskDetail.length
+    ) {
+      this.setState({
+        showend: true,
+        showsubmit: true,
+      });
+    }
+
+       var temp_task = this.state.taskDetail;
+    console.log(this.state.task);
+    var temp = [
+      {
+        taskname: this.state.taskname,
+        endDate: this.state.endDate,
+        taskstatus: this.state.taskstatus,
+        description: this.state.description,
+      },
+    ];
+
+
+    temp_task.push(temp[0]);
+    this.setState({
+      count: this.state.count + 1,
+      task: temp[0],
+      taskDetail: temp_task,
+    });
+    console.log(this.state.task);
+    console.log(this.state.count);
+    console.log(this.state.taskDetail);
+
+    for(var i=0; i<this.state.taskDetail.length; i++){
+  var taskBody =[{
+    task_name : this.state.taskDetail[i].taskname,
+    due_date : "2021-09-22",
+    action : this.state.taskDetail[i].description,
+    task_status : this.state.taskDetail[i].taskstatus,
+    project_id : this.state.selectedProject[0].id,
+    project_name : this.state.selectedProject[0].name,
+    assigned_to : ['11111111']
+  }]
+
+  axios.post('http://localhost:8070/task/addTask', taskBody)
+  .then((response) => {
+    console.log(response.data)
+
+  }).catch((error)=>{
+    alert('error')
+  })
+}
+ */
