@@ -184,6 +184,13 @@
     margin-top: 5px;
     border-radius: 10px;
 }
+.taskMore_errorMessage{
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
 @media only screen and (max-width: 991px) {
     .sideBarComponent{
         position: unset;

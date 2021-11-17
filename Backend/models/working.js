@@ -7,7 +7,7 @@ const workingprojectSchema = new Schema({
     type: String,
     required: true,
   },
-  email:{
+  name:{
     type:String,
     required:true,
   },

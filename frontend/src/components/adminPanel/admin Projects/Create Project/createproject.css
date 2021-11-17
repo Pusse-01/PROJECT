@@ -67,10 +67,14 @@ h1 {
   left: 930px;
 }
 
-.closebuttonactual {
+.calendar{
+  background-color: red;
+}
+
+.closebuttonactualproject {
   position: absolute;
-  top: 110px;
-  left: 890px;
+  top: 100px;
+  left: 950px;
   padding: 10px;
   background-color: transparent;
   color: rgb(190, 33, 33);
@@ -93,10 +97,10 @@ h1 {
     position: absolute;
     border: 0px;
   }
-  .buttonsubmitclear{
+  .buttonsubmitclearproject{
     position: absolute;
-    top: 140px;
-    left: 890px;
+    top: 100px;
+    left: 850px;
     padding: 10px;
     background-color: transparent;
     color: rgb(190, 33, 33);

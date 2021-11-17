@@ -15,6 +15,7 @@ export default class Sidebar extends Component{
                 <h4 className="sidebarMoreHeader">Members Assigned To The Task</h4>
                 <div className="sideBarMoreSubContainer">
                     {
+                        (this.props.members.length!=null && this.props.members.length > 0 )?
                         this.props.members.map((member, index)=>{
                             return (
                                 <div className="taskMoreElement">
@@ -23,7 +24,7 @@ export default class Sidebar extends Component{
                                     <h7 className="taskMoreElementEmail">{member.email}</h7>
                                 </div>
                             )
-                        })
+                        }) : <h5 className="taskMore_errorMessage">No members are assigned to the task</h5>
                     }
                 </div>
             </div>

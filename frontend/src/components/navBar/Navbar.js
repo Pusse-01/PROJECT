@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import "./navBarStyle.css"
 import { withRouter } from "react-router-dom";
+
 class Navbar extends Component{
     constructor(props) {
         super(props);
@@ -13,8 +14,9 @@ class Navbar extends Component{
                 selectedProjects: false,
                 selectedTasks: false,
                 selectedCalendar: false,
-                selectedTimeLogs: false,
+                selectedTimeLogs: false
             },
+            openProfileMenu:"employee_menu",
             name: founduser.employee.name,
             id:founduser.employee.id,
             profileImage:"http://localhost:8070/"+founduser.employee.profileImage
@@ -41,6 +43,20 @@ class Navbar extends Component{
         }
     }
 
+    openProfileMenu(){
+        if(this.state.openProfileMenu=="employee_menu"){
+            console.log("open menu",this.state.openProfileMenu)
+            this.setState({
+                openProfileMenu:"opened_employee_menu"
+            })
+        }else{
+            console.log("Close menu",this.state.openProfileMenu)
+            this.setState({
+                openProfileMenu:"employee_menu"
+            })
+        }
+
+    }
     logOut(){
         this.props.history.push("/");
         this.props.logout();
@@ -131,7 +147,7 @@ class Navbar extends Component{
         let linkClassTimeLogs = this.state.nav.selectedTimeLogs ? "nav-link text-danger" : "nav-link text-light";
         let linkClassLogout = this.state.nav.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark" id="employeeNavbar">
                 <div className="logoContainer">
                     <h5 className="logo">P</h5>
                     <h5 className="logo">R</h5>
@@ -151,7 +167,7 @@ class Navbar extends Component{
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className=" nav-item active">
-                            <a  className={linkClassHome} aria-current="page" href="#" onClick={this.changeColorHome.bind(this)}>Home</a>
+                                <a  className={linkClassHome} aria-current="page" href="#" onClick={this.changeColorHome.bind(this)}>Home</a>
                             </li>
                             <li className="nav-item" >
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>
@@ -171,14 +187,46 @@ class Navbar extends Component{
                         </ul>
                     </div>
                 </div>
-                <div className="user">
-                    <img className="notification" src={require('../../assests/images/notifications.png').default}/>
-                    <div >
-                        <h7 className="userNameText">Welcome {this.state.name}</h7>
-                        <p></p>
+
+                <div className="employee_navbar_action">
+                    <div className="employee_profile" onClick={this.openProfileMenu.bind(this)}>
+                        <img className="employee_avatar" src={this.state.profileImage}/>
                     </div>
-                    <img className="avatar" src={this.state.profileImage}/>
+                    <div className={this.state.openProfileMenu}>
+                        <h4 className="hiddenMenuTitle">
+                            Welcome
+                            <br/>
+                            <span className="hiddenMenuSpan">{this.state.name}</span>
+                        </h4>
+                        <ul>
+                            <li className="hiddenMenuListItem">
+                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
+                                <h7 className="hiddenMenuListItemText">Notofications</h7>
+                            </li>
+                            <li className="hiddenMenuListItem">
+                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
+                                <h7 className="hiddenMenuListItemText">Settings</h7>
+                            </li>
+                            <li className="hiddenMenuListItem">
+                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
+                                <h7 className="hiddenMenuListItemText" onClick={this.logOut.bind(this)}>Logout</h7>
+                            </li>
+                            <li className="hiddenMenuListItem">
+                                <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
+                                    <h7>Log out</h7>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                {/*<div className="user">*/}
+                {/*    <img className="notification" src={require('../../assests/images/notifications.png').default}/>*/}
+                {/*    <div className="userText">*/}
+                {/*        <h7 className="userNameText">Welcome {this.state.name}</h7>*/}
+                {/*        <p></p>*/}
+                {/*    </div>*/}
+                {/*    <img className="avatar" src={this.state.profileImage}/>*/}
+                {/*</div>*/}
 
             </nav>
         )

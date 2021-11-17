@@ -1,8 +1,16 @@
 
-
+.adminmain{
+    width: 100hw;
+    height: 100vh;
+    overflow: scroll;
+    
+}
 .admintimeline{
-   margin-left: 70px;
-   
+   margin-left: 30px;
+   box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
+}
+.employelist{
+    padding-left: 70px;
 }
 @media only screen and (max-width: 991px) {
     .admintimeline{
@@ -10,16 +18,30 @@
     }
 }
 .admintableheader{
+    margin-top: 10px;
     color: azure;
-    ;
+    background-color:rgb(250, 12, 4) ;
 
 }
+.timelinetext{
+    color: azure;
+    font-size: 20px;
+}
+.adminmain{
+    width: 100hw;
+    height: 90vh;
+}
 .searchbartimline{
+    position: relative;
     background-color: #2f3640 ;
     border:none;
     padding: 0;
     color:azure;
-    width: 30%;
+    width: 40%;
+  
+}
+.searchbarplacement{
+    text-align: right;
 }
 .searchtimlineimage{
     width: 25px;
@@ -28,7 +50,7 @@
 
 }
 .timelinetable{
-        height: 700px;
+        height: 500px;
         overflow: scroll;
 }
 .hides::-webkit-scrollbar {
