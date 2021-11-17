@@ -8,7 +8,7 @@ import Overdue from "./Overdue";
 
 const axios = require("axios").default;
 
-function Dashboard({ id, email,name }) {
+function Dashboard({ id, email, name }) {
   const [Time, Settime] = useState({ Hours: "", Minutes: "", seconds: "" });
   const [workdetals, Setworkdetails] = useState({ id: "", projectname: "", taskname: "", memo: "", starttime: new Date() })
   const [timeLeft, setTimeLeft] = useState({ Hours: "00", Minutes: "00", seconds: "00" });
@@ -237,6 +237,7 @@ function Dashboard({ id, email,name }) {
                       email={email}
                       id={id}
                       show={show}
+                      name={name}
 
                       workdetails={work}
                       setstatus={setstatus}

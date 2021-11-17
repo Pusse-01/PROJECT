@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import "./Timelines.css";
 const axios = require("axios").default;
 

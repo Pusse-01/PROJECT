@@ -90,7 +90,18 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
 
    //added by malaka
    //to get all projects delete this function
-// removed by malaka
+   const fetchallProjects = async (req, res) => {
+    try {
+        const projectlist = await Project.find({});
+        res.json(projectlist)
+        console.log("project get request success.");
+    } catch (error) {
+        console.log("project get request failed.");
+        res.json(error.message);
+    }
+};
+ router.get ('/projects', fetchallProjects);
+
 // ************************************** GET PROJECT BY ID *****************************************
 const getProjectById = (req,res,next) => {
     if(req.body.project_id==null){

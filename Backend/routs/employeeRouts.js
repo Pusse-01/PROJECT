@@ -147,4 +147,10 @@ router.post ('/auth',(req, res)=>{
     })
   });
 
+  router.get ('/allEmployees',(req, res)=>{
+  Employee.find({role: 0}).then(employees=>{
+     return res.json(employees);
+    })
+  });
+
 module.exports = router;

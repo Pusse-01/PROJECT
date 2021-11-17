@@ -17,21 +17,22 @@ function AdminPanel() {
         }
       });
   }
+
   useEffect(() => {
     admintimeline();
   }, []);
   return (
-    <div>
+    <div className="adminmain hides">
       <div>
         <div>
           <Sidebar />
         </div>
         <div className="row">
-          <div className=" admintimeline col-sm-12 col-md-12 col-lg-9 mt-3">
+          <div className=" admintimeline col-lg-6 col-sm-12 col-md-12 mt-3">
             <h1 className="text-center admintableheader">
-              Employee Work Details
+              Employee Worklogs
             </h1>
-            <div className="text-center">
+            <div className="searchbarplacement">
               <img
                 src={require("../../../assests/images/redSearch2.png").default}
                 className="searchtimlineimage"
@@ -43,32 +44,9 @@ function AdminPanel() {
                 onChange={(e) => setsearchterm(e.target.value)}
               />
             </div>
-            {projecttimeline.length>0?(
-            <div className=" timelinetable hides">
-              <table className="  table table-dark table-striped table-bordered mt-3">
-                <thead>
-                  <tr>
-                    <th scope="col" className="text-center">
-                      Employee
-                    </th>
-                    <th scope="col" className="text-center">
-                      Project Name
-                    </th>
-                    <th scope="col" className="text-center">
-                      Task name
-                    </th>
-                    <th scope="col" className="text-center">
-                      Start time
-                    </th>
-                    <th scope="col" className="text-center">
-                      End time
-                    </th>
-                    <th scope="col" className="text-center">
-                      Duration
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+            {projecttimeline.length > 0 ? (
+              <div className=" timelinetable hides">
+                <ul className="  employelist mt-3 timelinetext list-group-flush">
                   {projecttimeline
                     .filter((val) => {
                       if (searchterm == "") {
@@ -91,20 +69,24 @@ function AdminPanel() {
                         return val;
                       }
                     })
-                    .map((numList, i) => (
-                      <tr key={i}>
-                        {numList.map((num, j) => (
-                          <td className="text-center" key={j}>
-                            {num}
-                          </td>
-                        ))}
-                      </tr>
+                    .map((numList) => (
+                      <li >
+                        {numList[0]} has Worked on {numList[1]} at {numList[3]}
+                        <br />
+                        Task : {numList[2]}
+                        <br />
+                        Duration : {numList[5]}
+                        <br />
+                      
+                      </li>
                     ))}
-                </tbody>
-              </table>
-            </div>):(<div>
+                </ul>
+              </div>
+            ) : (
+              <div>
                 <h2 className="text-center">No Records Found</h2>
-            </div>)}
+              </div>
+            )}
           </div>
         </div>
       </div>

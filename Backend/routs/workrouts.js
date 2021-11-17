@@ -19,10 +19,10 @@ router.post("/record", (req, res) => {
   }
 
   let id=req.query.id;
-  let email=req.query.email;
+  let name=req.query.name;
   const newwork = new Workingproject({
     id:id,
-    email:email,
+    name:name,
     projectname: req.body.projectname,
     taskname: req.body.taskname,
     memo: req.body.memo,
@@ -108,13 +108,13 @@ router.get("/summery/:id", (req, res) => {
       let summery=[]
       let iter=work.values();
       for (let times of iter) {
-      
        let obj=[times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24)];
         summery.push(obj);
       }
-      return res.json({
-        summery
-      });
+      summery=summery.reverse();
+      return res.json(
+        {summery}
+      );
     }
   });
 });
@@ -133,9 +133,10 @@ router.get("/projectsummery", (req, res) => {
         summery.push(obj);
         }
       }
-      return res.json({
-        summery
-      });
+      summery=summery.reverse();
+      return res.json(
+        {summery}
+      );
     }
   });
 });
@@ -261,48 +262,17 @@ router.get("/admintimeline/",(req,res)=>{//get total workings of all employees
           duration+="0"+times.seconds.toString();
         }
       
-       let obj=[times.email,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
         summery.push(obj);
       
     }
-    return res.json(summery);
+    return res.json(summery.reverse());
   }).catch(error=>{
     return res.json("error");
   })
 })
 
-router.get("/admintimelineproject/:projectname",(req,res)=>{//get total workings of all employees projectwise
-  const projectname=req.params.projectname;
-  Workingproject.find({projectname:projectname}).then((admintimeline)=>{
-    let summery=[]
-      let iter=admintimeline.values();
-      for (let times of iter) {
-        let duration="";
-        if(times.hours>=10){
-          duration+=times.hours.toString()+":";
-        }else{
-          duration+="0"+times.hours.toString()+":";
-        }
-        if(times.minutes>=10){
-          duration+=times.minutes.toString()+":"
-        }else{
-          duration+="0"+times.minutes.toString()+":"
-        }
-        if(times.seconds>=10){
-          duration+=times.seconds.toString();
-        }else{
-          duration+="0"+times.seconds.toString();
-        }
-      
-       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
-        summery.push(obj);
-      
-    }
-    return res.json(summery);
-  }).catch(error=>{
-    return res.json("error");
-  })
-})
+
 
 
 module.exports = router;
