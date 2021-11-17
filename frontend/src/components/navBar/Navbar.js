@@ -181,9 +181,6 @@ class Navbar extends Component{
                             <li className="nav-item">
                                 <a className={linkClassTimeLogs} href="#" onClick={this.changeColorTimeLogs.bind(this)}>Time Logs</a>
                             </li>
-                            <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
-                                <h7>Log out</h7>
-                            </div>
                         </ul>
                     </div>
                 </div>
@@ -204,30 +201,16 @@ class Navbar extends Component{
                                 <h7 className="hiddenMenuListItemText">Notofications</h7>
                             </li>
                             <li className="hiddenMenuListItem">
-                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
+                                <img className="hiddenMenuIcon" src={require('../../assests/images/settings.png').default}/>
                                 <h7 className="hiddenMenuListItemText">Settings</h7>
                             </li>
                             <li className="hiddenMenuListItem">
-                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
+                                <img className="hiddenMenuIcon" src={require('../../assests/images/logout.png').default}/>
                                 <h7 className="hiddenMenuListItemText" onClick={this.logOut.bind(this)}>Logout</h7>
-                            </li>
-                            <li className="hiddenMenuListItem">
-                                <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
-                                    <h7>Log out</h7>
-                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
-                {/*<div className="user">*/}
-                {/*    <img className="notification" src={require('../../assests/images/notifications.png').default}/>*/}
-                {/*    <div className="userText">*/}
-                {/*        <h7 className="userNameText">Welcome {this.state.name}</h7>*/}
-                {/*        <p></p>*/}
-                {/*    </div>*/}
-                {/*    <img className="avatar" src={this.state.profileImage}/>*/}
-                {/*</div>*/}
-
             </nav>
         )
     }
