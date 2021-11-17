@@ -17,15 +17,13 @@ router.post('/addTask', TaskController.addTask)
 router.post('/update', TaskController.update)
 router.post('/deleteTask', TaskController.deleteTask)
 
-router.get('/getTasks/:email', (req, res) => {
-   let email = req.params.email;
+router.get ('/userTasks/:id',(req, res)=>{
+    let id = req.params.id;
    //Check for existing user
-   Task.find({ assigned_to: email }).then(tasks => {
-      if (tasks)
-         return res.json(tasks);
-   })
-});
-
-
+   Task.find({assigned_to: id}).then(tasks=>{
+      if (tasks) 
+      return res.json(tasks);
+     })
+   });
 
 module.exports = router
