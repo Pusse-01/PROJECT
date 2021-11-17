@@ -18,7 +18,6 @@ class UserSidebar extends Component{
 
     render(){
         const user = this.props.data;
-        console.log(user);
         return(
             <div className="reportsSideBarComponent">
                 {this.props.data.map(user =>

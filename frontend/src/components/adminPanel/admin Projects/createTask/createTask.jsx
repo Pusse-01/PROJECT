@@ -24,8 +24,8 @@ import FormLabel from "@material-ui/core/FormLabel";
 import axios from "axios";
 
 //style class
-import "../loadingPage.css";
-import "./createtask.css";
+import "../Admin project Home/loadingPage.css";
+import "./createtaskStyles.css";
 
 //style classes
 const paperStyle = {

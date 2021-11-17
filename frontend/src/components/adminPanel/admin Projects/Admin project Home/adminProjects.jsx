@@ -38,7 +38,7 @@ class ProjectAdmin extends React.Component {
         </div>
 
         <div class="bodyappear2">
-          <a href="www.google.com">
+          <a href="http://localhost:3000/viewprojects">
             <button class="button"> <Visibility
                         fontSize="large"
                         htmlColor="#ffffff"
