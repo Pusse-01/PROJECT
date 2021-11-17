@@ -111,13 +111,15 @@ class Reports extends Component {
             
         document.title = "PROJECT-Reports";
     }
-    clickMore = (email) => {
+    clickMore = (member) => {
       this.props.history.push({
           pathname:"/userReports",
           search: '?query=abc',
           state: {
-            email: email,
+            email: member.email,
+            id: member._id
           }
+          
       })
   }
 render(){
@@ -172,7 +174,7 @@ return (
                                     <td className="reportstable_data_column">
                                                 <div
                                                     className="reportsmoreButton"
-                                                    onClick ={()=>this.clickMore(member.email)}
+                                                    onClick ={()=>this.clickMore(member)}
                                                 >
                                                     More
                                                 </div>
