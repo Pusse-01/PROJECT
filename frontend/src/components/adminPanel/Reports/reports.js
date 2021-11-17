@@ -5,7 +5,7 @@ import {Doughnut} from 'react-chartjs-2';
 import "./reportsStyles.css";
 
 class Reports extends Component {
-    
+  
     constructor(props) {
         super(props);
         this.state1 = {
@@ -93,21 +93,37 @@ class Reports extends Component {
         },
         legend:false
       }}]
-      } 
+      }; 
+      this.state = {
+        data: [],
+        projects: [],
+        userEmail: ''
+      }
+        
       }
     componentDidMount() {
-        document.title = "PROJECT-Reports"
+      fetch('http://localhost:8070/employee/allEmployees')
+            .then(response => response.json())
+            .then((response) => this.setState({
+                data: response,
+                userEmail: response.email             
+            }));
+            
+        document.title = "PROJECT-Reports";
     }
-    clickMore = () => {
+    clickMore = (email) => {
       this.props.history.push({
           pathname:"/userReports",
           search: '?query=abc',
-          state: {}
+          state: {
+            email: email,
+          }
       })
   }
 render(){
-  
-    return (
+  const {data} = this.state;
+ return (
+      
         <div className = "reportsMainComponent">
             <Sidebar /> 
         <div className="projectsChart">         
@@ -126,57 +142,45 @@ render(){
         </div>
         </div>
         <div>
+
         <table className="reportsProjectsTable">
+          
                         <tr className="reportstable_head">
 
                             <th className="reportstable_header_column">Employee ID</th>
                             <th className="reportstable_header_column">Name</th>
                             <th className="reportstable_header_column">Designation</th>
-                            <th className="reportstable_header_column">Email</th>
-                            <th className="reportstable_header_column">Projects Assigned</th>
+                            <th className="reportstable_header_column">Email</th>                           
                             <th className="reportstable_header_column">Special Notes</th>
                             <th className="reportstable_header_column">More Details</th>
 
                         </tr>                      
-                           
-                                <tr className="reportstable_data_odd">
+                        
+                        {data.map((member, index) => {
+                          
 
-                                    <td className="reportstable_data_column">001</td>
-                                    <td className="reportstable_data_column">Yaso</td>
-                                    <td className="reportstable_data_column">SE</td>
-                                    <td className="reportstable_data_column">yaso@project.com</td>
-                                    <td className="reportstable_data_column">PROJECTS</td>
+return (
+  
+
+                                <tr className="reportstable_data_odd" key={index}>
+
+                                    <td className="reportstable_data_column">{member.id}</td>
+                                    <td className="reportstable_data_column">{member.name}</td>
+                                    <td className="reportstable_data_column">{member.position}</td>
+                                    <td className="reportstable_data_column">{member.email}</td>
                                     <td className="reportstable_data_column">Waddek thmai</td>
                                     <td className="reportstable_data_column">
                                                 <div
                                                     className="reportsmoreButton"
-                                                    onClick ={()=>this.clickMore()}
+                                                    onClick ={()=>this.clickMore(member.email)}
                                                 >
                                                     More
                                                 </div>
                                             </td>
                                 </tr>
-                                <tr className="reportstable_data_odd">
-
-                                    <td className="reportstable_data_column">001</td>
-                                    <td className="reportstable_data_column">Yaso</td>
-                                    <td className="reportstable_data_column">SE</td>
-                                    <td className="reportstable_data_column">yaso@project.com</td>
-                                    <td className="reportstable_data_column">PROJECTS</td>
-                                    <td className="table_data_column">Waddek thmai</td>
-                                    <td className="reportstable_data_column">
-                                                <div
-                                                    className="reportsmoreButton"
-                                                    onClick ={()=>this.clickMore()}
-                                                >
-                                                    More
-                                                </div>
-                                            </td>
-                                </tr>
-
-                            
-
+                         ) })} 
                     </table>
+
           </div>
       </div>
     );

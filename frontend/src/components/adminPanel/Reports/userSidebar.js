@@ -6,37 +6,22 @@ import { withRouter } from "react-router-dom";
 
 
 class UserSidebar extends Component{
-    constructor(props) {
-        super(props);
-        const loggedInUser = localStorage.getItem("user");
-        const founduser = JSON.parse(loggedInUser);
-        this.state = {
-            user: [],
-            name: founduser.employee.name,
-            id: founduser.employee.id,
-            email: founduser.employee.email,
-        }
-    }
-    
-    
     componentDidMount() {
-
-        fetch('http://localhost:8070/employee/user/' + this.state.email)
+        fetch('http://localhost:8070/employee/user/' + this.props.data.email)
             .then(response => response.json())
             .then((response) => this.setState({
                 user: response,
-
             }));
-
         //added by Malaka, will change your project page title - delete after read :)
         document.title = "PROJECT"
     }
 
     render(){
-        const {user}  = this.state;
+        const user = this.props.data;
+        console.log(user);
         return(
             <div className="reportsSideBarComponent">
-                {user.map(user =>
+                {this.props.data.map(user =>
                 <div className="userReportsSideBarComponent">
                 
                     <div class="container">
