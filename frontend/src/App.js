@@ -26,6 +26,7 @@ import Createproject from './components//adminPanel/admin Projects/Create Projec
 import UserReports from "./components/adminPanel/Reports/userReports";
 import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
+import Designations from "./components/adminPanel/Admin HR/Designations/designations";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -142,6 +143,15 @@ function App() {
             </Route>
             <Route path="/createtask">
               <Createtask/>
+            </Route>
+            <Route path="/hr/designations">
+              <Designations/>
+            </Route>
+            <Route path="/hr/employees">
+              <Designations/>
+            </Route>
+            <Route path="/hr/leave">
+              <Designations/>
             </Route>
           </div>   }
           </div>

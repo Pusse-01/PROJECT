@@ -1,0 +1,16 @@
+#hr_navbar{
+    top: 0px;
+    width: 50%;
+    height: 50px;
+    background: #1e272e;
+    /**/
+    padding : 10px;
+}
+
+@media only screen and (max-width: 991px) {
+    .hr_navbar{
+        height: 250px;
+    }
+}
+
+
