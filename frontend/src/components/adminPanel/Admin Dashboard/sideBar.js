@@ -8,15 +8,15 @@ function SideBar({id,email}) {
   const[totalpending,setpending]=useState();
 
   async function getdetails(){
-  await axios.get("http://localhost:8070/dashboard/completedprojects/"+email).then(function(response){
-      setcompletedp(response.data.completedp);
+  await axios.get("http://localhost:8070/dashboard//totalprojectadmin/").then(function(response){
+      setcompletedp(response.data);
     })
   
  await axios.get("http://localhost:8070/dashboard/pendingtasks/"+id).then(function(response){
       setpending(response.data.pendingtasks);
     })
-    await axios.get("http://localhost:8070/dashboard/totaltasks/"+id).then(function(response){
-      setcompletedt(response.data.totaltask);
+    await axios.get("http://localhost:8070/dashboard/totalemployees/").then(function(response){
+      setcompletedt(response.data);
     })
   }
   useEffect(()=>{
