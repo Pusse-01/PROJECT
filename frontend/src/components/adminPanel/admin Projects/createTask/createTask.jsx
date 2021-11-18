@@ -250,7 +250,7 @@ export default class Createtask extends React.Component {
     }
 
     if(!(this.state.customView)){
-        contribution = ['1111111111111111', '222222222222222222']
+        contribution = ['1111111111111111', '222222222222222222'] //fixed for now
     }
     for (var i = 0; i < this.state.taskDetail.length; i++) {
       var taskBody = [
@@ -622,7 +622,7 @@ export default class Createtask extends React.Component {
                     {(showsubmit || customView) && showgrid ? (
                       <button
                         class="buttonsubmittask"
-                        type="button"
+                        type="submit"
                         varient="contained"
                         color="primary"
                         onClick={this.handleClick}

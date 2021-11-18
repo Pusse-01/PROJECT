@@ -14,8 +14,10 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
-import { withStyles } from '@material-ui/styles';
 import axios from "axios";
+import './showprojectStyles.css'
+import { borderRadius } from "@mui/system";
+
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -33,8 +35,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    width: '10px'
+    fontSize: 16,
+    width: '40px',
+    border: 0
   },
 }));
 /*
@@ -53,6 +56,8 @@ class Row extends React.Component {
     super(props);
     this.state = {
       row: this.props.row,
+      key: this.props.index,
+      openProject: '',
       open: false,
     };
   }
@@ -62,29 +67,46 @@ class Row extends React.Component {
   }
 
 
-
+  //        <div>                        {open?<button onClick={this.getproject(row.name)}>hello</button>:null}</div>
   setOpen = (event) => {
     if (this.state.open) {
       this.setState({ open: false });
     } else if (!this.state.open) {
-      this.setState({ open: true });
+      this.setState({ open: true, openProject: this.state.row.name });
     }
   };
 
+  setProjectdelete = (event) => {
+    console.log(event.target.value)
+    console.log(this.state.openProject)
+    console.log(this.state.row.history[event.target.value].task_id)
+    axios.post('http://localhost:8070/task/deleteTask', { task_id: this.state.row.history[event.target.value].task_id })
+      .then((response) => {
+        console.log(response.data)
+        window.location.reload(false);
+      })
+  }
+  setProjectedit = (event) => {
+    console.log('edit' + event.target.value)
+    console.log(this.state.openProject)
+    //console.log(this.state.row.history)
+
+  }
+
   render() {
     const { row, open } = this.state;
-    const { classes } = this.props;
 
     return (
       <React.Fragment>
         <StyledTableRow
-          sx={{ "& > *": { borderBottom: "unset", border: "0px" } }}
+          sx={{ "& > *": { borderBottom: "unset", border: "0px" } }} value={row.name}
         >
           <TableCell>
             <IconButton
               aria-label="expand row"
               size="small"
               onClick={this.setOpen}
+              value={row.name}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
@@ -100,30 +122,48 @@ class Row extends React.Component {
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
+              <Box sx={{ margin: 1, backgroundColor:"#394b5b", borderRadius:"5px" }}>
                 <Typography variant="h6" gutterBottom component="div">
                   Task Stats
                 </Typography>
-                <Table size="small" aria-label="purchases">
+                <Table size="small" aria-label="stat">
                   <TableHead>
                     <TableRow>
+
                       <TableCell>Task</TableCell>
                       <TableCell align="right">Due Date</TableCell>
                       <TableCell align="right">Status</TableCell>
                       <TableCell align="right">Contributers</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.date}>
+                  <TableBody >
+                    {row.history.length === 0 ? <div>No tasks have assigned</div> : null}
+                    {row.history.map((historyRow, index) => (
+                      <TableRow key={index}>
                         <TableCell component="th" scope="row">
                           {historyRow.task}
                         </TableCell>
                         <TableCell align="right">{historyRow.date}</TableCell>
                         <TableCell align="right">{historyRow.taskstat}</TableCell>
                         <TableCell align="right">
-                          {historyRow.employee}
+                          {historyRow.employee.map((data, index) => (
+                            <Box sx={{ margin: 1 }}>
+                              <TableRow>
+                              <StyledTableCell align="right" border="none"></StyledTableCell>
+                              <StyledTableCell align="right" border="none"></StyledTableCell>
+                              <StyledTableCell align="right" border="none"></StyledTableCell>
+                              <StyledTableCell align="right" border="none"></StyledTableCell>
+                              <StyledTableCell align="right" border="none"></StyledTableCell>
+
+                                <StyledTableCell align="right" border="none">{index + 1}.</StyledTableCell>
+                                <StyledTableCell align="left" border="none"> {data}</StyledTableCell>
+                              </TableRow>
+                            </Box>
+                          ))}
                         </TableCell>
+                        <TableCell align="right"><button class="buttonsubmitaction" type="submit" value={index} onClick={this.setProjectdelete}>Delete</button>
+                          <a href="http://localhost:3000/createtask"><button class="buttonsubmitaction" value={index}>New</button></a></TableCell>
+
                       </TableRow>
                     ))}
                   </TableBody>
@@ -146,7 +186,11 @@ Row.propTypes = {
       PropTypes.shape({
         date: PropTypes.string.isRequired,
         task: PropTypes.string.isRequired,
-        employee: PropTypes.string.isRequired,
+        employee: PropTypes.arrayOf(
+          PropTypes.shape({
+            ename: PropTypes.string.isRequired,
+          })
+        ),
       })
     ).isRequired,
     name: PropTypes.string.isRequired,
@@ -166,9 +210,9 @@ export default class Showprojects extends React.Component {
   }
 
 
-componentDidMount() {
-  this.getProjectstoRender()
-}
+  componentDidMount() {
+    this.getProjectstoRender()
+  }
 
   getProjectstoRender = () => {
     let resources = [];
@@ -185,9 +229,9 @@ componentDidMount() {
               name: response.data[i].name,
               members: response.data[i].members,
               projectStatus: response.data[i].projectStatus,
-              overdue: ((response.data[i].overdue).toString()).substring(0,10),
+              overdue: ((response.data[i].overdue).toString()).substring(0, 10),
               administrators: response.data[i].administrators,
-              discription: (response.data[i].discription).substring(0,50),
+              discription: (response.data[i].discription).substring(0, 50),
             },
           ];
           resources.push(project[0]);
@@ -215,18 +259,21 @@ componentDidMount() {
                   if (data.assigned_to.length > 0) {
                     console.log(data.assigned_to.length);
 
-                    var employeelist = data.assigned_to[0];
-                    for (var z = 1; z < data.assigned_to.length; z++) {
-                      employeelist = employeelist + " , " + data.assigned_to[z];
+                    var employeelist = []
+                    for (var z = 0; z < data.assigned_to.length; z++) {
+                      var name = data.assigned_to[z]
+                      employeelist.push(name)
                     }
+
 
                     //taskstatus.push(data.task_status)
                     var history = [
                       {
-                        date: ((data.due_date).toString()).substring(0,10),
+                        date: ((data.due_date).toString()).substring(0, 10),
                         task: data.task_name,
                         employee: employeelist,
-                        taskstat:data.task_status
+                        taskstat: data.task_status,
+                        task_id: data._id
                       },
                     ];
                     historyArray.push(history[0]);
@@ -235,27 +282,24 @@ componentDidMount() {
 
               } //end of if
             });
-
-
-
-    var projectDetails = [
-      {
-        name: resources[i].name,
-        status: resources[i].projectStatus,
-        overdue: resources[i].overdue,
-        description: resources[i].discription,
-        admins: resources[i].administrators[0],
-        history: historyArray
-      },
-    ];
-    tempArray.push(projectDetails[0])
-    console.log(tempArray);
-    console.log('end');
+          var projectDetails = [
+            {
+              name: resources[i].name,
+              status: resources[i].projectStatus,
+              overdue: resources[i].overdue,
+              description: resources[i].discription,
+              admins: resources[i].administrators[0],
+              history: historyArray
+            },
+          ];
+          tempArray.push(projectDetails[0])
+          console.log(tempArray);
+          console.log('end');
         }
 
-this.setState({
-  rows:tempArray
-})
+        this.setState({
+          rows: tempArray
+        })
 
       })
       .catch(() => {
@@ -263,9 +307,15 @@ this.setState({
       });
   };
 
+
+
+  mouseClick = (index) => {
+    console.log(index)
+  }
+
   render() {
 
-const {rows} = this.state
+    const { rows } = this.state
 
     return (
       <div>
@@ -274,6 +324,8 @@ const {rows} = this.state
           sx={{
             width: "80%",
             color: "success.main",
+            position:"absolute",
+            left:"40px"
           }}
         >
           <Table aria-label="collapsible table">
@@ -284,15 +336,17 @@ const {rows} = this.state
                 <StyledTableCell align="right">Status</StyledTableCell>
                 <StyledTableCell align="right">Due Date</StyledTableCell>
                 <StyledTableCell align="right" >Description</StyledTableCell>
-                <StyledTableCell align="right">
-                 Admins
-                </StyledTableCell>
+                <StyledTableCell align="right">Admins</StyledTableCell>
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <Row key={row.name} row={row} />
-              ))}
+              {rows.map((row, index) => {
+                return (
+                  (
+                    <Row key={index} row={row} ></Row>
+                  )
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>

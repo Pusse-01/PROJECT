@@ -1,6 +1,6 @@
 import React from "react";
-import { projects } from "./resources";
-import { tasks } from "./resources";
+//import { projects } from "./resources";
+//import { tasks } from "./resources";
 //import Createproject from "./Create Project/createProject" 
 import "./adminProjects.css";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
@@ -79,6 +79,8 @@ class ProjectAdmin extends React.Component {
   }
 }
 
+/*
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -125,49 +127,5 @@ class Table extends React.Component {
   }
 }
 
-class TaskBoard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      loading: true,
-      show: false,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      loading: false,
-      data: tasks,
-    });
-  }
-
-  render() {
-    if (this.state.loading) {
-      return <div>Loading....</div>;
-    }
-    if (!this.state.data.length) {
-      return <div>No projects to show</div>;
-    }
-
-    const { data } = this.state;
-    return (
-      <div>
-        <div class="temp">
-          {data.map((projects) => (
-            <div key={projects.id}>
-              <div>
-                <a href={projects.link}>
-                  <button>
-                    <span>{projects.name}</span>
-                  </button>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
+*/
 export default ProjectAdmin;
