@@ -5,6 +5,8 @@ const cors = require("cors");
 const config = require("config");
 require("dotenv").config();
 const TaskRouts = require('./routs/taskRouts')
+const DepartmentsRouts = require('./routs/departmentsRouts')
+const DesignationsRouts =  require('./routs/designationsRouts')
 
 const app = express();
 
@@ -36,7 +38,9 @@ app.use('/dashboard',require('./routs/workrouts.js'));
 app.use('/employee',require('./routs/projectRouts.js'));
 app.use('/dashboard',require('./routs/workrouts.js'));
 
-
+app.use('/task',TaskRouts)
+app.use('/departments',DepartmentsRouts)
+app.use('/designations',DesignationsRouts)
 const URL = config.get("MONGODB_URI");
 
 mongoose.connect(URL, { 
@@ -54,4 +58,4 @@ app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`)
 })
 
-app.use('/task',TaskRouts)
+

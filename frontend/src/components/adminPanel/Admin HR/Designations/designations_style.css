@@ -11,11 +11,37 @@
 
 .designationsSubComponent {
     position: absolute;
-    top: 50px;
+    top: 70px;
     left :0px;
     bottom: 0px;
     width : 82%;
     z-index: -1;
+    padding: 10px;
+}
+
+.departmentsComponent{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background: red;
+    padding : 10px;
+}
+
+.departmentsSubComponent {
+    padding: 10px;
+}
+
+hrTitleText{
+
+}
+
+.hrForm{
+
+}
+
+.hrLabel{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 5px;
 }
 
 .hrText {

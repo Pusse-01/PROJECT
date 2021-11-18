@@ -1,5 +1,5 @@
 /*!******************************* MAIN COMPONENT *******************************!*/
-.employeesMainComponent{
+.leaveMainComponent{
     position: absolute;
     top: 80px;
     left :0px;
@@ -9,7 +9,7 @@
     background-color: #1e272e;
 }
 
-.employeesSubComponent {
+.leaveSubComponent{
     position: absolute;
     top: 70px;
     left :0px;
@@ -24,7 +24,7 @@
 
 
 @media only screen and (max-width: 991px) {
-    .employeesMainComponent {
+    .leaveMainComponent {
         position: absolute;
         top: 250px;
         left: 0px;
@@ -35,7 +35,7 @@
         background-color: #1e272e;
     }
 
-    .employeesSubComponent  {
+    .leaveSubComponent {
         position: static;
         width: 100%;
         z-index: -1;
@@ -45,7 +45,7 @@
 }
 
 /******************************* SIDE BAR ***********************************/
-.sideBarEmployeesComponent {
+.sideBarLeaveComponent {
     position: absolute;
     top: 00px;
     right :0px;
@@ -57,7 +57,7 @@
     /*grid-template-rows: 20% 80%;*/
 }
 @media only screen and (max-width: 991px) {
-    .sideBarEmployeesComponent {
+    .sideBarLeaveComponent {
         position: unset;
         bottom: unset;
         width: 100%;

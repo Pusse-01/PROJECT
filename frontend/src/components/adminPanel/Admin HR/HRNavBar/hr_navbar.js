@@ -84,14 +84,14 @@ class HRNavbar extends Component{
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul className="navbar-nav">
-                            <li className=" nav-item active">
+                        <ul className="navbar-nav hr_navbar_container">
+                            <li className=" nav-item active hr_navbar_element">
                                 <a  className={linkClassDesignations} aria-current="page" href="#" onClick={this.changeColorDesignations.bind(this)}>Designations</a>
                             </li>
-                            <li className="nav-item" >
+                            <li className="nav-item hr_navbar_element" >
                                 <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)}>Employees</a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item hr_navbar_element">
                                 <a className={linkClassLeave} href="#" onClick={this.changeColorLeave.bind(this)}>Leave</a>
                             </li>
                         </ul>

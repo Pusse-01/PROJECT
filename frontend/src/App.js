@@ -27,6 +27,8 @@ import UserReports from "./components/adminPanel/Reports/userReports";
 import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
+import Employees from "./components/adminPanel/Admin HR/Employees/employees";
+import Leave from "./components/adminPanel/Admin HR/Leave/leave";
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
@@ -148,10 +150,10 @@ function App() {
               <Designations/>
             </Route>
             <Route path="/hr/employees">
-              <Designations/>
+              <Employees/>
             </Route>
             <Route path="/hr/leave">
-              <Designations/>
+              <Leave/>
             </Route>
           </div>   }
           </div>
