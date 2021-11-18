@@ -4,12 +4,34 @@ const Designations = require('../models/designations')
 const Task = require("../models/task");
 
 // ************* Show the list of departments *************************
+
+function getDesignations(designation){
+    return new Promise((resolve,reject) => {
+       Designations.findById(designation,(err,pat) => resolve(pat))
+    })
+}
+
+function getDepartment(department){
+    return new Promise((resolve,reject) => {
+        let designations = department.designations
+        Promise.all(designations.map(desisgnation => getDesignations(desisgnation)))
+            .then(arr => {
+                resolve({
+                    'Department':department,
+                    'Designations':arr
+                })
+            })
+    })
+}
+
 const index = (req, res, next) => {
+    let departments = []
     Departments.find()
         .then(response => {
-            res.json({
-                response
-            })
+            Promise.all( response.map(department => getDepartment(department)))
+                .then(arr => {
+                    res.json(arr)
+                })
         })
         .catch(error => {
             res.json({
