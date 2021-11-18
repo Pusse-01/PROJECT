@@ -223,7 +223,7 @@ router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
 router.get("/completedprojects/:email",(req,res)=>{//get completed projects by email
   const email=req.params.email;
   let completedp=0;
-  Project.find({members:email,projectStatus:"completed"}).then((completed=>{
+  Project.find({members:email,projectStatus:"Completed"}).then((completed=>{
     if(completed){
       completedp=completed.length;
       
@@ -272,7 +272,19 @@ router.get("/admintimeline/",(req,res)=>{//get total workings of all employees
   })
 })
 
+router.get("/totalprojectadmin/",(req,res)=>{
+  Project.find({}).then(number=>{
+    return res.json(number.length);
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
 
-
-
+router.get("/totalemployees/",(req,res)=>{
+  Employee.find({role:0}).then(response=>{
+    return res.json(response.length);
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
 module.exports = router;

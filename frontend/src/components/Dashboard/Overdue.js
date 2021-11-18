@@ -4,12 +4,15 @@ const axios = require("axios").default;
 
 function Overdue({ id }) {
   const [overdue, setoverdue] = useState([]);
+  const[check,setcheck]=useState(false)
   async function overduetasks() {
      await axios
       .get("http://localhost:8070/dashboard/getoverduetasks/" + id)
       .then(function (response) {
+        setcheck(true);
         if (response.data.length > 0) {
           setoverdue(response.data);
+         
         }
       });
   }
@@ -18,7 +21,7 @@ function Overdue({ id }) {
   }, []);
   return (
     <div className="col-sm-12 col-md-12 ">
-      {overdue.length !== 0 ? (
+      {overdue.length !== 0 && check ? (
         <div>
           <h4 className="overdueheader text-center">Overdue Tasks</h4>
           <div className="scrolloverdue hides ">
@@ -37,13 +40,14 @@ function Overdue({ id }) {
           </div>
         </div>
       ) : (
-        <div>
+        check?(<div>
           <h1 className="overdueheader text-center nooverdue">Keep It Up
           <br/>
         <img className="nooverdueimg  " src={require('../../assests/images/completed.png').default}/></h1>
           <h2 className="text-center nooverdue">No Overdue Tasks</h2>
           
-        </div>
+        </div>):(<div></div>)
+        
       )}
     </div>
   );

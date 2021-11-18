@@ -8,14 +8,13 @@ import Overdue from "./Overdue";
 
 const axios = require("axios").default;
 
-function Dashboard({ id, email, name }) {
+function Dashboard({ id, email, name ,workisornot}) {
   const [Time, Settime] = useState({ Hours: "", Minutes: "", seconds: "" });
   const [workdetals, Setworkdetails] = useState({ id: "", projectname: "", taskname: "", memo: "", starttime: new Date() })
   const [timeLeft, setTimeLeft] = useState({ Hours: "00", Minutes: "00", seconds: "00" });
   const [showform, Setvisible] = useState(false);
   const [isworking, setstatus] = useState(false);
-  const[pinged,setpinged]=useState(false);
-
+  
   
 
   async function stopwork() {
@@ -89,17 +88,7 @@ function Dashboard({ id, email, name }) {
 
   
   }
-  async function pingserver(){
-    await axios.put("http://localhost:8070/dashboard/update/" + workdetals.id).then().catch(()=>{
-      console.log("can't connect to server");
-      setstatus(false);
-      sessionStorage.removeItem('workdata');
-      sessionStorage.removeItem('stime');
-      Setvisible(false);
-      window.location.reload(false);
-      
-    });
-  }
+ 
 
   const containerstyle = {
     position: "relative",
@@ -155,26 +144,19 @@ function Dashboard({ id, email, name }) {
     }
   },[]);
   useEffect(() => {
-    document.title = "PROJECT"
+    document.title = "PROJECT";
+    
   }, [])
 
   useEffect(() => {
     if (isworking) {
       setTimeout(() => {
-        setpinged(true);
         setTimeLeft(calculatetime());
       }, 1000);
      
     }
   });
-  useEffect(() => {
-    if (isworking) {
-      setInterval(() => {
-       
-        pingserver();
-      }, 300000);
-    }
-  },[pinged]);
+ 
 
   
 
@@ -206,7 +188,7 @@ function Dashboard({ id, email, name }) {
                   <motion.span style={circlestyleoff} />
                 )}
 
-                {!isworking ? (
+                {!isworking && !workisornot ? (
                   <p className="text">
                     Total Time Worked
                     <br />

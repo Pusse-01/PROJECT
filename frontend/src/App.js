@@ -21,19 +21,19 @@ import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
 import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
 import Reports from "./components/adminPanel/Reports/reports";
-import ProjectAdmin from './components//adminPanel/admin Projects/adminProjects'
+import ProjectAdmin from './components//adminPanel/admin Projects/Admin project Home/adminProjects'
 import Createproject from './components//adminPanel/admin Projects/Create Project/createProject'
 import UserReports from "./components/adminPanel/Reports/userReports";
 import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
-import Employees from "./components/adminPanel/Admin HR/Employees/employees";
-import Leave from "./components/adminPanel/Admin HR/Leave/leave";
+const axios = require("axios").default;
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
   const [error, setError] = useState("");
   const [logorcreate, setLogorCreate] = useState(false);
+  const [working,setw]=useState(false);
 
   const Login = (data) => {
     setUser({
@@ -45,6 +45,30 @@ function App() {
       profileImage: data.employee.profileImage
     });
   };
+  async function pingserver(){
+    const workdetals=sessionStorage.getItem('workdata');
+    if(workdetals){
+      const wd=JSON.parse(workdetals);
+      setw(true);
+    await axios.put("http://localhost:8070/dashboard/update/" + wd._id).then().catch(()=>{
+      console.log("can't connect to server");
+      sessionStorage.removeItem('workdata');
+      sessionStorage.removeItem('stime');
+      setw(false);
+      window.location.reload(false);
+      
+    });
+  }else{
+    setw(false);
+  }
+  }
+  useEffect(() => {
+    
+      setInterval(() => {  
+        pingserver();
+      }, 300000);
+    
+  },);
   const Logout = () => {
     setUser({ name: "", email: "", token: "", id: "" });
     setError("");
@@ -75,7 +99,7 @@ function App() {
         token: founduser.token,
         id: founduser.employee.id,
         role: founduser.employee.role,
-        profileImage:founduser.employee.profileImage
+        profileImage: founduser.employee.profileImage
       });
     }
   }, []);
@@ -85,77 +109,80 @@ function App() {
       <div >
         {user.id !== "" ? (
           <div>
-          {user.role === 0 ?(
-          <div>
-            <Route>
-              <Navbar logout = {Logout} />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/Dashboard" />
-            </Route>
-            <Route path="/Dashboard">
-              <Dashboard id={user.id} email={user.email} name={user.name} />
-            </Route>
-            <Route path="/api/taskBackLog">
+            {user.role === 0 ? (
+              <div>
+                <Route>
+                  <Navbar logout={Logout} />
+                </Route>
+                <Route exact path="/">
+                  <Redirect to="/Dashboard" />
+                </Route>
+                <Route path="/Dashboard">
+                  <Dashboard id={user.id} email={user.email} name={user.name} workisornot={working} set={setw}/>
+                </Route>
+                <Route path="/api/taskBackLog">
                   <ShowTaskBackLog />
                   <WeatherApp />
                 </Route>
-            <Route path="/projects">
-              <Projects />
-            </Route>
-            <Route path="/projectsDetails">
-              <ProjectsDetails/>
-            </Route>
-            <Route path="/tasks">
-              <Tasks />
-            </Route>
-            <Route path="/tasksMore">
-              <TasksMore/>
-            </Route>
-            <Route path="/tasksBoard">
-              <TasksBoard/>
-            </Route>
-            <Route path="/timeLogs">
-              <TimeLogs/>
-            </Route>
-          </div>
-            ):<div>
-            
-           {/*Admin panel components*/} 
-            <Route>
-              <AdminNavBar logout = {Logout} />
-            </Route>            
-            <Route exact path="/">
-              <Redirect to="/adminPanel" />
-            </Route>
-            <Route path="/adminPanel">
-              <AdminPanel/>
-            </Route>
-            <Route path="/reports">
-              <Reports/>
-            </Route>
-            <Route path="/userReports">
-              <UserReports/>
-            </Route>
-            <Route path="/projects">
-              <ProjectAdmin/>
-            </Route>
-            <Route path="/createproject">
-              <Createproject/>
-            </Route>
-            <Route path="/createtask">
-              <Createtask/>
-            </Route>
-            <Route path="/hr/designations">
-              <Designations/>
-            </Route>
-            <Route path="/hr/employees">
-              <Employees/>
-            </Route>
-            <Route path="/hr/leave">
-              <Leave/>
-            </Route>
-          </div>   }
+                <Route path="/projects">
+                  <Projects />
+                </Route>
+                <Route path="/projectsDetails">
+                  <ProjectsDetails />
+                </Route>
+                <Route path="/tasks">
+                  <Tasks />
+                </Route>
+                <Route path="/tasksMore">
+                  <TasksMore />
+                </Route>
+                <Route path="/tasksBoard">
+                  <TasksBoard />
+                </Route>
+                <Route path="/timeLogs">
+                  <TimeLogs />
+                </Route>
+              </div>
+            ) : <div>
+
+              {/*Admin panel components*/}
+              <Route>
+                <AdminNavBar logout={Logout} />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/adminPanel" />
+              </Route>
+              <Route path="/adminPanel">
+                <AdminPanel />
+              </Route>
+              <Route path="/reports">
+                <Reports />
+              </Route>
+              <Route path="/userReports">
+                <UserReports />
+              </Route>
+              <Route path="/projects">
+                <ProjectAdmin />
+              </Route>
+              <Route path="/createproject">
+                <Createproject />
+              </Route>
+              <Route path="/createtask">
+                <Createtask />
+              </Route>
+              <Route path="/viewprojects">
+                <Showprojects />
+              </Route>
+              <Route path="/hr/designations">
+                <Designations />
+              </Route>
+              <Route path="/hr/employees">
+                <Designations />
+              </Route>
+              <Route path="/hr/leave">
+                <Designations />
+              </Route>
+            </div>}
           </div>
         ) : logorcreate === true ? (
           <div>

@@ -23,10 +23,6 @@ const EmployeeSchema = new Schema({
         type: Number,
         required: true
     },
-    id: {
-        type: Number,
-        required: true
-    },
     profileImage : {
         type:String,
         required:true

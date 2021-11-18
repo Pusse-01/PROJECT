@@ -14,8 +14,8 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import "./createproject.css";
-import "../loadingPage.css";
+import "./createprojectStyles.css";
+import "../Admin project Home/loadingPage.css";
 import axios from "axios";
 import {
   MuiPickersUtilsProvider,
@@ -39,9 +39,7 @@ const avatarStyle = {
   margin:"0px"
 };
 
-const calendarStyle ={
 
-}
 
 const names = [
   { username: "shehanmalakarodrigo@gmail.com" },
@@ -66,7 +64,6 @@ class Createproject extends React.Component {
     super(props);
     this.state = {
       employees: names,
-
       projectname: "",
       adminstrsselected: [],
       employeesselected: [],
