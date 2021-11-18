@@ -27,11 +27,13 @@ import UserReports from "./components/adminPanel/Reports/userReports";
 import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
+const axios = require("axios").default;
 
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
   const [error, setError] = useState("");
   const [logorcreate, setLogorCreate] = useState(false);
+  const [working,setw]=useState(false);
 
   const Login = (data) => {
     setUser({
@@ -43,6 +45,30 @@ function App() {
       profileImage: data.employee.profileImage
     });
   };
+  async function pingserver(){
+    const workdetals=sessionStorage.getItem('workdata');
+    if(workdetals){
+      const wd=JSON.parse(workdetals);
+      setw(true);
+    await axios.put("http://localhost:8070/dashboard/update/" + wd._id).then().catch(()=>{
+      console.log("can't connect to server");
+      sessionStorage.removeItem('workdata');
+      sessionStorage.removeItem('stime');
+      setw(false);
+      window.location.reload(false);
+      
+    });
+  }else{
+    setw(false);
+  }
+  }
+  useEffect(() => {
+    
+      setInterval(() => {  
+        pingserver();
+      }, 300000);
+    
+  },);
   const Logout = () => {
     setUser({ name: "", email: "", token: "", id: "" });
     setError("");
@@ -92,7 +118,7 @@ function App() {
                   <Redirect to="/Dashboard" />
                 </Route>
                 <Route path="/Dashboard">
-                  <Dashboard id={user.id} email={user.email} name={user.name} />
+                  <Dashboard id={user.id} email={user.email} name={user.name} workisornot={working} set={setw}/>
                 </Route>
                 <Route path="/api/taskBackLog">
                   <ShowTaskBackLog />
