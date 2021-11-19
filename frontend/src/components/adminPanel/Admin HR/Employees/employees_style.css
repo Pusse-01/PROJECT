@@ -16,9 +16,22 @@
     bottom: 0px;
     width : 82%;
     z-index: -1;
+    padding: 20px;
+    overflow: scroll;
 }
 
-.hrText {
+.employeesSubComponent::-webkit-scrollbar{
+    display: none;
+}
+
+.addEmployee, .updateEmployee , .deleteEmployee{
+    height:500px;
+    background: red;
+    margin-bottom: 10px;
+    padding-top: 20px;
+}
+
+.hrTitleText {
     color: white;
 }
 

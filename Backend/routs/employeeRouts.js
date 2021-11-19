@@ -34,7 +34,7 @@ const Employee = require('../models/employee');
 // @desc Register employee
 // @access Public
 router.post ('/register',upload.single('profileImage'),(req, res)=>{
-   const{name,email,position,password,role}=req.body;
+   const{name,email,position,password,role,department,designation}=req.body;
 
     //Validation
    if(!name || !email || !position || !password || !role){
@@ -45,13 +45,21 @@ router.post ('/register',upload.single('profileImage'),(req, res)=>{
    Employee.findOne({email: req.body.email}).then(employee=>{
       if(employee) return res.status(400).json({msg:'User already exist'});
 
+      let profilePath  = ''
+      if(req.file==null){
+          profilePath=''
+      }else{
+          profilePath = req.file.path
+      }
       const newEmplyee = new Employee({
          name,
          email,
          position,
          password,
          role,
-         profileImage:req.file.path
+          department,
+          designation,
+         profileImage:profilePath
       });
 
       //Create salt & hash
@@ -79,7 +87,9 @@ router.post ('/register',upload.single('profileImage'),(req, res)=>{
                            email: employee.email,
                            position: employee.position,
                            role: employee.role,
-                           profileImage:req.file.path
+                            department:employee.department,
+                            designation:employee.designation,
+                           profileImage:employee.profileImage
                         }
                      });
                   }

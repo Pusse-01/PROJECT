@@ -25,15 +25,15 @@ const EmployeeSchema = new Schema({
     },
     profileImage : {
         type:String,
-        required:true
+        required:false
     },
     department :{
         type : String,
-        required : false
+        required : true
     },
     designation : {
         type:String,
-        required :false
+        required :true
     }
 })
 
