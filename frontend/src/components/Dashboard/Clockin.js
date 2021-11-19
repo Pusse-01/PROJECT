@@ -36,34 +36,35 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
           });
         }
       }
-      async function getprojects(){
-        await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
-         if (response.data.length>0){
-           setprojects(response.data.map(project=>project.name))
-         }
-         
-        })
-      }
-      async function getpids(){
-        await axios.get("http://localhost:8070/dashboard/getpid/"+work.projectname).then(function(getid){
-        const pidof=getid.data;
-         setpid(pidof);
-         })
-      }
-      async function gettasks(){
-        await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
-         if (response.data.tasksummery.length>0){
-           settasks([""]);
-           settasks(response.data.tasksummery);
-          
-         }else{
-          settasks([""]);
-         }
-
-        })
-      }
+     
       useEffect(() => {
         let mounted=true;
+        async function getprojects(){
+          await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
+           if (response.data.length>0){
+             setprojects(response.data.map(project=>project.name))
+           }
+           
+          })
+        }
+        async function getpids(){
+          await axios.get("http://localhost:8070/dashboard/getpid/"+work.projectname).then(function(getid){
+          const pidof=getid.data;
+           setpid(pidof);
+           })
+        }
+        async function gettasks(){
+          await axios.get("http://localhost:8070/dashboard/gettasksbyprojectandemployee?id="+id+"&pid="+pid).then(function(response){
+           if (response.data.tasksummery.length>0){
+             settasks([""]);
+             settasks(response.data.tasksummery);
+            
+           }else{
+            settasks([""]);
+           }
+  
+          })
+        }
         if(mounted){
         settasks([""]);
         getprojects();
@@ -78,6 +79,7 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
      };
        
     },[pid,work.projectname,work.taskname]);
+   
       
       
     return (
@@ -87,10 +89,10 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
         <div className="col-3 offset-4  text-danger">{error}</div>
           <form className=" mt-4 ms-5 col-sm-6 col-md-12 " onSubmit={startwork}>
             <div className="form-group mt-3 col-sm-auto col-md-10 ">
-              <label for="name">Project Name :</label>
-              <select className="form-select"  onChange={(e) =>
+              <label >Project Name :</label>
+              <select className="form-select" defaultValue={""}   onChange={(e) =>
                   setwork({ ...work, projectname: e.target.value }) }>
-                    <option disabled  defaultValue selected> -- Select a Project -- </option>
+                    <option disabled value={""}> -- Select a Project -- </option>
               {projects.map(item => {
                 return (<option  key={item} value={item}>{item}</option>);
               })}
@@ -98,18 +100,18 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
               
             </div>
             <div className="form-group mt-3 col-sm-auto col-md-10 ">
-              <label for="email">Task Name :</label>
-              <select className="form-select"  onChange={(e) =>
+              <label>Task Name :</label>
+              <select defaultValue={""} className="form-select"  onChange={(e) =>
                   setwork({ ...work, taskname: e.target.value })} >
                    
-                    <option disabled defaultValue selected> -- Select a Task -- </option>
+                    <option value={""} disabled> -- Select a Task -- </option>
               {tasks.map(item => {
                 return (<option  key={item} value={item}>{item}</option>);
               })}
             </select>
             </div>
             <div className="form-group mt-3 col-sm-auto col-md-10  ">
-              <label for="posistion">Memo :</label>
+              <label >Memo :</label>
               <input
                 className="form-control"
                 onChange={(e) =>
