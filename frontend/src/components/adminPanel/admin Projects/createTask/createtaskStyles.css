@@ -1,25 +1,29 @@
+.createtaskform{
+  position: absolute;
+  left:190px
+}
 
-.h1{
-  color:#6270af;
+.h1tasks{
+  padding-top: 10px;
+  color:#0d2592;
 }
 
 .buttonsubmitclear{
   color:#262c30;
   position: absolute;
-  top: 100px;
-  left: 850px;
-  padding: 10px;
+  top: 80px;
+  left: 75%;
+  padding: 0px;
   background-color: transparent;
   color: rgb(190, 33, 33);
   z-index: 21;
-  position: absolute;
   border: 0px;
 }
 
 .closebuttonactual {
   position: absolute;
-  top: 100px;
-  left: 950px;
+  top: 70px;
+  left: 87%;
   padding: 10px;
   background-color: transparent;
   color: rgb(190, 33, 33);
@@ -96,4 +100,82 @@
 
 .containerbuttons {
   text-align: center;
+}
+
+.bodyappear1createtask {
+  z-index: 10;
+  position: fixed;
+  left: 66%;
+  bottom: 0px;
+  top: 100px;
+}
+
+
+.bodyappear2createtask {
+  z-index: 10;
+  position: fixed;
+  left: 78%;
+  bottom: 0px;
+  top: 100px;
+}
+
+
+.bodyappear3createtask {
+  z-index: 10;
+  position: fixed;
+  left: 66%;
+  bottom: 0px;
+  top: 300px;
+}
+
+.bodyappear4createtask {
+  z-index: 10;
+  position: fixed;
+  left: 78%;
+  bottom: 0px;
+  top: 300px;
+}
+
+
+.buttoncreatetask {
+  color: rgb(189, 27, 27);
+  box-sizing: content-box;
+  height: 95px;
+  background: #252e35;
+  font-size: 20px;
+  text-align: left;
+  width: 50px;
+  padding: 90px;
+  padding-top: 10px;
+  padding-left: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  border: none;
+  opacity: 0.8;
+}
+.buttoncreatetask span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.buttoncreatetask span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.buttoncreatetask:hover {
+  background-color: #191b3a;
+  opacity: 0.5;
+}
+.buttoncreatetask:hover span {
+  padding-right: 25px;
+}
+.buttoncreatetask:hover span:after {
+  opacity: 1;
+  right: 0;
 }

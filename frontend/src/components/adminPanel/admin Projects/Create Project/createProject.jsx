@@ -25,18 +25,20 @@ import DateFnsUtils from "@date-io/date-fns";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-
-
+import Visibility from '@material-ui/icons/Visibility';
+import TrendingUp from '@material-ui/icons/TrendingUp';
+//import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const paperStyle = {
   padding: "50px 20px",
   width: "700px",
   margin: "20px auto",
-  backgroundColor: "#262c30",
+  backgroundColor: "#425e6e",
+  opacity: 0.8,
 };
 const avatarStyle = {
   backgroundColor: "#000000",
-  margin:"0px"
+  margin: "0px"
 };
 
 
@@ -63,7 +65,8 @@ class Createproject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      employees: names,
+      employees: [],
+      employeesasadmins: [],
       projectname: "",
       adminstrsselected: [],
       employeesselected: [],
@@ -81,6 +84,7 @@ class Createproject extends React.Component {
 
   componentDidMount() {
     document.title = "PROJECT Projects";
+    this.getEmployees()
     this.interval = setInterval(
       () =>
         this.setState(() => {
@@ -115,33 +119,32 @@ class Createproject extends React.Component {
     });
   };
 
-  setSelected = (event) => {
-    var employeeName = [{ name: event.target.value }];
-    this.state.selectedEmployees.push(employeeName[0]);
-    var temp = [];
-    var j = 0;
-    for (var i = 0; i < this.state.employees.length; i++) {
-      if (!(this.state.employees[i].username === employeeName[0].name)) {
-        temp[j++] = this.state.employees[i];
-      }
-    }
+  setSelectedContributor = (event) => {
+    let index = event.target.value;
+    this.state.selectedEmployees.push(this.state.employees[index]);
+    const newcontributorlist = this.state.employees.filter((employeelist) => {
+      return (
+        employeelist.email === this.state.employees[index].email ? false : true
+      )
+    })
     this.setState({
-      employees: temp,
+      employees: newcontributorlist,
     });
   };
 
   setSelectedManagers = (event) => {
-    var employeeName = [{ name: event.target.value }];
-    this.state.selectedManagers.push(employeeName[0]);
-    var temp1 = [];
-    var j = 0;
-    for (var i = 0; i < this.state.employees.length; i++) {
-      if (!(this.state.employees[i].username === employeeName[0].name)) {
-        temp1[j++] = this.state.employees[i];
-      }
-    }
+    let index = event.target.value;
+    console.log(index);
+    this.state.selectedManagers.push(this.state.employeesasadmins[index]);
+
+    const newcontributorlist = this.state.employeesasadmins.filter((employeelist) => {
+      return (
+        employeelist.email === this.state.employeesasadmins[index].email ? false : true
+      )
+    })
+
     this.setState({
-      employees: temp1,
+      employeesasadmins: newcontributorlist,
     });
   };
 
@@ -166,19 +169,41 @@ class Createproject extends React.Component {
 
 
   getEmployees() {
+    axios.get('http://localhost:8070/employee/allEmployees')
+      .then((response) => {
+        let employeelist = []
+        for (var i = 0; i < response.data.length; i++) {
+          var employee = [
+            {
+              username: response.data[i].name,
+              email: response.data[i].email
+            }
+          ]
+          employeelist.push(employee[0])
+        }
 
+        console.log("name" + employeelist)
+
+
+        this.setState({
+          employees: employeelist,
+          employeesasadmins: employeelist,
+        })
+
+      })
   }
 
   handleClick = (event) => {
+
     for (var i = 0; i < this.state.selectedEmployees.length; i++) {
-      this.state.employeesselected.push(this.state.selectedEmployees[i].name);
+      let email_ = this.state.selectedEmployees[i].email;
+      this.state.employeesselected.push(email_);
     }
 
     for (var j = 0; j < this.state.selectedManagers.length; j++) {
-      this.state.adminstrsselected.push(
-        this.state.selectedManagers[j].name
-      );
+      this.state.adminstrsselected.push(this.state.selectedManagers[j].email); //email or username
     }
+  
 
     if (
       this.state.projectname === "" ||
@@ -192,22 +217,31 @@ class Createproject extends React.Component {
         error: true,
       });
     } else {
-      console.log(this.state.employeesselected);
-      var temp_project = {
+
+      var temp_project = [{
         name: this.state.projectname,
         members: this.state.employeesselected,
-        projectStatus: this.state.category,
-        overdue: Date.now(),
+        projectStatus:this.state.category,
+        overdue: this.state.endDate,
         administrators: this.state.adminstrsselected,
         discription: this.state.description,
-        notes: "",
-      };
-      axios.post("http://localhost:8070/projects", temp_project);
-      console.log("created");
+      }];
+
+        axios.post("http://localhost:8070/projects", temp_project[0])
+        .then((response) => {
+          console.log(response);
+        })
     }
+
   };
+   // console.log("click 2" +(this.state.employeesselected[1]))
 
 
+  deleteManagerChip = (event) => {
+    console.log("delete button")
+    console.log(event.name)
+
+  }
 
   render() {
 
@@ -252,11 +286,11 @@ class Createproject extends React.Component {
 
 
 
-    const { selectedEmployees, employees, selectedManagers, category } =
+    const { selectedEmployees, employees, employeesasadmins, selectedManagers, category } =
       this.state;
 
     return (
-      <div>
+      <div class="createtaskform">
         <form>
           <div>
             <Grid>
@@ -271,7 +305,7 @@ class Createproject extends React.Component {
                     </Avatar>
                   </div>
 
-                  <h1 class='h1'>Create project</h1>
+                  <h1 class='h1project'>Create project</h1>
                   <Typography variant="caption">
                     <p>Please fill this from to create a project</p>
                   </Typography>
@@ -293,14 +327,14 @@ class Createproject extends React.Component {
                       label="Pending"
                     />
                     <FormControlLabel
-                      value="Not-Started"
+                      value="Not Started"
                       control={<Radio />}
                       label="Not Started"
                     />
                     <FormControlLabel
-                      value="Ongoing"
+                      value="On going"
                       control={<Radio />}
-                      label="Ongoing"
+                      label="On going"
                     />
                     <FormControlLabel
                       value="Completed"
@@ -308,48 +342,52 @@ class Createproject extends React.Component {
                       label="Completed"
                     />
                     <FormControlLabel
-                      value="Overdue"
+                      value="Over due"
                       control={<Radio />}
-                      label="Canceled"
+                      label="Over due"
                     />
                   </RadioGroup>
                 </FormControl>
                 <FormControl fullWidth label="" minWidth="300px">
                   <InputLabel>Project Contributers</InputLabel>
-                  <Select MenuProps={MenuProps} onChange={this.setSelected}>
-                    {employees.map((name, index) => (
-                      <MenuItem key={index} value={name.username}>
-                        {name.username}
+
+
+                  <Select value={''} MenuProps={MenuProps} onChange={this.setSelectedContributor}>
+                    {employees.map((employeename, index) => (
+                      <MenuItem key={index} value={index}>
+                        {employeename.username}
                       </MenuItem>
                     ))}
                   </Select>
                   {selectedEmployees.map((selectedm, number) => (
-                    <Chip
+                    <Chip variant="outlined"
                       size="sizeSmall"
                       key={number}
-                      label={selectedm.name}
+                      label={selectedm.username}
                     ></Chip>
                   ))}
                 </FormControl>
 
-                <FormControl fullWidth label="" minWidth="300px">
+
+                <FormControl fullWidth label="admin" minWidth="300px">
                   <InputLabel>Project Managers</InputLabel>
-                  <Select
+                  <Select value={''}
                     MenuProps={MenuProps}
                     onChange={this.setSelectedManagers}
                   >
-                    {employees.map((name, index) => (
-                      <MenuItem key={index} value={name.username}>
+                    {employeesasadmins.map((name, index) => (
+                      <MenuItem key={index} value={index}>
                         {name.username}
                       </MenuItem>
                     ))}
                   </Select>
                   {selectedManagers.map((selected, number) => (
-                    <Chip
-                      size="sizeSmall"
+                    <Chip variant="outlined"
                       key={number}
-                      label={selected.name}
+                      size="sizeSmall"
+                      label={selected.username}
                     ></Chip>
+
                   ))}
                 </FormControl>
 
@@ -395,27 +433,60 @@ class Createproject extends React.Component {
               </Paper>
             </Grid>
 
-            
+
             <div>
 
 
             </div>
           </div>
         </form>
-<div>
-<a href="http://localhost:3000/createproject">
-          <button
-            class="buttonsubmitclearproject"        >
-            C L E A R
-          </button>
-        </a>
-        <a href="http://localhost:3000/projects">
-          <button class="closebuttonactualproject">
-            C L O S E
-          </button>
-        </a>
-</div>
-
+        <div>
+          <a href="http://localhost:3000/createproject">
+            <button
+              class="buttonsubmitclearproject"        >
+              C L E A R
+            </button>
+          </a>
+          <a href="http://localhost:3000/projects">
+            <button class="closebuttonactualproject">
+              C L O S E
+            </button>
+          </a>
+        </div>
+        <div>
+          <div class="bodyappear1createproject">
+            <a href="http://localhost:3000/createtask">
+              <button class="buttoncreateproject"> <AddCircleOutlineOutlinedIcon
+                fontSize="large"
+                htmlColor="#ffffff"
+              />Create Task<br /><p class="p">assign task for employees easily</p> </button>
+            </a>
+          </div>
+          <div class="bodyappear2createproject">
+            <a href="www.google.com">
+              <button class="buttoncreateproject"> < Visibility
+                fontSize="large"
+                htmlColor="#ffffff"
+              />Show taskboard<br /><p class="p">view a summary of assign task</p></button>
+            </a>
+          </div>
+          <div class="bodyappear3createproject">
+            <a href="www.google.com">
+              <button class="buttoncreateproject"> <TrendingUp
+                fontSize="large"
+                htmlColor="#ffffff"
+              />Status<br /><p class="p">evaluate your work</p></button>
+            </a>
+          </div>
+          <div class="bodyappear4createproject">
+            <a href="http://localhost:3000/viewprojects">
+              <button class="buttoncreateproject"> <Visibility
+                fontSize="large"
+                htmlColor="#ffffff"
+              />Show Projects<br /><p class="p">view a summary of all the projects</p> </button>
+            </a>
+          </div>
+        </div>
 
       </div>
     );

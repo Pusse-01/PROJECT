@@ -42,7 +42,7 @@ class ProjectAdmin extends React.Component {
             <button class="button"> <Visibility
                         fontSize="large"
                         htmlColor="#ffffff"
-                      />Show Project<br/><p class="p">view a summary of all the projects</p> </button>
+                      />Show Projects<br/><p class="p">view a summary of all the projects</p> </button>
           </a>
         </div>
 
@@ -56,7 +56,7 @@ class ProjectAdmin extends React.Component {
         </div>
 
         <div class="bodyappear4">
-          <a href="www.google.com">
+          <a href="http://localhost:3000/viewtasks">
             <button class="button"> < Visibility
                         fontSize="large"
                         htmlColor="#ffffff"
@@ -65,7 +65,7 @@ class ProjectAdmin extends React.Component {
         </div>
 
         <div class="bodyappear5">
-          <a href="www.google.com">
+          <a href="http://localhost:3000/viewanalysis">
             <button class="button"> <TrendingUp
                         fontSize="large"
                         htmlColor="#ffffff"
