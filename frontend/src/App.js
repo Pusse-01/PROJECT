@@ -26,7 +26,7 @@ import Createproject from './components//adminPanel/admin Projects/Create Projec
 import UserReports from "./components/adminPanel/Reports/userReports";
 import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
-import Designations from "./components/adminPanel/Admin HR/Designations/designations";
+import Departments from "./components/adminPanel/Admin HR/Departments/departments";
 const axios = require("axios").default;
 
 function App() {
@@ -174,13 +174,13 @@ function App() {
                 <Showprojects />
               </Route>
               <Route path="/hr/designations">
-                <Designations />
+                <Departments />
               </Route>
               <Route path="/hr/employees">
-                <Designations />
+                <Departments/>
               </Route>
               <Route path="/hr/leave">
-                <Designations />
+                <Departments />
               </Route>
             </div>}
           </div>
