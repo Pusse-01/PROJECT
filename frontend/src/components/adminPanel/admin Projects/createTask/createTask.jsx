@@ -22,7 +22,8 @@ import {
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import FormLabel from "@material-ui/core/FormLabel";
 import axios from "axios";
-
+import Visibility from "@material-ui/icons/Visibility";
+import TrendingUp from "@material-ui/icons/TrendingUp";
 //style class
 import "../Admin project Home/loadingPage.css";
 import "./createtaskStyles.css";
@@ -32,13 +33,15 @@ const paperStyle = {
   padding: "50px 20px",
   width: "700px",
   margin: "20px auto",
-  backgroundColor: "#1e272e",
+  backgroundColor: "#425e6e",
+  opacity: 0.8,
 };
 const avatarStyle = {
   backgroundColor: "black",
 };
 const radioStyle = {
-  backgroundColor: "#1e272e",
+  backgroundColor: "#425e6e",
+  opacity: 0.8,
 };
 
 const ITEM_HEIGHT = 48;
@@ -53,37 +56,6 @@ const MenuProps = {
 };
 
 //dummy data const
-const project = [
-  {
-    name: "Project1111",
-    members: ["ryan.pusse@gmail.com"],
-    projectStatus: "Over due",
-    overdue: new Date(),
-    administrators: ["Pusse"],
-    discription: "First Project",
-  },
-  {
-    name: "Project2222",
-    members: ["malakarodrigo@gmail.com", "en93824@sjp.ac.lk"],
-    projectStatus: "Over due",
-    overdue: new Date(),
-    administrators: ["Malaka"],
-    discription: "Second Project",
-  },
-];
-
-const selectedproject = [
-  {
-    id: "111111111111111111",
-    name: "Project1111Selected",
-    members: ["ryan.pusse@gmail.com"],
-    projectStatus: "Over due",
-    overdue: new Date(),
-    administrators: ["Pusse"],
-    discription: "First Project",
-  },
-];
-
 const names = [
   { username: "shehanmalakarodrigo@gmail.com" },
   { username: "abeysinghechanuka@gmail.com" },
@@ -121,7 +93,9 @@ export default class Createtask extends React.Component {
       showerror: false,
       showend: false,
       showsubmit: false,
+      missingdata: false,
       showcustomoption: true,
+      submitted: false
     };
   }
 
@@ -223,11 +197,8 @@ export default class Createtask extends React.Component {
   };
 
   handleClick = (event) => {
-
-
-
     if (this.state.customView) {
-      var contribution = []
+      var contribution = [];
       var temp_task = this.state.taskDetail;
       var temp = [
         {
@@ -241,38 +212,86 @@ export default class Createtask extends React.Component {
       this.setState({
         taskDetail: temp_task,
       });
-
+      //end of getting data
 
 
       for (var j = 0; j < this.state.projectContributers.length; j++) {
-        contribution.push(this.state.projectContributers[j])
+        contribution.push(this.state.projectContributers[j]);
       }
     }
 
-    if(!(this.state.customView)){
-        contribution = ['1111111111111111', '222222222222222222'] //fixed for now
-    }
-    for (var i = 0; i < this.state.taskDetail.length; i++) {
-      var taskBody = [
-        {
-          task_name: this.state.taskDetail[i].taskname,
-          due_date: this.state.taskDetail[i].endDate,
-          action: this.state.taskDetail[i].description,
-          task_status: this.state.taskDetail[i].taskstatus, //
-          project_id: this.state.selectedProject[0].id, //
-          project_name: this.state.selectedProject[0].name, //
-          assigned_to: contribution,
-        },
-      ];
 
-      axios
-        .post("http://localhost:8070/task/addTask", taskBody[0])
-        .then((response) => {
-          console.log(response.data);
+
+    for (var i = 0; i < this.state.taskDetail.length; i++) {
+      if (
+        this.state.taskDetail[i].taskname === "" ||
+        (this.state.taskDetail[i].endDate).toString() === '' ||
+        this.state.taskDetail[i].taskstatus === "" ||
+        this.state.taskDetail[i].description === ""
+      ) {
+        this.setState({
+          missingdata: true,
+          submitted: false
         })
-        .catch((error) => {
-          alert("error");
-        });
+        break;
+      } else {
+        this.setState({
+          submitted: true
+        })
+      }
+    }
+    console.log(this.state.submitted)
+
+
+
+    if (!this.state.customView) {
+      for (let i = 0; i < this.state.taskDetail.length; i++) {
+        let contributor = [this.state.projectContributers[i]]
+        let taskBody = [
+          {
+            task_name: this.state.taskDetail[i].taskname,
+            due_date: this.state.taskDetail[i].endDate,
+            action: this.state.taskDetail[i].description,
+            task_status: this.state.taskDetail[i].taskstatus, //
+            project_id: this.state.selectedProject[0].id, //
+            project_name: this.state.selectedProject[0].name, //
+            assigned_to: contributor,
+          },
+        ];
+
+        axios
+          .post("http://localhost:8070/task/addTask", taskBody[0])
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            alert("error");
+          });
+      }
+
+    } else {
+      for (let i = 0; i < this.state.taskDetail.length; i++) {
+        let taskBody = [
+          {
+            task_name: this.state.taskDetail[i].taskname,
+            due_date: this.state.taskDetail[i].endDate,
+            action: this.state.taskDetail[i].description,
+            task_status: this.state.taskDetail[i].taskstatus, //
+            project_id: this.state.selectedProject[0].id, //
+            project_name: this.state.selectedProject[0].name, //
+            assigned_to: contribution,
+          },
+        ];
+
+        axios
+          .post("http://localhost:8070/task/addTask", taskBody[0])
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            alert("error");
+          });
+      }
     }
   };
 
@@ -286,13 +305,8 @@ export default class Createtask extends React.Component {
         description: this.state.description,
       },
     ];
-    temp_task[this.state.count] = temp[0];
 
-    console.log(
-      "back " + this.state.taskDetail[this.state.taskDetail.length - 1].taskname
-    );
-    console.log(this.state.taskDetail.length);
-    console.log(this.state.count);
+    temp_task[this.state.count] = temp[0];
 
     if (this.state.count > 0) {
       this.setState({
@@ -311,13 +325,6 @@ export default class Createtask extends React.Component {
         count: this.state.count,
       });
     }
-
-    console.log(
-      "back " + this.state.taskDetail[this.state.taskDetail.length - 1].taskname
-    );
-    console.log(this.state.taskDetail.length);
-    console.log(this.state.count);
-    console.log(temp_task);
   };
 
   handleNext = (event) => {
@@ -378,6 +385,7 @@ export default class Createtask extends React.Component {
         count: this.state.count + 1,
       });
     }
+
   };
 
   setModel = (event) => {
@@ -414,6 +422,8 @@ export default class Createtask extends React.Component {
       showcustomoption,
       customValue,
       customView,
+      missingdata,
+      submitted
     } = this.state;
 
     //if data didnt recieve loading is true and this will render
@@ -432,9 +442,15 @@ export default class Createtask extends React.Component {
         </div>
       );
     }
+
+
+
+    if (this.state.missingdata) {
+      <div>affa</div>
+    }
     //
     return (
-      <div>
+      <div class="createtaskform">
         <div>
           <form>
             <div>
@@ -450,27 +466,32 @@ export default class Createtask extends React.Component {
                       </Avatar>
                     </div>
 
-                    <h1 class="h1">MANAGE TASKS</h1>
+                    <h1 class="h1tasks">MANAGE TASKS</h1>
                     <Typography variant="caption">
-                      <p>Please use this form to create tasks</p>
+                      <p>Please use this form to create tasks<br />All fields are required.</p>
                     </Typography>
                   </Grid>
                   <Grid>
-                    <FormControl fullWidth label="" minWidth="300px">
-                      <InputLabel>Project List</InputLabel>
-                      <Select
-                        value={selectedProject.name}
-                        MenuProps={MenuProps}
-                        onChange={this.setSelectedProject}
-                      >
-                        {projects.map((selproject, index) => (
-                          <MenuItem key={index} value={selproject.name}>
-                            {selproject.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
 
+                    {!showgrid ? (
+                      <FormControl fullWidth label="" minWidth="300px">
+                        <InputLabel>Project List</InputLabel>
+                        <Select
+                          value={selectedProject.name}
+                          MenuProps={MenuProps}
+                          onChange={this.setSelectedProject}
+                        >
+                          {projects.map((selproject, index) => (
+                            <MenuItem key={index} value={selproject.name}>
+                              {selproject.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    ) : null}
+
+                    {missingdata ? <div>Reqired Data is missing.<br /><button class="buttonsubmittask">Go Back</button></div> : null}
+                    {submitted ? <div>Task Added Successfully<br /><button class="buttonsubmittask">Go Back</button></div> : null}
                     {showcustomoption && !showgrid ? (
                       <FormControl class="marginedit">
                         <FormLabel>Method you need to follow</FormLabel>
@@ -497,24 +518,24 @@ export default class Createtask extends React.Component {
 
                     <div></div>
                   </Grid>
-                  {showerror && showgrid ? (
+                  {showerror && showgrid && !missingdata ? (
                     <div>
                       <br />
                       <p>No contributers for this project.</p>
                     </div>
                   ) : null}
 
-                  {showend && showgrid ? (
+                  {showend && showgrid && !missingdata ? (
                     <div>
                       <br />
                       <p>No more contributers for this project.</p>
                     </div>
                   ) : null}
 
-                  {showgrid && !showend && !showerror ? (
+                  {showgrid && !showend && !showerror && !submitted && !missingdata ? (
                     <div>
                       {!customView ? (
-                        <h1 class="h1">
+                        <h1 class="h1tasks">
                           {count + 1}. {projectContributers[count]}
                         </h1>
                       ) : null}
@@ -618,11 +639,12 @@ export default class Createtask extends React.Component {
                     </div>
                   ) : null}
 
+
                   <div class="containerbuttons">
-                    {(showsubmit || customView) && showgrid ? (
+                    {(showsubmit || customView) && showgrid && !submitted && !missingdata ? (
                       <button
                         class="buttonsubmittask"
-                        type="submit"
+                        type="button"
                         varient="contained"
                         color="primary"
                         onClick={this.handleClick}
@@ -641,6 +663,55 @@ export default class Createtask extends React.Component {
           <a href="http://localhost:3000/projects">
             <button class="closebuttonactual">C L O S E</button>
           </a>
+        </div>
+
+        <div>
+          <div class="bodyappear1createtask">
+            <a href="http://localhost:3000/createproject">
+              <button class="buttoncreatetask">
+                <AddCircleOutlineOutlinedIcon
+                  fontSize="large"
+                  htmlColor="#ffffff"
+                />
+                Create Project
+                <br />
+                <p class="p">create your new project</p>
+              </button>
+            </a>
+          </div>
+          <div class="bodyappear2createtask">
+            <a href="www.google.com">
+              <button class="buttoncreatetask">
+                {" "}
+                <Visibility fontSize="large" htmlColor="#ffffff" />
+                Show taskboard
+                <br />
+                <p class="p">view a summary of assign task</p>
+              </button>
+            </a>
+          </div>
+          <div class="bodyappear3createtask">
+            <a href="www.google.com">
+              <button class="buttoncreatetask">
+                {" "}
+                <TrendingUp fontSize="large" htmlColor="#ffffff" />
+                Status
+                <br />
+                <p class="p">evaluate your work</p>
+              </button>
+            </a>
+          </div>
+          <div class="bodyappear4createtask">
+            <a href="http://localhost:3000/viewprojects">
+              <button class="buttoncreatetask">
+                {" "}
+                <Visibility fontSize="large" htmlColor="#ffffff" />
+                Show Projects
+                <br />
+                <p class="p">view a summary of all the projects</p>{" "}
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     );
