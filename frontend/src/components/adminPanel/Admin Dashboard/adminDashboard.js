@@ -13,7 +13,7 @@ function AdminPanel() {
       .then(function (response) {
         if (response.data.length > 0) {
           settimeline(response.data);
-          console.log(response.data);
+          
         }
       });
   }
@@ -22,13 +22,13 @@ function AdminPanel() {
     admintimeline();
   }, []);
   return (
-    <div className="adminmain hides">
+    <div className="adminmain adminhides">
       <div>
         <div>
           <Sidebar />
         </div>
         <div className="row">
-          <div className=" admintimeline col-lg-6 col-sm-12 col-md-12 mt-3">
+          <div className=" admintimeline col-lg-5 col-sm-12 col-md-12 mt-3">
             <h1 className="text-center admintableheader">
               Employee Worklogs
             </h1>
@@ -45,7 +45,7 @@ function AdminPanel() {
               />
             </div>
             {projecttimeline.length > 0 ? (
-              <div className=" timelinetable hides">
+              <div className=" timelinetable adminhides">
                 <ul className="  employelist mt-3 timelinetext list-group-flush">
                   {projecttimeline
                     .filter((val) => {
@@ -69,8 +69,8 @@ function AdminPanel() {
                         return val;
                       }
                     })
-                    .map((numList) => (
-                      <li >
+                    .map((numList,i) => (
+                      <li key={i} >
                         {numList[0]} has Worked on {numList[1]} at {numList[3]}
                         <br />
                         Task : {numList[2]}

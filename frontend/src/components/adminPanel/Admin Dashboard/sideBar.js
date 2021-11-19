@@ -26,18 +26,18 @@ function SideBar({id,email}) {
     return (
         <div className="admindashboardsidemainComponent admintitle text-center">
            
-            <div className="admincpbutton  " >
+            <div className="admincpbutton mt-3" >
               Total  Projects
               <div className="adminsiderbarfont">{totalcompletedprojects}</div> 
           </div>
          
           
-            <div className="adminptbutton ">
+            <div className="adminptbutton mt-3 ">
               Total Cilents
               <div className="adminsiderbarfont">{totalpending}</div>
               </div>
             
-            <div className="adminctbutton ">
+            <div className="adminctbutton mt-3">
               Total Employees
               <div className="adminsiderbarfont">{totalcompletedtasks}</div>
               

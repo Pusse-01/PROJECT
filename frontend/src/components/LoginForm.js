@@ -34,11 +34,11 @@ function LoginForm({ Login, Logerror, error, check }) {
         <form className="col-12 " onSubmit={Auth}>
           <div className="col-2 offset-5  text-danger">{error}</div>
           <div className="form-group mt-3 col-2 offset-5">
-            <label for="email">E-mail :</label>
+            <label >E-mail :</label>
             <input className="form-control" onChange={e => setDetails({ ...logindetails, email: e.target.value })} value={logindetails.email} type="text" placeholder="Email" />
           </div>
           <div className="form-group col-2 offset-5">
-            <label for="password">Password :</label>
+            <label >Password :</label>
             <input className="form-control" onChange={e => setDetails({ ...logindetails, password: e.target.value })} value={logindetails.password} type="password" placeholder="Password" />
           </div>
           <br />

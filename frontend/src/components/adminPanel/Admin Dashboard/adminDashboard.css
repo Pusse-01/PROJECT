@@ -1,6 +1,6 @@
 
 .adminmain{
-    width: 100hw;
+    width: 80hw;
     height: 100vh;
     overflow: scroll;
     
@@ -25,19 +25,20 @@
 }
 .timelinetext{
     color: azure;
-    font-size: 20px;
+    font-size: 2vh;
 }
 .adminmain{
     width: 100hw;
     height: 90vh;
 }
 .searchbartimline{
-    position: relative;
+    position: static;
     background-color: #2f3640 ;
     border:none;
     padding: 0;
     color:azure;
-    width: 40%;
+    width: 50%;
+    
   
 }
 .searchbarplacement{
@@ -50,15 +51,16 @@
 
 }
 .timelinetable{
+        position: relative;
         height: 500px;
         overflow: scroll;
 }
-.hides::-webkit-scrollbar {
+.adminhides::-webkit-scrollbar {
     display: none;
 }
 
 
-.hides {
+.adminhides {
   -ms-overflow-style: none;  
   scrollbar-width: none; 
 }
