@@ -8,6 +8,9 @@
     z-index: -1;
     background-color: #1e272e;
 }
+.designationsMainComponent::-webkit-scrollbar{
+    display: none;
+}
 
 .designationsSubComponent {
     position: absolute;
@@ -17,37 +20,175 @@
     width : 82%;
     z-index: -1;
     padding: 10px;
+    display: grid;
+    grid-template-rows: 50% 50%;
 }
 
-.departmentsComponent{
+.addDepartmentsComponents{
     display: grid;
     grid-template-columns: 50% 50%;
-    background: red;
     padding : 10px;
+    color: white;
+    overflow: scroll;
 }
 
-.departmentsSubComponent {
+.addDepartmentsSubComponent {
     padding: 10px;
 }
 
-hrTitleText{
+.addDepartmentsComponents::-webkit-scrollbar{
+    display: none;
+}
 
+.hrTitleText{
+    color: #a4b0be;
+    font-weight: bolder;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .hrForm{
+    display: grid;
+    grid-template-rows: 150px 80px;
+}
 
+.hrFormSub{
+    height: 100%;
 }
 
 .hrLabel{
     display: grid;
     grid-template-columns: 40% 60%;
-    margin: 5px;
+    margin: 10px;
+}
+.hrTextInput{
+    background: #2f3640;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 5px;
+    border-radius: 50px;
+}
+.hrTextInput:focus{
+    outline: none;
+}
+.designations_addButtonContainer{
+    margin-top: 40px;
+    padding: 5px;
+    border-bottom : 3px solid red;
+    border-top : 2px solid #2f3640;
+    border-radius: 100px;
+    width: 200px;
+    justify-self: center;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+.designations_addButton {
+    padding :5px;
+    text-align: center;
+}
+.designations_addButtonContainer:hover {
+    background: red;
 }
 
 .hrText {
     color: white;
 }
+.multiSelect{
+    background: #1e272e;
+}
 
+.departments_table_view{
+    overflow: scroll;
+    margin-bottom: 10px;
+}
+.departments_table_view::-webkit-scrollbar{
+    display: none;
+}
+.designationsTable{
+    margin-top: 10px;
+    align-items: center;
+    width: 100%;
+}
+.designations_table_head {
+    width : 20%;
+    color: #a4b0be;
+    background-color: #2f3640;
+    font-weight: bolder;
+    height: 40px;
+}
+
+.designations_table_data_odd{
+    width: 20%;
+    background-color: #1e272e;
+    color: white ;
+}
+.designations_table_data_even{
+    width: 20%;
+    background-color: #2f3640;
+    color: white ;
+
+}
+.designations_table_header_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+.designations_table_header_column_more{
+    border-left: 1px solid #57606f;
+    text-align: center;
+}
+.designations_table_data_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+.designations_table_data_column_more {
+    border-right: 0px solid #57606f;
+}
+.designations_moreButton {
+    background-color: red;
+    color: white;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.designations_searchBar {
+    align-items: center;
+    border-color: #1e272e;
+    display: grid;
+    grid-template-columns: 70% 5% 25%;
+    background-color: #2f3640 ;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 0;
+    width: 90%;
+}
+.designations_blankColumn {
+    height: 100%;
+    background-color: #1e272e;
+}
+.designations_searchIcon {
+    width :25px;
+    height :25px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    margin: 5px;
+}
+.designations_taskSearchBox{
+    color: white;
+    justify-content: center;
+    align-self: center;
+    margin: 5px;
+    height: 25px;
+    background: #2f3640;
+    border: 0px solid #57606f;
+}
+.designations_taskSearchBox:focus {
+    outline: none;
+}
 
 @media only screen and (max-width: 991px) {
     .designationsMainComponent {
@@ -69,6 +210,7 @@ hrTitleText{
         padding-bottom: 20px;
     }
 }
+
 
 /******************************* SIDE BAR ***********************************/
 .sideBarDesignationsComponent {

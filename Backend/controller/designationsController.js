@@ -104,7 +104,8 @@ const deleteDesignation= async (req,res) => {
                         })
                         .catch(error => {
                             res.json({
-                                message : 'An error occurred!'
+                                message : 'An error occurred!',
+                                error:error
                             })
                         })
                 }else{
