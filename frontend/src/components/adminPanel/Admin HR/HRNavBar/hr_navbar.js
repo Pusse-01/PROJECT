@@ -40,7 +40,7 @@ class HRNavbar extends Component{
             }
         },function (){
             localStorage.setItem('HRNav', JSON.stringify(this.state.hrNav))
-            this.props.history.push("/HR/designations");
+            this.props.history.push("/HR/departments");
         })
     }
     changeColorEmployees(){
@@ -86,7 +86,7 @@ class HRNavbar extends Component{
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav hr_navbar_container">
                             <li className=" nav-item active hr_navbar_element">
-                                <a  className={linkClassDesignations} aria-current="page" href="#" onClick={this.changeColorDesignations.bind(this)}>Designations</a>
+                                <a  className={linkClassDesignations} aria-current="page" href="#" onClick={this.changeColorDesignations.bind(this)}>Departments</a>
                             </li>
                             <li className="nav-item hr_navbar_element" >
                                 <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)}>Employees</a>

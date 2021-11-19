@@ -70,7 +70,7 @@ class AdminNavbar extends Component{
             selectedEmployees:false,
             selectedLogout:false
         })
-        this.props.history.push("/hr/designations");
+        this.props.history.push("/hr/departments");
     }
     changeColorClients(){
         this.setState({
