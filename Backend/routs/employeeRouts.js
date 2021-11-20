@@ -77,26 +77,26 @@ router.post('/register', upload.single('profileImage'), (req, res) => {
 
                         //Add the employee to department
                         Departments.findById(department)
-                            .then(result=>{
+                            .then(result => {
                                 let employees = result.employees
                                 employees.push(employee._id)
 
                                 let updatedDepartment = {
-                                    employees :employees
+                                    employees: employees
                                 }
-                                Departments.findByIdAndUpdate(department,updatedDepartment)
-                                    .then(result2=>{
+                                Departments.findByIdAndUpdate(department, updatedDepartment)
+                                    .then(result2 => {
 
                                         // Add the employee to desination
                                         Designations.findById(designation)
-                                            .then(result3=>{
+                                            .then(result3 => {
                                                 let employeesOfDesignation = result3.employees
                                                 employeesOfDesignation.push(employee._id)
                                                 let updatedDesignation = {
-                                                    employees : employeesOfDesignation
+                                                    employees: employeesOfDesignation
                                                 }
-                                                Designations.findByIdAndUpdate(designation,updatedDesignation)
-                                                    .then(result4=>{
+                                                Designations.findByIdAndUpdate(designation, updatedDesignation)
+                                                    .then(result4 => {
                                                         //Verify user by jwt
                                                         jwt.sign(
                                                             {id: employee.id},
@@ -120,19 +120,19 @@ router.post('/register', upload.single('profileImage'), (req, res) => {
                                                             }
                                                         )
                                                     })
-                                                    .catch(error=>{
+                                                    .catch(error => {
                                                         res.json(error)
                                                     })
                                             })
-                                            .catch(error=>{
+                                            .catch(error => {
                                                 res.json(error)
                                             })
                                     })
-                                    .catch(error=>{
+                                    .catch(error => {
                                         res.json(error)
                                     })
                             })
-                            .catch(error=>{
+                            .catch(error => {
                                 res.json
                             })
                     })
@@ -210,10 +210,10 @@ const deleteEmployee = (req, res) => {
         })
     } else {
         Employee.findById(req.body.employee_id)
-            .then(result =>{
-                if(!result){
+            .then(result => {
+                if (!result) {
                     return res.status(400).json({msg: 'Employee does not exist'});
-                }else{
+                } else {
                     Employee.findByIdAndDelete(req.body.employee_id)
                         .then(response => {
                             res.json({
@@ -236,24 +236,24 @@ const updatePasswordByAdmin = (req, res) => {
     let employee_id = req.body.employee_id;
     let newPassword = req.body.new_password;
 
-    if (employee_id == null||newPassword==null) {
+    if (employee_id == null || newPassword == null) {
         res.json({
             message: "Employee Id Is Empty."
         })
     } else {
         let updated_employee = {
-            password:newPassword
+            password: newPassword
         }
         Employee.findById(employee_id)
-            .then(result=>{
-                if(!result){
+            .then(result => {
+                if (!result) {
                     return res.status(400).json({msg: 'Employee does not exist'});
-                }else{
+                } else {
                     bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(updated_employee.password, salt, (err, hash) => {
                             if (err) throw err;
                             updated_employee.password = hash;
-                            Employee.findByIdAndUpdate(employee_id,updated_employee)
+                            Employee.findByIdAndUpdate(employee_id, updated_employee)
                                 .then(employee => {
                                     //Giving the output
                                     console.log("Updating password is succeed!");
@@ -294,30 +294,30 @@ const updatePasswordByEmployee = (req, res) => {
     let oldPassword = req.body.old_password;
     let newPassword = req.body.new_password;
 
-    if (employee_id == null||oldPassword==null||newPassword==null) {
+    if (employee_id == null || oldPassword == null || newPassword == null) {
         res.json({
             message: "Employee Id Is Empty."
         })
     } else {
         let updated_employee = {
-            password:newPassword
+            password: newPassword
         }
         Employee.findById(employee_id)
-            .then(result=>{
-                if(!result){
+            .then(result => {
+                if (!result) {
                     return res.status(400).json({msg: 'Employee does not exist'});
-                }else{
+                } else {
                     bcrypt.compare(oldPassword, result.password)
                         .then(isMatch => {
                             if (!isMatch)
                                 return res.status(400).json({msg: 'Invalid old password'});
-                            else{
+                            else {
                                 //Create salt & hash
                                 bcrypt.genSalt(10, (err, salt) => {
                                     bcrypt.hash(updated_employee.password, salt, (err, hash) => {
                                         if (err) throw err;
                                         updated_employee.password = hash;
-                                        Employee.findByIdAndUpdate(employee_id,updated_employee)
+                                        Employee.findByIdAndUpdate(employee_id, updated_employee)
                                             .then(employee => {
                                                 //Giving the output
                                                 console.log("Updating password is succeed!");
@@ -335,10 +335,10 @@ const updatePasswordByEmployee = (req, res) => {
                                                 });
                                             })
                                             .catch(error => {
-                                            res.json({
-                                                message: 'An error occurred!'
+                                                res.json({
+                                                    message: 'An error occurred!'
+                                                })
                                             })
-                                        })
                                     })
                                 })
                                     .catch(error => {
@@ -351,10 +351,10 @@ const updatePasswordByEmployee = (req, res) => {
                 }
             })
             .catch(error => {
-            res.json({
-                message: 'An error occurred!'
+                res.json({
+                    message: 'An error occurred!'
+                })
             })
-        })
     }
 }
 router.post('/updatePasswordEmployee', updatePasswordByEmployee)
@@ -363,12 +363,12 @@ router.post('/updatePasswordEmployee', updatePasswordByEmployee)
 router.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => {
     let employee_id = req.body.employee_id;
     Employee.findById(employee_id)
-        .then(result=>{
-            if(!result){
+        .then(result => {
+            if (!result) {
                 res.json({
-                    message:"No employee existing with the id!"
+                    message: "No employee existing with the id!"
                 })
-            }else{
+            } else {
                 let profilePath = ''
                 if (req.file == null) {
                     profilePath = 'uploads/avatar.jpeg'
@@ -379,8 +379,8 @@ router.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => 
                     profileImage: profilePath
                 }
 
-                Employee.findByIdAndUpdate(employee_id,updatedEmployee)
-                    .then(result2=>{
+                Employee.findByIdAndUpdate(employee_id, updatedEmployee)
+                    .then(result2 => {
                         res.json(result2)
                     })
                     .catch(error => {
@@ -401,37 +401,109 @@ const updatePositionByAdmin = (req, res) => {
     let department = req.body.department;
     let position = req.body.position;
 
-    if (employee_id == null||department==null||designation==null||position==null) {
+    if (employee_id == null || department == null || designation == null || position == null) {
         res.json({
             message: "One of Parameters Is Empty."
         })
     } else {
         let updated_employee = {
-            designation:designation,
-            department:department,
-            position:position
+            designation: designation,
+            department: department,
+            position: position
         }
         Employee.findById(employee_id)
-            .then(result=>{
-                if(!result){
+            .then(result => {
+                if (!result) {
                     return res.status(400).json({msg: 'Employee does not exist'});
-                }else{
-                    Employee.findByIdAndUpdate(employee_id,updated_employee)
+                } else {
+                    Employee.findByIdAndUpdate(employee_id, updated_employee)
                         .then(employee => {
                             //Giving the output
                             console.log("Updating position is succeed!");
-                            res.json({
-                                employee: {
-                                    id: employee.id,
-                                    name: employee.name,
-                                    email: employee.email,
-                                    position: employee.position,
-                                    role: employee.role,
-                                    department: employee.department,
-                                    designation: employee.designation,
-                                    profileImage: employee.profileImage
-                                }
-                            });
+                            // Update employee in department
+                            Departments.findById(department)
+                                .then(departmentFromDB => {
+                                    let employeesFromDB = departmentFromDB.employees
+                                    employeesFromDB.push(employee_id)
+                                    let updatedDepartment = {
+                                        employees: employeesFromDB
+                                    }
+                                    Departments.findByIdAndUpdate(department, updatedDepartment)
+                                        .then(result2 => {
+                                            // Delete the employee from previous department
+                                            Departments.findById(employee.department)
+                                                .then(previousDepartment => {
+                                                    let employeesFromPreviousDepartment = previousDepartment.employees
+                                                    let employeesOfDepAfterRemoving =
+                                                        employeesFromPreviousDepartment.filter(element => {
+                                                            if (element != employee_id) {
+                                                                return element
+                                                            }
+                                                        })
+                                                    let updatedPrevDepartment = {employees:employeesOfDepAfterRemoving}
+                                                    Departments.findByIdAndUpdate(employee.department, updatedPrevDepartment)
+                                                        .then(result3 => {
+                                                            // Update the new designation with employee
+                                                            Designations.findById(designation)
+                                                                .then(designationFromDB => {
+                                                                    let employeesOfDesignation = designationFromDB.employees
+                                                                    employeesOfDesignation.push(employee_id)
+                                                                    let updatedDesignation = {
+                                                                        employees: employeesOfDesignation
+                                                                    }
+                                                                    Designations.findByIdAndUpdate(designation, updatedDesignation)
+                                                                        .then(result4 => {
+                                                                            // Remove employee from previous designation
+                                                                            Designations.findById(employee.designation)
+                                                                                .then(previousDesignation => {
+                                                                                    let empFromPreDes = previousDesignation.employees
+                                                                                    let empOfDesAfterRemov =
+                                                                                        empFromPreDes.filter(element => {
+                                                                                            if (element != employee_id) {
+                                                                                                return element
+                                                                                            }
+                                                                                        })
+                                                                                    let updatedPrevDes = {employees: empOfDesAfterRemov}
+                                                                                    Designations.findByIdAndUpdate(employee.designation, updatedPrevDes)
+                                                                                        .then(result5 => {
+                                                                                            res.json({
+                                                                                                employee: {
+                                                                                                    id: employee.id,
+                                                                                                    name: employee.name,
+                                                                                                    email: employee.email,
+                                                                                                    position: employee.position,
+                                                                                                    role: employee.role,
+                                                                                                    department: employee.department,
+                                                                                                    designation: employee.designation,
+                                                                                                    profileImage: employee.profileImage
+                                                                                                }
+                                                                                            });
+                                                                                        })
+                                                                                        .catch(error => {
+                                                                                            res.json(error)
+                                                                                        })
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    res.json(error)
+                                                                                })
+                                                                        })
+                                                                })
+                                                        })
+                                                        .catch(error => {
+                                                            res.json(error)
+                                                        })
+                                                })
+                                                .catch(error => {
+                                                    res.json(error)
+                                                })
+                                        })
+                                        .catch(error => {
+                                            res.json(error)
+                                        })
+                                })
+                                .catch(error => {
+                                    res.json(error)
+                                })
                         })
                         .catch(error => {
                             res.json({
