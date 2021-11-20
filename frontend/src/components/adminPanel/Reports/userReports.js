@@ -13,93 +13,11 @@ class UserReports extends Component {
             data: [],
             userProjects: [],
             userTasks: [],
-        };
-        this.state1 = {
-            labels: ['Pending', 'Not started', 'Ongoing',
-                 'Completed', 'Overdue'],
-        datasets: [
-          {
-            label: 'Projects',
-            backgroundColor: [
-              '#6800B4',
-              '#C9DE00',
-              '#2FDE00',
-              '#00A6B4',             
-              '	#ff0000'
-            ],
-            hoverBackgroundColor: [
-                '#6800B4',
-                '#C9DE00',
-                '#2FDE00',
-                '#00A6B4',             
-                '#ff0000 '
-            ],
-            data: [8,3,5,9,12],
-            radius: 150
-          }
-        ],
-        options:
-            [{ tooltips: {
-              enabled: false
-          },
-          pieceLabel: {
-              render: 'label',
-              arc: true,
-              fontColor: '#000',
-              position: 'outside'
-          },
-          responsive: true,
-          legend: {
-              position: 'bottom',
-          },
-          title: {
-              display: true,
-              text: 'Projects',
-              fontSize: 20
-          },
-          animation: {
-              animateScale: true,
-              animateRotate: true
-          }}]
-        }    
+            userProjectsCount:[],
+            userTasksCount: []
+        };  
         
-        this.state2 = {
-          labels: ['Pending', 'Not started', 'Ongoing',
-               'Completed', 'Overdue'],
-      datasets: [
-        {
-          label: 'Tasks',
-          backgroundColor: [
-            '#6800B4',
-            '#C9DE00',
-            '#2FDE00',
-            '#00A6B4',             
-            '#ff0000 '
-          ],
-          hoverBackgroundColor: [
-              '#6800B4',
-              '#C9DE00',
-              '#2FDE00',
-              '#00A6B4',             
-              '#ff0000 '
-          ],
-          data: [5, 6, 2, 7, 8],
-          radius: 150
-        }
-      ],
-      options:
-          [{
-        title:{
-          display:true,
-          text:'Tasks', 
-          fontSize:20,
-          padding: {
-            top: 10,
-            bottom: 30
-        },
-        legend:false
-      }}]
-      };
+        
     };
    
     componentDidMount() {
@@ -123,6 +41,20 @@ class UserReports extends Component {
                 isLoaded: true,
                 userTasks: response,
             }));
+
+            fetch('http://localhost:8070/employee/countProjects/' + this.state.user)
+            .then(response => response.json())
+            .then((response) => this.setState({
+                isLoaded: true,
+                userProjectsCount: Object.values(response),
+            }));
+            
+            fetch('http://localhost:8070/task/countTasks/' + this.state.user_id)
+            .then(response => response.json())
+            .then((response) => this.setState({
+                isLoaded: true,
+                userTasksCount: Object.values(response),
+            }));
         document.title = "PROJECT"
     }   
 
@@ -131,6 +63,98 @@ render(){
     const {data} = this.state;
     const {userProjects} = this.state;
     const {userTasks} = this.state;
+    const {userProjectsCount} = this.state;
+    const {userTasksCount} = this.state;
+    
+    const chart1 = {
+        labels: ['Pending', 'Not started', 'Ongoing',
+             'Completed', 'Overdue'],
+    datasets: [
+      {
+        label: 'Projects',
+        backgroundColor: [
+          '#6800B4',
+          '#C9DE00',
+          '#2FDE00',
+          '#00A6B4',             
+          '	#ff0000'
+        ],
+        hoverBackgroundColor: [
+            '#6800B4',
+            '#C9DE00',
+            '#2FDE00',
+            '#00A6B4',             
+            '#ff0000 '
+        ],
+        data: userProjectsCount,
+        radius: 120
+      }
+    ],
+    options:
+        [{ tooltips: {
+          enabled: false
+      },
+      pieceLabel: {
+          render: 'label',
+          arc: true,
+          fontColor: '#000',
+          position: 'outside'
+      },
+      responsive: true,
+      legend: {
+          position: 'bottom',
+      },
+      title: {
+          display: true,
+          text: 'Projects',
+          fontSize: 20
+      },
+      animation: {
+          animateScale: true,
+          animateRotate: true
+      }}]
+    } 
+
+    const chart2 = {
+        labels: ['Pending', 'Not started', 'Ongoing',
+             'Completed', 'Overdue'],
+    datasets: [
+      {
+        label: 'Tasks',
+        backgroundColor: [
+          '#6800B4',
+          '#C9DE00',
+          '#2FDE00',
+          '#00A6B4',             
+          '#ff0000 '
+        ],
+        hoverBackgroundColor: [
+            '#6800B4',
+            '#C9DE00',
+            '#2FDE00',
+            '#00A6B4',             
+            '#ff0000 '
+        ],
+        data: userTasksCount,
+        radius: 120
+      }
+    ],
+    options:
+        [{
+      title:{
+        display:true,
+        text:'Tasks', 
+        fontSize:20,
+        padding: {
+          top: 10,
+          bottom: 30
+      },
+      legend:false
+    }}]
+    };
+
+
+
     return (
         <div className = "reportsMainComponent">
         <Sidebar data={this.state.data}/> 
@@ -214,14 +238,14 @@ render(){
         <div >   
         <h3 className ="name">Projects</h3>      
         <Doughnut      
-          data={this.state1}
-          options={this.state1.options}
+          data={chart1}
+          options={chart1.options}
         /></div>
         <div>
         <h3 className= "name">Tasks</h3>
         <Doughnut 
-          data={this.state2}
-          options={this.state2.options}
+          data={chart2}
+          options={chart2.options}
         />       
         </div>
         </div>
