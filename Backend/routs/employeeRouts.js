@@ -30,7 +30,8 @@ const upload = multer({
 const Employee = require('../models/employee');
 const TaskController = require("../controller/taskController");
 const Task = require("../models/task");
-
+const Departments = require('../models/departments');
+const Designations = require('../models/designations');
 
 // @route POST employee/register
 // @desc Register employee
@@ -74,28 +75,66 @@ router.post('/register', upload.single('profileImage'), (req, res) => {
                         //Giving the output
                         console.log("Registration succeed!");
 
-                        //Verify user by jwt
-                        jwt.sign(
-                            {id: employee.id},
-                            config.get('jwtSecret'),
-                            {expiresIn: 7200},
-                            (err, token) => {
-                                if (err) throw err;
-                                res.json({
-                                    token,
-                                    employee: {
-                                        id: employee.id,
-                                        name: employee.name,
-                                        email: employee.email,
-                                        position: employee.position,
-                                        role: employee.role,
-                                        department: employee.department,
-                                        designation: employee.designation,
-                                        profileImage: employee.profileImage
-                                    }
-                                });
-                            }
-                        )
+                        //Add the employee to department
+                        Departments.findById(department)
+                            .then(result=>{
+                                let employees = result.employees
+                                employees.push(employee._id)
+
+                                let updatedDepartment = {
+                                    employees :employees
+                                }
+                                Departments.findByIdAndUpdate(department,updatedDepartment)
+                                    .then(result2=>{
+
+                                        // Add the employee to desination
+                                        Designations.findById(designation)
+                                            .then(result3=>{
+                                                let employeesOfDesignation = result3.employees
+                                                employeesOfDesignation.push(employee._id)
+                                                let updatedDesignation = {
+                                                    employees : employeesOfDesignation
+                                                }
+                                                Designations.findByIdAndUpdate(designation,updatedDesignation)
+                                                    .then(result4=>{
+                                                        //Verify user by jwt
+                                                        jwt.sign(
+                                                            {id: employee.id},
+                                                            config.get('jwtSecret'),
+                                                            {expiresIn: 7200},
+                                                            (err, token) => {
+                                                                if (err) throw err;
+                                                                res.json({
+                                                                    token,
+                                                                    employee: {
+                                                                        id: employee.id,
+                                                                        name: employee.name,
+                                                                        email: employee.email,
+                                                                        position: employee.position,
+                                                                        role: employee.role,
+                                                                        department: employee.department,
+                                                                        designation: employee.designation,
+                                                                        profileImage: employee.profileImage
+                                                                    }
+                                                                });
+                                                            }
+                                                        )
+                                                    })
+                                                    .catch(error=>{
+                                                        res.json(error)
+                                                    })
+                                            })
+                                            .catch(error=>{
+                                                res.json(error)
+                                            })
+                                    })
+                                    .catch(error=>{
+                                        res.json(error)
+                                    })
+                            })
+                            .catch(error=>{
+                                res.json
+                            })
                     })
             })
         })
