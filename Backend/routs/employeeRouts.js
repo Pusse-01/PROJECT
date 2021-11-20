@@ -5,162 +5,409 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const storage = multer.diskStorage({
-   destination : function(req,file,cb){
-      cb(null,'./uploads/')
-   },
-   filename : function (req,file,cb){
-      cb(null,new Date().toString()+file.originalname);
-   }
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().toString() + file.originalname);
+    }
 })
-const fileFilter = (req,file,cb) => {
-   if(file.mimetype==='image/jpeg'||file.mimetype==='image/png'){
-      cb(null,true);
-   }else{
-      cb(null,false);
-   }
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
 }
-const upload =  multer({
-   storage:storage,
-   limits:{fileSize : 1024*1024*500},
-   fileFilter : fileFilter
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 1024 * 1024 * 500},
+    fileFilter: fileFilter
 
 });
 
 //Employee model
 const Employee = require('../models/employee');
+const TaskController = require("../controller/taskController");
+const Task = require("../models/task");
 
 
 // @route POST employee/register
 // @desc Register employee
 // @access Public
-router.post ('/register',upload.single('profileImage'),(req, res)=>{
-   const{name,email,position,password,role,department,designation}=req.body;
+router.post('/register', upload.single('profileImage'), (req, res) => {
+    const {name, email, position, password, role, department, designation} = req.body;
 
     //Validation
-   if(!name || !email || !position || !password || !role){
-      return res.status(400).json({ msg: 'Please enter all fields'});
-   }
+    if (!name || !email || !position || !password || !role) {
+        return res.status(400).json({msg: 'Please enter all fields'});
+    }
 
-   //Check for existing user
-   Employee.findOne({email: req.body.email}).then(employee=>{
-      if(employee) return res.status(400).json({msg:'User already exist'});
+    //Check for existing user
+    Employee.findOne({email: req.body.email}).then(employee => {
+        if (employee) return res.status(400).json({msg: 'User already exist'});
 
-      let profilePath  = ''
-      if(req.file==null){
-          profilePath=''
-      }else{
-          profilePath = req.file.path
-      }
-      const newEmplyee = new Employee({
-         name,
-         email,
-         position,
-         password,
-         role,
-          department,
-          designation,
-         profileImage:profilePath
-      });
+        let profilePath = ''
+        if (req.file == null) {
+            profilePath = 'uploads/avatar.jpeg'
+        } else {
+            profilePath = req.file.path
+        }
+        const newEmplyee = new Employee({
+            name,
+            email,
+            position,
+            password,
+            role,
+            department,
+            designation,
+            profileImage: profilePath
+        });
 
-      //Create salt & hash
-      bcrypt.genSalt(10, (err, salt)=>{
-         bcrypt.hash(newEmplyee.password, salt, (err, hash)=>{
-            if(err) throw err;
-            newEmplyee.password = hash;
-            newEmplyee.save()
-            .then(employee=>{
-               //Giving the output
-               console.log("Registration succeed!");
-               
-               //Verify user by jwt
-               jwt.sign(
-                  { id: employee.id },
-                  config.get('jwtSecret'),
-                  { expiresIn: 7200},
-                  (err,token)=>{
-                     if(err) throw err;
-                     res.json({
-                        token,
-                        employee: {
-                           id: employee.id,
-                           name: employee.name,
-                           email: employee.email,
-                           position: employee.position,
-                           role: employee.role,
-                            department:employee.department,
-                            designation:employee.designation,
-                           profileImage:employee.profileImage
-                        }
-                     });
-                  }
-               )              
+        //Create salt & hash
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newEmplyee.password, salt, (err, hash) => {
+                if (err) throw err;
+                newEmplyee.password = hash;
+                newEmplyee.save()
+                    .then(employee => {
+                        //Giving the output
+                        console.log("Registration succeed!");
+
+                        //Verify user by jwt
+                        jwt.sign(
+                            {id: employee.id},
+                            config.get('jwtSecret'),
+                            {expiresIn: 7200},
+                            (err, token) => {
+                                if (err) throw err;
+                                res.json({
+                                    token,
+                                    employee: {
+                                        id: employee.id,
+                                        name: employee.name,
+                                        email: employee.email,
+                                        position: employee.position,
+                                        role: employee.role,
+                                        department: employee.department,
+                                        designation: employee.designation,
+                                        profileImage: employee.profileImage
+                                    }
+                                });
+                            }
+                        )
+                    })
             })
-         })
-      })
-   })
+        })
+    })
 });
 
 // @route POST employee/auth
 // @desc Authenticate the employee
 // @access Public
-router.post ('/auth',(req, res)=>{
-   const{email,password}=req.body;
-   
+router.post('/auth', (req, res) => {
+    const {email, password} = req.body;
+
     //Validation
-    if(!email || !password){
-      return res.status(400).json({ msg: 'Please enter all fields'});
-   }
+    if (!email || !password) {
+        return res.status(400).json({msg: 'Please enter all fields'});
+    }
 
-   //Check for existing user
-   Employee.findOne({email: req.body.email}).then(employee=>{
-      if(!employee) return res.status(400).json({msg:'User does not exist'});
+    //Check for existing user
+    Employee.findOne({email: req.body.email}).then(employee => {
+        if (!employee) return res.status(400).json({msg: 'User does not exist'});
 
-      //Validating password
-      bcrypt.compare(password,employee.password)
-      .then(isMatch =>{
-         if(!isMatch) return res.status(400).json({ msg: 'Invalid credintials'});
+        //Validating password
+        bcrypt.compare(password, employee.password)
+            .then(isMatch => {
+                if (!isMatch) return res.status(400).json({msg: 'Invalid credintials'});
 
-         //Verify user by jwt
-         jwt.sign(
-            { id: employee.id },
-            config.get('jwtSecret'),
-            { expiresIn: 7200},
-            (err,token)=>{
-               if(err) throw err;
-               console.log("User logged in!");
-               res.json({
-                  token,
-                  employee: {
-                     id: employee.id,
-                     name: employee.name,
-                     email: employee.email,
-                     position: employee.position,
-                     role: employee.role,
-                     profileImage: employee.profileImage
-                  }
-               });
-            }
-         )
+                //Verify user by jwt
+                jwt.sign(
+                    {id: employee.id},
+                    config.get('jwtSecret'),
+                    {expiresIn: 7200},
+                    (err, token) => {
+                        if (err) throw err;
+                        console.log("User logged in!");
+                        res.json({
+                            token,
+                            employee: {
+                                id: employee.id,
+                                name: employee.name,
+                                email: employee.email,
+                                position: employee.position,
+                                role: employee.role,
+                                profileImage: employee.profileImage
+                            }
+                        });
+                    }
+                )
 
-      })
-   })
+            })
+    })
 });
 
-  router.get ('/user/:email',(req, res)=>{
-   let user = req.params.email;
-   console.log(user)
-  Employee.find({email: user}).then(user=>{
-     if (user) 
+router.get('/user/:email', (req, res) => {
+    let user = req.params.email;
+    console.log(user)
+    Employee.find({email: user}).then(user => {
+        if (user)
+            return res.json(user);
 
-     return res.json(user);
-  
     })
-  });
+});
 
-  router.get ('/allEmployees',(req, res)=>{
-  Employee.find({role: 0}).then(employees=>{
-     return res.json(employees);
+router.get('/allEmployees', (req, res) => {
+    Employee.find({role: 0}).then(employees => {
+        return res.json(employees);
     })
-  });
+});
+
+const deleteEmployee = (req, res) => {
+    if (req.body.employee_id == null) {
+        res.json({
+            message: "Employee Id is empty"
+        })
+    } else {
+        Employee.findById(req.body.employee_id)
+            .then(result =>{
+                if(!result){
+                    return res.status(400).json({msg: 'Employee does not exist'});
+                }else{
+                    Employee.findByIdAndDelete(req.body.employee_id)
+                        .then(response => {
+                            res.json({
+                                response
+                            })
+                        })
+                        .catch(error => {
+                            res.json({
+                                message: 'An error occurred!'
+                            })
+                        })
+                }
+            })
+    }
+}
+router.post('/deleteEmployee', deleteEmployee)
+
+// ******************** Update a Password By Admin ***************************
+const updatePasswordByAdmin = (req, res) => {
+    let employee_id = req.body.employee_id;
+    let newPassword = req.body.new_password;
+
+    if (employee_id == null||newPassword==null) {
+        res.json({
+            message: "Employee Id Is Empty."
+        })
+    } else {
+        let updated_employee = {
+            password:newPassword
+        }
+        Employee.findById(employee_id)
+            .then(result=>{
+                if(!result){
+                    return res.status(400).json({msg: 'Employee does not exist'});
+                }else{
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(updated_employee.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            updated_employee.password = hash;
+                            Employee.findByIdAndUpdate(employee_id,updated_employee)
+                                .then(employee => {
+                                    //Giving the output
+                                    console.log("Updating password is succeed!");
+                                    res.json({
+                                        employee: {
+                                            id: employee.id,
+                                            name: employee.name,
+                                            email: employee.email,
+                                            position: employee.position,
+                                            role: employee.role,
+                                            department: employee.department,
+                                            designation: employee.designation,
+                                            profileImage: employee.profileImage
+                                        }
+                                    });
+                                })
+                                .catch(error => {
+                                    res.json({
+                                        message: 'An error occurred!'
+                                    })
+                                })
+                        })
+                    })
+                }
+            })
+            .catch(error => {
+                res.json({
+                    message: 'An error occurred!'
+                })
+            })
+    }
+}
+router.post('/updatePasswordAdmin', updatePasswordByAdmin)
+
+// ******************** Update a Password By Employee ***************************
+const updatePasswordByEmployee = (req, res) => {
+    let employee_id = req.body.employee_id;
+    let oldPassword = req.body.old_password;
+    let newPassword = req.body.new_password;
+
+    if (employee_id == null||oldPassword==null||newPassword==null) {
+        res.json({
+            message: "Employee Id Is Empty."
+        })
+    } else {
+        let updated_employee = {
+            password:newPassword
+        }
+        Employee.findById(employee_id)
+            .then(result=>{
+                if(!result){
+                    return res.status(400).json({msg: 'Employee does not exist'});
+                }else{
+                    bcrypt.compare(oldPassword, result.password)
+                        .then(isMatch => {
+                            if (!isMatch)
+                                return res.status(400).json({msg: 'Invalid old password'});
+                            else{
+                                //Create salt & hash
+                                bcrypt.genSalt(10, (err, salt) => {
+                                    bcrypt.hash(updated_employee.password, salt, (err, hash) => {
+                                        if (err) throw err;
+                                        updated_employee.password = hash;
+                                        Employee.findByIdAndUpdate(employee_id,updated_employee)
+                                            .then(employee => {
+                                                //Giving the output
+                                                console.log("Updating password is succeed!");
+                                                res.json({
+                                                    employee: {
+                                                        id: employee.id,
+                                                        name: employee.name,
+                                                        email: employee.email,
+                                                        position: employee.position,
+                                                        role: employee.role,
+                                                        department: employee.department,
+                                                        designation: employee.designation,
+                                                        profileImage: employee.profileImage
+                                                    }
+                                                });
+                                            })
+                                            .catch(error => {
+                                            res.json({
+                                                message: 'An error occurred!'
+                                            })
+                                        })
+                                    })
+                                })
+                                    .catch(error => {
+                                        res.json({
+                                            message: 'An error occurred!'
+                                        })
+                                    })
+                            }
+                        })
+                }
+            })
+            .catch(error => {
+            res.json({
+                message: 'An error occurred!'
+            })
+        })
+    }
+}
+router.post('/updatePasswordEmployee', updatePasswordByEmployee)
+
+// ******************** Update a Profile Pic By Employee ***************************
+router.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => {
+    let employee_id = req.body.employee_id;
+    Employee.findById(employee_id)
+        .then(result=>{
+            if(!result){
+                res.json({
+                    message:"No employee existing with the id!"
+                })
+            }else{
+                let profilePath = ''
+                if (req.file == null) {
+                    profilePath = 'uploads/avatar.jpeg'
+                } else {
+                    profilePath = req.file.path
+                }
+                const updatedEmployee = {
+                    profileImage: profilePath
+                }
+
+                Employee.findByIdAndUpdate(employee_id,updatedEmployee)
+                    .then(result2=>{
+                        res.json(result2)
+                    })
+                    .catch(error => {
+                        res.json(error)
+                    })
+            }
+        })
+        .catch(error => {
+            res.json(error)
+        })
+})
+
+// ******************** Update a Position By Admin ***************************
+const updatePositionByAdmin = (req, res) => {
+    let employee_id = req.body.employee_id;
+
+    let designation = req.body.designation;
+    let department = req.body.department;
+    let position = req.body.position;
+
+    if (employee_id == null||department==null||designation==null||position==null) {
+        res.json({
+            message: "One of Parameters Is Empty."
+        })
+    } else {
+        let updated_employee = {
+            designation:designation,
+            department:department,
+            position:position
+        }
+        Employee.findById(employee_id)
+            .then(result=>{
+                if(!result){
+                    return res.status(400).json({msg: 'Employee does not exist'});
+                }else{
+                    Employee.findByIdAndUpdate(employee_id,updated_employee)
+                        .then(employee => {
+                            //Giving the output
+                            console.log("Updating position is succeed!");
+                            res.json({
+                                employee: {
+                                    id: employee.id,
+                                    name: employee.name,
+                                    email: employee.email,
+                                    position: employee.position,
+                                    role: employee.role,
+                                    department: employee.department,
+                                    designation: employee.designation,
+                                    profileImage: employee.profileImage
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            res.json({
+                                message: 'An error occurred!'
+                            })
+                        })
+                }
+            })
+            .catch(error => {
+                res.json({
+                    message: 'An error occurred!'
+                })
+            })
+    }
+}
+router.post('/updatePositionAdmin', updatePositionByAdmin)
 
 module.exports = router;

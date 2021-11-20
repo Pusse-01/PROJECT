@@ -31,7 +31,9 @@ class Employees extends Component {
                 department: "",
                 designation: ""
             },
-            deleteEmployee: {},
+            deleteEmployee: {
+                id:""
+            },
 
         }
     }
