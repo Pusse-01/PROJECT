@@ -160,6 +160,49 @@ router.get("/countProjects", async (req, res) => {
     };
 
     res.send(statusObject);
+});
+
+
+
+router.get("/countProjects/:email", async (req, res) => {
+    let email = req.params.email;
+    const allProjects = await Project.find({members: email}).lean();
+    let pending = 0;
+    let not_started = 0;
+    let ongoing = 0;
+    let completed = 0;
+    let over_due = 0;
+    allProjects.forEach((Project)=> {
+        switch (Project.projectStatus) {
+            case "Pending":
+                pending++;
+                break;
+            case "Not Started":
+                not_started++;
+                break;
+            case "On going":
+                ongoing++;
+                break;                
+            case "Completed":
+                completed++;
+                break;    
+            case "Over due":
+                over_due++;
+                break; 
+            default:
+                break;          
+        }
+    });
+
+    const statusObject = {
+        pending,
+        not_started,
+        ongoing,
+        completed,
+        over_due,
+    };
+
+    res.send(statusObject);
 })
 
 module.exports = router;
