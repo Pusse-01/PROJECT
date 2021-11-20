@@ -1,5 +1,5 @@
 /*!******************************* MAIN COMPONENT *******************************!*/
-.employeesMainComponent{
+.hr_employeesMainComponent{
     position: absolute;
     top: 80px;
     left :0px;
@@ -9,35 +9,110 @@
     background-color: #1e272e;
 }
 
-.employeesSubComponent {
+.hr_employeesSubComponent {
     position: absolute;
     top: 70px;
     left :0px;
     bottom: 0px;
     width : 82%;
     z-index: -1;
-    padding: 20px;
-    overflow: scroll;
-}
-
-.employeesSubComponent::-webkit-scrollbar{
-    display: none;
-}
-
-.addEmployee, .updateEmployee , .deleteEmployee{
-    height:500px;
-    background: red;
-    margin-bottom: 10px;
     padding-top: 20px;
-}
-
-.hrTitleText {
+    padding-right: 5%;
+    padding-left: 5%;
+    overflow: scroll;
     color: white;
 }
 
+.hr_employeesSubComponent::-webkit-scrollbar{
+    display: none;
+}
+
+.hr_addEmployee, .hr_updateEmployee , .hr_deleteEmployee{
+    height:500px;
+    background: #2f3640;
+    margin-bottom: 40px;
+    border-radius: 30px;
+    padding: 0px;
+}
+.hrTitleText {
+    color: white;
+    height: 50px;
+    padding-top: 10px;
+    margin: 0px;
+}
+
+.hr_employeeForm{
+    display: grid;
+    grid-template-rows: 380px 80px;
+}
+
+.hr_employeeFormSub{
+    height: 100%;
+    width: 100%;
+}
+
+.hr_employeeLabel{
+    display: grid;
+    grid-template-columns: 45% 45%;
+    margin-top: 10px;
+    /*margin-left: 5%;*/
+    /*margin-right: 5%;*/
+    text-align: center;
+}
+.hr_employeeTextInput{
+    background-color: #1e272e;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+}
+.hr_employeeTextInput:focus{
+    outline: none;
+}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{
+    transition: background-color 5000s ease-in-out 0s;
+}
+.no_error_message{
+    visibility: hidden;
+}
+.error_message{
+    position: absolute;
+    padding-top: 10px;
+    padding-bottom :10px;
+    color: red;
+    font-size: 13px;
+    visibility: visible;
+    width: 90%;
+    text-align: center;
+}
+.hr_employee_addButtonContainer{
+    border-bottom : 3px solid red;
+    border-top : 2px solid #2f3640;
+    border-radius: 100px;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+    justify-self: center;
+    text-align: center;
+    cursor: pointer;
+    padding :5px;
+    text-align: center;
+}
+
+.hr_employee_addButtonContainer:hover {
+    background: red;
+}
+.employee_select{
+    background-color:#FF5349;
+    border-color: #FF5349;
+    color:azure;
+    border-radius: 10px;
+}
 
 @media only screen and (max-width: 991px) {
-    .employeesMainComponent {
+    .hr_employeesMainComponent {
         position: absolute;
         top: 250px;
         left: 0px;
@@ -48,7 +123,7 @@
         background-color: #1e272e;
     }
 
-    .employeesSubComponent  {
+    .hr_employeesSubComponent  {
         position: static;
         width: 100%;
         z-index: -1;
