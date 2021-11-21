@@ -52,7 +52,7 @@ class HRNavbar extends Component{
             }
         },function (){
             localStorage.setItem('HRNav', JSON.stringify(this.state.hrNav))
-            this.props.history.push("/HR/employees")
+            this.props.history.push("/hr/employees/menu")
         })
 
     }

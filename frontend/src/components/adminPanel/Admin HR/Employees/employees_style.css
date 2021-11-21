@@ -27,20 +27,74 @@
     display: none;
 }
 
-.hr_addEmployee, .hr_updateEmployee , .hr_deleteEmployee{
+.hr_addEmployee, .hr_updateEmployee , .hr_deleteEmployee , .hr_updatePosition{
+    position: absolute;
+    top: 70px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
     height:500px;
     background: #2f3640;
     margin-bottom: 40px;
     border-radius: 30px;
     padding: 0px;
+    visibility: visible;
+}
+.no_hr_addEmployee, .no_hr_updateEmployee , .no_hr_deleteEmployee , .no_hr_updatePosition{
+    visibility: hidden;
 }
 .hrTitleText {
-    color: white;
+    color: #a4b0be;
     height: 50px;
     padding-top: 10px;
     margin: 0px;
+    font-size: 20px;
 }
-
+.hr_employeeMenu{
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    height:500px;
+    background: #1e272e;
+    margin-bottom: 40px;
+    border-radius: 30px;
+    padding: 0px;
+    visibility: visible;
+}
+.menuContainer{
+    height: 300px;
+    margin-top:20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+.menuItem{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+    background-color: #2f3640;
+    box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
+    cursor: pointer;
+    transition: 1s;
+}
+.menuItem:hover{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+    box-shadow: 0px 0px 10px 10px rgb(250, 12, 4);
+}
+.menuItemText{
+    margin-top: 80px;
+    margin-bottom: 80px;
+    height:40px;
+    text-align: center;
+}
 .hr_employeeForm{
     display: grid;
     grid-template-rows: 380px 80px;
@@ -87,28 +141,83 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     width: 90%;
     text-align: center;
 }
-.hr_employee_addButtonContainer{
-    border-bottom : 3px solid red;
-    border-top : 2px solid #2f3640;
-    border-radius: 100px;
-    width: 20%;
-    margin-left: 40%;
-    margin-right: 40%;
+.employeeButtonsContainer{
+    width: max-content;
+    justify-content: center;
+    align-content: center;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-bottom: 50px;
+    align-self: center;
     justify-self: center;
+}
+.hr_employee_addButtonContainer{
+    border-radius: 100px;
+    width: 200px;
     text-align: center;
     cursor: pointer;
     padding :5px;
-    text-align: center;
+    margin-right: 10px;
+    transition: 1s;
+    box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
 }
+.hr_employee_menuButtonContainer{
+    border-radius: 100px;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    padding :5px;
+    margin-right: 10px;
+}
+.hr_employee_addButtonContainer:hover ,.hr_employee_menuButtonContainer:hover{
+    color: red;
 
-.hr_employee_addButtonContainer:hover {
-    background: red;
+    transition: 1s;
 }
 .employee_select{
     background-color:#FF5349;
     border-color: #FF5349;
     color:azure;
     border-radius: 10px;
+}
+.showDeleteConfirm{
+    background:red;
+    width: 50%;
+    height: 100px;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-top: 50px;
+    padding: 10px;
+    border-radius: 20px;
+}
+.deleteButtonsContainer{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 40% 40%;
+    justify-content: center;
+    /*align-items: center;*/
+}
+.deleteCancelButton{
+    text-align: center;
+    text-align: center;
+    background: #2f3640;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.deleteCancelButton:hover{
+
+}
+.deleteConfirmButton{
+    text-align: center;
+    background: #2f3640;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.hideDeleteConfirm{
+    visibility: hidden;
 }
 
 @media only screen and (max-width: 991px) {

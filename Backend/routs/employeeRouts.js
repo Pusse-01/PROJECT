@@ -203,6 +203,14 @@ router.get('/allEmployees', (req, res) => {
     })
 });
 
+router.get('/departmentEmployees/:dep_id', (req, res) => {
+    let dep_id = req.params.dep_id;
+    Employee.find({department: dep_id}).then(employees => {
+        if (employees)
+            return res.json(employees);
+    })
+});
+
 const deleteEmployee = (req, res) => {
     if (req.body.employee_id == null) {
         res.json({

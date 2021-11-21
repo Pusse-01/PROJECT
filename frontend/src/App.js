@@ -28,9 +28,12 @@ import Showprojects from './components/adminPanel/admin Projects/Show Projects/s
 import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 import Departments from "./components/adminPanel/Admin HR/Departments/departments";
 import Leave from "./components/adminPanel/Admin HR/Leave/leave";
-import Employees from "./components/adminPanel/Admin HR/Employees/employees";
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
-
+import AddEmployee from "./components/adminPanel/Admin HR/Employees/AddEmployee/addEmployee";
+import DeleteEmployee from "./components/adminPanel/Admin HR/Employees/DeleteEmployee/deleteEmployee";
+import UpdatePassword from "./components/adminPanel/Admin HR/Employees/UpdatePassword/updatePassword";
+import UpdatePosition from "./components/adminPanel/Admin HR/Employees/UpdatePosition/updatePosition";
+import Menu from "./components/adminPanel/Admin HR/Employees/Menu/menu";
 const axios = require("axios").default;
 
 function App() {
@@ -180,8 +183,20 @@ function App() {
               <Route path="/hr/departments">
                 <Departments/>
               </Route>
-              <Route path="/hr/employees">
-                <Employees/>
+              <Route path="/hr/employees/menu">
+                <Menu/>
+              </Route>
+              <Route path="/hr/employees/addEmployee">
+                <AddEmployee/>
+              </Route>
+              <Route path="/hr/employees/deleteEmployee">
+                <DeleteEmployee/>
+              </Route>
+              <Route path="/hr/employees/updatePassword">
+                <UpdatePassword/>
+              </Route>
+              <Route path="/hr/employees/updatePosition">
+                <UpdatePosition/>
               </Route>
               <Route path="/hr/leave">
                 <Leave/>
