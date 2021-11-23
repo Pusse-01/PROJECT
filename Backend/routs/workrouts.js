@@ -354,4 +354,11 @@ router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a pr
   })
 })
 
+router.get("/overdueprojects/",(req,res)=>{//get overdue projects
+  Project.find({projectStatus:"Over due"}).then(response=>{
+    return res.json(response)
+  }).catch(()=>{
+    return res.json("error");
+  })
+})
 module.exports = router;
