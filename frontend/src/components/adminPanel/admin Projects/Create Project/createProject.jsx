@@ -41,15 +41,6 @@ const avatarStyle = {
   margin: "0px"
 };
 
-
-
-const names = [
-  { username: "shehanmalakarodrigo@gmail.com" },
-  { username: "abeysinghechanuka@gmail.com" },
-  { username: "pusse@gmail.com" },
-  { username: "ryan.pusse@gmail.com" },
-];
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -173,6 +164,7 @@ class Createproject extends React.Component {
       .then((response) => {
         let employeelist = []
         for (var i = 0; i < response.data.length; i++) {
+          console.log(i + "name" + response.data[i].name)
           var employee = [
             {
               username: response.data[i].name,
@@ -181,10 +173,6 @@ class Createproject extends React.Component {
           ]
           employeelist.push(employee[0])
         }
-
-        console.log("name" + employeelist)
-
-
         this.setState({
           employees: employeelist,
           employeesasadmins: employeelist,
@@ -290,7 +278,7 @@ class Createproject extends React.Component {
       this.state;
 
     return (
-      <div class="createtaskform">
+      <Grid class="createtaskform">
         <form>
           <div>
             <Grid>
@@ -463,7 +451,7 @@ class Createproject extends React.Component {
             </a>
           </div>
           <div class="bodyappear2createproject">
-            <a href="www.google.com">
+            <a href="http://localhost:3000/viewtasks">
               <button class="buttoncreateproject"> < Visibility
                 fontSize="large"
                 htmlColor="#ffffff"
@@ -488,7 +476,7 @@ class Createproject extends React.Component {
           </div>
         </div>
 
-      </div>
+      </Grid>
     );
   }
 }

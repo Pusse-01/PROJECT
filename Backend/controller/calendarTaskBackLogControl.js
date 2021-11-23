@@ -72,7 +72,7 @@ const updateCalendarTaskBacklogOne = async (req, res) => {
         },
             {
                 new: true,
-                runValidators: false
+                runValidators: true
             }
         );
         console.log("okay");

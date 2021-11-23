@@ -9,7 +9,6 @@ import Dashboard from "./components/Dashboard/Dashboard";
 //18th oct
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom"; //this will provide ability to navigate among pages
-import ShowTaskBackLog from "./components/calendar/calendar";
 import Tasks from "./components/tasks/tasks";
 import { Redirect } from "react-router-dom";
 import TasksMore from "./components/tasksMore/tasksMore";
@@ -19,17 +18,25 @@ import TimeLogs from "./components/timeLogs/timeLogs";
 import ProjectsDetails from "./components/projects/projectsDetails";
 import AdminPanel from "./components/adminPanel/Admin Dashboard/adminDashboard";
 import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
-import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
 import Reports from "./components/adminPanel/Reports/reports";
-import ProjectAdmin from './components//adminPanel/admin Projects/Admin project Home/adminProjects'
-import Createproject from './components//adminPanel/admin Projects/Create Project/createProject'
 import UserReports from "./components/adminPanel/Reports/userReports";
-import Showprojects from './components/adminPanel/admin Projects/Show Projects/showProjects'
-import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
 import Departments from "./components/adminPanel/Admin HR/Departments/departments";
 import Leave from "./components/adminPanel/Admin HR/Leave/leave";
-import Employees from "./components/adminPanel/Admin HR/Employees/employees";
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
+
+//Start of Employee Calendar TaskBacklog by Malaka
+import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
+import ShowTaskBackLog from "./components/calendar/calendar";
+//End of Employee Calendar TaskBacklog 
+
+//Start of Admin Projects by Malaka
+import ShowProjects from './components/adminPanel/admin Projects/Show Projects/showProjects'
+import Createtask from './components/adminPanel/admin Projects/createTask/createTask'
+import ProjectAdmin from './components//adminPanel/admin Projects/Admin project Home/adminProjects'
+import Createproject from './components//adminPanel/admin Projects/Create Project/createProject'
+import  Viewtasks from './components/adminPanel/admin Projects/View tasks/viewtasks'
+import AnalyzeProjects from './components/adminPanel/admin Projects/Project Analyze/anlyzeProjects'
+//End of Admin Project Imports
 
 const axios = require("axios").default;
 
@@ -165,7 +172,32 @@ function App() {
               <Route path="/userReports">
                 <UserReports />
               </Route>
-              <Route path="/projects">
+             
+              <Route path="/hr/departments">
+                <Departments/>
+              </Route>
+              <Route path="/hr/employees/menu">
+                <Menu/>
+              </Route>
+              <Route path="/hr/employees/addEmployee">
+                <AddEmployee/>
+              </Route>
+              <Route path="/hr/employees/deleteEmployee">
+                <DeleteEmployee/>
+              </Route>
+              <Route path="/hr/employees/updatePassword">
+                <UpdatePassword/>
+              </Route>
+              <Route path="/hr/employees/updatePosition">
+                <UpdatePosition/>
+              </Route>
+              <Route path="/hr/leave">
+                <Leave/>
+              </Route>
+              <Route path="/hr/designations">
+                <Designations/>
+              {/*Start of Admin Panel - Projects */}
+              </Route> <Route path="/projects">
                 <ProjectAdmin />
               </Route>
               <Route path="/createproject">
@@ -175,20 +207,17 @@ function App() {
                 <Createtask />
               </Route>
               <Route path="/viewprojects">
-                <Showprojects />
+                <ShowProjects />
               </Route>
-              <Route path="/hr/departments">
-                <Departments/>
+              <Route path="/viewtasks">
+                <Viewtasks/>
               </Route>
-              <Route path="/hr/employees">
-                <Employees/>
+              <Route path="/viewanalysis">
+                <AnalyzeProjects/>
               </Route>
-              <Route path="/hr/leave">
-                <Leave/>
-              </Route>
-              <Route path="/hr/designations">
-                <Designations/>
-              </Route>
+               {/*
+               */}
+               {/*End of Admin Panel - Projects */}
             </div>}
           </div>
         ) : logorcreate === true ? (

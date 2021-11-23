@@ -55,20 +55,12 @@ const MenuProps = {
   },
 };
 
-//dummy data const
-const names = [
-  { username: "shehanmalakarodrigo@gmail.com" },
-  { username: "abeysinghechanuka@gmail.com" },
-  { username: "pusse@gmail.com" },
-  { username: "ryan.pusse@gmail.com" },
-];
-
-//React class
+//React class for creating a task
 export default class Createtask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      employees: names,
+      employees: [],
       projects: [],
       selectedValue: 0,
       selectedProject: [],
@@ -95,13 +87,14 @@ export default class Createtask extends React.Component {
       showsubmit: false,
       missingdata: false,
       showcustomoption: true,
-      submitted: false
+      submitted: false,
     };
   }
 
   componentDidMount() {
     this.getProjecLogs();
   }
+
 
   //data fetching
   getProjecLogs = () => {
@@ -135,22 +128,7 @@ export default class Createtask extends React.Component {
       });
   };
 
-  //setters
-  setSelectedManagers = (event) => {
-    var employeeName = [{ name: event.target.value }];
-    this.state.selectedManagers.push(employeeName[0]);
-    var temp1 = [];
-    var j = 0;
-    for (var i = 0; i < this.state.employees.length; i++) {
-      if (!(this.state.employees[i].username === employeeName[0].name)) {
-        temp1[j++] = this.state.employees[i];
-      }
-    }
-    this.setState({
-      employees: temp1,
-    });
-  };
-
+  //set selected project
   setSelectedProject = (event) => {
     var value = event.target.value;
     for (var i = 0; i < this.state.projects.length; i++) {
@@ -170,12 +148,15 @@ export default class Createtask extends React.Component {
     });
   };
 
+  //set selected task name of current state
   setTaskname = (event) => {
     var value = event.target.value;
     this.setState({
       taskname: value,
     });
   };
+
+  //set selected task status of current state
   setCategory = (event) => {
     var value = event.target.value;
     this.setState({
@@ -183,12 +164,14 @@ export default class Createtask extends React.Component {
     });
   };
 
+  //setselected end date of current state
   setendDate = (date) => {
     this.setState({
       endDate: date,
     });
   };
 
+  //set added description of current state
   setdescription = (event) => {
     var value = event.target.value;
     this.setState({
@@ -196,6 +179,7 @@ export default class Createtask extends React.Component {
     });
   };
 
+  //submit click of the form
   handleClick = (event) => {
     if (this.state.customView) {
       var contribution = [];
@@ -212,91 +196,150 @@ export default class Createtask extends React.Component {
       this.setState({
         taskDetail: temp_task,
       });
-      //end of getting data
+    } //end of getting data
 
 
-      for (var j = 0; j < this.state.projectContributers.length; j++) {
-        contribution.push(this.state.projectContributers[j]);
-      }
-    }
-
-
-
+    //checking for invalid
     for (var i = 0; i < this.state.taskDetail.length; i++) {
       if (
         this.state.taskDetail[i].taskname === "" ||
-        (this.state.taskDetail[i].endDate).toString() === '' ||
+        this.state.taskDetail[i].endDate.toString() === "" ||
         this.state.taskDetail[i].taskstatus === "" ||
         this.state.taskDetail[i].description === ""
       ) {
         this.setState({
           missingdata: true,
-          submitted: false
-        })
+          submitted: false,
+        });
         break;
       } else {
         this.setState({
-          submitted: true
-        })
+          missingdata: false,
+          submitted: true,
+        });
       }
     }
-    console.log(this.state.submitted)
 
 
+    axios.get('http://localhost:8070/employee/allEmployees')
+      .then((response) => {
+        let IDarray = response.data
+        var saveIndex = []
+        for (let j = 0; j < IDarray.length; j++) {
+          for (let k = 0; k < this.state.projectContributers.length; k++) {
+            if (this.state.projectContributers[k] === IDarray[j].email) {
+              saveIndex.push(IDarray[j]._id)
+            }
+          }
+        }
+        console.log(saveIndex)
 
-    if (!this.state.customView) {
-      for (let i = 0; i < this.state.taskDetail.length; i++) {
-        let contributor = [this.state.projectContributers[i]]
-        let taskBody = [
-          {
-            task_name: this.state.taskDetail[i].taskname,
-            due_date: this.state.taskDetail[i].endDate,
-            action: this.state.taskDetail[i].description,
-            task_status: this.state.taskDetail[i].taskstatus, //
-            project_id: this.state.selectedProject[0].id, //
-            project_name: this.state.selectedProject[0].name, //
-            assigned_to: contributor,
-          },
-        ];
+        if (!this.state.customView && !this.state.missingdata) {
+          for (let i = 0; i < this.state.taskDetail.length; i++) {
+            let contributor = [saveIndex[i]];
+            let taskBody = [
+              {
+                task_name: this.state.taskDetail[i].taskname,
+                due_date: this.state.taskDetail[i].endDate,
+                action: this.state.taskDetail[i].description,
+                task_status: this.state.taskDetail[i].taskstatus, //
+                project_id: this.state.selectedProject[0].id, //
+                project_name: this.state.selectedProject[0].name, //
+                assigned_to: contributor,
+              },
+            ];
 
-        axios
-          .post("http://localhost:8070/task/addTask", taskBody[0])
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            alert("error");
-          });
+            axios
+              .post("http://localhost:8070/task/addTask", taskBody[0])
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                alert("error");
+              });
+          }
+        } else if (!this.state.missingdata) {
+          for (let i = 0; i < this.state.taskDetail.length; i++) {
+            let taskBody = [
+              {
+                task_name: this.state.taskDetail[i].taskname,
+                due_date: this.state.taskDetail[i].endDate,
+                action: this.state.taskDetail[i].description,
+                task_status: this.state.taskDetail[i].taskstatus, //
+                project_id: this.state.selectedProject[0].id, //
+                project_name: this.state.selectedProject[0].name, //
+                assigned_to: saveIndex,
+              },
+            ];
+
+            axios
+              .post("http://localhost:8070/task/addTask", taskBody[0])
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                alert("error");
+              });
+          }
+        }
+
+
+    //updating the project status accordigly
+    //show project fuction will working together
+    if (!this.state.missingdata) {
+      var ProjecTStat = "-";
+      let Completed = false;
+      for (let y = 0; y < this.state.taskDetail.length; y++) {
+        if (
+          this.state.taskDetail[y].taskstatus === "To Do" ||
+          this.state.taskDetail[y].taskstatus === "In Progress" ||
+          this.state.taskDetail[y].taskstatus === "Bugs/Issues"
+        ) {
+          ProjecTStat = "On going";
+          break;
+        } else if (
+          this.state.taskDetail[y].taskstatus === "Review" ||
+          this.state.taskDetail[y].taskstatus === "Done"
+        ) {
+          ProjecTStat = "Completed";
+          Completed = true;
+        } else if (!Completed) {
+          ProjecTStat = "Overdue";
+        }
       }
+      let sendData = { projectStatus: ProjecTStat };
 
-    } else {
-      for (let i = 0; i < this.state.taskDetail.length; i++) {
-        let taskBody = [
-          {
-            task_name: this.state.taskDetail[i].taskname,
-            due_date: this.state.taskDetail[i].endDate,
-            action: this.state.taskDetail[i].description,
-            task_status: this.state.taskDetail[i].taskstatus, //
-            project_id: this.state.selectedProject[0].id, //
-            project_name: this.state.selectedProject[0].name, //
-            assigned_to: contribution,
-          },
-        ];
-
-        axios
-          .post("http://localhost:8070/task/addTask", taskBody[0])
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            alert("error");
-          });
-      }
+      axios
+        .post(
+          "http://localhost:8070/projectsstatus/" +
+          this.state.selectedProject[0].id,
+          sendData
+        )
+        .then((response) => {
+          console.log(response);
+        });
     }
+
+
+
+      }).catch((error) => {
+        console.log(error)
+      })
+
   };
 
+
+
+  //going back in form
   handleBack = (event) => {
-    var temp_task = this.state.taskDetail;
+    //going back in task form
+    var currentpage = this.state.count; //current page index starting from zero
+
+    //copying current data to tempory array
+    var temp_task = [];
+    temp_task = this.state.taskDetail;
+
+    //saving current page data to tempory variable
     var temp = [
       {
         taskname: this.state.taskname,
@@ -306,88 +349,86 @@ export default class Createtask extends React.Component {
       },
     ];
 
-    temp_task[this.state.count] = temp[0];
+    //setting count to previous page if not in first page
+    if (currentpage > 0) {
+      //overwrite page data to current page
+      temp_task[currentpage] = temp[0];
 
-    if (this.state.count > 0) {
+      //move to previos page
+      currentpage = currentpage - 1;
       this.setState({
-        taskname: this.state.taskDetail[this.state.count - 1].taskname,
-        endDate: this.state.taskDetail[this.state.count - 1].endDate,
-        taskstatus: this.state.taskDetail[this.state.count - 1].taskstatus,
-        description: this.state.taskDetail[this.state.count - 1].description,
-        count: this.state.count - 1,
+        count: currentpage,
       });
-    } else if (this.state.count === 0) {
-      this.setState({
-        taskname: this.state.taskDetail[0].taskname,
-        endDate: this.state.taskDetail[0].endDate,
-        taskstatus: this.state.taskDetail[0].taskstatus,
-        description: this.state.taskDetail[0].description,
-        count: this.state.count,
-      });
+    } else {
+      //overwrite page data to current page
+      temp_task[currentpage] = temp[0];
     }
+
+    this.setState({
+      taskDetail: temp_task,
+    });
+
+    //setting intial data of rendering page
+    this.setState({
+      taskname: this.state.taskDetail[currentpage].taskname,
+      endDate: this.state.taskDetail[currentpage].endDate,
+      taskstatus: this.state.taskDetail[currentpage].taskstatus,
+      description: this.state.taskDetail[currentpage].description,
+    });
   };
 
+  //going forward in form
   handleNext = (event) => {
-    if (this.state.count === this.state.projectContributers.length - 1) {
+    //going forward in task form
+    var currentpage = this.state.count; //current page index starting from zero
+    var temp_task = [];
+    temp_task = this.state.taskDetail;
+
+    var temp = [
+      {
+        taskname: this.state.taskname,
+        endDate: this.state.endDate,
+        taskstatus: this.state.taskstatus,
+        description: this.state.description,
+      },
+    ];
+
+    temp_task[currentpage] = temp[0];
+
+    currentpage = currentpage + 1;
+
+    this.setState({
+      taskDetail: temp_task,
+    });
+
+    //end form if end of employees
+    if (currentpage >= this.state.projectContributers.length) {
       this.setState({
         showend: true,
         showsubmit: true,
       });
-    }
-    var temp_task = this.state.taskDetail;
-    var temp = [
-      {
-        taskname: this.state.taskname,
-        endDate: this.state.endDate,
-        taskstatus: this.state.taskstatus,
-        description: this.state.description,
-      },
-    ];
-
-    console.log("next 1 ");
-    console.log(this.state.taskDetail.length);
-    console.log(this.state.count);
-
-    if (this.state.taskDetail.length - 1 > this.state.count) {
-      temp_task[this.state.count] = temp[0];
+    } else if (this.state.taskDetail.length === currentpage) {
       this.setState({
-        taskname: this.state.taskDetail[this.state.count + 1].taskname,
-        endDate: this.state.taskDetail[this.state.count + 1].endDate,
-        taskstatus: this.state.taskDetail[this.state.count + 1].taskstatus,
-        description: this.state.taskDetail[this.state.count + 1].description,
-        taskDetail: temp_task,
-        count: this.state.count + 1,
-      });
-    } else if (this.state.count !== 0) {
-      temp_task.push(temp[0]);
-      this.setState({
-        taskDetail: temp_task,
         taskname: "",
         endDate: Date.now(),
         taskstatus: "To Do",
         description: "",
-        count: this.state.count + 1,
       });
-      console.log(
-        "next 2" +
-        this.state.taskDetail[this.state.taskDetail.length - 1].taskname
-      );
-      console.log(this.state.taskDetail.length);
-      console.log(this.state.count);
-    } else if (this.state.count === 0) {
-      temp_task[this.state.count] = temp[0];
+    } else {
       this.setState({
-        taskDetail: temp_task,
-        taskname: "",
-        endDate: Date.now(),
-        taskstatus: "To Do",
-        description: "",
-        count: this.state.count + 1,
+        taskname: this.state.taskDetail[currentpage].taskname,
+        endDate: this.state.taskDetail[currentpage].endDate,
+        taskstatus: this.state.taskDetail[currentpage].taskstatus,
+        description: this.state.taskDetail[currentpage].description,
       });
     }
 
+    this.setState({
+      count: currentpage,
+    });
   };
 
+  // set the customers selection of method of creating tasks
   setModel = (event) => {
     var value = event.target.value;
     this.setState({
@@ -423,7 +464,7 @@ export default class Createtask extends React.Component {
       customValue,
       customView,
       missingdata,
-      submitted
+      submitted,
     } = this.state;
 
     //if data didnt recieve loading is true and this will render
@@ -443,10 +484,8 @@ export default class Createtask extends React.Component {
       );
     }
 
-
-
     if (this.state.missingdata) {
-      <div>affa</div>
+      <div>affa</div>;
     }
     //
     return (
@@ -468,11 +507,14 @@ export default class Createtask extends React.Component {
 
                     <h1 class="h1tasks">MANAGE TASKS</h1>
                     <Typography variant="caption">
-                      <p>Please use this form to create tasks<br />All fields are required.</p>
+                      <p>
+                        Please use this form to create tasks
+                        <br />
+                        All fields are required.
+                      </p>
                     </Typography>
                   </Grid>
                   <Grid>
-
                     {!showgrid ? (
                       <FormControl fullWidth label="" minWidth="300px">
                         <InputLabel>Project List</InputLabel>
@@ -490,8 +532,20 @@ export default class Createtask extends React.Component {
                       </FormControl>
                     ) : null}
 
-                    {missingdata ? <div>Reqired Data is missing.<br /><button class="buttonsubmittask">Go Back</button></div> : null}
-                    {submitted ? <div>Task Added Successfully<br /><button class="buttonsubmittask">Go Back</button></div> : null}
+                    {missingdata ? (
+                      <div>
+                        Reqired Data is missing.
+                        <br />
+                        <button class="buttonsubmittask">Go Back</button>
+                      </div>
+                    ) : null}
+                    {submitted ? (
+                      <div>
+                        Task Added Successfully
+                        <br />
+                        <button class="buttonsubmittask">Go Back</button>
+                      </div>
+                    ) : null}
                     {showcustomoption && !showgrid ? (
                       <FormControl class="marginedit">
                         <FormLabel>Method you need to follow</FormLabel>
@@ -532,7 +586,11 @@ export default class Createtask extends React.Component {
                     </div>
                   ) : null}
 
-                  {showgrid && !showend && !showerror && !submitted && !missingdata ? (
+                  {showgrid &&
+                    !showend &&
+                    !showerror &&
+                    !submitted &&
+                    !missingdata ? (
                     <div>
                       {!customView ? (
                         <h1 class="h1tasks">
@@ -639,9 +697,11 @@ export default class Createtask extends React.Component {
                     </div>
                   ) : null}
 
-
                   <div class="containerbuttons">
-                    {(showsubmit || customView) && showgrid && !submitted && !missingdata ? (
+                    {(showsubmit || customView) &&
+                      showgrid &&
+                      !submitted &&
+                      !missingdata ? (
                       <button
                         class="buttonsubmittask"
                         type="button"
@@ -680,7 +740,7 @@ export default class Createtask extends React.Component {
             </a>
           </div>
           <div class="bodyappear2createtask">
-            <a href="www.google.com">
+            <a href="http://localhost:3000/viewtasks">
               <button class="buttoncreatetask">
                 {" "}
                 <Visibility fontSize="large" htmlColor="#ffffff" />
@@ -717,69 +777,3 @@ export default class Createtask extends React.Component {
     );
   }
 } //end of class
-
-/*******************************
-
-                  {projectContributers.map((projectmembers, number) => (
-
-                  ))}
-
-
-                      this.setState({
-      taskname: "",
-      endDate: Date.now(),
-      taskstatus: "To Do",
-      description: "",
-    });
-
-    if (
-      this.state.projectContributers.length === this.state.taskDetail.length
-    ) {
-      this.setState({
-        showend: true,
-        showsubmit: true,
-      });
-    }
-
-       var temp_task = this.state.taskDetail;
-    console.log(this.state.task);
-    var temp = [
-      {
-        taskname: this.state.taskname,
-        endDate: this.state.endDate,
-        taskstatus: this.state.taskstatus,
-        description: this.state.description,
-      },
-    ];
-
-
-    temp_task.push(temp[0]);
-    this.setState({
-      count: this.state.count + 1,
-      task: temp[0],
-      taskDetail: temp_task,
-    });
-    console.log(this.state.task);
-    console.log(this.state.count);
-    console.log(this.state.taskDetail);
-
-    for(var i=0; i<this.state.taskDetail.length; i++){
-  var taskBody =[{
-    task_name : this.state.taskDetail[i].taskname,
-    due_date : "2021-09-22",
-    action : this.state.taskDetail[i].description,
-    task_status : this.state.taskDetail[i].taskstatus,
-    project_id : this.state.selectedProject[0].id,
-    project_name : this.state.selectedProject[0].name,
-    assigned_to : ['11111111']
-  }]
-
-  axios.post('http://localhost:8070/task/addTask', taskBody)
-  .then((response) => {
-    console.log(response.data)
-
-  }).catch((error)=>{
-    alert('error')
-  })
-}
- */

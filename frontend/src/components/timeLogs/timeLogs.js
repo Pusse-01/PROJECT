@@ -15,20 +15,21 @@ constructor(props) {
             error:"",
             name: founduser.employee.name,
             id: founduser.employee.id,
-            email: founduser.employee.email
+            email: founduser.employee.email,
+            searchTerm:""
         }
     }
 
     async componentDidMount() {
-        // POST request using fetch with async/await
+        
         console.log(this.state.id);
-        axios.post('http://localhost:8070/task/getTaskByAssignedTo/',{'assigned_to':this.state.id})
+        axios.get('http://localhost:8070/dashboard/timelogs/')
             .then((res)=>{
                 this.setState({
-                    tasks :res.data.response,
+                    tasks :res.data,
                     error:"error"
                 });
-                console.log(this.state.tasks)
+                
 
             })
             .catch(error=>{console.log(error)})
@@ -41,6 +42,7 @@ constructor(props) {
 
 
     render(){
+        const {tasks} = this.state;
         return(
             <div className="timeLogsMainComponent">
                  <Timelogssidebar/>
@@ -48,59 +50,71 @@ constructor(props) {
                     <div className="searchBar">
                         <div className="blankColumn"></div>
                         <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
-                        <h5 className="searchText">Search</h5>
+                        
+                        <input type="text" placeholder="Search by Project or Task or Name or Date" className="tasks_taskSearchBox" onChange={event =>{
+                            this.setState({
+                                searchTerm:event.target.value
+                            },()=>{console.log(this.state.searchTerm)})
+                        }}/>
                     </div>
 
                     <table className="timeLogsTable">
                         <tr className="table_head">
+                            <th className="table_header_column">Name</th>
+                            <th className="table_header_column">Project</th>
                             <th className="table_header_column">Task</th>
                             <th className="table_header_column">Start Time</th>
                             <th className="table_header_column">End Time</th>
-                            <th className="table_header_column">Total Hours</th>
+                            <th className="table_header_column">Duration</th>
                             <th className="table_header_column">Memo</th>
-                            <th className="table_header_column">Who Logged</th>
                         </tr>
-                        <tr className="table_data_odd">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">08:00</td>
-                            <td className="table_data_column">17:00</td>
-                            <td className="table_data_column">15 Hours</td>
-                            <td className="table_data_column">ABC</td>
-                            <td className="table_data_column">AKASH</td>
-                        </tr>
-                        <tr className="table_data_even">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">08:00</td>
-                            <td className="table_data_column">17:00</td>
-                            <td className="table_data_column">15 Hours</td>
-                            <td className="table_data_column">ABC</td>
-                            <td className="table_data_column">AKASH</td>
-                        </tr>
-                        <tr className="table_data_odd">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">08:00</td>
-                            <td className="table_data_column">17:00</td>
-                            <td className="table_data_column">15 Hours</td>
-                            <td className="table_data_column">ABC</td>
-                            <td className="table_data_column">AKASH</td>
-                        </tr>
-                        <tr className="table_data_even">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">08:00</td>
-                            <td className="table_data_column">17:00</td>
-                            <td className="table_data_column">15 Hours</td>
-                            <td className="table_data_column">ABC</td>
-                            <td className="table_data_column">AKASH</td>
-                        </tr>
-                        <tr className="table_data_odd">
-                            <td className="table_data_column">Task 1</td>
-                            <td className="table_data_column">08:00</td>
-                            <td className="table_data_column">17:00</td>
-                            <td className="table_data_column">15 Hours</td>
-                            <td className="table_data_column">ABC</td>
-                            <td className="table_data_column">AKASH</td>
-                        </tr>
-                    </table>
+                        
+                    
+                            {(tasks.length > 0) ? tasks.filter((val) => {
+                      if ( this.state.searchTerm == "") {
+                        return val;
+                      } else if (
+                        val[0].toLowerCase().includes(this.state.searchTerm.toLowerCase())
+                      ) {
+                        return val;
+                      } else if (
+                        val[1].toLowerCase().includes(this.state.searchTerm.toLowerCase())
+                      ) {
+                        return val;
+                      } else if (
+                        val[2].toLowerCase().includes(this.state.searchTerm.toLowerCase())
+                      ) {
+                        return val;
+                      } else if (
+                        val[4].toLowerCase().includes(this.state.searchTerm.toLowerCase())
+                      ) {
+                        return val;
+                      }
+                    })
+                            .map((task, index) => {
+                                if(index%2==0){
+                                
+                                    return (
+                                        <tr className="tasks_table_data_odd" key={index}>
+                                        {task.map((num, j) => (
+                                     <td  className="tasks_table_data_column" key={j}>{num}</td>
+                                     ))}
+                                        </tr>
+
+                                    )
+                                }else{
+                                }
+                                return (
+                                       <tr className="tasks_table_data_even" key={index}>
+                                        {task.map((num, j) => (
+                                     <td  className="tasks_table_data_column" key={j}>{num}</td>
+                                     ))}
+                                        </tr>
+
+                                )
+                            }) : <tr><td colSpan="5">Loading...</td></tr>
+                            }
+                        </table>
                 </div>
             </div>
         )

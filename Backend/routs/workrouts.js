@@ -233,6 +233,38 @@ router.get("/completedprojects/:email",(req,res)=>{//get completed projects by e
 
 })
 
+//for timelogs
+router.get("/timelogs/",(req,res)=>{
+  Workingproject.find({}).then((timeline)=>{
+    let summery=[]
+      let iter=timeline.values();
+      for (let times of iter) {
+        let duration="";
+        if(times.hours>=10){
+          duration+=times.hours.toString()+":";
+        }else{
+          duration+="0"+times.hours.toString()+":";
+        }
+        if(times.minutes>=10){
+          duration+=times.minutes.toString()+":"
+        }else{
+          duration+="0"+times.minutes.toString()+":"
+        }
+        if(times.seconds>=10){
+          duration+=times.seconds.toString();
+        }else{
+          duration+="0"+times.seconds.toString();
+        }
+      
+       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration,times.memo];
+        summery.push(obj);
+      
+    }
+    return res.json(summery.reverse());
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
 
 
 
@@ -272,7 +304,7 @@ router.get("/admintimeline/",(req,res)=>{//get total workings of all employees
   })
 })
 
-router.get("/totalprojectadmin/",(req,res)=>{
+router.get("/totalprojectadmin/",(req,res)=>{//get total projects
   Project.find({}).then(number=>{
     return res.json(number.length);
   }).catch(error=>{
@@ -280,11 +312,46 @@ router.get("/totalprojectadmin/",(req,res)=>{
   })
 })
 
-router.get("/totalemployees/",(req,res)=>{
+router.get("/totalemployees/",(req,res)=>{//get total employees
   Employee.find({role:0}).then(response=>{
     return res.json(response.length);
   }).catch(error=>{
     return res.json("error");
   })
 })
+
+
+//working time of particulr project - added by malaka
+router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a project
+  Workingproject.find({"projectname":req.params.id}).then((admintimeline)=>{
+    let summery=[]
+      let iter=admintimeline.values();
+      for (let times of iter) {
+        let duration="";
+        if(times.hours>=10){
+          duration+=times.hours.toString()+":";
+        }else{
+          duration+="0"+times.hours.toString()+":";
+        }
+        if(times.minutes>=10){
+          duration+=times.minutes.toString()+":"
+        }else{
+          duration+="0"+times.minutes.toString()+":"
+        }
+        if(times.seconds>=10){
+          duration+=times.seconds.toString();
+        }else{
+          duration+="0"+times.seconds.toString();
+        }
+      
+       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+        summery.push(obj);
+      
+    }
+    return res.json(summery.reverse());
+  }).catch(error=>{
+    return res.json("error");
+  })
+})
+
 module.exports = router;

@@ -1,28 +1,30 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import "./showprojectStyles.css";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+import Typography from "@material-ui/core/Typography";
+//Table
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import SearchIcon from '@mui/icons-material/Search';
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
-import './showprojectStyles.css'
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Visibility from '@material-ui/icons/Visibility';
-import TrendingUp from '@material-ui/icons/TrendingUp';
 import { InputBase } from "@material-ui/core";
 
+//icons
+import BeenhereIcon from "@mui/icons-material/Beenhere";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import MoreTimeIcon from "@mui/icons-material/MoreTime";
+import PendingIcon from "@mui/icons-material/Pending";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import SearchIcon from "@mui/icons-material/Search";
 
+//styleset
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
@@ -35,406 +37,476 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#000000",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 16,
-    width: '40px',
     border: 0,
   },
+  [`&.${tableCellClasses.body}`]: {
+    color: "#ff0000",
+  },
 }));
-/*
-const cellStyle ={
-  display: "block",
-  width: "200px",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis"
-};
-*/
 
 
-class Row extends React.Component {
+//Data Grid columns format
+const columns = [
+  {
+    field: "id",
+    headerName: "Task ID",
+    width: 200,
+    hide: true,
+  },
+  {
+    field: "taskName",
+    headerName: "Task Name",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "firstName",
+    headerName: "Task Name",
+    width: 150,
+    editable: true,
+  },
+];
+
+export default class ShowProject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      row: this.props.row,
-      openProject: '',
-      open: false,
+      gridData: [],
+      gridDataSave: [],
+      projectData: [],
+      workingData: [],
+      taskData: [],
+      pageCount: 0,
+      MAX_PAGES: 0,
+      loading: true,
     };
   }
 
   componentDidMount() {
-
+    this.getAllProjectsAndWorking();
   }
 
-  setOpen = (event) => {
-    if (this.state.open) {
-      this.setState({ open: false });
-    } else if (!this.state.open) {
-      this.setState({ open: true, openProject: this.state.row.name });
+  getalltasks() {
+    // axios.get('http://localhost:8070/task')
+  }
+
+  getAllProjectsAndWorking() {
+    let GridStructure = [];
+
+
+    axios.get("http://localhost:8070/projects")
+      .then((response) => {
+        var projectData = []
+        projectData = response.data;
+
+        this.setState({
+          MAX_PAGES: projectData.length - 1,
+        });
+
+        for (let i = 0; i < projectData.length; i++) {
+          let workingData = [];
+          axios.get("http://localhost:8070/dashboard/gettotaltimeofproject/" + projectData[i].name)
+            .then((response) => {
+              workingData = response.data
+            }).then(() => {
+              let ID = { project_id: projectData[i]._id };
+              let taskData = [];
+              let allTasks = [];
+              axios.post("http://localhost:8070/task/getTasksOfProject", ID)
+                .then((response) => {
+                  taskData = response.data.response;
+                  let totalTimeProject = { hrs: 0, mins: 0, secs: 0 }
+                  for (let z = 0; z < taskData.length; z++) {
+                    var taskLog = [];
+                    let Time = { hrs: 0, mins: 0, secs: 0 };
+                    for (var y = 0; y < workingData.length; y++) {
+                      if (taskData[z].task_name === workingData[y][2] && taskData[z].project_name === workingData[y][1]) {
+                        taskLog.push(workingData[y]);
+                        Time.hrs += parseInt((workingData[y][5]).substring(0, 2))
+                        Time.mins += parseInt((workingData[y][5]).substring(3, 5))
+                        Time.secs += parseInt((workingData[y][5]).substring(6, 8))
+                      }
+
+                    }
+                    let aTask = {
+                      taskName: taskData[z].task_name,
+                      taskStatus: taskData[z].task_status,
+                      tasktime: Time,
+                      taskWorking: taskLog,
+                    };
+                    totalTimeProject.hrs = totalTimeProject.hrs + Time.hrs
+                    totalTimeProject.mins = totalTimeProject.mins + Time.mins
+                    totalTimeProject.secs = totalTimeProject.secs + Time.secs
+
+                    allTasks.push(aTask);
+                  }
+
+                  let Structure = [
+                    {
+                      p_totalTime: totalTimeProject,
+                      p_details: projectData[i],
+                      t_details: allTasks,
+                    },
+                  ];
+                  GridStructure.push(Structure[0]);
+
+                  console.log(this.state.gridData.length, this.state.MAX_PAGES)
+                  if (GridStructure.length - 1 === this.state.MAX_PAGES) {
+                    this.setState({
+                      gridData: GridStructure,
+                      gridDataSave: GridStructure,
+                      loading: false
+                    });
+                    console.log(this.state.gridData);
+                  } else {
+                    this.setState({
+                      loading: true
+                    });
+                  }
+
+                })
+            })
+
+        }
+
+
+
+      })
+  }
+
+
+  cellDoubleClick = (event) => {
+    console.log(event);
+  };
+
+  gridPageChangeNext = (event) => {
+    let id = this.state.pageCount;
+    if (id < this.state.MAX_PAGES) {
+      this.setState({
+        pageCount: id + 1,
+      });
     }
   };
 
-  setProjectdelete = (event) => {
-    console.log(this.state.row.history[event.target.value].task_id)
-    axios.post('http://localhost:8070/task/deleteTask', { task_id: this.state.row.history[event.target.value].task_id })
-      .then((response) => {
-        console.log(response.data)
-        window.location.reload(false);
-      })
-  }
-  setProjectedit = (event) => {
-    console.log('edit' + event.target.value)
-    console.log(this.state.openProject)
-    //console.log(this.state.row.history)
-  }
-
-
-  DeleteProject = (event) => {
-    console.log('edit' + event.target.value)
-    console.log(this.state.openProject)
-    //delete project
-
-    //code
-
-  }
-  //          <TableCell align="left"  onClick={this.DeleteProject}><button type="submit" value={'delete button'}>Delete</button></TableCell>
-  render() {
-    const { row, open } = this.state;
-
-    return (
-      <React.Fragment>
-        <StyledTableRow
-          sx={{ "& > *": { borderBottom: "unset", border: "0px" } }} value={row.name}
-        >
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={this.setOpen}
-              value={row.name}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {row.name}
-          </TableCell>
-          <TableCell align="left">{row.status}</TableCell>
-          <TableCell align="left">{row.overdue}</TableCell>
-          <TableCell align="left" maxwidth="150px" >{row.description}</TableCell>
-          <TableCell align="left">
-            {row.admins.map((adminsname, index) => (
-
-              <TableRow>
-                <StyledTableCell align="left" border="none">{index + 1}.</StyledTableCell>
-                <StyledTableCell align="left" border="none"> {adminsname}</StyledTableCell>
-              </TableRow>
-
-            ))}
-          </TableCell>
-        </StyledTableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1, backgroundColor: "#394b5b", borderRadius: "5px" }}>
-                <Typography row variant="h6" gutterBottom component="div">
-                  Task Stats        <button type="submit" class="buttondelete" onClick={this.DeleteProject}>Delete Project</button>
-                </Typography>
-                <Table size="small" aria-label="stat">
-                  <TableHead>
-                    <TableRow>
-
-                      <TableCell>Task</TableCell>
-                      <TableCell align="left">Due Date</TableCell>
-                      <TableCell align="left">Status</TableCell>
-                      <TableCell align="left">Contributers</TableCell>
-                      <TableCell align="left"></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody >
-                    {row.history.length === 0 ? <div>No tasks have assigned
-                      <StyledTableCell><a href="http://localhost:3000/createtask"><button class="buttonsubmitactionaddtask">Add Task</button></a></StyledTableCell>
-                    </div>
-                    
-                    : null}
-                    {row.history.map((historyRow, index) => (
-                      <TableRow key={index}>
-                        <TableCell component="th" scope="row">
-                          {historyRow.task}
-                        </TableCell>
-                        <TableCell align="left">{historyRow.date}</TableCell>
-                        <TableCell align="left">{historyRow.taskstat}</TableCell>
-                        <TableCell align="left">
-                          {historyRow.employee.map((data, index) => (
-                            <Box sx={{ margin: 1 }}>
-                              <TableRow>
-                                <StyledTableCell align="left" border="none">{index + 1}.</StyledTableCell>
-                                <StyledTableCell align="left" border="none"> {data}</StyledTableCell>
-                              </TableRow>
-                            </Box>
-                          ))}
-                        </TableCell>
-                        <TableCell align="left"><Box><button class="buttonsubmitaction" type="submit" value={index} onClick={this.setProjectdelete}>Delete</button>
-                       </Box> </TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow>
-                    {row.history.length !== 0 ?
-                    <StyledTableCell><a href="http://localhost:3000/createtask"><button class="buttonsubmitactionnewtask">New Task</button></a></StyledTableCell>:null
-                    
-                  }
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-    );
-  }
-}
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    status: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    overdue: PropTypes.string.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        date: PropTypes.string.isRequired,
-        task: PropTypes.string.isRequired,
-        employee: PropTypes.arrayOf(
-          PropTypes.shape({
-            ename: PropTypes.string.isRequired,
-          })
-        ),
-      })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    taskstatus: PropTypes.string.isRequired,
-    admins: PropTypes.arrayOf(
-      PropTypes.shape({
-        adminsname: PropTypes.string.isRequired,
-      })
-    )
-  }).isRequired,
-};
-
-
-
-export default class Showprojects extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows: [],
-      filterdresult: []
-    };
-  }
-
-
-  componentDidMount() {
-    this.getProjectstoRender()
-  }
-
-  getProjectstoRender = () => {
-    let resources = [];
-    let tempArray = [];
-
-    axios
-      .get("http://localhost:8070/projects")
-      .then((response) => {
-        for (let i = 0; i < response.data.length; i++) {
-          //response.data.length
-          const project = [
-            {
-              id: response.data[i]._id,
-              name: response.data[i].name,
-              members: response.data[i].members,
-              projectStatus: response.data[i].projectStatus,
-              overdue: ((response.data[i].overdue).toString()).substring(0, 10),
-              administrators: response.data[i].administrators,
-              discription: (response.data[i].discription).substring(0, 50),
-            },
-          ];
-          resources.push(project[0]);
-        }
-
-        for (let i = 0; i < resources.length; i++) {
-          let historyArray = [];
-          console.log('length' + resources.length)
-          axios
-            .post("http://localhost:8070/task/getTasksOfProject", {
-              project_id: resources[i].id,
-            })
-            .then((response) => {
-              // console.log("resonse data " + response.data.response.length);
-
-              if (response.data.response.length > 0) {
-
-                for (let k = 0; k < response.data.response.length; k++) {
-                  console.log('length of projects tasks' + response.data.response.length)
-
-                  var data = response.data.response[k];
-
-                  if (data.assigned_to.length > 0) {
-                    console.log(data.assigned_to.length);
-
-                    var employeelist = []
-                    for (var z = 0; z < data.assigned_to.length; z++) {
-                      var name = data.assigned_to[z]
-                      employeelist.push(name)
-                    }
-                    var history = [
-                      {
-                        date: ((data.due_date).toString()).substring(0, 10),
-                        task: data.task_name,
-                        employee: employeelist,
-                        taskstat: data.task_status,
-                        task_id: data._id
-                      },
-                    ];
-                    historyArray.push(history[0]);
-                  }
-                }
-
-              } //end of if
-            });
-          var projectDetails = [
-            {
-              name: resources[i].name,
-              status: resources[i].projectStatus,
-              overdue: resources[i].overdue,
-              description: resources[i].discription,
-              admins: resources[i].administrators,
-              history: historyArray
-            },
-          ];
-          tempArray.push(projectDetails[0])
-          console.log(tempArray);
-          console.log('end');
-        }
-
-        this.setState({
-          rows: tempArray,
-          filterdresult: tempArray
-        })
-
-      })
-      .catch(() => {
-        //alert("error");
+  gridPageChangePrev = (event) => {
+    let id = this.state.pageCount;
+    if (id - 1 >= 0) {
+      this.setState({
+        pageCount: id - 1,
       });
+    }
   };
+
+
+  Click = (event) => {
+    console.log(this.state.gridData[this.state.pageCount].t_details[0].taskName)
+  }
+
 
   filterProjects = (event) => {
     var value = event.target.value;
-    console.log(event.target.value)
-    console.log('fired')
-
-    this.setState({
-      filterdresult: this.state.rows
-    })
-    var copyArray = []
-    for (var i = 0; i < this.state.rows.length; i++) {
-      if (((this.state.rows[i].name).toLowerCase()).includes(value.toLowerCase()) || value === '') {
-        console.log('inside ' + value)
-        console.log('inside va ' + this.state.rows[i].name)
-        copyArray.push(this.state.rows[i]);
+    console.log(value);
+    var searchPage = 0;
+    for (var i = 0; i < this.state.gridData.length; i++) {
+      if (
+        this.state.gridData[i].p_details.name.toLowerCase().includes(value.toLowerCase())) {
+          searchPage =i;
       }
     }
     this.setState({
-      filterdresult: copyArray
-    })
-
-  }
-
+      pageCount:searchPage
+    });
+  };
 
 
-
-  mouseClick = (index) => {
-    console.log(index)
-  }
 
   render() {
+    const { gridData, pageCount, loading } = this.state;
 
-    const { filterdresult } = this.state
-
-    return (
-      <div>
+    if (!loading) {
+      return (
         <div>
-          <Box class="serachbar">
-            <SearchIcon
-              fontSize="large"
-              htmlColor="#ffffff"
-            />
-            <InputBase placeholder="Search....." onChange={this.filterProjects} ></InputBase>
+          <Box style={{ backgroundColor: "#525252" }}>
+            <Grid container>
+              <Grid
+                item
+                style={{
+                  backgroundColor: "#525252",
+                  padding: "0px",
+                  marginLeft: "50%",
+                  width: "300px",
+                  marginRight: "80px",
+                  marginTop: "0px",
+                  marginBottom: "10px",
+                  borderBottom: "2px solid black",
+                }}
+              >
+                <Box>
+            <SearchIcon fontSize="large" htmlColor="#ffffff" />
+            <InputBase
+              sx={{ htmlcolor: "white" }}
+              placeholder="Search for project name....."
+              onChange={this.filterProjects}
+            ></InputBase>
+          </Box>
+              </Grid>
+              <Grid style={{ marginLeft: "10px", marginTop: "0px" }}>
+              <button
+                  type="submit"
+                  style={{ marginLeft: "0px", marginTop: "5px" }}
+                  onClick={this.gridPageChangePrev}
+                >
+                  Prev Project
+                </button>
+               <button
+                  type="submit"
+                  style={{ marginLeft: "0px", marginTop: "5px" }}
+                  onClick={this.gridPageChangeNext}
+                >
+                  Next Project
+                </button>
+                <br/>
+                Page {pageCount+1} of {gridData.length}
+              </Grid>
+            </Grid>
+            <Grid container style={{ marginTop: "0px" }}>
+              <Grid
+                item
+                style={{
+                  backgroundColor: "transparent",
+                  opacity: 0.8,
+                  marginLeft: "20px",
+                  borderRadius: "8px",
+                  borderwidth: "1px",
+                  border: "5px solid black",
+                  marginBottom: "10px",
+                  width: "400px",
+                }}
+              >
+                <h1
+                  style={{
+                    color: "#000000",
+                    font: "35px Helvetica",
+                    textAlign: "center",
+                    marginTop: "10px",
+                  }}
+                >
+                  {gridData[pageCount].p_details.name}
+                </h1>
+              </Grid>
+              <Grid>
+                {gridData[pageCount].p_details.projectStatus === "On going" ?
+                  <Grid
+                    item
+                    style={{ backgroundColor: "trasnparent", padding: "0px", width: '100px' }}
+                  >
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginLeft: "20px",
+                        marginRight: "10px",
+                        marginBottom: "0px",
+                        paddingTop: "10px",
+                        color: "#FFFF00",
+                      }}
+                    >
+                      <BeenhereIcon fontSize="small" htmlColor="#000000" />
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      style={{
+                        marginLeft: "10px",
+                        font: "5px",
+                        marginTop: "0px",
+                        color: "#FFFF00",
+                      }}
+                    >
+                      {" "}
+                      {gridData[pageCount].p_details.projectStatus}{" "}
+                    </Typography>
+                  </Grid>
+                  : null}
+                {gridData[pageCount].p_details.projectStatus === "Completed" ?
+                  <Grid
+                    item
+                    style={{ backgroundColor: "trasnparent", padding: "0px", width: '100px' }}
+                  >
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginLeft: "20px",
+                        marginRight: "10px",
+                        marginBottom: "0px",
+                        paddingTop: "10px",
+                        color: "#FFFF00",
+                      }}
+                    >
+                      <BeenhereIcon fontSize="small" htmlColor="#000000" />
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      style={{
+                        marginLeft: "10px",
+                        font: "5px",
+                        marginTop: "0px",
+                        color: "#00FF00",
+                      }}
+                    >
+                      {" "}
+                      {gridData[pageCount].p_details.projectStatus}{" "}
+                    </Typography>
+                  </Grid>
+                  : null}
+                {gridData[pageCount].p_details.projectStatus === "Over due" ?
+                  <Grid
+                    item
+                    style={{ backgroundColor: "trasnparent", padding: "0px", width: '100px' }}
+                  >
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginLeft: "20px",
+                        marginRight: "10px",
+                        marginBottom: "0px",
+                        paddingTop: "10px",
+                        color: "#FFFF00",
+                      }}
+                    >
+                      <BeenhereIcon fontSize="small" htmlColor="#000000" />
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      style={{
+                        marginLeft: "10px",
+                        font: "5px",
+                        marginTop: "0px",
+                        color: "#FF0000",
+                      }}
+                    >
+                      {" "}
+                      {gridData[pageCount].p_details.projectStatus}{" "}
+                    </Typography>
+                  </Grid>
+                  : null}
+                {gridData[pageCount].p_details.projectStatus === "Pending" || gridData[pageCount].p_details.projectStatus === "Not Started" ?
+                  <Grid
+                    item
+                    style={{ backgroundColor: "trasnparent", padding: "0px", width: '100px' }}
+                  >
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginLeft: "20px",
+                        marginRight: "10px",
+                        marginBottom: "0px",
+                        paddingTop: "10px",
+                        color: "#FFFF00",
+                      }}
+                    >
+                      <BeenhereIcon fontSize="small" htmlColor="#000000" />
+                    </Typography>
+                    <Typography
+                      variant="h7"
+                      style={{
+                        marginLeft: "10px",
+                        font: "5px",
+                        marginTop: "0px",
+                        color: "#0000FF",
+                      }}
+                    >
+                      {" "}
+                      {gridData[pageCount].p_details.projectStatus}{" "}
+                    </Typography>
+                  </Grid>
+                  : null}
+              </Grid>
+              <Grid
+                style={{
+                  marginLeft: "100px",
+                  marginTop: "20px",
+                  width: "700px",
+                }}
+              >
+                <p style={{ font: "15px Helvetica", color: "#000000" }}>
+                  End Date&ensp; :&emsp;
+                  {(gridData[pageCount].p_details.overdue).substring(0, 10)} &emsp;&emsp; Total
+                  Time spent&ensp; :&emsp;
+                  {gridData[pageCount].p_totalTime.hrs} Hrs  {gridData[pageCount].p_totalTime.mins} Mins {gridData[pageCount].p_totalTime.secs} Secs
+                </p>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <Grid container item>
+              <Grid>
+                <p row style={{ color: "black", fontSize: '15PX' }}>Project Description : <span row style={{ color: "black", fontSize: '10PX' }}>
+                  {gridData[pageCount].p_details.discription}
+                </span>{" "}</p>
+                : null
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <Grid conatiner
+              item
+              style={{
+                backgroundColor: "trasnparent",
+                padding: "0px",
+                marginTop: "0px",
+              }}
+            >
+
+              <Paper style={{ marginLeft: '40px',marginRight: '100px' }}>
+                <TableContainer sx={{ maxHeight: 580 }}>
+                  {gridData[pageCount].t_details.map((tasks, index) => (
+                    <Table>
+                      <TableHead  >
+                        <StyledTableRow style={{ border: 'none' }}>
+                          <TableCell style={{ border: 'none', color: 'white' }}>Task Name :</TableCell>
+                          <TableCell style={{ border: 'none' }}align='left'>{tasks.taskName}</TableCell>
+                          <TableCell style={{ border: 'none', color: 'white' }}>Task Status :</TableCell>
+                          <TableCell style={{ border: 'none' }} colSpan={2} >{tasks.taskStatus}</TableCell>
+                          <TableCell style={{ border: 'none', color: 'white' }}>Task Time :</TableCell>
+                          <TableCell style={{ border: 'none' }}>{tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins {tasks.tasktime.secs} Secs</TableCell>
+                          <TableCell style={{ border: 'none' }}><button style={{ backgroundColor: 'transparent', border: 'none' }}>< DeleteForeverIcon /></button></TableCell>
+
+                        </StyledTableRow>
+                      </TableHead  >
+                      <StyledTableRow style={{ border: 'none' }}>
+                        <TableCell style={{ border: 'none', color: 'white' }}>Employee Name :</TableCell>
+                        <TableCell style={{ border: 'none', color: 'white' }}>Task Start Time :</TableCell>
+                        <TableCell style={{ border: 'none', color: 'white' }}>Task End Time :</TableCell>
+                        <TableCell style={{ border: 'none', color: 'white' }}>Total Time :</TableCell>
+                      </StyledTableRow>
+                      {tasks.taskWorking.map((taskwork, indextask) => (
+                        <StyledTableRow>
+                          <TableCell style={{ border: 'none', color: 'white' }}>{taskwork[0]}</TableCell>
+                          <TableCell style={{ border: 'none', color: 'white' }}>{taskwork[3]}</TableCell>
+                          <TableCell style={{ border: 'none', color: 'white' }}>{taskwork[4]}</TableCell>
+                          <TableCell style={{ border: 'none', color: 'white' }}>{taskwork[5]}</TableCell>
+
+                        </StyledTableRow>
+                      ))}
+
+
+
+                    </Table>
+                  ))}
+                </TableContainer>
+              </Paper>
+
+
+            </Grid>
           </Box>
         </div>
-        <Paper class='PAPER' >
-          <TableContainer
-            sx={{ maxHeight: 580, left: '110' }}
-          >
-            <Table stickyHeader aria-label="collapsible table">
-              <TableHead>
-                <StyledTableRow>
-                  <StyledTableCell />
-                  <StyledTableCell>Project Title</StyledTableCell>
-                  <StyledTableCell align="left">Status</StyledTableCell>
-                  <StyledTableCell align="left">Due Date</StyledTableCell>
-                  <StyledTableCell align="left" >Description</StyledTableCell>
-                  <StyledTableCell align="left">Admins</StyledTableCell>
-                </StyledTableRow>
-              </TableHead>
-              <TableBody>
-                {filterdresult.map((row, index) => {
-                  return (
-                    (
-                      <Row key={row.name} row={row} ></Row>
-                    )
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <div>
-          <div class="bodyappear3viewproject">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttonviewproject"><AddCircleOutlineOutlinedIcon
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Create Project<br /><p class="p">create your new project</p></button>
-            </a>
-          </div>
-          <div class="bodyappear4viewproject">
-            <a href="www.google.com">
-              <button class="buttonviewproject"> < Visibility
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Show taskboard<br /><p class="p">view a summary of assign task</p></button>
-            </a>
-          </div>
-          <div class="bodyappear5viewproject">
-            <a href="www.google.com">
-              <button class="buttonviewproject"> <TrendingUp
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Status<br /><p class="p">evaluate your work</p></button>
-            </a>
-          </div>
-        </div>
+      );
+    }
+    else {
+      return (
+        <div>loading....</div>
+      )
+    }
 
-      </div>
-    );
+
   }
 }
-
-
-
-
-
-
-

@@ -100,6 +100,27 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
 };
  router.get ('/projects', fetchallProjects);
 
+
+
+
+ 
+ const postProjectupdate = async (req, res) => {
+    try {
+        const projectlist = await Project.updateOne({'_id':req.params.id}, {$set:{
+         
+                "projectStatus":req.body.projectStatus
+            
+        }});
+        res.json(projectlist)
+        console.log("project get request success.");
+    } catch (error) {
+        console.log("project get request failed.");
+        res.json(error.message);
+    }
+};
+ router.post ('/projectsstatus/:id', postProjectupdate);
+
+
 // ************************************** GET PROJECT BY ID *****************************************
 const getProjectById = (req,res,next) => {
     if(req.body.project_id==null){
