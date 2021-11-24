@@ -280,7 +280,7 @@ export default class Demo extends React.PureComponent {
             color = deepOrange
           }
 
-          if(i=== 0){
+          if(i=== response.data.length-1){
             currentlog =[{
               title:response.data[i].name,
               duedate:((response.data[i].overdue).toString()).substring(0, 10),
@@ -288,7 +288,7 @@ export default class Demo extends React.PureComponent {
             }]
             this.setState({lastlog:currentlog});
           }
-          console.log(this.state.lastlog)
+
 
 
           var resourcesData = [

@@ -97,12 +97,12 @@ export default class AnalyzeProjectEmployees extends React.Component {
               }
               let Status = "";
               let note = '';
-              if ((yAxis[0] + yAxis[3] < yAxis[2] + yAxis[4] + yAxis[1]) && !due) {
+              if ((yAxis[0] + yAxis[3] < yAxis[2] + yAxis[4] + yAxis[1]) && (!due || yAxis[2])) {
                 Status = "Good";
                 note ='No due work, not many bugs/issues and Todos.'
               } else if ((yAxis[0] + yAxis[1] + yAxis[3] === yAxis[2] + yAxis[4]) && !due) {
                 Status = "Neutral";
-                note ='No due work, having some bugs/issues and Todos.'
+                note ='No due work,May have some Bugs/Issues and Todos.'
               } else if(due) {
                 Status = "Bad";
                 note ='Have due work'
@@ -150,6 +150,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
                           border: "none",
                           color: "black",
                           fontSize: "18px",
+  
                         }}
                       >
                         Employee Name :
@@ -159,19 +160,13 @@ export default class AnalyzeProjectEmployees extends React.Component {
                           border: "none",
                           color: "#080808",
                           fontSize: "16px",
+                          width:'180px'
                         }}
-                        align="right"
+                        align="left"
                       >
                         {employee.name}
                       </TableCell>
-                      <TableCell
-                        style={{
-                          border: "none",
-                          color: "#080808",
-                          fontSize: "16px",
-                        }}
-                        align="left"
-                      ></TableCell>
+  
                     </StyledTableRow>
                     <StyledTableRow style={{ border: "none" }}>
                       <StyledTableRow>
