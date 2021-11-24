@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 //import { projects } from "./resources";
 //import { tasks } from "./resources";
 //import Createproject from "./Create Project/createProject" 
@@ -7,13 +8,21 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import Visibility from '@material-ui/icons/Visibility';
 import TrendingUp from '@material-ui/icons/TrendingUp';
 
+import { Helmet } from 'react-helmet'
+
+const TITLE ='Admin Projects'
+
 class ProjectAdmin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
+      projectsInfo: []
     };
     this.togglesection = this.togglesection.bind(this);
+  }
+  componentDidMount() {
+    this.adjustStats()
   }
 
   togglesection = () => {
@@ -21,60 +30,125 @@ class ProjectAdmin extends React.Component {
     this.setState({ show: !show });
   };
 
+  adjustStats() {
+    axios.get("http://localhost:8070/projects")
+      .then((response) => {
+        var projectData = []
+        projectData = response.data;
+        this.setState({
+          projectsInfo: projectData
+        });
 
+      }).then(() => {
+        let projectData = this.state.projectsInfo
+
+        for (let i = 0; i < this.state.projectsInfo.length; i++) {
+          let ID = { project_id: this.state.projectsInfo[i]._id };
+          axios.post("http://localhost:8070/task/getTasksOfProject", ID)
+            .then((response) => {
+              var ProjecTStat;
+              let taskData = response.data.response;
+
+              if (taskData.length === 0 && this.state.projectsInfo[i].projectStatus !== 'Pending') {
+                ProjecTStat = "Not Started";
+              }else if(taskData.length === 0 && this.state.projectsInfo[i].projectStatus === 'Pending'){
+                ProjecTStat = "Pending";
+              }
+              else {
+                for (let y = 0; y < taskData.length; y++) {
+                  if (
+                    taskData[y].task_status === "To Do" ||
+                    taskData[y].task_status === "In Progress" ||
+                    taskData[y].task_status === "Bugs/Issues"
+                  ) {
+                    ProjecTStat = "On going";
+                    break;
+                  } else if (
+                    taskData[y].task_status === "Review" ||
+                    taskData[y].task_status === "Done"
+                  ) {
+                    ProjecTStat = "Completed";
+                  }
+                }
+
+              }
+              console.log(ProjecTStat);
+              console.log(this.state.projectsInfo[i]._id);
+              let sendData = { projectStatus: ProjecTStat };
+              axios.post(
+                "http://localhost:8070/projectsstatus/" + this.state.projectsInfo[i]._id, sendData
+              ).then((response)=>{
+                console.log(response.data)
+              });
+
+            })
+
+
+
+
+
+
+        }
+
+      })
+
+  }
 
   render() {
     const { show } = this.state;
 
     return (
       <div>
+          <Helmet>
+          <title>{ TITLE }</title>
+        </Helmet>
         <div class="bodyapper1">
           <a href="http://localhost:3000/createproject">
             <button class="button"><AddCircleOutlineOutlinedIcon
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />Create Project<br/><p class="p">create your new project at glance</p></button>
+              fontSize="large"
+              htmlColor="#ffffff"
+            />Create Project<br /><p class="p">create your new project at glance</p></button>
           </a>
         </div>
 
         <div class="bodyappear2">
           <a href="http://localhost:3000/viewprojects">
             <button class="button"> <Visibility
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />Show Projects<br/><p class="p">view a summary of all the projects</p> </button>
+              fontSize="large"
+              htmlColor="#ffffff"
+            />Show Projects<br /><p class="p">view a summary of all the projects</p> </button>
           </a>
         </div>
 
         <div class="bodyappear3">
           <a href="http://localhost:3000/createtask">
             <button class="button"> <AddCircleOutlineOutlinedIcon
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />Create Task<br/><p class="p">assign task for employees easily</p> </button>
+              fontSize="large"
+              htmlColor="#ffffff"
+            />Create Task<br /><p class="p">assign task for employees easily</p> </button>
           </a>
         </div>
 
         <div class="bodyappear4">
           <a href="http://localhost:3000/viewtasks">
             <button class="button"> < Visibility
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />Show taskboard<br/><p class="p">view a summary of assign task for employees</p></button>
+              fontSize="large"
+              htmlColor="#ffffff"
+            />Show taskboard<br /><p class="p">view a summary of assign task for employees</p></button>
           </a>
         </div>
 
         <div class="bodyappear5">
           <a href="http://localhost:3000/viewanalysis">
             <button class="button"> <TrendingUp
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />Status<br/><p class="p">evaluate your work</p></button>
+              fontSize="large"
+              htmlColor="#ffffff"
+            />Status<br /><p class="p">evaluate your work</p></button>
           </a>
         </div>
       </div>
-      
-      
+
+
     );
   }
 }

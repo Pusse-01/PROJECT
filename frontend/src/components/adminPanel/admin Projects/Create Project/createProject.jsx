@@ -27,7 +27,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Visibility from '@material-ui/icons/Visibility';
 import TrendingUp from '@material-ui/icons/TrendingUp';
-//import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { Helmet } from 'react-helmet'
+
+const TITLE ='Create Project'
 
 const paperStyle = {
   padding: "50px 20px",
@@ -61,6 +63,8 @@ class Createproject extends React.Component {
       projectname: "",
       adminstrsselected: [],
       employeesselected: [],
+      currentProjects: [],
+      sameName: false,
       description: "",
       datenow: new Date(),
       startDate: new Date(),
@@ -76,6 +80,7 @@ class Createproject extends React.Component {
   componentDidMount() {
     document.title = "PROJECT Projects";
     this.getEmployees()
+    this.getProjects()
     this.interval = setInterval(
       () =>
         this.setState(() => {
@@ -99,6 +104,21 @@ class Createproject extends React.Component {
 
   setProjectname = (event) => {
     console.log(event.target.value);
+    let value = event.target.value
+    let lengthvalue = value.length
+    for (let i = 0; i < this.state.currentProjects.length; i++) {
+      if ((((this.state.currentProjects[i].name.toLowerCase())) === value.toLowerCase()) && lengthvalue !== 0) {
+        console.log('in')
+        this.setState({
+          sameName: true
+        })
+      } else {
+        this.setState({
+          sameName: false
+        })
+      }
+
+    }
     this.setState({
       projectname: event.target.value,
     });
@@ -158,6 +178,19 @@ class Createproject extends React.Component {
     this.setState({ category: event.target.value });
   };
 
+  getProjects() {
+    axios.get("http://localhost:8070/projects")
+      .then((response) => {
+        var projectData = []
+        projectData = response.data;
+        this.setState({
+          currentProjects: projectData
+        })
+        console.log(projectData)
+      })
+  }
+
+
 
   getEmployees() {
     axios.get('http://localhost:8070/employee/allEmployees')
@@ -191,15 +224,24 @@ class Createproject extends React.Component {
     for (var j = 0; j < this.state.selectedManagers.length; j++) {
       this.state.adminstrsselected.push(this.state.selectedManagers[j].email); //email or username
     }
-  
+
+    for (let i = 0; i < this.state.currentProjects.length; i++) {
+      if ((((this.state.currentProjects[i].name.toLowerCase())) === this.state.projectname.toLowerCase())) {
+        console.log('in')
+        this.setState({
+          error: true,
+          sameName: true
+        })
+      }
+    }
 
     if (
-      this.state.projectname === "" ||
-      this.state.description === "" ||
-      this.state.selectedManagers.length === 0 ||
-      this.state.selectedEmployees.length === 0 ||
-      this.state.category === "" ||
-      this.state.endDate === null
+      (this.state.projectname === "" ||
+        this.state.description === "" ||
+        this.state.selectedManagers.length === 0 ||
+        this.state.selectedEmployees.length === 0 ||
+        this.state.category === "" ||
+        this.state.endDate === null || this.state.sameName)
     ) {
       this.setState({
         error: true,
@@ -209,20 +251,20 @@ class Createproject extends React.Component {
       var temp_project = [{
         name: this.state.projectname,
         members: this.state.employeesselected,
-        projectStatus:this.state.category,
+        projectStatus: this.state.category,
         overdue: this.state.endDate,
         administrators: this.state.adminstrsselected,
         discription: this.state.description,
       }];
 
-        axios.post("http://localhost:8070/projects", temp_project[0])
+      axios.post("http://localhost:8070/projects", temp_project[0])
         .then((response) => {
           console.log(response);
         })
     }
 
   };
-   // console.log("click 2" +(this.state.employeesselected[1]))
+
 
 
   deleteManagerChip = (event) => {
@@ -274,11 +316,14 @@ class Createproject extends React.Component {
 
 
 
-    const { selectedEmployees, employees, employeesasadmins, selectedManagers, category } =
+    const { selectedEmployees, employees, employeesasadmins, selectedManagers, category, sameName } =
       this.state;
 
     return (
       <Grid class="createtaskform">
+                <Helmet>
+          <title>{ TITLE }</title>
+        </Helmet>
         <form>
           <div>
             <Grid>
@@ -304,7 +349,7 @@ class Createproject extends React.Component {
                   label="Project Name"
                   onChange={this.setProjectname}
                 ></TextField>
-
+                {sameName ? <div><h5>Project name already exits.</h5></div> : null}
                 <FormControl class="marginedit">
 
                   <FormLabel>Project Status</FormLabel>
@@ -459,7 +504,7 @@ class Createproject extends React.Component {
             </a>
           </div>
           <div class="bodyappear3createproject">
-            <a href="www.google.com">
+            <a href="http://localhost:3000/viewanalysis">
               <button class="buttoncreateproject"> <TrendingUp
                 fontSize="large"
                 htmlColor="#ffffff"

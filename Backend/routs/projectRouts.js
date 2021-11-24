@@ -120,6 +120,18 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
 };
  router.post ('/projectsstatus/:id', postProjectupdate);
 
+ const deleteProject = async (req, res) => {
+    try {
+        const projectlist = await Project.deleteOne({'_id':req.params.id});
+        res.json(projectlist)
+        console.log("project delete request success.");
+    } catch (error) {
+        console.log("project delete request failed.");
+        res.json(error.message);
+    }
+};
+ router.delete ('/projectdelete/:id', deleteProject);
+
 
 // ************************************** GET PROJECT BY ID *****************************************
 const getProjectById = (req,res,next) => {

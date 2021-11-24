@@ -57,7 +57,7 @@ html {
   }
   
   .buttondelete{
-    margin-top: 8px;
+    margin-top: 0px;
     position: relative;
     left:75%;
     z-index: 10;
@@ -65,9 +65,10 @@ html {
     background-color: rgb(19, 19, 43);
     border:none;
     color: #c4b9b9;
-    font-size: 15px;
-    width: 150px;
+    font-size: 10px;
+    width: 140px;
     height: 30px;
+    margin-bottom: '100px';
   }
   
     .buttonsubmitactionaddtask{
@@ -87,7 +88,7 @@ html {
       margin-right: 100px;
     }
   
-    .bodyappear3viewproject {
+    .bodyappear3viewtask {
       z-index: 10;
       position: fixed;
       left: 85%;
@@ -96,7 +97,7 @@ html {
     }
   
   
-    .bodyappear4viewproject {
+    .bodyappear4viewtask {
       z-index: 10;
       position: fixed;
       left: 85%;
@@ -104,7 +105,7 @@ html {
       top: 280px;
     }
   
-    .bodyappear5viewproject {
+    .bodyappear5viewtask {
       z-index: 10;
       position: fixed;
       left: 85%;
@@ -113,7 +114,7 @@ html {
     }
   
   
-    .buttonviewproject {
+    .buttonviewtask {
       color: rgb(189, 27, 27);
       box-sizing: content-box;
       height: 95px;
@@ -130,13 +131,13 @@ html {
       border: none;
       opacity: 0.8;
     }
-    .buttonviewproject span {
+    .buttonviewtask span {
       cursor: pointer;
       display: inline-block;
       position: relative;
       transition: 0.5s;
     }
-    .buttonviewproject span:after {
+    .buttonviewtask span:after {
       content: "\00bb";
       position: absolute;
       opacity: 0;
@@ -144,14 +145,14 @@ html {
       right: -20px;
       transition: 0.5s;
     }
-    .buttonviewproject:hover {
+    .buttonviewtask:hover {
       background-color: #191b3a;
       opacity: 0.5;
     }
-    .buttonviewproject:hover span {
+    .buttonviewtask:hover span {
       padding-right: 25px;
     }
-    .buttonviewproject:hover span:after {
+    .buttonviewtask:hover span:after {
       opacity: 1;
       right: 0;
     }
