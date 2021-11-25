@@ -9,21 +9,21 @@ class UpdatePassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            departments: [],
+            employees: [],
             designations:[],
             confirmPassword: "",
             selectedDepartmentId: "",
             errorStyle2: "no_error_message", errorMessage2: "",
             updateEmployee: {employee_id: "", new_password: ""},
-            updatingDepartmentEmployees: [],
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8070/departments/')
+        axios.get('http://localhost:8070/employee/allEmployees')
             .then((res) => {
+                console.log(res.data)
                 this.setState({
-                    departments: res.data
+                    employees: res.data
                 }, () => console.log("Departments", this.state.departments))
             })
             .catch(error => {
@@ -33,18 +33,6 @@ class UpdatePassword extends Component {
 
     changeMenu = (menu) => {
         this.props.history.push("menu")
-    }
-
-    selectUpdatingEmployeeDepartment = (e) => {
-        axios.get('http://localhost:8070/employee/departmentEmployees/' + e.target.value)
-            .then((res) => {
-                this.setState({
-                    updatingDepartmentEmployees: res.data
-                })
-            })
-            .catch(error => {
-                alert("Error")
-            })
     }
 
     updatePassword = () => {
@@ -140,21 +128,6 @@ class UpdatePassword extends Component {
                                     />
                                 </label>
                                 <label className="hr_employeeLabel">
-                                    Select The Department of Employee
-                                    <select className="form-select form-select-sm employee_select "
-                                            defaultValue={""}
-                                            onChange={e => {
-                                                this.selectUpdatingEmployeeDepartment(e)
-                                            }}
-                                    >
-                                        <option disabled value={""}> -- Select The Department--</option>
-                                        {this.state.departments.map(item => {
-                                            return (<option key={item.Department._id}
-                                                            value={item.Department._id}>{item.Department.department_name}</option>);
-                                        })}
-                                    </select>
-                                </label>
-                                <label className="hr_employeeLabel">
                                     Select The Employee To be Updated
                                     <select className="form-select form-select-sm employee_select "
                                             defaultValue={""}
@@ -168,7 +141,7 @@ class UpdatePassword extends Component {
                                             }}
                                     >
                                         <option disabled value={""}> -- Select the Employee --</option>
-                                        {this.state.updatingDepartmentEmployees.map(item => {
+                                        {this.state.employees.map(item => {
                                             return (<option key={item._id}
                                                             value={item._id}>{item.name} -- {item.email}</option>);
                                         })}
