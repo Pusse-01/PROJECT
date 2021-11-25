@@ -41,15 +41,53 @@ class Designations extends Component {
                 }
             })
         }
-        this.setState({employeesOfSelectedDes:tempEmployees})
-
+        if (tempEmployees.length>0){
+            this.setState({employeesOfSelectedDes:tempEmployees})
+        }else{
+            this.setState({
+                sideBarError:"There is no employees assigned to this designation"
+            })
+        }
     }
     displayAllEmployees = () => {
-        this.setState({
-            employeesOfSelectedDes:this.state.employees
-        })
+        if(this.state.employees.length>0){
+            this.setState({
+                employeesOfSelectedDes:this.state.employees
+            })
+        }else {
+            this.setState({
+                sideBarError:"There is no employees assigned to this department"
+            })
+        }
+
     }
-    deleteDepartment(){
+    deleteDepartment = () => {
+        if(this.state.employees!=null&&this.state.employees.length>0){
+            this.setState({
+                designations_hidden_text_style:"des_display_error_message",
+                error_message:"Sorry you can not delete the department as there are employees assigned to it."
+            })
+        }else{
+            axios.post('http://localhost:8070/departments/deleteDespartment/' ,{department_id:this.state.department.Department._id})
+                .then((res) => {
+                    if (res.status == 200) {
+                        this.setState({
+                            designations_hidden_text_style:"des_display_error_message",
+                            error_message:"Successfully Deleted the department.",
+                            employees:[],
+                            employeesOfSelectedDes:[]
+                        })
+                    } else {
+                        this.setState({
+                            designations_hidden_text_style:"des_display_error_message",
+                            error_message:"Error occurred while deleting the designation."
+                        })
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        }
 
     }
 
@@ -93,7 +131,6 @@ class Designations extends Component {
                     alert(error)
                 })
         }
-
     }
 
     render(){
