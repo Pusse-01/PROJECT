@@ -97,10 +97,25 @@ const deleteDesignation= async (req,res) => {
                 if (designation.employees.length==0){
                     Designations.findByIdAndDelete(req.body.designation_id)
                         .then(response => {
-                            res.json({
-                                message:"Succesfully deleted designation",
-                                response
-                            })
+                            Departments.findById(response.department)
+                                .then(result=>{
+                                    let designationsOfDep = result.designations
+                                    let updatedDesignations = designationsOfDep.filter(value=>{
+                                        if(value!=response._id){
+                                            return value
+                                        }
+                                    })
+                                    Departments.findByIdAndUpdate(response.department,{designations:updatedDesignations})
+                                        .then(result2=>{
+                                            res.json({result:result2,message:"Successfully deleted the designation"})
+                                        })
+                                        .catch(error=>{
+                                            res.json(error)
+                                        })
+                                })
+                                .catch(error=>{
+                                    res.json(error)
+                                })
                         })
                         .catch(error => {
                             res.json({

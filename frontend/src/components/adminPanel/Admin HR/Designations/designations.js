@@ -9,12 +9,91 @@ class Designations extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            department : this.props.location.state.detail
+            department : this.props.location.state.detail,
+            employees:[],
+            employeesOfSelectedDes:[],
+            sideBarTitle:"Employees of the Department",
+            sideBarError:"There is no employees assigned to this department",
+            designations_hidden_text_style:"des_hide_error_message",
+            error_message:"Deleted Successfully"
         }
     }
 
     componentDidMount() {
-        console.log(this.state.department)
+        axios.get('http://localhost:8070/employee/departmentEmployees/' + this.props.location.state.detail.Department._id)
+            .then((res) => {
+                this.setState({
+                    employees: res.data,
+                    employeesOfSelectedDes:res.data
+                })
+            })
+            .catch(error => {
+                alert("Error")
+            })
+    }
+
+    displayEmployees(designation){
+        let tempEmployees=[]
+        if(this.state.employees.length>0){
+            tempEmployees = this.state.employees.filter((val)=>{
+                if(val.designation==designation._id){
+                    return val
+                }
+            })
+        }
+        this.setState({employeesOfSelectedDes:tempEmployees})
+
+    }
+    displayAllEmployees = () => {
+        this.setState({
+            employeesOfSelectedDes:this.state.employees
+        })
+    }
+    deleteDepartment(){
+
+    }
+
+    delete(designation){
+        if(designation.employees.length>0){
+            this.setState({
+                designations_hidden_text_style:"des_display_error_message",
+                error_message:"Sorry you can not delete the designation as there are employees assigned to it."
+            })
+        }else{
+            axios.post('http://localhost:8070/designations/deleteDesignation/' ,{designation_id:designation._id})
+                .then((res) => {
+                    if (res.status == 200) {
+                        axios.get('http://localhost:8070/departments/')
+                            .then((result) => {
+                                console.log("New departments",this.state.department.Department._id)
+                                let newDepartment = result.data.filter(val=>{
+                                    if(val.Department._id===this.state.department.Department._id){
+                                        return val
+                                    }
+                                })
+                                this.setState({
+                                    department: newDepartment[0]
+                                }, () => console.log("Department123", this.state.department))
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                        this.setState({
+                            designations_hidden_text_style:"des_display_error_message",
+                            error_message:"Successfully deleted the designation."
+                        })
+                    } else {
+                        this.setState({
+                            designations_hidden_text_style:"des_display_error_message",
+                            error_message:"Error occurred while deleting the designation."
+                        })
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        }
+
     }
 
     render(){
@@ -22,18 +101,24 @@ class Designations extends Component {
         return(
             <div className="designationsMainComponent">
                 <HRNavbar/>
-                <Sidebar/>
+                <Sidebar
+                    employees={this.state.employeesOfSelectedDes}
+                    sideBarTitle={this.state.sideBarTitle}
+                    sideBarError ={this.state.sideBarError}
+                />
                 <div className="designationsSubComponent">
-                    <h5 className="hrText">{department.Department.department_name}</h5>
+                    <h5 className="hrText">Department Name : {department.Department.department_name}</h5>
+
                     <div className="departments_table_view">
                         <table className="designationsTable">
                             <tr className="designations_table_head">
                                 <th className="designations_table_header_column">Designation</th>
                                 <th className="designations_table_header_column">Description</th>
+                                <th className="designations_table_header_column">Display Employees</th>
                                 <th className="designations_table_header_column">Delete</th>
                             </tr>
 
-                            {(department.Designations.length > 0) ? department.Designations.map((designation, index) => {
+                            {(department.Designations.length > 0&&department.Designations!=null) ? department.Designations.map((designation, index) => {
                                     if (index % 2 == 0) {
                                         return (
                                             <tr className="designations_table_data_odd" key={index}>
@@ -41,7 +126,15 @@ class Designations extends Component {
                                                 <td className="designations_table_data_column">{designation.designation_desc}</td>
                                                 <td className="designations_table_data_column_more">
                                                     <div
-                                                        className="moreButton"
+                                                        className="designations_moreButton"
+                                                        onClick={()=>this.displayEmployees(designation)}
+                                                    >
+                                                        Display Employees
+                                                    </div>
+                                                </td>
+                                                <td className="designations_table_data_column_more">
+                                                    <div
+                                                        className="designations_moreButton"
                                                         onClick={() => this.delete(designation)}
                                                     >
                                                         Delete
@@ -57,7 +150,15 @@ class Designations extends Component {
                                                 <td className="designations_table_data_column">{designation.designation_desc}</td>
                                                 <td className="designations_table_data_column_more">
                                                     <div
-                                                        className="moreButton"
+                                                        className="designations_moreButton"
+                                                        onClick={()=>this.displayEmployees(designation)}
+                                                    >
+                                                        Display Employees
+                                                    </div>
+                                                </td>
+                                                <td className="designations_table_data_column_more">
+                                                    <div
+                                                        className="designations_moreButton"
                                                         onClick={() => this.delete(designation)}
                                                     >
                                                         Delete
@@ -67,12 +168,26 @@ class Designations extends Component {
 
                                         )
                                     }
-                                }) :
+                                })
+                                :
                                 <tr>
-                                    <td colSpan="5">Loading...</td>
+                                    <td colSpan="5" className="loadingText">Loading...</td>
                                 </tr>
                             }
                         </table>
+                    </div>
+
+                    <div>
+                        <div className={this.state.designations_hidden_text_style} onClick={this.displayAllEmployees}>
+                            <h7 classsName="des_display_error_message">{this.state.error_message}</h7>
+                        </div>
+                        <div className="designations_display_all_button"  onClick={this.displayAllEmployees}>
+                            Display All Employees
+                        </div>
+                        <div className="designations_display_all_button" onClick={this.deleteDepartment}>
+                            Delete Department
+                            <h7>   (Only if there are no employees)</h7>
+                        </div>
                     </div>
                 </div>
             </div>
