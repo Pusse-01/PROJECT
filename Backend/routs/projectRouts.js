@@ -11,40 +11,40 @@ const Task = require("../models/task");
 // @route POST project/projects
 // @desc displays about projects
 // @access Public
-router.post ('/projects',(async(req, res)=>{
-    const{name,members,projectStatus, overdue, administrators,discription,notes}=req.body;
+router.post('/projects', (async (req, res) => {
+    const { name, members, projectStatus, overdue, administrators, discription, notes } = req.body;
     //res.status(201).json({ msg: 'Projects'});
 
- //Check for existing user
- await Project.findOne({name: req.body.name}).then(project=>{
-    if(project) return res.status(400).json({msg:'Project already exist'});
+    //Check for existing user
+    await Project.findOne({ name: req.body.name }).then(project => {
+        if (project) return res.status(400).json({ msg: 'Project already exist' });
 
-    const newProject = new Project({
-       name,
-       members,
-       projectStatus,
-       overdue,  
-       administrators,
-       discription,
-       notes
-    });
+        const newProject = new Project({
+            name,
+            members,
+            projectStatus,
+            overdue,
+            administrators,
+            discription,
+            notes
+        });
 
-    newProject.save()
-            .then((project)=>{
-    console.log("Project added successfully!")
-    res.json({
-        Project: {
-            name: project.name,
-            members: project.members,
-            projectStatus: project.projectStatus,
-            overdue: project.overdue,
-            administrators: project.administrators,
-            discription: project.discription,
-            notes: project.notes,
-        }
-     });
-   })
-})
+        newProject.save()
+            .then((project) => {
+                console.log("Project added successfully!")
+                res.json({
+                    Project: {
+                        name: project.name,
+                        members: project.members,
+                        projectStatus: project.projectStatus,
+                        overdue: project.overdue,
+                        administrators: project.administrators,
+                        discription: project.discription,
+                        notes: project.notes,
+                    }
+                });
+            })
+    })
 })
 );
 
@@ -52,43 +52,42 @@ router.post ('/projects',(async(req, res)=>{
 // @route GET project/projects
 // @desc displays about projects
 // @access Public
-router.get ('/projects/:email',(req, res)=>{
- let email = req.params.email;
-//Check for existing user
-Project.find({members: email}).then(projects=>{
-   if (projects) 
-   return res.json(projects);
-  })
+router.get('/projects/:email', (req, res) => {
+    let email = req.params.email;
+    //Check for existing user
+    Project.find({ members: email }).then(projects => {
+        if (projects)
+            return res.json(projects);
+    })
 });
 
 // @route GET project/projects
 // @desc displays about projects
 // @access Public
-router.get ('/projects/projectsDetails:name',(req, res)=>{
+router.get('/projects/projectsDetails:name', (req, res) => {
     let name = req.params.name;
-   //Check for existing user
-   Project.find({name: name}).then(projects=>{
-      if (projects) 
-      return res.json(projects);  
-     })
-   });
+    //Check for existing user
+    Project.find({ name: name }).then(projects => {
+        if (projects)
+            return res.json(projects);
+    })
+});
 
 
-   //added by malaka
-   //to get project by its contributers
-   const fetchProjects = async (req, res) => {
-      try {
-          const projectlist = await Project.findOne({name: req.params.id});
-          res.json(projectlist)
-      } catch (error) {
-          res.json(error.message);
-      }
-  };
-   router.get ('/projects/list/:id', fetchProjects);
+//added by malaka
+//to get project by its contributers
+const fetchProjects = async (req, res) => {
+    try {
+        const projectlist = await Project.findOne({ name: req.params.id });
+        res.json(projectlist)
+    } catch (error) {
+        res.json(error.message);
+    }
+};
+router.get('/projects/list/:id', fetchProjects);
 
-   //added by malaka
-   //to get all projects delete this function
-   const fetchallProjects = async (req, res) => {
+//added by malaka
+const fetchallProjects = async (req, res) => {
     try {
         const projectlist = await Project.find({});
         res.json(projectlist)
@@ -98,19 +97,46 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
         res.json(error.message);
     }
 };
- router.get ('/projects', fetchallProjects);
+router.get('/projects', fetchallProjects);
 
 
-
-
- 
- const postProjectupdate = async (req, res) => {
+const updateThisproject = async (req, res) => {
     try {
-        const projectlist = await Project.updateOne({'_id':req.params.id}, {$set:{
-         
-                "projectStatus":req.body.projectStatus
-            
-        }});
+        const project = await Project.findByIdAndUpdate({ '_id': req.params.id }, {
+            $set: {
+
+                members: req.body.members,
+                projectStatus: req.body.projectStatus,
+                overdue: req.body.overdue,
+                administrators: req.body.administrators,
+                discription: req.body.discription,
+            },
+        },
+            {
+                new: true,
+                runValidators: true
+            });
+        res.json(project)
+        console.log(req.body.discription);
+        console.log("project update success.");
+
+    } catch (error) {
+        console.log("project update failed.");
+        res.json(error.message)
+    }
+}
+router.put('/projectdetail/:id', updateThisproject);
+
+
+const postProjectupdate = async (req, res) => {
+    try {
+        const projectlist = await Project.updateOne({ '_id': req.params.id }, {
+            $set: {
+
+                "projectStatus": req.body.projectStatus
+
+            }
+        });
         res.json(projectlist)
         console.log("project get request success.");
     } catch (error) {
@@ -118,11 +144,11 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
         res.json(error.message);
     }
 };
- router.post ('/projectsstatus/:id', postProjectupdate);
+router.post('/projectsstatus/:id', postProjectupdate);
 
- const deleteProject = async (req, res) => {
+const deleteProject = async (req, res) => {
     try {
-        const projectlist = await Project.deleteOne({'_id':req.params.id});
+        const projectlist = await Project.deleteOne({ '_id': req.params.id });
         res.json(projectlist)
         console.log("project delete request success.");
     } catch (error) {
@@ -130,16 +156,16 @@ router.get ('/projects/projectsDetails:name',(req, res)=>{
         res.json(error.message);
     }
 };
- router.delete ('/projectdelete/:id', deleteProject);
+router.delete('/projectdelete/:id', deleteProject);
 
 
 // ************************************** GET PROJECT BY ID *****************************************
-const getProjectById = (req,res,next) => {
-    if(req.body.project_id==null){
+const getProjectById = (req, res, next) => {
+    if (req.body.project_id == null) {
         res.json({
-            message : "The Project id is empty"
+            message: "The Project id is empty"
         })
-    }else{
+    } else {
         Project.findById(req.body.project_id)
             .then(response => {
                 res.json({
@@ -148,12 +174,12 @@ const getProjectById = (req,res,next) => {
             })
             .catch(error => {
                 res.json({
-                    message : 'An error occurred!'
+                    message: 'An error occurred!'
                 })
             })
     }
 }
-router.post('/projects/getProjectById',getProjectById)
+router.post('/projects/getProjectById', getProjectById)
 
 router.get("/countProjects", async (req, res) => {
     const allProjects = await Project.find().lean();
@@ -162,7 +188,7 @@ router.get("/countProjects", async (req, res) => {
     let ongoing = 0;
     let completed = 0;
     let over_due = 0;
-    allProjects.forEach((Project)=> {
+    allProjects.forEach((Project) => {
         switch (Project.projectStatus) {
             case "Pending":
                 pending++;
@@ -172,15 +198,15 @@ router.get("/countProjects", async (req, res) => {
                 break;
             case "On going":
                 ongoing++;
-                break;                
+                break;
             case "Completed":
                 completed++;
-                break;    
+                break;
             case "Over due":
                 over_due++;
-                break; 
+                break;
             default:
-                break;          
+                break;
         }
     });
 
@@ -199,13 +225,13 @@ router.get("/countProjects", async (req, res) => {
 
 router.get("/countProjects/:email", async (req, res) => {
     let email = req.params.email;
-    const allProjects = await Project.find({members: email}).lean();
+    const allProjects = await Project.find({ members: email }).lean();
     let pending = 0;
     let not_started = 0;
     let ongoing = 0;
     let completed = 0;
     let over_due = 0;
-    allProjects.forEach((Project)=> {
+    allProjects.forEach((Project) => {
         switch (Project.projectStatus) {
             case "Pending":
                 pending++;
@@ -215,15 +241,15 @@ router.get("/countProjects/:email", async (req, res) => {
                 break;
             case "On going":
                 ongoing++;
-                break;                
+                break;
             case "Completed":
                 completed++;
-                break;    
+                break;
             case "Over due":
                 over_due++;
-                break; 
+                break;
             default:
-                break;          
+                break;
         }
     });
 

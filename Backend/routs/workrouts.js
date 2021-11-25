@@ -328,6 +328,7 @@ router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a pr
       let iter=admintimeline.values();
       for (let times of iter) {
         let duration="";
+        
         if(times.hours>=10){
           duration+=times.hours.toString()+":";
         }else{
@@ -344,9 +345,9 @@ router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a pr
           duration+="0"+times.seconds.toString();
         }
       
-       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration];
+       let obj=[times.name,times.projectname,times.taskname,times.Stime.toString().substring(3,24),times.Etime.toString().substring(3,24),duration, times.memo];
         summery.push(obj);
-      
+      console.log(summery)
     }
     return res.json(summery.reverse());
   }).catch(error=>{

@@ -185,7 +185,7 @@ class Navbar extends Component{
                     </div>
                 </div>
 
-                <div className="employee_navbar_action">
+                <div className="employee_navbar_action"  style={{zIndex:10}}>
                     <div className="employee_profile" onClick={this.openProfileMenu.bind(this)}>
                         <img className="employee_avatar" src={this.state.profileImage}/>
                     </div>

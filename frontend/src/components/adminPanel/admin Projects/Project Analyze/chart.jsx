@@ -52,11 +52,11 @@ export default class Projectperformancecharts extends React.Component {
         MAX_PAGES: projectData.length - 1,
       });
 
-      if(this.state.MAX_PAGES===0){    
+      if (this.state.MAX_PAGES === 0) {
         this.setState({
           loadingdata: true,
         });
-      }else{
+      } else {
         this.setState({
           loadingdata: false,
         });
@@ -158,7 +158,7 @@ export default class Projectperformancecharts extends React.Component {
           for (let m = 0; m < GridStructure[k].t_details[l].taskWorking.length; m++) {
             for (let n = m; n < GridStructure[k].t_details[l].taskWorking.length; n++) {
 
-              if (GridStructure[k].t_details[l].taskWorking[m][3] === GridStructure[k].t_details[l].taskWorking[n][3]) {
+              if (GridStructure[k].t_details[l].taskWorking[m][3] === GridStructure[k].t_details[l].taskWorking[n][3] && GridStructure[k].p_details.projectStatus!=='Completed') {
 
                 year = GridStructure[k].t_details[l].taskWorking[m][3].substring(8, 12);
                 date = GridStructure[k].t_details[l].taskWorking[m][3].substring(5, 7);
@@ -427,9 +427,13 @@ export default class Projectperformancecharts extends React.Component {
                     size: 20
                   },
                   xref: 'paper',
-                  x: 0.05,
+                  x: new Date(),
                 },
                 xaxis: {
+                  type: 'date',
+                  tick0: Date.now(),
+
+                  range: [Date.now()-(.0002*(Date.now())), Date.now()+ (0.0001*(Date.now()))],
                   title: {
                     text: 'Date',
                     font: {
@@ -440,6 +444,8 @@ export default class Projectperformancecharts extends React.Component {
                   },
                 },
                 yaxis: {
+                  range: [0, 30],
+                  rangemode: 'tozero',
                   title: {
                     text: 'Time in minutes',
                     font: {
