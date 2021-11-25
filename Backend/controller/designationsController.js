@@ -25,7 +25,7 @@ const addDesignation = (req, res) => {
     let designation_desc = req.body.designation_desc;
     let department = req.body.department;
 
-    if (designation_name == null || designation_desc == null || department == null) {
+    if (designation_name == null || designation_desc == null) {
         res.json({
             message: "One or more of request paramaters are empty."
         })
@@ -35,50 +35,69 @@ const addDesignation = (req, res) => {
                 if (designations.length > 0) {
                     return res.status(400).json({Error: "Designation is already existing in that department"});
                 } else {
-                    let designation = new Designations({
-                        designation_name: designation_name,
-                        designation_desc: designation_desc,
-                        department: department
-                    })
-
-                    designation.save()
-                        .then(response => {
-                            Departments.findById(department)
-                                .then(departmentFromDB => {
-                                    // Update the department's designations array
-                                    let existingDesignationsOfDepartment = departmentFromDB.designations
-                                    existingDesignationsOfDepartment.push(response.id)
-                                    let updatedDepartment = {
-                                        designations: existingDesignationsOfDepartment
-                                    }
-                                    Departments.findByIdAndUpdate(department, updatedDepartment)
-                                        .then(resultFromUpdatedDepartment => {
-                                            Departments.findById(department)
-                                                .then(resultAfterUpdating => {
-                                                    res.json({
-                                                        message: "Successfully added designation",
-                                                        designation: response,
-                                                        department: resultAfterUpdating
-                                                    })
-                                                })
-                                        })
-                                        .catch(error => {
-                                            res.json({
-                                                message: error
-                                            })
-                                        })
-                                        .catch(error => {
-                                            res.json({
-                                                message: error
-                                            })
-                                        })
+                    if(department==null||department==""){
+                        let designation = new Designations({
+                            designation_name: designation_name,
+                            designation_desc: designation_desc,
+                        })
+                        designation.save()
+                            .then(response => {
+                                res.json({
+                                    message: "Successfully added designation",
+                                    designation: response
                                 })
-                        })
-                        .catch(error => {
-                            res.json({
-                                message: error
                             })
+                            .catch(error => {
+                                res.json({
+                                    message: error
+                                })
+                            })
+                    }else{
+                        let designation = new Designations({
+                            designation_name: designation_name,
+                            designation_desc: designation_desc,
+                            department: department
                         })
+
+                        designation.save()
+                            .then(response => {
+                                Departments.findById(department)
+                                    .then(departmentFromDB => {
+                                        // Update the department's designations array
+                                        let existingDesignationsOfDepartment = departmentFromDB.designations
+                                        existingDesignationsOfDepartment.push(response.id)
+                                        let updatedDepartment = {
+                                            designations: existingDesignationsOfDepartment
+                                        }
+                                        Departments.findByIdAndUpdate(department, updatedDepartment)
+                                            .then(resultFromUpdatedDepartment => {
+                                                Departments.findById(department)
+                                                    .then(resultAfterUpdating => {
+                                                        res.json({
+                                                            message: "Successfully added designation",
+                                                            designation: response,
+                                                            department: resultAfterUpdating
+                                                        })
+                                                    })
+                                            })
+                                            .catch(error => {
+                                                res.json({
+                                                    message: error
+                                                })
+                                            })
+                                            .catch(error => {
+                                                res.json({
+                                                    message: error
+                                                })
+                                            })
+                                    })
+                            })
+                            .catch(error => {
+                                res.json({
+                                    message: error
+                                })
+                            })
+                    }
                 }
             })
     }

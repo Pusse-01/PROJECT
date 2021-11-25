@@ -29,7 +29,7 @@ const EmployeeSchema = new Schema({
     },
     department :{
         type : String,
-        required : true
+        required : false
     },
     designation : {
         type:String,

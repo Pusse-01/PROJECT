@@ -11,6 +11,7 @@ class AddEmployee extends Component {
         this.state = {
             departments: [],
             designations: [],
+            designationsWithoutDep:[],
             confirmPassword: "",
             selectedDepartmentId: "",
             errorStyle: "no_error_message", errorMessage: "",
@@ -21,9 +22,19 @@ class AddEmployee extends Component {
     componentDidMount() {
         axios.get('http://localhost:8070/departments/')
             .then((res) => {
-                this.setState({
-                    departments: res.data
-                }, () => console.log("Departments", this.state.departments))
+                axios.get('http://localhost:8070/designations/')
+                    .then(res2 => {
+                        let temDes = res2.data.response.filter(val=>{
+                            if(val.department==null){
+                                return val
+                            }
+                        })
+                        this.setState({
+                            departments: res.data,
+                            designations:temDes,
+                            designationsWithoutDep:temDes
+                        })
+                    })
             })
             .catch(error => {
                 console.log(this.state.registerEmployee)
@@ -42,7 +53,6 @@ class AddEmployee extends Component {
                 this.state.registerEmployee.email == "" ||
                 this.state.registerEmployee.password == "" ||
                 this.state.registerEmployee.role == "" ||
-                this.state.registerEmployee.department == "" ||
                 this.state.registerEmployee.designation == "" ||
                 this.state.confirmPassword == "") {
                 this.setState({
@@ -103,19 +113,30 @@ class AddEmployee extends Component {
     }
 
     selectDepartment = (e) => {
-        this.state.departments.filter((val) => {
-            if (e.target.value == val.Department._id) {
-                return val
-            }
-        }).map((department, index) => {
+        if(e.target.value==0){
             this.setState({
-                designations: department.Designations,
                 registerEmployee: {
                     ...this.state.registerEmployee,
-                    department: e.target.value
-                }
+                    department: ""
+                },
+                designations:this.state.designationsWithoutDep
             })
-        })
+        }else{
+            this.state.departments.filter((val) => {
+                if (e.target.value == val.Department._id) {
+                    return val
+                }
+            }).map((department, index) => {
+                this.setState({
+                    designations: department.Designations,
+                    registerEmployee: {
+                        ...this.state.registerEmployee,
+                        department: e.target.value
+                    }
+                })
+            })
+        }
+
     }
     selectDesignation = (e) => {
         const designation_name = this.state.designations.filter((val) => {
@@ -222,6 +243,7 @@ class AddEmployee extends Component {
                                             return (<option key={item.Department._id}
                                                             value={item.Department._id}>{item.Department.department_name}</option>);
                                         })}
+                                        <option key="no-admin" value="0">No Department</option>
                                     </select>
                                 </label>
                                 <label className="hr_employeeLabel">
