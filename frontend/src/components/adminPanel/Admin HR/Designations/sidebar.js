@@ -27,7 +27,7 @@ export default class Sidebar extends Component {
                             }
                             return(
                                 <div className="designations_sidebar_employee"  id={employee_style} key={index}>
-                                    <div className="desginations_sidebar_employee_image">
+                                    <div className="designations_sidebar_employee_image">
                                         {
                                             employee.profileImage != "" ?
                                             <img className="designations_employee_avatar"
@@ -35,8 +35,8 @@ export default class Sidebar extends Component {
                                             : <div></div>
                                         }
                                     </div>
-                                    <h5 className="desginations_sidebar_employee_name">{employee.name}</h5>
-                                    <h5 className="desginations_sidebar_employee_name">{employee.email}</h5>
+                                    <h5 className="designations_sidebar_employee_name">{employee.name}</h5>
+                                    <h5 className="designations_sidebar_employee_name" id="designations_sidebar_employee_email">{employee.email}</h5>
                                 </div>
                             )
                         })

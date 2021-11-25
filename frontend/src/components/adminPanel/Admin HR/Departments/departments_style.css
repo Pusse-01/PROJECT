@@ -233,6 +233,74 @@
     /*display: grid;*/
     /*grid-template-rows: 20% 80%;*/
 }
+
+.departmentsSideBarTitle{
+    color: #a4b0be;
+    text-align: center;
+    margin: 10px;
+    height: 120px;
+}
+
+.departments_sidebar_employees_container{
+    position: absolute;
+    top: 120px;
+    padding-top: 10px;
+    bottom: 0px;
+    overflow: scroll;
+    width: 100%;
+}
+.departments_sidebar_employees_container::-webkit-scrollbar{
+    display: none;
+}
+.departments_sidebar_employee{
+    height: 250px;
+    width:90%;
+    margin-left: 5%;
+    margin-bottom: 30px;
+    background: #1e272e;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+#departments_sidebar_employee0 {
+    box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
+}
+#departments_sidebar_employee1 {
+    box-shadow: 0px 0px 10px 1px rgb(101, 59, 141);
+}
+#departments_sidebar_employee2 {
+    box-shadow: 0px 0px 10px 1px rgb(248, 171, 4);
+}
+#departments_sidebar_employee3 {
+    box-shadow: 0px 0px 10px 1px blue;
+}
+.departments_sidebar_error{
+    margin:10px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+.departments_sidebar_employee_name{
+    color:#a4b0be;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+#departments_sidebar_employee_email{
+    font-size: 12px;
+    color: red;
+}
+
+.departments_sidebar_employee_image{
+    width: 50%;
+    height: 100px;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+.departments_employee_avatar{
+    width: 100%;
+    height: 100px;
+}
 @media only screen and (max-width: 991px) {
     .sideBarDepartmentsComponent {
         position: unset;

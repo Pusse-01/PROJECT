@@ -12,6 +12,7 @@ class Departments extends Component {
         super(props);
         this.state = {
             departments: [],
+            employees:[],
             searchTerm: "Department1",
             department: {
                 department_name: "",
@@ -28,6 +29,22 @@ class Departments extends Component {
     componentDidMount() {
         axios.get('http://localhost:8070/departments/')
             .then((res) => {
+                axios.get('http://localhost:8070/employee/allEmployees')
+                    .then((res2) => {
+                        let temEmployees = res2.data
+                        console.log(temEmployees)
+                        let noDepEmployees = temEmployees.filter(val=>{
+                            if(val.department==""||val.department==null){
+                                return val
+                            }
+                        })
+                        this.setState({
+                            employees: noDepEmployees
+                        },()=>console.log(this.state.employees))
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
                 this.setState({
                     departments: res.data
                 }, () => console.log("Departments", this.state.departments))
@@ -96,7 +113,7 @@ class Departments extends Component {
         return (
             <div className="departmentsMainComponent">
                 <HRNavbar/>
-                <Sidebar/>
+                <Sidebar noDepEmployees={this.state.employees}/>
                 <div className="departmentsSubComponent">
                     <div className="addDepartmentsComponents">
                         <div className="addDepartmentsSubComponent">

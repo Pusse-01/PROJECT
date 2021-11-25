@@ -213,15 +213,18 @@
     font-size: 20px;
     text-align: center;
 }
-.desginations_sidebar_employee_name{
+.designations_sidebar_employee_name{
     color:#a4b0be;
     text-align: center;
     padding-top: 10px;
     font-size: 15px;
     font-weight: bolder;
 }
-
-.desginations_sidebar_employee_image{
+#designations_sidebar_employee_email{
+    font-size: 10px;
+    color: red;
+}
+.designations_sidebar_employee_image{
     width: 50%;
     height: 100px;
     margin-left: 25%;
