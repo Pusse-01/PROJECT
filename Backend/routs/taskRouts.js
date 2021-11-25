@@ -16,6 +16,7 @@ router.post('/getTasksOfProject', TaskController.getTasksOfProject)
 router.post('/addTask', TaskController.addTask)
 router.post('/update', TaskController.update)
 router.post('/deleteTask', TaskController.deleteTask)
+router.delete('/deleteallTaskofthisproject/:id', TaskController.deleteallTasksofproject)
 
 //To get all the tasks of a particular employee by passing his ID
 router.get ('/userTasks/:id',(req, res)=>{

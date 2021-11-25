@@ -1,20 +1,31 @@
-import './analyzeProject.css';
-import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Legend } from 'recharts/lib/component/Legend';
+import React from "react";
+import Projectperformancecharts from './chart'
+import { Helmet } from 'react-helmet'
 
-function AnalyzeProjects({ title, data, dataKey, grid }) {
-
-    return (
-        <div className='chart'>
-h1
-        </div>
-    )
+const TITLE ='Analyze Projects'
+export default class AnalyzeProjects extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            gridData: [],
+        }
+    }
+    render() {
+        return (
+            <div>
+                <Helmet>
+                    <title>{TITLE}</title>
+                </Helmet>
+                <div>
+                    <Projectperformancecharts />
+                </div>
+            </div>
+        )
+    }
 }
 
 
 
-
-export default AnalyzeProjects;
 
 
 
@@ -58,7 +69,7 @@ export default class AnalyzeProjects extends React.Component {
 
 
 
-    
+
 render() { return(
 
     <div>

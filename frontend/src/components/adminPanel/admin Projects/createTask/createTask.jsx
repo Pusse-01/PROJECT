@@ -28,6 +28,9 @@ import TrendingUp from "@material-ui/icons/TrendingUp";
 import "../Admin project Home/loadingPage.css";
 import "./createtaskStyles.css";
 
+import { Helmet } from 'react-helmet'
+
+const TITLE ='Create Task'
 //style classes
 const paperStyle = {
   padding: "50px 20px",
@@ -490,6 +493,9 @@ export default class Createtask extends React.Component {
     //
     return (
       <div class="createtaskform">
+                  <Helmet>
+          <title>{ TITLE }</title>
+        </Helmet>
         <div>
           <form>
             <div>
@@ -751,7 +757,7 @@ export default class Createtask extends React.Component {
             </a>
           </div>
           <div class="bodyappear3createtask">
-            <a href="www.google.com">
+            <a href="http://localhost:3000/viewanalysis">
               <button class="buttoncreatetask">
                 {" "}
                 <TrendingUp fontSize="large" htmlColor="#ffffff" />
