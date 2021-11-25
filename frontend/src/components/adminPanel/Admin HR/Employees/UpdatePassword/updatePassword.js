@@ -27,7 +27,7 @@ class UpdatePassword extends Component {
                 }, () => console.log("Departments", this.state.departments))
             })
             .catch(error => {
-                console.log(this.state.registerEmployee)
+
             })
     }
 

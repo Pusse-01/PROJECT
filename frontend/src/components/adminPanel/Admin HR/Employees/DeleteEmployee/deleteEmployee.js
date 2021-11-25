@@ -10,6 +10,7 @@ class DeleteEmployee extends Component {
         super(props);
         this.state = {
             departments: [],
+            employees:[],
             deleteEmployee: {employee_id: ""},
             deletingDepartmentEmployees: [],
             confirmDeleteContainerStyle:"hideDeleteConfirm",
@@ -19,11 +20,11 @@ class DeleteEmployee extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8070/departments/')
+        axios.get('http://localhost:8070/employee/allEmployees')
             .then((res) => {
                 this.setState({
-                    departments: res.data
-                }, () => console.log("Departments", this.state.departments))
+                    employees: res.data
+                })
             })
             .catch(error => {
                 console.log(this.state.registerEmployee)
@@ -32,18 +33,6 @@ class DeleteEmployee extends Component {
 
     changeMenu = (menu) => {
         this.props.history.push("menu")
-    }
-
-    selectDeletingEmployeeDepartment = (e) => {
-        axios.get('http://localhost:8070/employee/departmentEmployees/' + e.target.value)
-            .then((res) => {
-                this.setState({
-                    deletingDepartmentEmployees: res.data
-                })
-            })
-            .catch(error => {
-                alert("Error")
-            })
     }
 
     deleteAccount = () =>{
@@ -73,11 +62,18 @@ class DeleteEmployee extends Component {
             axios.post('http://localhost:8070/employee/deleteEmployee', this.state.deleteEmployee)
                 .then((res) => {
                     if (res.status == 200) {
-                        this.setState({
-                            errorMessage4: "Deleting Account Successfully! ",
-                            errorStyle4: "error_message",
-                            deleteEmployee: {employee_id: ""},
-                        })
+                        axios.get('http://localhost:8070/employee/allEmployees')
+                            .then((res) => {
+                                this.setState({
+                                    employees: res.data,
+                                    errorMessage4: "Deleting Account Successfully! ",
+                                    errorStyle4: "error_message",
+                                    deleteEmployee: {employee_id: ""},
+                                })
+                            })
+                            .catch(error => {
+                                console.log(this.state.registerEmployee)
+                            })
                     } else {
                         this.setState({
                             errorMessage4: "Could not Update Position ",
@@ -107,21 +103,6 @@ class DeleteEmployee extends Component {
                         <form className="hr_employeeForm">
                             <div className="hr_employeeFormSub">
                                 <label className="hr_employeeLabel">
-                                    Select The Department of Employee
-                                    <select className="form-select form-select-sm employee_select "
-                                            defaultValue={""}
-                                            onChange={e => {
-                                                this.selectDeletingEmployeeDepartment(e)
-                                            }}
-                                    >
-                                        <option disabled value={""}> -- Select The Department--</option>
-                                        {this.state.departments.map(item => {
-                                            return (<option key={item.Department._id}
-                                                            value={item.Department._id}>{item.Department.department_name}</option>);
-                                        })}
-                                    </select>
-                                </label>
-                                <label className="hr_employeeLabel">
                                     Select The Employee To be Deleted
                                     <select className="form-select form-select-sm employee_select "
                                             defaultValue={""}
@@ -135,7 +116,7 @@ class DeleteEmployee extends Component {
                                             }}
                                     >
                                         <option disabled value={""}> -- Select the Employee --</option>
-                                        {this.state.deletingDepartmentEmployees.map(item => {
+                                        {this.state.employees.map(item => {
                                             return (<option key={item._id}
                                                             value={item._id}>{item.name} -- {item.email}</option>);
                                         })}

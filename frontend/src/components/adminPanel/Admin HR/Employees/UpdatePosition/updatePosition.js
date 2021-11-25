@@ -10,7 +10,8 @@ class UpdatePosition extends Component {
         super(props);
         this.state = {
             departments: [],
-            designations:[],
+            designations: [],
+            employees: [],
             errorStyle3: "no_error_message", errorMessage3: "",
             updatePositionEmployee: {employee_id: "", department: "", designation: ""},
             updatingDepartmentEmployees: [],
@@ -20,9 +21,17 @@ class UpdatePosition extends Component {
     componentDidMount() {
         axios.get('http://localhost:8070/departments/')
             .then((res) => {
-                this.setState({
-                    departments: res.data
-                }, () => console.log("Departments", this.state.departments))
+                axios.get('http://localhost:8070/employee/allEmployees')
+                    .then((res2) => {
+                        this.setState({
+                            employees: res2.data,
+                            departments: res.data
+                        })
+                    })
+                    .catch(error => {
+                        alert(error)
+                    })
+
             })
             .catch(error => {
                 console.log(this.state.registerEmployee)
@@ -85,7 +94,7 @@ class UpdatePosition extends Component {
                 this.state.updatePositionEmployee.employee_id == "" ||
                 this.state.updatePositionEmployee.department == "" ||
                 this.state.updatePositionEmployee.position == "" ||
-                this.state.updatePositionEmployee.designation == "" ) {
+                this.state.updatePositionEmployee.designation == "") {
                 this.setState({
                     errorMessage3: "Please Fill Every Information!",
                     errorStyle3: "error_message"
@@ -97,13 +106,23 @@ class UpdatePosition extends Component {
                             this.setState({
                                 errorMessage3: "Position Updated Successfully! ",
                                 errorStyle3: "error_message",
-                                updatePositionEmployee: {employee_id: "", position:"", department:"",designation:""},
+                                updatePositionEmployee: {
+                                    employee_id: "",
+                                    position: "",
+                                    department: "",
+                                    designation: ""
+                                },
                             })
                         } else {
                             this.setState({
                                 errorMessage3: "Could not Update Position ",
                                 errorStyle3: "error_message",
-                                updatePositionEmployee: {employee_id: "",position:"",  department:"",designation:""},
+                                updatePositionEmployee: {
+                                    employee_id: "",
+                                    position: "",
+                                    department: "",
+                                    designation: ""
+                                },
                             })
                         }
                     })
@@ -111,7 +130,7 @@ class UpdatePosition extends Component {
                         this.setState({
                             errorMessage3: "Could not Update Position ",
                             errorStyle3: "error_message",
-                            updatePositionEmployee: {employee_id: "", position:"", department:"",designation:""},
+                            updatePositionEmployee: {employee_id: "", position: "", department: "", designation: ""},
                         })
                     })
             }
@@ -129,21 +148,6 @@ class UpdatePosition extends Component {
                         <form className="hr_employeeForm">
                             <div className="hr_employeeFormSub">
                                 <label className="hr_employeeLabel">
-                                    Select The Current Department of Employee
-                                    <select className="form-select form-select-sm employee_select "
-                                            defaultValue={""}
-                                            onChange={e => {
-                                                this.selectUpdatingEmployeeDepartment(e)
-                                            }}
-                                    >
-                                        <option disabled value={""}> -- Select The Department--</option>
-                                        {this.state.departments.map(item => {
-                                            return (<option key={item.Department._id}
-                                                            value={item.Department._id}>{item.Department.department_name}</option>);
-                                        })}
-                                    </select>
-                                </label>
-                                <label className="hr_employeeLabel">
                                     Select The Employee To be Updated
                                     <select className="form-select form-select-sm employee_select "
                                             defaultValue={""}
@@ -157,7 +161,7 @@ class UpdatePosition extends Component {
                                             }}
                                     >
                                         <option disabled value={""}> -- Select the Employee --</option>
-                                        {this.state.updatingDepartmentEmployees.map(item => {
+                                        {this.state.employees.map(item => {
                                             return (<option key={item._id}
                                                             value={item._id}>{item.name} -- {item.email}</option>);
                                         })}
