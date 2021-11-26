@@ -520,44 +520,6 @@ export default class Viewtasks extends React.Component {
           <title>{ TITLE }</title>
         </Helmet>
         <div><h3 style={{color:'white', marginLeft:'500px', font:'30px', marginTop:'200PX'}}>No data to show.</h3></div>
-
-<div>
-          <div class="bodyappear3viewtask">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttonviewtask">
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Project
-                <br />
-                <p class="p">create your new project</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear4viewtask">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttonviewtask">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary all projects</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear5viewtask">
-            <a href="http://localhost:3000/viewanalysis">
-              <button class="buttonviewtask">
-                {" "}
-                <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                Status
-                <br />
-                <p class="p">evaluate your work</p>
-              </button>
-            </a>
-          </div>
-        </div>
         </div>
       )
     }
@@ -607,44 +569,6 @@ export default class Viewtasks extends React.Component {
             </Table>
           </TableContainer>
         </Paper>
-        <div>
-          <div class="bodyappear3viewtask">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttonviewtask">
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Project
-                <br />
-                <p class="p">create your new project</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear4viewtask">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttonviewtask">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary all projects</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear5viewtask">
-          <a href="http://localhost:3000/viewanalysis">
-              <button class="buttonviewtask">
-                {" "}
-                <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                Status
-                <br />
-                <p class="p">evaluate your work</p>
-              </button>
-              </a>
-        
-          </div>
-        </div>
       </div>
     );
   }

@@ -2,12 +2,35 @@ body {
   background-color: #1e272e;
 }
 
+.float-parent-element { 
+  width: 100%; 
+} 
+.float-child-element1 { 
+  float: left; 
+  width: 82%; 
+} 
+
+.float-child-element2 { 
+  float: left; 
+  width: 18%; 
+} 
+.red { 
+
+  margin-left: 0%; 
+  height: 100%; 
+} 
+.yellow { 
+  margin-left: 0; 
+  height: 100%; 
+  background-color: #2f3640;
+}
+
 .bodyappear1 {
   z-index: 10;
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 110px;
   left: 3px;
-  top: 100px;
+  top: 10px;
 }
 
 .bodyappear2 {
@@ -59,21 +82,19 @@ body {
 }
 
 .button {
+  padding-left: 0px;
+  padding-right: 10px;
+  padding-top: 10px;
   color: rgb(189, 27, 27);
   box-sizing: content-box;
-  height: 380px;
+  height: 100px;
   background: #252e35;
-  content: center;
-  text-align: center;
-  font-size: 28px;
-  width: 65px;
-  padding: 100px;
+  font-size: 12px;
+  width: 80%;
   transition: all 0.5s;
-  cursor: pointer;
-  margin: 15px;
   border: none;
-  text-align: center;
   opacity: 0.8;
+  margin-left:20px;
 }
 .button span {
   cursor: pointer;
