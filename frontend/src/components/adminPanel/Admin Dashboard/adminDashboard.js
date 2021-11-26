@@ -8,6 +8,7 @@ function AdminPanel() {
   const [projecttimeline, settimeline] = useState([]);
   const [searchterm, setsearchterm] = useState("");
   const [overdueprojects, setoverdueprojects] = useState({});
+  const[overduetasks,setoverduetasks]=useState(0);
   async function admintimeline() {
     await axios
       .get("http://localhost:8070/dashboard/admintimeline/")
@@ -26,10 +27,23 @@ function AdminPanel() {
         }
       });
   }
+  async function overduetask() {
+    await axios
+      .get("http://localhost:8070/Dashboard/overduetaskstotal/")
+      .then(function (response) {
+      
+          setoverduetasks(response.data);
+         
+         
+        
+      });
+  }
 
   useEffect(() => {
     admintimeline();
     overdueproject();
+    overduetask();
+    
   }, []);
   return (
     <div className="adminmain adminhides">
@@ -123,15 +137,11 @@ function AdminPanel() {
                 </div>
                 <div className="col-8 mt-5 ms-3">
                   <h1 className="noverdueadmin "> No Overdue Projects</h1>
-                  <div>
-                    <p className=" overduebuttonnumber">
-                      {overdueprojects.length}
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             )}
-             {overdueprojects.length > 0 ? (
+             {overduetasks> 0 ? (
               <div className="row">
                 <div className="col-3 text-center">
                   <img
@@ -140,10 +150,10 @@ function AdminPanel() {
                   />
                 </div>
                 <div className="col-8 ms-3">
-                  <h1 className="noverdueadmin ">Overdue Projects</h1>
+                  <h1 className="noverdueadmin ">Overdue Tasks</h1>
                   <div>
                     <p className=" overduebuttonnumber">
-                      {overdueprojects.length}
+                      {overduetasks}
                     </p>
                   </div>
                 </div>
@@ -158,11 +168,7 @@ function AdminPanel() {
                 </div>
                 <div className="col-8 mt-5 ms-3">
                   <h1 className="noverdueadmin "> No Overdue Tasks</h1>
-                  <div>
-                    <p className=" overduebuttonnumber">
-                      {overdueprojects.length}
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             )}

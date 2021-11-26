@@ -43,10 +43,11 @@ import DeleteEmployee from "./components/adminPanel/Admin HR/Employees/DeleteEmp
 import UpdatePassword from "./components/adminPanel/Admin HR/Employees/UpdatePassword/updatePassword";
 import UpdatePosition from "./components/adminPanel/Admin HR/Employees/UpdatePosition/updatePosition";
 import Menu from "./components/adminPanel/Admin HR/Employees/Menu/menu";
+import Profile from "./components/Profilepage/Profile";
 const axios = require("axios").default;
 
 function App() {
-  const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "" });
+  const [user, setUser] = useState({ name: "", email: "", token: "", id: "", role: "",profileImage:"" });
   const [error, setError] = useState("");
   const [logorcreate, setLogorCreate] = useState(false);
   const [working,setw]=useState(false);
@@ -158,6 +159,9 @@ function App() {
                 <Route path="/timeLogs">
                   <TimeLogs />
                 </Route>
+                <Route  path="/Profile">
+                <Profile logout ={Logout}/>
+              </Route>
               </div>
             ) : <div>
 

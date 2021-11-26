@@ -434,11 +434,7 @@ const updatePasswordByEmployee = (req, res) => {
                                             })
                                     })
                                 })
-                                    .catch(error => {
-                                        res.json({
-                                            message: 'An error occurred!'
-                                        })
-                                    })
+                                   
                             }
                         })
                 }

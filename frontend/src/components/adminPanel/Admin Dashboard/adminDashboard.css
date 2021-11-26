@@ -79,17 +79,20 @@
    
 }
 .overduebuttonnumber{
-    font-size: 10vh;
-    padding-left: 50px;
-    margin-left: 80px;
+    font-size: 6vh;
+    
+    
+    
 }
 .noverdueadmin{
     font-size: 4vh;
+    position: static;
 
 }
 .nooverdueimgadmin{
-    height: 150px;
-    width: 150px;
+    height: 11vh;
+    width: 11vh;
     margin-left: 10px;
-    position: static;
+    margin-right: 10px;
+    position: relative;
   }
