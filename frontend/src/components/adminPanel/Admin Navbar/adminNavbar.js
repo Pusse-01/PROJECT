@@ -9,7 +9,7 @@ class AdminNavbar extends Component{
         const founduser = JSON.parse(loggedInUser);
         this.state = {
             selectedHome: true,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:false,
             selectedHR:false,
             selectedClients:false,
@@ -27,7 +27,7 @@ class AdminNavbar extends Component{
     changeColorHome(){
         this.setState({
             selectedHome:true,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:false,
             selectedHR:false,
             selectedClients:false,
@@ -36,7 +36,7 @@ class AdminNavbar extends Component{
         })
         this.props.history.push("/adminPanel");
     }
-    changeColorReports(){
+    /*changeColorReports(){
         this.setState({
             selectedHome:false,
             selectedReports:true,
@@ -47,11 +47,11 @@ class AdminNavbar extends Component{
             selectedLogout:false
         })
         this.props.history.push("/reports")
-    }
+    }*/
     changeColorProjects(){
         this.setState({
             selectedHome:false,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:true,
             selectedHR:false,
             selectedClients:false,
@@ -64,7 +64,7 @@ class AdminNavbar extends Component{
     changeColorHR(){
         this.setState({
             selectedHome:false,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:false,
             selectedHR:true,
             selectedClients:false,
@@ -76,7 +76,7 @@ class AdminNavbar extends Component{
     changeColorClients(){
         this.setState({
             selectedHome:false,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:false,
             selectedHR:false,
             selectedClients:true,
@@ -88,7 +88,7 @@ class AdminNavbar extends Component{
     changeColorEmployees(){
         this.setState({
             selectedHome:false,
-            selectedReports:false,
+            //selectedReports:false,
             selectedProjects:false,
             selectedHR:false,
             selectedClients:false,
@@ -100,7 +100,7 @@ class AdminNavbar extends Component{
     render(){
 
         let linkClassHome = this.state.selectedHome ? "nav-link text-danger " : "nav-link text-light";
-        let linkClassReports = this.state.selectedReports ? "nav-link text-danger" : "nav-link text-light";
+      //  let linkClassReports = this.state.selectedReports ? "nav-link text-danger" : "nav-link text-light";
         let linkClassProjects = this.state.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
         let linkClassHR = this.state.selectedHR? "nav-link text-danger" : "nav-link text-light";
         let linkClassClients = this.state.selectedClients ? "nav-link text-danger" : "nav-link text-light";
@@ -129,14 +129,14 @@ class AdminNavbar extends Component{
                             <li className=" nav-item active">
                             <a  className={linkClassHome} aria-current="page" href="#" onClick={this.changeColorHome.bind(this)}>Dashboard</a>
                             </li>
-                            <li className="nav-item" >
+                            {/*<li className="nav-item" >
                                 <a className={linkClassReports } href="#" onClick={this.changeColorReports.bind(this)}>Reports</a>
-                            </li>
+        </li>*/}
                             <li className="nav-item"> 
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassHR} href="#" onClick={this.changeColorHR.bind(this)}>HR</a>
+                                <a className={linkClassHR} href="#" onClick={this.changeColorHR.bind(this)}>Departments</a>
                             </li>
                             <li className="nav-item">
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
