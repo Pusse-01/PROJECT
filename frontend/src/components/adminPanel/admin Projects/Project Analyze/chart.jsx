@@ -158,7 +158,7 @@ export default class Projectperformancecharts extends React.Component {
           for (let m = 0; m < GridStructure[k].t_details[l].taskWorking.length; m++) {
             for (let n = m; n < GridStructure[k].t_details[l].taskWorking.length; n++) {
 
-              if (GridStructure[k].t_details[l].taskWorking[m][3] === GridStructure[k].t_details[l].taskWorking[n][3] && GridStructure[k].p_details.projectStatus!=='Completed') {
+              if (GridStructure[k].t_details[l].taskWorking[m][3] === GridStructure[k].t_details[l].taskWorking[n][3] && GridStructure[k].p_details.projectStatus !== 'Completed') {
 
                 year = GridStructure[k].t_details[l].taskWorking[m][3].substring(8, 12);
                 date = GridStructure[k].t_details[l].taskWorking[m][3].substring(5, 7);
@@ -345,24 +345,29 @@ export default class Projectperformancecharts extends React.Component {
   }
 
 
-  gridPageChangeNext = (event) => {
-    let id = this.state.PageCount;
-    if (id < 3) {
-      this.setState({
-        PageCount: id + 1,
-      });
-    }
+  gridPageChangetoOne = (event) => {
+    this.setState({
+      PageCount: 0,
+    });
   };
 
-  gridPageChangePrev = (event) => {
-    let id = this.state.PageCount;
-    if (id - 1 >= 0) {
-      this.setState({
-        PageCount: id - 1,
-      });
-    }
+  gridPageChangetoTwo = (event) => {
+    this.setState({
+      PageCount: 1,
+    });
   };
 
+  gridPageChangetoThree = (event) => {
+    this.setState({
+      PageCount: 2,
+    });
+  };
+
+  gridPageChangetoFour = (event) => {
+    this.setState({
+      PageCount: 3,
+    });
+  };
 
 
   render() {
@@ -376,37 +381,37 @@ export default class Projectperformancecharts extends React.Component {
       >
         <Grid container>
 
-          <Box row style={{ backgroundColor: "#525252", marginLeft: '20px', marginBottom: '20px', marginTop: '10px', width: '80%' }}>
+          <Box row style={{ backgroundColor: "#525252", marginLeft: '20px', marginBottom: '20px', marginTop: '10px', width: '100%' }}>
             <Grid container>
-              <Grid item style={{ width: '60%', marginLeft: '20px', marginTop: '20px' }}>
-                {PageCount === 0 ?
-                  <h4 style={{ marginLeft: '30px', marginTop: '20px' }}>Daily Project Activity Chart<span style={{ marginLeft: '50px' }}>  <h6 style={{ marginLeft: '30px', marginTop: '20px' }}>Next : Projects And There Current Status</h6> </span></h4> : null}
-                {PageCount === 1 ?
-                  <h4 style={{ marginLeft: '30px', marginTop: '20px' }}>Projects And There Current Status<span style={{ marginLeft: '50px' }}>  <h6 style={{ marginLeft: '30px', marginTop: '20px' }}>Next : Tasks And There Status</h6> </span></h4> : null}
-                {PageCount === 2 ?
-                  <h4 style={{ marginLeft: '30px', marginTop: '20px' }}>Tasks And There Status<span style={{ marginLeft: '50px' }}>  <h6 style={{ marginLeft: '30px', marginTop: '20px' }}>Next : Employee Contribution and performance</h6> </span></h4> : null}
-                {PageCount === 3 ?
-                  <h4 style={{ marginLeft: '30px', marginTop: '20px' }}>Employee Contribution and performance<span style={{ marginLeft: '50px' }}>  <h6 style={{ marginLeft: '30px', marginTop: '20px' }}>Next : END</h6> </span></h4> : null}
-
-
-              </Grid>
-
-              <Grid item style={{ marginLeft: "70%", marginTop: "0px", marginBottom: '10px' }}>
+              <Grid item style={{ marginLeft: "4%", marginTop: "0px", marginBottom: '10px' }}>
                 <button class="directionButtons"
-                  type="submit"
+                  type="button"
                   style={{ marginLeft: "20px", marginTop: "5px" }}
-                  onClick={this.gridPageChangePrev}
+                  onClick={this.gridPageChangetoOne}
                 >
-                  Prev Chart
+                  Daily Project Activity Chart
                 </button>
                 <button class="directionButtons"
-                  type="submit"
+                  type="button"
                   style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
-                  onClick={this.gridPageChangeNext}
+                  onClick={this.gridPageChangetoTwo}
                 >
-                  Next Chart
+                  Tasks And There Status
                 </button>
-                <br />
+                <button class="directionButtons"
+                  type="button"
+                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
+                  onClick={this.gridPageChangetoThree}
+                >
+                  Projects And There Current Status
+                </button>
+                <button class="directionButtons"
+                  type="button"
+                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
+                  onClick={this.gridPageChangetoFour}
+                >
+                  Employee Contribution and performance
+                </button>
               </Grid>
             </Grid>
 
@@ -433,7 +438,7 @@ export default class Projectperformancecharts extends React.Component {
                   type: 'date',
                   tick0: Date.now(),
 
-                  range: [Date.now()-(.0002*(Date.now())), Date.now()+ (0.0001*(Date.now()))],
+                  range: [Date.now() - (.0002 * (Date.now())), Date.now() + (0.0001 * (Date.now()))],
                   title: {
                     text: 'Date',
                     font: {
@@ -459,7 +464,7 @@ export default class Projectperformancecharts extends React.Component {
             />
           </Grid> : null}
 
-        {PageCount === 1 ?
+        {PageCount === 2 ?
 
 
 
@@ -482,8 +487,8 @@ export default class Projectperformancecharts extends React.Component {
               }} />
           </Grid> : null
         }
-        {PageCount === 2 ?
-          <Grid style={{ marginLeft: '30px' }}>
+        {PageCount === 1 ?
+          <Grid style={{ marginLeft: '10px' }}>
             <Plot
               data={this.taskStatus()}
               layout={{
@@ -522,43 +527,6 @@ export default class Projectperformancecharts extends React.Component {
 
           </Grid> : null}
         {PageCount === 3 ? <AnalyzeProjectEmployees /> : null}
-        <div>
-          <div class="bodyappear1analyze">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttonanalyze">
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Project
-                <br />
-                <p class="p">create your new project</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear2analyze">
-            <a href="http://localhost:3000/viewtasks">
-              <button class="buttonanalyze">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Tasks
-                <br />
-                <p class="p">view a summary all tasks</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear3analyze">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttonanalyze">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary all projects</p>
-              </button>
-            </a>
-          </div>
-        </div>
 
       </div>
     );

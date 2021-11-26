@@ -11,8 +11,8 @@
 .buttonsubmitclear{
   color:#262c30;
   position: absolute;
-  top: 80px;
-  left: 75%;
+  top: 120px;
+  left: 54%;
   padding: 0px;
   background-color: transparent;
   color: rgb(190, 33, 33);
@@ -22,8 +22,8 @@
 
 .closebuttonactual {
   position: absolute;
-  top: 70px;
-  left: 87%;
+  top:110px;
+  left: 60%;
   padding: 10px;
   background-color: transparent;
   color: rgb(190, 33, 33);

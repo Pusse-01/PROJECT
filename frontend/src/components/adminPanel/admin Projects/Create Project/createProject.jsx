@@ -320,7 +320,7 @@ class Createproject extends React.Component {
       this.state;
 
     return (
-      <Grid class="createtaskform">
+      <Grid>
                 <Helmet>
           <title>{ TITLE }</title>
         </Helmet>
@@ -328,6 +328,19 @@ class Createproject extends React.Component {
           <div>
             <Grid>
               <Paper elevation={20} style={paperStyle}>
+              <div>
+          <a href="http://localhost:3000/createproject">
+            <button
+              class="buttonsubmitclearproject"        >
+              C L E A R
+            </button>
+          </a>
+          <a href="http://localhost:3000/projects">
+            <button class="closebuttonactualproject">
+              C L O S E
+            </button>
+          </a>
+        </div>
                 <Grid align="left">
                   <div>
                     <Avatar style={avatarStyle}>
@@ -486,40 +499,7 @@ class Createproject extends React.Component {
             </button>
           </a>
         </div>
-        <div>
-          <div class="bodyappear1createproject">
-            <a href="http://localhost:3000/createtask">
-              <button class="buttoncreateproject"> <AddCircleOutlineOutlinedIcon
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Create Task<br /><p class="p">assign task for employees easily</p> </button>
-            </a>
-          </div>
-          <div class="bodyappear2createproject">
-            <a href="http://localhost:3000/viewtasks">
-              <button class="buttoncreateproject"> < Visibility
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Show taskboard<br /><p class="p">view a summary of assign task</p></button>
-            </a>
-          </div>
-          <div class="bodyappear3createproject">
-            <a href="http://localhost:3000/viewanalysis">
-              <button class="buttoncreateproject"> <TrendingUp
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Status<br /><p class="p">evaluate your work</p></button>
-            </a>
-          </div>
-          <div class="bodyappear4createproject">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttoncreateproject"> <Visibility
-                fontSize="large"
-                htmlColor="#ffffff"
-              />Show Projects<br /><p class="p">view a summary of all the projects</p> </button>
-            </a>
-          </div>
-        </div>
+     
 
       </Grid>
     );

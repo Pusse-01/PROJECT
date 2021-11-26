@@ -7,10 +7,8 @@ import axios from "axios";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
-import { InputBase } from "@material-ui/core";
 
 //styleset
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -138,7 +136,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
     const { data } = this.state;
     return (
       <div>
-        <Paper style={{ marginLeft: "50px", marginRight: "300px" }}>
+        <Paper style={{ marginLeft: "2%", marginRight: "0%" }}>
           <TableContainer sx={{ maxHeight: 580 }}>
             {data.length ? (
               <div>

@@ -30,7 +30,7 @@ import "./createtaskStyles.css";
 
 import { Helmet } from 'react-helmet'
 
-const TITLE ='Create Task'
+const TITLE = 'Create Task'
 //style classes
 const paperStyle = {
   padding: "50px 20px",
@@ -287,41 +287,41 @@ export default class Createtask extends React.Component {
         }
 
 
-    //updating the project status accordigly
-    //show project fuction will working together
-    if (!this.state.missingdata) {
-      var ProjecTStat = "-";
-      let Completed = false;
-      for (let y = 0; y < this.state.taskDetail.length; y++) {
-        if (
-          this.state.taskDetail[y].taskstatus === "To Do" ||
-          this.state.taskDetail[y].taskstatus === "In Progress" ||
-          this.state.taskDetail[y].taskstatus === "Bugs/Issues"
-        ) {
-          ProjecTStat = "On going";
-          break;
-        } else if (
-          this.state.taskDetail[y].taskstatus === "Review" ||
-          this.state.taskDetail[y].taskstatus === "Done"
-        ) {
-          ProjecTStat = "Completed";
-          Completed = true;
-        } else if (!Completed) {
-          ProjecTStat = "Overdue";
-        }
-      }
-      let sendData = { projectStatus: ProjecTStat };
+        //updating the project status accordigly
+        //show project fuction will working together
+        if (!this.state.missingdata) {
+          var ProjecTStat = "-";
+          let Completed = false;
+          for (let y = 0; y < this.state.taskDetail.length; y++) {
+            if (
+              this.state.taskDetail[y].taskstatus === "To Do" ||
+              this.state.taskDetail[y].taskstatus === "In Progress" ||
+              this.state.taskDetail[y].taskstatus === "Bugs/Issues"
+            ) {
+              ProjecTStat = "On going";
+              break;
+            } else if (
+              this.state.taskDetail[y].taskstatus === "Review" ||
+              this.state.taskDetail[y].taskstatus === "Done"
+            ) {
+              ProjecTStat = "Completed";
+              Completed = true;
+            } else if (!Completed) {
+              ProjecTStat = "Overdue";
+            }
+          }
+          let sendData = { projectStatus: ProjecTStat };
 
-      axios
-        .post(
-          "http://localhost:8070/projectsstatus/" +
-          this.state.selectedProject[0].id,
-          sendData
-        )
-        .then((response) => {
-          console.log(response);
-        });
-    }
+          axios
+            .post(
+              "http://localhost:8070/projectsstatus/" +
+              this.state.selectedProject[0].id,
+              sendData
+            )
+            .then((response) => {
+              console.log(response);
+            });
+        }
 
 
 
@@ -492,15 +492,23 @@ export default class Createtask extends React.Component {
     }
     //
     return (
-      <div class="createtaskform">
-                  <Helmet>
-          <title>{ TITLE }</title>
+      <div>
+        <Helmet>
+          <title>{TITLE}</title>
         </Helmet>
         <div>
           <form>
             <div>
               <Grid>
                 <Paper elevation={20} style={paperStyle}>
+                  
+                      <a href="http://localhost:3000/createtask">
+                        <button class="buttonsubmitclear">C L E A R</button>
+                      </a>
+                      <a href="http://localhost:3000/projects">
+                        <button class="closebuttonactual">C L O S E</button>
+                      </a>
+                 
                   <Grid align="left">
                     <div>
                       <Avatar style={avatarStyle}>
@@ -723,62 +731,9 @@ export default class Createtask extends React.Component {
               </Grid>
             </div>
           </form>
-          <a href="http://localhost:3000/createtask">
-            <button class="buttonsubmitclear">C L E A R</button>
-          </a>
-          <a href="http://localhost:3000/projects">
-            <button class="closebuttonactual">C L O S E</button>
-          </a>
         </div>
 
-        <div>
-          <div class="bodyappear1createtask">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttoncreatetask">
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Project
-                <br />
-                <p class="p">create your new project</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear2createtask">
-            <a href="http://localhost:3000/viewtasks">
-              <button class="buttoncreatetask">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show taskboard
-                <br />
-                <p class="p">view a summary of assign task</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear3createtask">
-            <a href="http://localhost:3000/viewanalysis">
-              <button class="buttoncreatetask">
-                {" "}
-                <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                Status
-                <br />
-                <p class="p">evaluate your work</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear4createtask">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttoncreatetask">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary of all the projects</p>{" "}
-              </button>
-            </a>
-          </div>
-        </div>
+
       </div>
     );
   }

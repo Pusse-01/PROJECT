@@ -74,7 +74,7 @@ export default class ShowProject extends React.Component {
       taskData: [],
       pageCount: 0,
       MAX_PAGES: 0,
-      sendData:[],
+      sendData: [],
       editproject: false,
       loading: true,
     };
@@ -233,11 +233,11 @@ export default class ShowProject extends React.Component {
       });
   };
   editProject = (event) => {
-    this.setState({ editproject: true,sendData:this.state.gridData[this.state.pageCount].p_details});
+    this.setState({ editproject: true, sendData: this.state.gridData[this.state.pageCount].p_details });
   };
 
   render() {
-    const { gridData, pageCount, loading, editproject,sendData } = this.state;
+    const { gridData, pageCount, loading, editproject, sendData } = this.state;
     if (editproject) {
       return (
         <div>
@@ -253,7 +253,7 @@ export default class ShowProject extends React.Component {
             style={{
               backgroundColor: "#525252",
               marginLeft: "20px",
-              marginRight: "200px",
+              marginRight: "10px",
               marginTop: "0px",
             }}
           >
@@ -282,7 +282,7 @@ export default class ShowProject extends React.Component {
                   borderwidth: "1px",
                   border: "5px solid black",
                   alignItems: "center",
-                  width: "400px",
+                  width: "300px",
                 }}
               >
                 <h1
@@ -545,7 +545,6 @@ export default class ShowProject extends React.Component {
           <Box>
             <Grid container item>
               <Grid style={{ marginLeft: "30px", marginTopt: "30px" }}>
-                : null
               </Grid>
             </Grid>
           </Box>
@@ -592,7 +591,7 @@ export default class ShowProject extends React.Component {
                 )}
               </Grid>
 
-              <Paper style={{ marginLeft: "30px", marginRight: "200px" }}>
+              <Paper style={{ marginLeft: "30px", marginRight: "10px" }}>
                 <TableContainer sx={{ maxHeight: 580 }}>
                   {gridData[pageCount].t_details.map((tasks, index) => (
                     <Table style={{ backgroundColor: "#525252" }}>
@@ -601,114 +600,97 @@ export default class ShowProject extends React.Component {
                           style={{ border: "none" }}
                           value={index}
                         >
-                          <TableCell
+                          <TableCell colSpan={5}
                             style={{
                               border: "none",
                               color: "black",
-                              fontSize: "18px",
-                            }}
-                          >
-                            Task Name :
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "#080808",
-                              fontSize: "16px",
-                            }}
-                            align="left"
-                          >
-                            {tasks.taskName}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "black",
-                              fontSize: "18px",
-                            }}
-                          >
-                            Task Status :
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "#080808",
                               fontSize: "16px",
                             }}
                           >
-                            {tasks.taskStatus}
+                            Task Name -   {tasks.taskName}
                           </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "black",
-                              fontSize: "18px",
-                            }}
-                          >
-                            Total Time Spent :
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "#080808",
-                              fontSize: "16px",
-                            }}
-                          >
-                            {tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins{" "}
-                            {tasks.tasktime.secs} Secs
-                          </TableCell>
+
+
                           <TableCell style={{ border: "none" }}></TableCell>
                         </StyledTableRow>
                       </TableHead>
+                      <StyledTableRow>
+                        <TableCell
+                          style={{
+                            border: "none",
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Task Status :-  {tasks.taskStatus}
+                        </TableCell>
+                        <TableCell colSpan={5}
+                          style={{
+                            border: "none",
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Total Time Spent :-  {tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins{" "}
+                          {tasks.tasktime.secs} Secs
+                        </TableCell>
+
+                      </StyledTableRow>
+                      <StyledTableRow>
+                        <TableCell colSpan={6} align='center' style={{border:'none'}}>
+                        &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
+
+                        </TableCell>
+                      </StyledTableRow>
                       <StyledTableRow style={{ border: "none" }}>
                         <TableCell
                           colSpan={1}
                           style={{
                             border: "none",
                             color: "black",
-                            fontSize: "16px",
+                            fontSize: "13px",
                           }}
                         >
-                          Employee Name :
+                          Employee Name
                         </TableCell>
                         <TableCell
                           colSpan={1}
                           style={{
                             border: "none",
                             color: "black",
-                            fontSize: "16px",
+                            fontSize: "13px",
                           }}
                         >
-                          Task Start Time :
+                          Task Start Time
                         </TableCell>
                         <TableCell
                           style={{
                             border: "none",
                             color: "black",
-                            fontSize: "16px",
+                            fontSize: "13px",
                           }}
                         >
-                          Task End Time :
+                          Task End Time
                         </TableCell>
                         <TableCell
                           colSpan={1}
                           style={{
                             border: "none",
                             color: "black",
-                            fontSize: "16px",
+                            fontSize: "13px",
                           }}
                         >
-                          Total Time :
+                          Total Time
                         </TableCell>
                         <TableCell
                           colSpan={3}
                           style={{
                             border: "none",
                             color: "black",
-                            fontSize: "16px",
+                            fontSize: "13px",
                           }}
                         >
-                          Memo :
+                          Memo
                         </TableCell>
                       </StyledTableRow>
                       {tasks.taskWorking.map((taskwork, indextask) => (
@@ -765,7 +747,16 @@ export default class ShowProject extends React.Component {
                         </StyledTableRow>
                       ))}
                       <StyledTableRow />
+
+                      <StyledTableRow>
+                        <TableCell colSpan={6} align='center' style={{borderBottom:'1px solid white'}}>
+                          E  N D
+
+                        </TableCell>
+                      </StyledTableRow>
+
                     </Table>
+
                   ))}
                 </TableContainer>
                 <Grid>
@@ -783,41 +774,7 @@ export default class ShowProject extends React.Component {
             </Grid>
           </Box>
           <div>
-            <div class="bodyappear3viewproject">
-              <a href="http://localhost:3000/createproject">
-                <button class="buttonviewproject">
-                  <AddCircleOutlineOutlinedIcon
-                    fontSize="large"
-                    htmlColor="#ffffff"
-                  />
-                  Create Project
-                  <br />
-                  <p class="p">create your new project</p>
-                </button>
-              </a>
-            </div>
-            <div class="bodyappear4viewproject">
-              <a href="http://localhost:3000/viewtasks">
-                <button class="buttonviewproject">
-                  {" "}
-                  <Visibility fontSize="large" htmlColor="#ffffff" />
-                  Show Tasks
-                  <br />
-                  <p class="p">view a summary all tasks</p>
-                </button>
-              </a>
-            </div>
-            <div class="bodyappear5viewproject">
-              <a href="http://localhost:3000/viewanalysis">
-                <button class="buttonviewproject">
-                  {" "}
-                  <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                  Status
-                  <br />
-                  <p class="p">evaluate your work</p>
-                </button>
-              </a>
-            </div>
+
           </div>
         </div>
       );
@@ -840,41 +797,6 @@ export default class ShowProject extends React.Component {
           </h3>
 
           <div>
-            <div class="bodyappear3viewproject">
-              <a href="http://localhost:3000/createproject">
-                <button class="buttonviewproject">
-                  <AddCircleOutlineOutlinedIcon
-                    fontSize="large"
-                    htmlColor="#ffffff"
-                  />
-                  Create Project
-                  <br />
-                  <p class="p">create your new project</p>
-                </button>
-              </a>
-            </div>
-            <div class="bodyappear4viewproject">
-              <a href="http://localhost:3000/viewtasks">
-                <button class="buttonviewproject">
-                  {" "}
-                  <Visibility fontSize="large" htmlColor="#ffffff" />
-                  Show Tasks
-                  <br />
-                  <p class="p">view a summary all tasks</p>
-                </button>
-              </a>
-            </div>
-            <div class="bodyappear5viewproject">
-              <a href="http://localhost:3000/viewanalysis">
-                <button class="buttonviewproject">
-                  {" "}
-                  <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                  Status
-                  <br />
-                  <p class="p">evaluate your work</p>
-                </button>
-              </a>
-            </div>
           </div>
         </div>
       );
@@ -925,7 +847,7 @@ class Editproject extends React.Component {
       category: this.props.details.projectStatus,
       loading: false,
       error: false,
-     };
+    };
   }
 
   componentDidMount() {
@@ -951,7 +873,7 @@ class Editproject extends React.Component {
     this.setState({
       description: this.props.details.discription,
     })
-    console.log('this d'+this.props.details.discription)
+    console.log('this d' + this.props.details.discription)
     console.log('hello' + this.state.description)
   }
   componentWillUnmount() {
@@ -1070,48 +992,48 @@ class Editproject extends React.Component {
   }
 
   handleClick = (event) => {
-console.log(this.state.employeesselected);
-console.log(this.state.projectname);
+    console.log(this.state.employeesselected);
+    console.log(this.state.projectname);
 
-for (var i = 0; i < this.state.selectedEmployees.length; i++) {
-  let email_ = this.state.selectedEmployees[i].email;
-  this.state.employeesselected.push(email_);
-}
+    for (var i = 0; i < this.state.selectedEmployees.length; i++) {
+      let email_ = this.state.selectedEmployees[i].email;
+      this.state.employeesselected.push(email_);
+    }
 
-for (var j = 0; j < this.state.selectedManagers.length; j++) {
-  this.state.adminstrsselected.push(this.state.selectedManagers[j].email); //email or username
-}
+    for (var j = 0; j < this.state.selectedManagers.length; j++) {
+      this.state.adminstrsselected.push(this.state.selectedManagers[j].email); //email or username
+    }
 
 
-if (
-  this.state.projectname === "" ||
-  this.state.description === "" ||
-  this.state.selectedManagers.length === 0 ||
-  this.state.selectedEmployees.length === 0 ||
-  this.state.category === "" ||
-  this.state.endDate === null ||
-  this.state.sameName
-) {
-  this.setState({
-    error: true,
-  });
-} else {
-  var temp_project = [
-    {
-      members: this.state.employeesselected,
-      projectStatus: this.state.category,
-      overdue: this.state.endDate,
-      administrators: this.state.adminstrsselected,
-      discription: this.state.description,
-    },
-  ];
+    if (
+      this.state.projectname === "" ||
+      this.state.description === "" ||
+      this.state.selectedManagers.length === 0 ||
+      this.state.selectedEmployees.length === 0 ||
+      this.state.category === "" ||
+      this.state.endDate === null ||
+      this.state.sameName
+    ) {
+      this.setState({
+        error: true,
+      });
+    } else {
+      var temp_project = [
+        {
+          members: this.state.employeesselected,
+          projectStatus: this.state.category,
+          overdue: this.state.endDate,
+          administrators: this.state.adminstrsselected,
+          discription: this.state.description,
+        },
+      ];
 
-  axios
-    .put("http://localhost:8070/projectdetail/"+ this.props.details._id, temp_project[0])
-    .then((response) => {
-      console.log(response);
-    });
-}
+      axios
+        .put("http://localhost:8070/projectdetail/" + this.props.details._id, temp_project[0])
+        .then((response) => {
+          console.log(response);
+        });
+    }
 
   };
 
@@ -1182,14 +1104,14 @@ if (
                     </Avatar>
                   </div>
 
-                  <h1 class="h1project">Create project</h1>
+                  <h1 class="h1project">Edit project</h1>
                   <Typography variant="caption">
-                    <p>Please fill this from to create a project</p>
+                    <p>Please fill this from to edit a project</p>
                   </Typography>
                 </Grid>
 
                 <TextField
-                disabled={true}
+                  disabled={true}
                   value={this.props.details.name}
                   fullWidth
                   label="Project Name"
@@ -1323,63 +1245,7 @@ if (
             <div></div>
           </div>
         </form>
-        <div>
-          <a href="http://localhost:3000/createproject">
-            <button class="buttonsubmitclearproject">C L E A R</button>
-          </a>
-          <a href="http://localhost:3000/projects">
-            <button class="closebuttonactualproject">C L O S E</button>
-          </a>
-        </div>
-        <div>
-          <div class="bodyappear1createproject">
-            <a href="http://localhost:3000/createtask">
-              <button class="buttoncreateproject">
-                {" "}
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Task
-                <br />
-                <p class="p">assign task for employees easily</p>{" "}
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear2createproject">
-            <a href="http://localhost:3000/viewtasks">
-              <button class="buttoncreateproject">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show taskboard
-                <br />
-                <p class="p">view a summary of assign task</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear3createproject">
-            <a href="http://localhost:3000/viewanalysis">
-              <button class="buttoncreateproject">
-                {" "}
-                <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                Status
-                <br />
-                <p class="p">evaluate your work</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear4createproject">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttoncreateproject">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary of all the projects</p>{" "}
-              </button>
-            </a>
-          </div>
-        </div>
+
       </Grid>
     );
   }
