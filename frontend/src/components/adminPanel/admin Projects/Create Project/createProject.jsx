@@ -25,11 +25,9 @@ import DateFnsUtils from "@date-io/date-fns";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-import Visibility from '@material-ui/icons/Visibility';
-import TrendingUp from '@material-ui/icons/TrendingUp';
 import { Helmet } from 'react-helmet'
-
-const TITLE ='Create Project'
+import ProjectAdmin from '../Admin project Home/adminProjects'
+const TITLE = 'Create Project'
 
 const paperStyle = {
   padding: "50px 20px",
@@ -59,6 +57,7 @@ class Createproject extends React.Component {
     super(props);
     this.state = {
       employees: [],
+      employeesCopy: [],
       employeesasadmins: [],
       projectname: "",
       adminstrsselected: [],
@@ -209,6 +208,7 @@ class Createproject extends React.Component {
         this.setState({
           employees: employeelist,
           employeesasadmins: employeelist,
+          employeesCopy: employeelist
         })
 
       })
@@ -265,6 +265,24 @@ class Createproject extends React.Component {
 
   };
 
+clearForm = (event) => {
+  this.setState({
+    employees: this.state.employeesCopy,
+    employeesasadmins: this.state.employeesCopy,
+    projectname: "",
+    adminstrsselected: [],
+    employeesselected: [],
+    sameName: false,
+    description: "",
+    datenow: new Date(),
+    endDate: new Date(),
+    selectedEmployees: [],
+    selectedManagers: [],
+    category: "Pending",
+    loading: false,
+    error: false,
+  })
+}
 
 
   deleteManagerChip = (event) => {
@@ -321,26 +339,26 @@ class Createproject extends React.Component {
 
     return (
       <Grid>
-                <Helmet>
-          <title>{ TITLE }</title>
+        <Helmet>
+          <title>{TITLE}</title>
         </Helmet>
         <form>
           <div>
             <Grid>
               <Paper elevation={20} style={paperStyle}>
-              <div>
-          <a href="http://localhost:3000/createproject">
-            <button
-              class="buttonsubmitclearproject"        >
-              C L E A R
-            </button>
-          </a>
-          <a href="http://localhost:3000/projects">
-            <button class="closebuttonactualproject">
-              C L O S E
-            </button>
-          </a>
-        </div>
+                <div>
+
+                  <button
+                    class="buttonsubmitclearproject" type='button'  onClick={this.clearForm}>
+                    C L E A R
+                  </button>
+
+                  <a href="http://localhost:3000/projects#">
+                    <button class="closebuttonactualproject">
+                      C L O S E
+                    </button>
+                  </a>
+                </div>
                 <Grid align="left">
                   <div>
                     <Avatar style={avatarStyle}>
@@ -360,6 +378,7 @@ class Createproject extends React.Component {
                 <TextField
                   fullWidth
                   label="Project Name"
+                  value={this.state.projectname}
                   onChange={this.setProjectname}
                 ></TextField>
                 {sameName ? <div><h5>Project name already exits.</h5></div> : null}
@@ -461,6 +480,7 @@ class Createproject extends React.Component {
                       id="outlined-multiline-flexible"
                       multiline
                       maxRows={4}
+                      value={this.state.description}
                       onChange={this.setProjectdescription}
                     />
                   </div>
@@ -486,21 +506,6 @@ class Createproject extends React.Component {
             </div>
           </div>
         </form>
-        <div>
-          <a href="http://localhost:3000/createproject">
-            <button
-              class="buttonsubmitclearproject"        >
-              C L E A R
-            </button>
-          </a>
-          <a href="http://localhost:3000/projects">
-            <button class="closebuttonactualproject">
-              C L O S E
-            </button>
-          </a>
-        </div>
-     
-
       </Grid>
     );
   }

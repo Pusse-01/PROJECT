@@ -6,7 +6,6 @@ import axios from "axios";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import Visibility from "@material-ui/icons/Visibility";
 import TrendingUp from "@material-ui/icons/TrendingUp";
-import { Helmet } from "react-helmet";
 import ShowProject from "../Show Projects/showProjects";
 import Createtask from '../createTask/createTask'
 import Createproject from '../Create Project/createProject'
@@ -14,7 +13,7 @@ import Viewtasks from '../View tasks/viewtasks'
 import AnalyzeProjects from '../Project Analyze/anlyzeProjects'
 import "./adminProjects.css";
 
-const TITLE = "Admin Projects";
+
 
 class ProjectAdmin extends React.Component {
   constructor(props) {
@@ -22,7 +21,7 @@ class ProjectAdmin extends React.Component {
     this.state = {
       show: false,
       projectsInfo: [],
-      count:this.props.count
+      count:0
     };
     this.togglesection = this.togglesection.bind(this);
   }
@@ -172,7 +171,7 @@ class ProjectAdmin extends React.Component {
                   />&nbsp;Status<br /><p class="p">Evaluare your work</p></button>
               </div>
               <div>             
-                  <button class="button"  style={{ marginTop: '10px' }} onClick={this.gotohome}><Visibility
+                  <button class="button"  style={{ marginTop: '10px', marginBottom: '10px' }} onClick={this.gotohome}><Visibility
                     fontSize="large"
                     htmlColor="#ffffff"
                   />&nbsp;View Project Details<br /><p class="p">view a summary project details</p></button>

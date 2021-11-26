@@ -50,7 +50,7 @@ function Profile({logout}) {
       }).then(function(response){
         
          seterror("Success You will need to log in again")
-         setTimeout(() => {logout(); }, 1000);
+         setTimeout(() => { logout(); }, 1000);
         }).catch(error=>{
           seterror("Check Your Old Password and try again ")
         })

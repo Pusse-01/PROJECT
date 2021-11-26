@@ -22,8 +22,6 @@ import {
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import FormLabel from "@material-ui/core/FormLabel";
 import axios from "axios";
-import Visibility from "@material-ui/icons/Visibility";
-import TrendingUp from "@material-ui/icons/TrendingUp";
 //style class
 import "../Admin project Home/loadingPage.css";
 import "./createtaskStyles.css";
@@ -68,17 +66,10 @@ export default class Createtask extends React.Component {
       selectedValue: 0,
       selectedProject: [],
       projectContributers: [],
-      selectedManagers: [],
       taskname: "",
       endDate: Date.now(),
       taskstatus: "To Do",
       description: "",
-      task: {
-        taskname: "",
-        endDate: Date.now(),
-        taskstatus: "",
-        description: "",
-      },
       count: 0,
       taskDetail: [],
       customValue: "",
@@ -185,7 +176,6 @@ export default class Createtask extends React.Component {
   //submit click of the form
   handleClick = (event) => {
     if (this.state.customView) {
-      var contribution = [];
       var temp_task = this.state.taskDetail;
       var temp = [
         {
@@ -448,6 +438,30 @@ export default class Createtask extends React.Component {
     }
   };
 
+
+  clearForm =(event) => {
+    this.setState({
+      selectedValue: 0,
+      selectedProject: [],
+      taskname: "",
+      endDate: Date.now(),
+      taskstatus: "To Do",
+      description: "",
+      count: 0,
+      customValue: "",
+      customView: false,
+      loading: false,
+      showgrid: false,
+      showerror: false,
+      showend: false,
+      showsubmit: false,
+      missingdata: false,
+      showcustomoption: true,
+      submitted: false,
+
+    })
+  }
+
   //render to web page
   render() {
     const {
@@ -501,13 +515,14 @@ export default class Createtask extends React.Component {
             <div>
               <Grid>
                 <Paper elevation={20} style={paperStyle}>
-                  
-                      <a href="http://localhost:3000/createtask">
-                        <button class="buttonsubmitclear">C L E A R</button>
-                      </a>
-                      <a href="http://localhost:3000/projects">
-                        <button class="closebuttonactual">C L O S E</button>
-                      </a>
+                  <div>
+                  <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
+                   
+                   <a href="http://localhost:3000/projects">
+                     <button type="submit" class="closebuttonactual">C L O S E</button>
+                   </a>
+                  </div>
+
                  
                   <Grid align="left">
                     <div>

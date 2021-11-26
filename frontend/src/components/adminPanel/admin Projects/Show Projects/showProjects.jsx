@@ -15,7 +15,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { InputBase } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
 //icons
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
@@ -24,7 +23,6 @@ import PendingIcon from "@mui/icons-material/Pending";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import TrendingUp from "@material-ui/icons/TrendingUp";
 import EditIcon from "@mui/icons-material/Edit";
 import { Helmet } from "react-helmet";
 
@@ -136,8 +134,15 @@ export default class ShowProject extends React.Component {
                   };
                   totalTimeProject.hrs = totalTimeProject.hrs + Time.hrs;
                   totalTimeProject.mins = totalTimeProject.mins + Time.mins;
+                  if (totalTimeProject.mins - 60 > 0) {
+                    totalTimeProject.hrs++;
+                    totalTimeProject.mins = totalTimeProject.mins - 60;
+                  }
                   totalTimeProject.secs = totalTimeProject.secs + Time.secs;
-
+                  if (totalTimeProject.secs - 60 > 0) {
+                    totalTimeProject.mins++;
+                    totalTimeProject.secs = totalTimeProject.secs - 60;
+                  }
                   allTasks.push(aTask);
                 }
 
@@ -509,7 +514,7 @@ export default class ShowProject extends React.Component {
                       Delete Project
                     </button>
                     <button
-                      type="submit"
+                      type="button"
                       onClick={this.editProject}
                       style={{
                         backgroundColor: "transparent",
@@ -637,8 +642,8 @@ export default class ShowProject extends React.Component {
 
                       </StyledTableRow>
                       <StyledTableRow>
-                        <TableCell colSpan={6} align='center' style={{border:'none'}}>
-                        &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
+                        <TableCell colSpan={6} align='center' style={{ border: 'none' }}>
+                          &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
 
                         </TableCell>
                       </StyledTableRow>
@@ -749,7 +754,7 @@ export default class ShowProject extends React.Component {
                       <StyledTableRow />
 
                       <StyledTableRow>
-                        <TableCell colSpan={6} align='center' style={{borderBottom:'1px solid white'}}>
+                        <TableCell colSpan={6} align='center' style={{ borderBottom: '1px solid white' }}>
                           E  N D
 
                         </TableCell>
@@ -833,6 +838,7 @@ class Editproject extends React.Component {
     this.state = {
       employees: [],
       employeesasadmins: [],
+      employeesCopy: [],
       projectname: this.props.details.name,
       adminstrsselected: [],
       employeesselected: [],
@@ -987,6 +993,8 @@ class Editproject extends React.Component {
         this.setState({
           employees: employeelist,
           employeesasadmins: employeelist,
+          employeesCopy: employeelist,
+
         });
       });
   }
@@ -1036,6 +1044,27 @@ class Editproject extends React.Component {
     }
 
   };
+
+
+  clearForm = (event) => {
+    this.setState({
+      employees: this.state.employeesCopy,
+      employeesasadmins: this.state.employeesCopy,
+      adminstrsselected: [],
+      employeesselected: [],
+      sameName: false,
+      description: "",
+      datenow: new Date(),
+      endDate: new Date(),
+      selectedEmployees: [],
+      selectedManagers: [],
+      category: "Pending",
+      loading: false,
+      error: false,
+    })
+  }
+
+
 
   deleteManagerChip = (event) => {
     console.log("delete button");
@@ -1089,164 +1118,181 @@ class Editproject extends React.Component {
     } = this.state;
 
     return (
-      <Grid class="createtaskform">
-        <form>
-          <div>
-            <Grid>
-              <Paper elevation={20} style={paperStyle}>
-                <Grid align="left">
-                  <div>
-                    <Avatar style={avatarStyle}>
-                      <AddCircleOutlineOutlinedIcon
-                        fontSize="large"
-                        htmlColor="#ffffff"
-                      />
-                    </Avatar>
-                  </div>
-
-                  <h1 class="h1project">Edit project</h1>
-                  <Typography variant="caption">
-                    <p>Please fill this from to edit a project</p>
-                  </Typography>
-                </Grid>
-
-                <TextField
-                  disabled={true}
-                  value={this.props.details.name}
-                  fullWidth
-                  label="Project Name"
-                ></TextField>
-                {sameName ? (
-                  <div>
-                    <h5>Project name already exits.</h5>
-                  </div>
-                ) : null}
-                <FormControl class="marginedit">
-                  <FormLabel>Project Status</FormLabel>
-                  <RadioGroup row value={category} onChange={this.setCategory}>
-                    <FormControlLabel
-                      value="Pending"
-                      control={<Radio />}
-                      label="Pending"
-                    />
-                    <FormControlLabel
-                      value="Not Started"
-                      control={<Radio />}
-                      label="Not Started"
-                    />
-                    <FormControlLabel
-                      value="On going"
-                      control={<Radio />}
-                      label="On going"
-                    />
-                    <FormControlLabel
-                      value="Completed"
-                      control={<Radio />}
-                      label="Completed"
-                    />
-                    <FormControlLabel
-                      value="Over due"
-                      control={<Radio />}
-                      label="Over due"
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <FormControl fullWidth label="" minWidth="300px">
-                  <InputLabel>Project Contributers</InputLabel>
-
-                  <Select
-                    value={""}
-                    MenuProps={MenuProps}
-                    onChange={this.setSelectedContributor}
-                  >
-                    {employees.map((employeename, index) => (
-                      <MenuItem key={index} value={index}>
-                        {employeename.username}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {selectedEmployees.map((selectedm, number) => (
-                    <Chip
-                      variant="outlined"
-                      size="sizeSmall"
-                      key={number}
-                      label={selectedm.username}
-                    ></Chip>
-                  ))}
-                </FormControl>
-
-                <FormControl fullWidth label="admin" minWidth="300px">
-                  <InputLabel>Project Managers</InputLabel>
-                  <Select
-                    value={""}
-                    MenuProps={MenuProps}
-                    onChange={this.setSelectedManagers}
-                  >
-                    {employeesasadmins.map((name, index) => (
-                      <MenuItem key={index} value={index}>
-                        {name.username}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {selectedManagers.map((selected, number) => (
-                    <Chip
-                      variant="outlined"
-                      key={number}
-                      size="sizeSmall"
-                      label={selected.username}
-                    ></Chip>
-                  ))}
-                </FormControl>
-
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    variant="inline"
-                    inputVarient="outlined"
-                    label="End Date"
-                    value={this.state.endDate}
-                    formate="MM/dd/yyy"
-                    onChange={this.setendDate}
-                  ></KeyboardDatePicker>
-                </MuiPickersUtilsProvider>
-
-                <Box
-                  component="form"
-                  sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <div>
-                    <TextField
-                      fullWidth
-                      label="Project Description"
-                      id="outlined-multiline-flexible"
-                      multiline
-                      maxRows={4}
-                      placeholder={'heelo'}
-                      value={this.state.description}
-                      onChange={this.setProjectdescription}
-                    />
-                  </div>
-                </Box>
+      <div class="float-parent-element">
+        <div class="float-child-element">
+          <div class="red">
+            <Grid class>
+              <form>
                 <div>
-                  <button
-                    class="buttonsubmit"
-                    type="submit"
-                    varient="contained"
-                    color="primary"
-                    onClick={this.handleClick}
-                  >
-                    Submit and Create{" "}
-                  </button>
+                  <Grid>
+                    <Paper elevation={20} style={paperStyle}>
+                      <div>
+                        <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
+
+                        <a href="http://localhost:3000/projects">
+                          <button type="submit" class="closebuttonactual">C L O S E</button>
+                        </a>
+                      </div>
+                      <Grid align="left">
+                        <div>
+                          <Avatar style={avatarStyle}>
+                            <AddCircleOutlineOutlinedIcon
+                              fontSize="large"
+                              htmlColor="#ffffff"
+                            />
+                          </Avatar>
+                        </div>
+
+                        <h1 class="h1project">Edit project</h1>
+                        <Typography variant="caption">
+                          <p>Please fill this from to edit a project</p>
+                        </Typography>
+                      </Grid>
+
+                      <TextField
+                        disabled={true}
+                        value={this.props.details.name}
+                        fullWidth
+                        label="Project Name"
+                      ></TextField>
+                      {sameName ? (
+                        <div>
+                          <h5>Project name already exits.</h5>
+                        </div>
+                      ) : null}
+                      <FormControl class="marginedit">
+                        <FormLabel>Project Status</FormLabel>
+                        <RadioGroup row value={category} onChange={this.setCategory}>
+                          <FormControlLabel
+                            value="Pending"
+                            control={<Radio />}
+                            label="Pending"
+                          />
+                          <FormControlLabel
+                            value="Not Started"
+                            control={<Radio />}
+                            label="Not Started"
+                          />
+                          <FormControlLabel
+                            value="On going"
+                            control={<Radio />}
+                            label="On going"
+                          />
+                          <FormControlLabel
+                            value="Completed"
+                            control={<Radio />}
+                            label="Completed"
+                          />
+                          <FormControlLabel
+                            value="Over due"
+                            control={<Radio />}
+                            label="Over due"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                      <FormControl fullWidth label="" minWidth="300px">
+                        <InputLabel>Project Contributers</InputLabel>
+
+                        <Select
+                          value={""}
+                          MenuProps={MenuProps}
+                          onChange={this.setSelectedContributor}
+                        >
+                          {employees.map((employeename, index) => (
+                            <MenuItem key={index} value={index}>
+                              {employeename.username}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        {selectedEmployees.map((selectedm, number) => (
+                          <Chip
+                            variant="outlined"
+                            size="sizeSmall"
+                            key={number}
+                            label={selectedm.username}
+                          ></Chip>
+                        ))}
+                      </FormControl>
+
+                      <FormControl fullWidth label="admin" minWidth="300px">
+                        <InputLabel>Project Managers</InputLabel>
+                        <Select
+                          value={""}
+                          MenuProps={MenuProps}
+                          onChange={this.setSelectedManagers}
+                        >
+                          {employeesasadmins.map((name, index) => (
+                            <MenuItem key={index} value={index}>
+                              {name.username}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        {selectedManagers.map((selected, number) => (
+                          <Chip
+                            variant="outlined"
+                            key={number}
+                            size="sizeSmall"
+                            label={selected.username}
+                          ></Chip>
+                        ))}
+                      </FormControl>
+
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          variant="inline"
+                          inputVarient="outlined"
+                          label="End Date"
+                          value={this.state.endDate}
+                          formate="MM/dd/yyy"
+                          onChange={this.setendDate}
+                        ></KeyboardDatePicker>
+                      </MuiPickersUtilsProvider>
+
+                      <Box
+                        component="form"
+                        sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <div>
+                          <TextField
+                            fullWidth
+                            label="Project Description"
+                            id="outlined-multiline-flexible"
+                            multiline
+                            maxRows={4}
+                            placeholder={'heelo'}
+                            value={this.state.description}
+                            onChange={this.setProjectdescription}
+                          />
+                        </div>
+                      </Box>
+                      <div>
+                        <button
+                          class="buttonsubmit"
+                          type="submit"
+                          varient="contained"
+                          color="primary"
+                          onClick={this.handleClick}
+                        >
+                          Submit and Create{" "}
+                        </button>
+                      </div>
+                    </Paper>
+                  </Grid>
+
+                  <div></div>
                 </div>
-              </Paper>
+              </form>
+
             </Grid>
 
-            <div></div>
           </div>
-        </form>
-
-      </Grid>
+        </div>
+        <div class="float-child-element">
+          <div class="yellow"></div>
+        </div>
+      </div>
     );
   }
 }
