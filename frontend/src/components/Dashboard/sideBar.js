@@ -8,7 +8,7 @@ function SideBar({id,email}) {
   const[totalpending,setpending]=useState();
 
   async function getdetails(){
-  await axios.get("http://localhost:8070/dashboard/completedprojects/"+email).then(function(response1){
+  await axios.get("http://localhost:8070/dashboard/totalt/"+id).then(function(response1){
       setcompletedp(response1.data.completedp);
     })
   
@@ -27,7 +27,7 @@ function SideBar({id,email}) {
         <div className="dashboardsidemainComponent title">
             <div className="ps-3 pe-3  mt-3">
             <div className="cpbutton col-12 " >
-              Total Completed Projects
+              Total Tasks
               <div className="siderbarfont">{totalcompletedprojects}</div>
               
           </div>

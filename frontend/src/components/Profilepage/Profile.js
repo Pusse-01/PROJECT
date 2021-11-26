@@ -15,6 +15,7 @@ function Profile({logout}) {
   const [changepassword, setpass] = useState({ old: "", new: "", confirm: "" });
   const [visible, setvisible] = useState(false);
   const [error, seterror] = useState("");
+  const[pic,setpic]=useState('');
   
   
 
@@ -49,7 +50,7 @@ function Profile({logout}) {
       }).then(function(response){
         
          seterror("Success You will need to log in again")
-         setTimeout(() => { localStorage.clear(),sessionStorage.clear(), show(),logout(); }, 1000);
+         setTimeout(() => {logout(); }, 1000);
         }).catch(error=>{
           seterror("Check Your Old Password and try again ")
         })
@@ -58,6 +59,7 @@ function Profile({logout}) {
       seterror("Please Fill All Fields")
     }
   }
+ 
 
   function show() {
     if (visible) {
@@ -85,7 +87,9 @@ function Profile({logout}) {
           </button>
         </div>
       </div>
+      
       <div>
+        
         {visible ? (
           <div className="popup-boxpassword">
             <div className="popup-innerpassword">

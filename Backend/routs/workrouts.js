@@ -236,10 +236,10 @@ router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
 
 })
 
-router.get("/completedprojects/:email",(req,res)=>{//get completed projects by email
-  const email=req.params.email;
+router.get("/totalt/:id",(req,res)=>{//get total tasks by email
+  const id=req.params.id;
   let completedp=0;
-  Project.find({members:email,projectStatus:"Completed"}).then((completed=>{
+  Task.find({assigned_to:id}).then((completed=>{
     if(completed){
       completedp=completed.length;
       
