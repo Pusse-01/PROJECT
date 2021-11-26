@@ -7,10 +7,8 @@ import axios from "axios";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
-import { InputBase } from "@material-ui/core";
 
 //styleset
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -138,14 +136,14 @@ export default class AnalyzeProjectEmployees extends React.Component {
     const { data } = this.state;
     return (
       <div>
-        <Paper style={{ marginLeft: "50px", marginRight: "300px" }}>
+        <Paper style={{ marginLeft: "2%", marginRight: "0%" }}>
           <TableContainer sx={{ maxHeight: 580 }}>
             {data.length ? (
               <div>
                 {data.map((employee, index) => (
                   <Table style={{ backgroundColor: "#525252" }}>
                     <StyledTableRow style={{ border: "none" }}>
-                      <TableCell
+                      <TableCell 
                         style={{
                           border: "none",
                           color: "black",
@@ -153,20 +151,8 @@ export default class AnalyzeProjectEmployees extends React.Component {
   
                         }}
                       >
-                        Employee Name :
+                        Employee Name :  {employee.name}
                       </TableCell>
-                      <TableCell
-                        style={{
-                          border: "none",
-                          color: "#080808",
-                          fontSize: "16px",
-                          width:'180px'
-                        }}
-                        align="left"
-                      >
-                        {employee.name}
-                      </TableCell>
-  
                     </StyledTableRow>
                     <StyledTableRow style={{ border: "none" }}>
                       <StyledTableRow>
@@ -178,7 +164,8 @@ export default class AnalyzeProjectEmployees extends React.Component {
                         <TableCell>In Progress</TableCell>
                         <TableCell>Bugs/Issues</TableCell>
                         <TableCell>Review</TableCell>
-                        <TableCell>Note</TableCell>
+                        <TableCell colSpan={2}>Note</TableCell>
+                        <TableCell colSpan={1}></TableCell>
                       </StyledTableRow>
                       <StyledTableRow>
                         <TableCell style={{width: "100px"}} align="left" >{employee.status}</TableCell>
@@ -187,7 +174,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
                         <TableCell  style={{width: "120px"}} align="left">{((employee.InprogressPer).toString()).substring(0, 5)}%</TableCell>
                         <TableCell  style={{width: "100px"}} align="left">{((employee.BugsPe).toString()).substring(0, 5)}%</TableCell>
                         <TableCell  style={{width: "100px"}} align="left">{((employee.ReviewPer).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell  style={{width: "350px"}} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
+                        <TableCell colSpan={2}  style={{width: "350px"}} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
                       </StyledTableRow>
                     </StyledTableRow>
                   </Table>

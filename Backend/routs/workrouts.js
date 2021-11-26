@@ -202,6 +202,22 @@ router.get("/totaltasks/:id",(req,res)=>{//get total tasks by id
   
  
 })
+router.get ('/projectsincompleted/:email',(req, res)=>{
+  let email = req.params.email;
+ //Check for existing user
+ Project.find({members: email}).then(projects=>{
+    if (projects) {
+    let iter=projects.values();
+    let obj=[];
+    for(let times of iter){
+      if(times.projectStatus!="Completed"){
+        obj.push(times);
+      }
+    }
+    return res.json(obj);
+  }
+   })
+ });
 router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
   const id=req.params.id;
   let pendingtasks=0
@@ -220,10 +236,10 @@ router.get("/pendingtasks/:id",(req,res)=>{//get all pending tasks by id
 
 })
 
-router.get("/completedprojects/:email",(req,res)=>{//get completed projects by email
-  const email=req.params.email;
+router.get("/totalt/:id",(req,res)=>{//get total tasks by email
+  const id=req.params.id;
   let completedp=0;
-  Project.find({members:email,projectStatus:"Completed"}).then((completed=>{
+  Task.find({assigned_to:id}).then((completed=>{
     if(completed){
       completedp=completed.length;
       
@@ -360,6 +376,22 @@ router.get("/overdueprojects/",(req,res)=>{//get overdue projects
     return res.json(response)
   }).catch(()=>{
     return res.json("error");
+  })
+})
+router.get("/overduetaskstotal/",(req,res)=>{//get overdue projects
+  
+  Task.find({}).then((overdue)=>{
+    let count=0;
+    if(overdue){
+    let iter=overdue.values()
+      for(let times of iter){
+        if(times.due_date<new Date()&&times.task_status!="Done"){
+          count++;
+        }
+      }
+
+    }
+    return res.json(count)
   })
 })
 module.exports = router;

@@ -201,8 +201,10 @@ class Navbar extends Component{
                                 <h7 className="hiddenMenuListItemText">Notofications</h7>
                             </li>
                             <li className="hiddenMenuListItem">
-                                <img className="hiddenMenuIcon" src={require('../../assests/images/settings.png').default}/>
-                                <h7 className="hiddenMenuListItemText">Settings</h7>
+                            <img className="hiddenMenuIcon" src={require('../../assests/images/settings.png').default}/>
+                                <a href="http://localhost:3000/Profile">
+                                <h7 className="hiddenMenuListItemText">Profile</h7>
+                                </a>
                             </li>
                             <li className="hiddenMenuListItem">
                                 <img className="hiddenMenuIcon" src={require('../../assests/images/logout.png').default}/>

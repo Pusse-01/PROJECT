@@ -63,8 +63,8 @@
 
 .closebuttonactualproject {
   position: absolute;
-  top: 60px;
-  left: 70%;
+  top:110px;
+  left: 60%;
   padding: 10px;
   background-color: transparent;
   color: rgb(190, 33, 33);
@@ -88,14 +88,14 @@
     border: 0px;
   }
   .buttonsubmitclearproject{
+    color:#262c30;
     position: absolute;
-    top: 60px;
-    left: 85%;
-    padding: 10px;
+    top: 120px;
+    left: 54%;
+    padding: 0px;
     background-color: transparent;
     color: rgb(190, 33, 33);
     z-index: 21;
-    position: absolute;
     border: 0px;
   }
 

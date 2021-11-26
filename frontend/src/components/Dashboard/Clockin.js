@@ -40,7 +40,7 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
       useEffect(() => {
         let mounted=true;
         async function getprojects(){
-          await axios.get("http://localhost:8070/employee/projects/"+email).then(function(response){
+          await axios.get("http://localhost:8070/dashboard/projectsincompleted/"+email).then(function(response){
            if (response.data.length>0){
              setprojects(response.data.map(project=>project.name))
            }
@@ -110,7 +110,7 @@ function Clockin({email,id,show,workdetails,setstatus,name}) {
               })}
             </select>
             </div>
-            <div className="form-group mt-3 col-sm-auto col-md-10  ">
+            <div className="form-group mt-3 col-sm-auto col-md-11  ">
               <label >Memo :</label>
               <input
                 className="form-control"

@@ -59,6 +59,7 @@ class AdminNavbar extends Component{
             selectedLogout:false
         })
         this.props.history.push("/projects");
+        window.location.reload (false)
     }
     changeColorHR(){
         this.setState({
@@ -96,7 +97,6 @@ class AdminNavbar extends Component{
         })
         this.props.history.push("/employees");
     }
-
     render(){
 
         let linkClassHome = this.state.selectedHome ? "nav-link text-danger " : "nav-link text-light";
@@ -142,7 +142,8 @@ class AdminNavbar extends Component{
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)}>Employees</a>
+                                <a className={linkClassEmployees} href="http://localhost:3000/projects" onClick={this.changeColorEmployees.bind(this)
+                            }>Employees</a>
                             </li>
                             <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
                                 <h7>Log out</h7>
