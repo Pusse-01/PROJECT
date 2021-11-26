@@ -242,14 +242,16 @@ function App() {
             </div>}
           </div>
         ) : logorcreate === true ? (
-          <div>
-            <SignUp
+          /*<div>
+          <SignUp
               Login={Login}
               Logerror={Logerror}
               error={error}
               check={Logorcreate}
             />
-          </div>
+          
+          </div>*/
+          <div></div>
         ) : (
           <div>
             <LoginForm

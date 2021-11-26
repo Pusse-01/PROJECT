@@ -29,26 +29,50 @@ function LoginForm({ Login, Logerror, error, check }) {
     document.title = "PROJECT LOG IN"
   }, [])
   return (
-    <div className="bodybg">
-      <div className="loginform">
-        <form className="col-12 " onSubmit={Auth}>
-          <div className="col-2 offset-5  text-danger">{error}</div>
-          <div className="form-group mt-3 col-2 offset-5">
-            <label >E-mail :</label>
-            <input className="form-control" onChange={e => setDetails({ ...logindetails, email: e.target.value })} value={logindetails.email} type="text" placeholder="Email" />
-          </div>
-          <div className="form-group col-2 offset-5">
-            <label >Password :</label>
-            <input className="form-control" onChange={e => setDetails({ ...logindetails, password: e.target.value })} value={logindetails.password} type="password" placeholder="Password" />
-          </div>
-          <br />
-          <input type="submit" className="btn btn-dark col-2 offset-5" value="Login" />
-          <input type="button" className="btn btn-outline-dark col-2 offset-5 mt-3" value="Create New Account" onClick={check} />
-        </form>
-      </div>
-
+   
+      <div className="pos ">
+        <div className="loginform">
+          <form onSubmit={Auth}>
+            <h2 className="loginformlabels">Welcome</h2>
+            <div className=" offset-2  text-danger">{error}</div>
+            <div className="form-group loginformtextbox ">
+              <label className="loginformlabels">E-mail :</label>
+              <input
+                className="form-control loginformtextbox "
+                onChange={(e) =>
+                  setDetails({ ...logindetails, email: e.target.value })
+                }
+                value={logindetails.email}
+                type="text"
+                placeholder="Email"
+              />
+            </div>
+            <div className="form-group ">
+              <label className="loginformlabels">Password :</label>
+              <input
+                className="form-control"
+                onChange={(e) =>
+                  setDetails({ ...logindetails, password: e.target.value })
+                }
+                value={logindetails.password}
+                type="password"
+                placeholder="Password"
+              />
+            </div>
+            <br />
+            <input
+              type="submit"
+              className="btn btn-danger loginbutton col-12"
+              value="Login"
+            />
+            {/*<input type="button" className="btn btn-outline-dark col-2 offset-5 mt-3" value="Create New Account" onClick={check} />*/}
+          </form>
+          
+        </div>
+     
+     
     </div>
-  )
+  );
 
 }
 
