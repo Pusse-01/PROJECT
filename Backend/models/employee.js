@@ -34,6 +34,10 @@ const EmployeeSchema = new Schema({
     designation : {
         type:String,
         required :true
+    },
+    notes : {
+        type:String,
+        required :false
     }
 })
 

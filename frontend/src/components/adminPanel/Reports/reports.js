@@ -15,7 +15,9 @@ class Reports extends Component {
         countTasks: [],
         data: [],
         projects: [],
-        userEmail: ''
+        userEmail: '',
+        departments: [],
+        countsInDeps:[]
       }
         
       }
@@ -38,6 +40,13 @@ class Reports extends Component {
             .then((response) => this.setState({  
                 countTasks: Object.values(response)       
             }));
+
+        fetch('http://localhost:8070/departments/countDepartments')
+            .then(response => response.json())
+            .then((response) => this.setState({  
+                departments: response.department_names,
+                countsInDeps: response.count
+            }));
             
         document.title = "PROJECT-Reports";
     }
@@ -56,7 +65,11 @@ render(){
 const {data} = this.state;
 const {countProjects} = this.state;
 const {countTasks} = this.state;
+const {departments} = this.state;
+const {countsInDeps} = this.state;
 
+console.log(departments);
+console.log(countsInDeps);
 
 
  const chart1 = {
@@ -146,6 +159,55 @@ title:{
 legend:false
 }}]
 }; 
+
+const chart3 = {
+  labels: departments,
+datasets: [
+{
+  label: 'Projects',
+  backgroundColor: [
+    '#6800B4',
+    '#C9DE00',
+    '#2FDE00',
+    '#00A6B4',             
+    '	#ff0000'
+  ],
+  hoverBackgroundColor: [
+      '#6800B4',
+      '#C9DE00',
+      '#2FDE00',
+      '#00A6B4',             
+      '#ff0000 '
+  ],
+  data: countsInDeps,
+  radius: 120
+}
+],
+options:
+  [{ tooltips: {
+    enabled: false
+},
+pieceLabel: {
+    render: 'label',
+    arc: true,
+    fontColor: '#000',
+    position: 'outside'
+},
+responsive: true,
+legend: {
+    position: 'bottom',
+},
+title: {
+    display: true,
+    text: 'Projects',
+    fontSize: 20
+},
+animation: {
+    animateScale: true,
+    animateRotate: true
+}}]
+}
+
  return (
       
         <div className = "reportsMainComponent">
@@ -165,6 +227,13 @@ legend:false
           options={chart2.options}
         />       
         </div>
+        <div>
+        <h3 className= "name">Departments</h3>
+        <Doughnut 
+          data={chart3}
+          options={chart3.options}
+        />       
+        </div>
         </div>
         <div>
 
@@ -176,7 +245,6 @@ legend:false
                             <th className="reportstable_header_column">Name</th>
                             <th className="reportstable_header_column">Designation</th>
                             <th className="reportstable_header_column">Email</th>                           
-                            <th className="reportstable_header_column">Special Notes</th>
                             <th className="reportstable_header_column">More Details</th>
 
                         </tr>                      
@@ -193,7 +261,6 @@ return (
                                     <td className="reportstable_data_column">{member.name}</td>
                                     <td className="reportstable_data_column">{member.position}</td>
                                     <td className="reportstable_data_column">{member.email}</td>
-                                    <td className="reportstable_data_column">Waddek thmai</td>
                                     <td className="reportstable_data_column">
                                                 <div
                                                     className="reportsmoreButton"

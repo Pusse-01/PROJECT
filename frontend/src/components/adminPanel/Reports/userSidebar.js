@@ -33,6 +33,7 @@ class UserSidebar extends Component{
                     <h6 className="reportsSidebarText">{user.name}</h6>
                     <h6 className="reportsSidebarText">{user.position}</h6>
                     <h6 className="reportsSidebarText">{user.email}</h6>
+                    <h6 className="reportsSidebarText">{user.notes}</h6>
 
                
                 </div>
