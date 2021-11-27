@@ -18,10 +18,10 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import "./viewTaskStyles.css";
 import { InputBase } from "@material-ui/core";
-
+import Createtask from "../createTask/createTask"
 import { Helmet } from 'react-helmet'
 
-const TITLE ='Task View'
+const TITLE = 'Task View'
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
@@ -70,7 +70,9 @@ class Row extends React.Component {
       row: this.props.row,
       openProject: "",
       open: false,
+      edit: false,
     };
+    this.createTaskfromthis.bind(this)
   }
 
   setOpen = (event) => {
@@ -84,12 +86,12 @@ class Row extends React.Component {
   taskDelete = (event) => {
     console.log(event.target.value)
     var newrow = []
-    for(let i=0; i<this.state.row.history.length; i++){
-      if(i!==event.target.value){
+    for (let i = 0; i < this.state.row.history.length; i++) {
+      if (i !== event.target.value) {
         newrow.push(this.state.row.history[i])
       }
     }
-     axios
+    axios
       .post("http://localhost:8070/task/deleteTask", {
         task_id: this.state.row.history[event.target.value].task_id,
       })
@@ -97,10 +99,12 @@ class Row extends React.Component {
         console.log(response.data);
         this.setState({ open: false });
       });
-   
+
   };
 
-
+  createTaskfromthis = () => {
+    this.props.setStateOfParent("Geeks For Geeks");
+  }
   render() {
     const { row, open } = this.state;
 
@@ -142,7 +146,7 @@ class Row extends React.Component {
           </TableCell>
         </StyledTableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0,backgroundColor: '#525252' }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: '#525252' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box
                 sx={{
@@ -152,7 +156,7 @@ class Row extends React.Component {
                   width: "100%",
                 }}
               >
-                <Typography 
+                <Typography
                   row
                   variant="h6"
                   gutterBottom
@@ -180,11 +184,11 @@ class Row extends React.Component {
                       <div>
                         No tasks have assigned
                         <StyledTableCell>
-                          <a href="http://localhost:3000/createtask">
-                            <button class="buttonsubmitactionaddtask">
+                        
+                            <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
                               Add Task
-                            </button>
-                          </a>
+                         </button>
+                         
                         </StyledTableCell>
                       </div>
                     ) : null}
@@ -231,12 +235,12 @@ class Row extends React.Component {
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
-                            {(historyRow.taskstat === 'Overdue' && (new Date(historyRow.date) < Date.now())) ?
+                        {(historyRow.taskstat === 'Overdue' && (new Date(historyRow.date) < Date.now())) ?
                           <TableCell align="left" colSpan={2} sx={{ color: '#ff0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
-                         
+
                         <TableCell align="left">
                           {historyRow.employee.map((data, index) => (
                             <Box sx={{ margin: 0 }}>
@@ -249,28 +253,28 @@ class Row extends React.Component {
                           ))}
                         </TableCell>
                         <TableCell align="left">
-                         
-                         <button
-                           class="taskdeletebutton"
-                           type="button"
-                           value={index}
-                           onClick={this.taskDelete}
-                         >
-                          
-                           Delete
-                         </button>
-                     
-                     </TableCell>
+
+                          <button
+                            class="taskdeletebutton"
+                            type="button"
+                            value={index}
+                            onClick={this.taskDelete}
+                          >
+
+                            Delete
+                          </button>
+
+                        </TableCell>
                       </TableRow>
                     ))}
                     {row.history.length !== 0 ? (
                       <div>
                         <StyledTableCell>
-                          <a href="http://localhost:3000/createtask">
-                            <button class="buttonsubmitactionaddtask">
+                         
+                            <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
                               Add Task
                             </button>
-                          </a>
+ 
                         </StyledTableCell>
                       </div>
                     ) : null}
@@ -314,10 +318,13 @@ Row.propTypes = {
 export default class Viewtasks extends React.Component {
   constructor(props) {
     super(props);
+    this.setStateOfParent.bind(this)
     this.state = {
       rows: [],
       filterdresult: [],
+      createTaskstat: false
     };
+   
   }
 
   componentDidMount() {
@@ -495,69 +502,86 @@ export default class Viewtasks extends React.Component {
     });
   };
 
-  mouseClick = (index) => {
-    console.log(index);
-  };
+  setStateOfParent = (newState) => {
+   this.setState({
+    createTaskstat:true
+   })
+ }
 
   render() {
-    const { filterdresult } = this.state;
+    const { filterdresult, createTaskstat } = this.state;
 
-    if(filterdresult.length===0){
-      return(
+    if (filterdresult.length === 0) {
+      return (
         <div>
-           <Helmet>
-          <title>{ TITLE }</title>
-        </Helmet>
-        <div><h3 style={{color:'white', marginLeft:'500px', font:'30px', marginTop:'200PX'}}>No data to show.</h3></div>
+          <Helmet>
+            <title>{TITLE}</title>
+          </Helmet>
+          <div><h3 style={{ color: 'white', marginLeft: '500px', font: '30px', marginTop: '200PX' }}>No data to show.</h3></div>
         </div>
       )
     }
-    return (
-      <div>
-        <div class="serachbar">
-        <Helmet>
-          <title>{ TITLE }</title>
-        </Helmet>
-          <Box>
-            <SearchIcon fontSize="large" htmlColor="#ffffff" />
-            <InputBase
-              sx={{ htmlcolor: "white" }}
-              placeholder="Search for project name....."
-              onChange={this.filterProjects}
-            ></InputBase>
-          </Box>
+
+    if (createTaskstat) {
+      return (
+        <div>
+          <Helmet>
+            <title>{'Create Task'}</title>
+          </Helmet>
+          <Createtask  />
+
         </div>
-        <Paper class="PAPER">
-          <TableContainer sx={{ maxHeight: 580 }}>
-            <Table 
-              stickyHeader
-              aria-label="collapsible table"
-              sx={{
-                "& .MuiTableRow-root:hover": {
-                  backgroundColor: "#93aeb0",
-                  opacity: 0.8,
-                },
-              }}
-            >
-              <TableHead>
-                <StyledTableRow>
-                  <StyledTableCell />
-                  <StyledTableCell>Project Title</StyledTableCell>
-                  <StyledTableCell align="left">Due Date</StyledTableCell>
-                  <StyledTableCell align="left">Status</StyledTableCell>
-                  <StyledTableCell align="left">Description</StyledTableCell>
-                  <StyledTableCell align="left">Admins</StyledTableCell>
-                </StyledTableRow>
-              </TableHead>
-              <TableBody>
-                {filterdresult.map((row, index) => {
-                  return <Row key={row.name} row={row}></Row>;
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </div>
-    );
+
+      )
+    } else {
+      return (
+        <div>
+          <div class="serachbar">
+            <Helmet>
+              <title>{TITLE}</title>
+            </Helmet>
+            <Box>
+              <SearchIcon fontSize="large" htmlColor="#ffffff" />
+              <InputBase
+                sx={{ htmlcolor: "white" }}
+                placeholder="Search for project name....."
+                onChange={this.filterProjects}
+              ></InputBase>
+            </Box>
+          </div>
+          <Paper class="PAPER">
+            <TableContainer sx={{ maxHeight: 580 }}>
+              <Table
+                stickyHeader
+                aria-label="collapsible table"
+                sx={{
+                  "& .MuiTableRow-root:hover": {
+                    backgroundColor: "#93aeb0",
+                    opacity: 0.8,
+                  },
+                }}
+              >
+                <TableHead>
+                  <StyledTableRow>
+                    <StyledTableCell />
+                    <StyledTableCell>Project Title</StyledTableCell>
+                    <StyledTableCell align="left">Due Date</StyledTableCell>
+                    <StyledTableCell align="left">Status</StyledTableCell>
+                    <StyledTableCell align="left">Description</StyledTableCell>
+                    <StyledTableCell align="left">Admins</StyledTableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  {filterdresult.map((row, index) => {
+                    return <Row key={row.name} row={row} setStateOfParent={this.setStateOfParent}></Row>;
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </div>
+      );
+    }
+
   }
 }

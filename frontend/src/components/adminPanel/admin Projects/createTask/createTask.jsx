@@ -439,7 +439,7 @@ export default class Createtask extends React.Component {
   };
 
 
-  clearForm =(event) => {
+  clearForm = (event) => {
     this.setState({
       selectedValue: 0,
       selectedProject: [],
@@ -461,6 +461,7 @@ export default class Createtask extends React.Component {
 
     })
   }
+
 
   //render to web page
   render() {
@@ -502,9 +503,9 @@ export default class Createtask extends React.Component {
     }
 
     if (this.state.missingdata) {
-      <div>affa</div>;
+      <div>Missing Data</div>;
     }
-    //
+
     return (
       <div>
         <Helmet>
@@ -516,14 +517,12 @@ export default class Createtask extends React.Component {
               <Grid>
                 <Paper elevation={20} style={paperStyle}>
                   <div>
-                  <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
-                   
-                   <a href="http://localhost:3000/projects">
-                     <button type="submit" class="closebuttonactual">C L O S E</button>
-                   </a>
+                    <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
+
+
                   </div>
 
-                 
+
                   <Grid align="left">
                     <div>
                       <Avatar style={avatarStyle}>
@@ -572,7 +571,7 @@ export default class Createtask extends React.Component {
                       <div>
                         Task Added Successfully
                         <br />
-                        <button class="buttonsubmittask">Go Back</button>
+                        <button type='submit' class="buttonsubmittask" onClick={this.goBack}>Go Back</button>
                       </div>
                     ) : null}
                     {showcustomoption && !showgrid ? (
