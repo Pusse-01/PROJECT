@@ -19,20 +19,11 @@ class ProjectAdmin extends React.Component {
     this.state = {
       projectsInfo: [],
       count: 0,
-      log:0
     };
   }
 
   componentDidMount() {
     this.adjustStats();
-  }
-
-  componetWillUpdate() {
-    alert('before'+this.state.log)
-    this.setState({log:this.state.log+1})
-  }
-  componentDidUpdate(){
-    alert(this.state.log)
   }
 
   adjustStats() {
@@ -104,21 +95,18 @@ class ProjectAdmin extends React.Component {
   gotoCreateproject = (event) => {
     this.setState({
       count: 1,
-      log:0
     })
   }
   gotoCreatetask = (event) => {
 
     this.setState({
       count: 2,
-      log:0
     })
   }
 
   gotoviewtask = (event) => {
     this.setState({
       count: 3,
-      log:0
     })
   }
   gotoanalyze = (event) => {
