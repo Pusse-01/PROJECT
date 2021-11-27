@@ -9,6 +9,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import { InputBase } from "@material-ui/core";
 
 //styleset
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -26,6 +28,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
     super(props);
     this.state = {
       data: [],
+      copyData:[],
       length: 0,
     };
   }
@@ -97,16 +100,16 @@ export default class AnalyzeProjectEmployees extends React.Component {
               let note = '';
               if ((yAxis[0] + yAxis[3] < yAxis[2] + yAxis[4] + yAxis[1]) && (!due || yAxis[2])) {
                 Status = "Good";
-                note ='No due work, not many bugs/issues and Todos.'
+                note = 'No due work, not many bugs/issues and Todos.'
               } else if ((yAxis[0] + yAxis[1] + yAxis[3] === yAxis[2] + yAxis[4]) && !due) {
                 Status = "Neutral";
-                note ='No due work,May have some Bugs/Issues and Todos.'
-              } else if(due) {
+                note = 'No due work,May have some Bugs/Issues and Todos.'
+              } else if (due) {
                 Status = "Bad";
-                note ='Have due work'
-              }else{
+                note = 'Have due work'
+              } else {
                 Status = "Bad";
-                note ='Have many To dos and Bugs/Issues.'
+                note = 'Have many To dos and Bugs/Issues.'
               }
 
               let personTask = [
@@ -125,6 +128,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
               if (this.state.length - 1 === i) {
                 this.setState({
                   data: tasksemployee,
+                  copyData:tasksemployee
                 });
               }
             });
@@ -132,10 +136,45 @@ export default class AnalyzeProjectEmployees extends React.Component {
       });
   }
 
+  filterProjects = (event) => {
+   
+
+    var value = event.target.value;
+    var filterdresult = []
+    this.setState({
+      data:this.state.copyData
+     })
+    for (var i = 0; i < this.state.copyData.length; i++) {
+      if ((this.state.copyData[i].name.toLowerCase()).includes(value.toLowerCase()) || value==='') {
+        filterdresult.push(this.state.copyData[i]);
+      }
+    }
+
+    this.setState({
+      data:filterdresult
+    })
+  
+  
+  }
+
   render() {
     const { data } = this.state;
     return (
       <div>
+
+        <Box style={{ marginLeft: "70%" }}>
+          <SearchIcon fontSize="large" htmlColor="#000000" />
+          <InputBase
+            style={{
+              borderBottom: "2px solid black",
+              marginTop: "10px",
+            }}
+            placeholder="Search for a name....."
+            onChange={this.filterProjects}
+          ></InputBase>
+
+
+        </Box>
         <Paper style={{ marginLeft: "2%", marginRight: "0%" }}>
           <TableContainer sx={{ maxHeight: 580 }}>
             {data.length ? (
@@ -143,40 +182,39 @@ export default class AnalyzeProjectEmployees extends React.Component {
                 {data.map((employee, index) => (
                   <Table style={{ backgroundColor: "#525252" }}>
                     <StyledTableRow style={{ border: "none" }}>
-                      <TableCell 
+                      <TableCell colSpan={9}
                         style={{
                           border: "none",
                           color: "black",
-                          fontSize: "18px",
-  
+                          fontSize: "15px",
+
                         }}
                       >
                         Employee Name :  {employee.name}
                       </TableCell>
                     </StyledTableRow>
-                    <StyledTableRow style={{ border: "none" }}>
-                      <StyledTableRow>
-                        <TableCell style={{width: "20%"}}>
-                          Emplyee Performance Status
-                        </TableCell>
-                        <TableCell>To Do</TableCell>
-                        <TableCell>Done</TableCell>
-                        <TableCell>In Progress</TableCell>
-                        <TableCell>Bugs/Issues</TableCell>
-                        <TableCell>Review</TableCell>
-                        <TableCell colSpan={2}>Note</TableCell>
-                        <TableCell colSpan={1}></TableCell>
-                      </StyledTableRow>
-                      <StyledTableRow>
-                        <TableCell style={{width: "100px"}} align="left" >{employee.status}</TableCell>
-                        <TableCell  style={{width: "100px"}} align="left">{((employee.ToDoPer).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell  style={{width: "100px"}} align="left">{((employee.DonePer).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell  style={{width: "120px"}} align="left">{((employee.InprogressPer).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell  style={{width: "100px"}} align="left">{((employee.BugsPe).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell  style={{width: "100px"}} align="left">{((employee.ReviewPer).toString()).substring(0, 5)}%</TableCell>
-                        <TableCell colSpan={2}  style={{width: "350px"}} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
-                      </StyledTableRow>
+
+                    <StyledTableRow>
+                      <TableCell colSpan={2} style={{ fontSize: '14px', border: "none" }}>
+                        Emplyee Performance Status
+                      </TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }}>To Do</TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }}>Done</TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }}>In Progress</TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }}>Bugs/Issues</TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }}>Review</TableCell>
+                      <TableCell style={{ fontSize: '12px', border: "none" }} colSpan={1}>Note</TableCell>
                     </StyledTableRow>
+                    <StyledTableRow >
+                      <TableCell colSpan={2} style={{ fontSize: '12px', width: "100px" }} align="left" >{employee.status}</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.ToDoPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.DonePer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "120px" }} align="left">{((employee.InprogressPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.BugsPe).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.ReviewPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell colSpan={1} style={{ fontSize: '12px', width: "350px" }} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
+                    </StyledTableRow>
+                    <TableRow></TableRow>
                   </Table>
                 ))}
               </div>

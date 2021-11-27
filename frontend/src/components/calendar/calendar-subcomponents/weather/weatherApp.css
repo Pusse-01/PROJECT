@@ -33,15 +33,18 @@
 .buttonweather:hover {background-color: #413d4e}
 
 .buttonweather:active {
-  background-color: #262436;
+  background-color: #2f3640;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 
 .main-container {
-  background: transparent;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background:#2f3640;
   background-size: cover;
   background-position: center;
+  height: 1000px;
 }
 
 .main-container {

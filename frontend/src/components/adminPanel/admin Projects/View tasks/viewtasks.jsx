@@ -17,11 +17,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import "./viewTaskStyles.css";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Visibility from "@material-ui/icons/Visibility";
-import TrendingUp from "@material-ui/icons/TrendingUp";
 import { InputBase } from "@material-ui/core";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
 import { Helmet } from 'react-helmet'
 
 const TITLE ='Task View'
@@ -76,10 +73,6 @@ class Row extends React.Component {
     };
   }
 
-  componentDidMount() {
-
-   }
-
   setOpen = (event) => {
     if (this.state.open) {
       this.setState({ open: false });
@@ -89,32 +82,24 @@ class Row extends React.Component {
   };
 
   taskDelete = (event) => {
-    axios
+    console.log(event.target.value)
+    var newrow = []
+    for(let i=0; i<this.state.row.history.length; i++){
+      if(i!==event.target.value){
+        newrow.push(this.state.row.history[i])
+      }
+    }
+     axios
       .post("http://localhost:8070/task/deleteTask", {
         task_id: this.state.row.history[event.target.value].task_id,
       })
       .then((response) => {
         console.log(response.data);
-        window.location.reload(false);
+        this.setState({ open: false });
       });
+   
   };
 
-  setProjectedit = (event) => {
-    console.log("edit" + event.target.value);
-    console.log(this.state.openProject);
-    //console.log(this.state.row.history)
-  };
-
-  DeleteProject = (event) => {
-    console.log("delete" + event.target.value);
-
-    //delete project
-    //code
-  };
-
-  handler = (event) => {
-    console.log("cell" + event.target.value);
-  };
 
   render() {
     const { row, open } = this.state;
@@ -122,9 +107,7 @@ class Row extends React.Component {
     return (
       <React.Fragment>
         <StyledTableRow
-          sx={{ "& > *": { borderBottom: "0px", border: "0px" } }}
-          value={row.name}
-        >
+          sx={{ "& > *": { borderBottom: "0px", border: "0px" } }}>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -248,6 +231,12 @@ class Row extends React.Component {
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
+                            {(historyRow.taskstat === 'Overdue' && (new Date(historyRow.date) < Date.now())) ?
+                          <TableCell align="left" colSpan={2} sx={{ color: '#ff0000' }}>
+                            {historyRow.taskstat}
+                          </TableCell>
+                          : null}
+                         
                         <TableCell align="left">
                           {historyRow.employee.map((data, index) => (
                             <Box sx={{ margin: 0 }}>
@@ -260,18 +249,18 @@ class Row extends React.Component {
                           ))}
                         </TableCell>
                         <TableCell align="left">
-                          <Box class="deleteicon">
-                            <button
-                              class="taskdeletebutton"
-                              type="submit"
-                              value={index}
-                              onClick={this.taskDelete}
-                            >
-                              <DeleteForeverIcon />
-                              Delete
-                            </button>
-                          </Box>{" "}
-                        </TableCell>
+                         
+                         <button
+                           class="taskdeletebutton"
+                           type="button"
+                           value={index}
+                           onClick={this.taskDelete}
+                         >
+                          
+                           Delete
+                         </button>
+                     
+                     </TableCell>
                       </TableRow>
                     ))}
                     {row.history.length !== 0 ? (
@@ -523,7 +512,6 @@ export default class Viewtasks extends React.Component {
         </div>
       )
     }
-
     return (
       <div>
         <div class="serachbar">
