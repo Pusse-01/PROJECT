@@ -16,12 +16,12 @@ body {
   margin-left:82%;
   position: fixed;
 } 
-.red { 
+.maincomponentProject { 
 
   margin-left: 0%; 
   height: 100%; 
 } 
-.yellow { 
+.sidebarProject { 
   margin-left: 0; 
   height: 100%; 
   background-color: #2f3640;
