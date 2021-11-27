@@ -1,7 +1,11 @@
+div{
+   font-family: 'Lato';
+   
+}
 .dashMainComponent {
    position: absolute;
    width : 100%;
-   height:auto;
+   height:90vh;
    z-index: -1;
    background-color: #1e272e;
    overflow:scroll;
@@ -9,9 +13,18 @@
 .text{
    text-align:center;
    padding-top: 100px;
-   font-size:xx-large;
+   font-size:23px;
    color:white ;
+   font-family: 'Lato';
    
+   
+}
+.btn:hover{
+   box-shadow:0px 0px 1px 1px #f06203;
+}
+.timeworkedtext{
+   font-size:50px;
+   font-family: 'Helvetica';
 }
 .btn-danger{
    background-color:#FF5349;

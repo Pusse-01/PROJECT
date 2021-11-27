@@ -121,6 +121,7 @@ function Dashboard({ id, email, name ,workisornot}) {
     left: 0,
 
   };
+  
   const spinTransisiton = {
     loop: Infinity,
     duration: 1,
@@ -192,14 +193,18 @@ function Dashboard({ id, email, name ,workisornot}) {
                   <p className="text">
                     Total Time Worked
                     <br />
+                    <div className="timeworkedtext">
                     {Time.Hours}:{Time.Minutes}:{Time.seconds}
+                    </div>
                     <br />
                   </p>
                 ) : (
                   <p className="text">
                     Time Worked
                     <br />
+                    <div className="timeworkedtext">
                     {timeLeft.Hours}:{timeLeft.Minutes}:{timeLeft.seconds}
+                    </div>
                     <br />
                   </p>
                 )}
