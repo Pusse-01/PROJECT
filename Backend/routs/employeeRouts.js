@@ -266,51 +266,63 @@ const deleteEmployee = (req, res) => {
                 } else {
                     Employee.findByIdAndDelete(req.body.employee_id)
                         .then(response => {
-                            if(response.department!=""&&response.department!=null){
+                            if (response.department != "" && response.department != null) {
                                 Departments.findById(response.department)
-                                    .then(result=>{
+                                    .then(result => {
                                         let temDeps = result.employees
-                                        let letRemEmployee = temDeps.filter(val=>{
-                                            if(val!=req.body.employee_id){
+                                        let letRemEmployee = temDeps.filter(val => {
+                                            if (val != req.body.employee_id) {
                                                 return val
                                             }
                                         })
-                                        Departments.findByIdAndUpdate(response.department,{employees:letRemEmployee})
-                                            .then(result2=>{
+                                        Departments.findByIdAndUpdate(response.department, {employees: letRemEmployee})
+                                            .then(result2 => {
                                                 console.log("Deleting employee department updated")
                                                 Designations.findById(response.designation)
-                                                    .then(result3=>{
+                                                    .then(result3 => {
                                                         let temDes = result3.employees
-                                                        let remTemDes = temDes.filter(val=>{
-                                                            if(val!=req.body.employee_id){
+                                                        let remTemDes = temDes.filter(val => {
+                                                            if (val != req.body.employee_id) {
                                                                 return val
                                                             }
                                                         })
-                                                        Designations.findByIdAndUpdate(response.designation,{employees:remTemDes})
-                                                            .then(result4=>{
+                                                        Designations.findByIdAndUpdate(response.designation, {employees: remTemDes})
+                                                            .then(result4 => {
                                                                 res.json({
                                                                     response
                                                                 })
-                                                            }).catch(error=>{res.json(error)})
-                                                    }).catch(error=>{res.json(error)})
-                                            }).catch(error=>{res.json(error)})
-                                    }).catch(error=>{res.json(error)})
-                            }else{
+                                                            }).catch(error => {
+                                                            res.json(error)
+                                                        })
+                                                    }).catch(error => {
+                                                    res.json(error)
+                                                })
+                                            }).catch(error => {
+                                            res.json(error)
+                                        })
+                                    }).catch(error => {
+                                    res.json(error)
+                                })
+                            } else {
                                 Designations.findById(response.designation)
-                                    .then(result3=>{
+                                    .then(result3 => {
                                         let temDes = result3.employees
-                                        let remTemDes = temDes.filter(val=>{
-                                            if(val!=req.body.employee_id){
+                                        let remTemDes = temDes.filter(val => {
+                                            if (val != req.body.employee_id) {
                                                 return val
                                             }
                                         })
-                                        Designations.findByIdAndUpdate(response.designation,{employees:remTemDes})
-                                            .then(result4=>{
+                                        Designations.findByIdAndUpdate(response.designation, {employees: remTemDes})
+                                            .then(result4 => {
                                                 res.json({
                                                     response
                                                 })
-                                            }).catch(error=>{res.json(error)})
-                                    }).catch(error=>{res.json(error)})
+                                            }).catch(error => {
+                                            res.json(error)
+                                        })
+                                    }).catch(error => {
+                                    res.json(error)
+                                })
                             }
                         })
                         .catch(error => {
@@ -434,7 +446,7 @@ const updatePasswordByEmployee = (req, res) => {
                                             })
                                     })
                                 })
-                                   
+
                             }
                         })
                 }
@@ -470,7 +482,16 @@ router.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => 
 
                 Employee.findByIdAndUpdate(employee_id, updatedEmployee)
                     .then(result2 => {
-                        res.json(result2)
+                        Employee.findById(employee_id)
+                            .then(result3 => {
+                                res.json({
+                                    message: "Successfully Updated Profile Image",
+                                    newImage: result3.profileImage
+                                })
+                            })
+                            .catch(error => {
+                                res.json(error)
+                            })
                     })
                     .catch(error => {
                         res.json(error)
