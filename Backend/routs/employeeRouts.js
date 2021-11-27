@@ -219,7 +219,10 @@ router.post('/auth', (req, res) => {
                                 email: employee.email,
                                 position: employee.position,
                                 role: employee.role,
-                                profileImage: employee.profileImage
+                                profileImage: employee.profileImage,
+                                designation:employee.designation,
+                                department:employee.department,
+                                notes:employee.notes
                             }
                         });
                     }

@@ -1,6 +1,7 @@
 import axios from "axios";
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import "./profile.css";
+import Sidebar from "./sideBar";
 
 
 function Profile({logout}) {
@@ -14,7 +15,7 @@ function Profile({logout}) {
     });
 
     const [profileImage, setProfileImage] = useState(null);
-
+    const [department,setDepartment] =useState("")
     const [changepassword, setpass] = useState({old: "", new: "", confirm: ""});
     const [visible, setvisible] = useState(false);
     const [visibleProfileImage, setvisibleProfileImage] = useState(false);
@@ -35,8 +36,8 @@ function Profile({logout}) {
                 'content-type': 'multipart/form-data'
             }
         }
-        axios.post('http://localhost:8070/employee/uploadProfileImage',formData)
-            .then(res =>{
+        axios.post('http://localhost:8070/employee/uploadProfileImage', formData)
+            .then(res => {
                 setUser({
                     ...user,
                     profileImage: res.data.newImage
@@ -44,27 +45,30 @@ function Profile({logout}) {
                 let oldUser = localStorage.getItem("user")
                 const founduser = JSON.parse(oldUser);
                 let newUser = {
-                    token:founduser.token,
-                    employee:{
+                    token: founduser.token,
+                    employee: {
                         name: founduser.employee.name,
                         email: founduser.employee.email,
-                        position:founduser.employee.position,
+                        position: founduser.employee.position,
                         id: founduser.employee.id,
                         role: founduser.employee.role,
-                        profileImage:res.data.newImage
+                        department:founduser.employee.department,
+                        designation:founduser.employee.designation,
+                        notes:founduser.employee.notes,
+                        profileImage: res.data.newImage
                     }
                 }
                 localStorage.setItem('user', JSON.stringify(newUser))
                 window.location.reload();
 
             })
-            .catch(error=>{
+            .catch(error => {
                 alert(error)
             })
 
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
             const founduser = JSON.parse(loggedInUser);
@@ -75,9 +79,13 @@ function Profile({logout}) {
                 id: founduser.employee.id,
                 role: founduser.employee.role,
                 profileImage: founduser.employee.profileImage,
+                position:founduser.employee.position,
+                department:founduser.employee.department,
+                designation:founduser.employee.designation,
+                notes:founduser.employee.notes
             });
         }
-    }, []);
+    },[]);
 
     async function changepassworduser(event) {
         console.log(user.id);
@@ -116,6 +124,7 @@ function Profile({logout}) {
             setvisible(true);
         }
     }
+
     function showProfileImage() {
         if (visibleProfileImage) {
             setvisibleProfileImage(false);
@@ -125,112 +134,124 @@ function Profile({logout}) {
     }
 
     return (
-        <div>
-     
-      <span>
-        <img
-            src={"http://localhost:8070/" + user.profileImage}
-            className="profileimg"
-        />
-      </span>
-            <div className="usernametext">
-                <div className="text-center">{user.name}</div>
+        <div className="profileMainComponent">
+            <Sidebar designation={user.position} department={user.department}/>
+            <div className="profileSubComponent">
+                 <span className="profile_page_image">
+                    <img
+                        src={"http://localhost:8070/" + user.profileImage}
+                        className="profileimg"
+                    />
+                 </span>
 
-                <div className="useremail text-center">
-                    {user.email}
-                    <button className="changepbutton btn btn-danger" onClick={show}>
-                        Change Password
-                    </button>
-                    <button className="changepbutton btn btn-danger" onClick={showProfileImage}>
-                        Update Profile Image
-                    </button>
+                <div className="usernametext">
+                    <div className="text-center">{user.name}</div>
+
+                    <div className="useremail text-center">{user.email}</div>
+                    <div className="profile_image_button_row">
+                        <button className="changepbutton btn btn-danger" onClick={show}>
+                            Change Password
+                        </button>
+                        <button className="changepbutton btn btn-danger" onClick={showProfileImage}>
+                            Update Profile Image
+                        </button>
+                    </div>
+                </div>
+
+                <div className="profileDetails">
+                    <h6 className="profile_page_details_title">Details</h6>
+                    <h7 className="profile_page_details">
+                        {user.notes}
+                    </h7>
                 </div>
             </div>
-
 
             {visibleProfileImage ? (
                 <div className="popup-boxpassword">
                     <div className="popup-innerpassword">
-                        <h1>Upload Image</h1>
                         <form onSubmit={onFormSubmit}>
-                            <input type="file" name="profileImage" onChange={onInputChange}/>
-                            <button type="submit">Upload Profile Image</button>
-                            <button
-                                className="btn  btn-danger col-12 col-md-5 mt-3 ms-md-3"
-                                onClick={show}
-                            >
-                                Cancel
-                            </button>
+                            <input type="file"
+                                   name="profileImage"
+                                   onChange={onInputChange}
+
+                            />
+                            <div className="text-center">
+                                <input
+                                    type="submit"
+                                    className="btn  btn-dark col-12 col-md-5 mt-3"
+                                    value="Upload Profile Pic"
+                                />
+                                <button
+                                    className="btn  btn-danger col-12 col-md-5 mt-3 ms-md-3"
+                                    onClick={showProfileImage}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             ) : (
                 <div></div>
             )}
-
-            <div>
-
-                {visible ? (
-                    <div className="popup-boxpassword">
-                        <div className="popup-innerpassword">
-                            <div className="errorlog">
-                                {error}
-                            </div>
-                            <br/>
-                            <form onSubmit={changepassworduser}>
-                                <label>Old Password</label>
-                                <br/>
-                                <input
-                                    onChange={(e) =>
-                                        setpass({...changepassword, old: e.target.value})
-                                    }
-                                    type="password"
-                                    className="form-group mt-3 col-sm-12 col-md-12"
-                                />
-                                <br/>
-                                <label>New Password</label>
-                                <br/>
-                                <input
-                                    type="password"
-                                    onChange={(e) =>
-                                        setpass({...changepassword, new: e.target.value})
-                                    }
-                                    className="form-group mt-3 col-sm-12 col-md-12"
-                                />
-                                <br/>
-                                <label>Confirm Password</label>
-                                <br/>
-                                <input
-                                    type="password"
-                                    onChange={(e) =>
-                                        setpass({...changepassword, confirm: e.target.value})
-                                    }
-                                    className="form-group mt-3 col-sm-12 col-md-12"
-                                />
-                                <br/>
-                                <div className="text-center">
-                                    <input
-                                        type="submit"
-                                        className="btn  btn-dark col-12 col-md-5 mt-3"
-                                        value="Confirm"
-                                    />
-                                    <button
-                                        className="btn  btn-danger col-12 col-md-5 mt-3 ms-md-3"
-                                        onClick={show}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </form>
+            {visible ? (
+                <div className="popup-boxpassword">
+                    <div className="popup-innerpassword">
+                        <div className="errorlog">
+                            {error}
                         </div>
+                        <br/>
+                        <form onSubmit={changepassworduser}>
+                            <label>Old Password</label>
+                            <br/>
+                            <input
+                                onChange={(e) =>
+                                    setpass({...changepassword, old: e.target.value})
+                                }
+                                type="password"
+                                className="form-group mt-3 col-sm-12 col-md-12"
+                            />
+                            <br/>
+                            <label>New Password</label>
+                            <br/>
+                            <input
+                                type="password"
+                                onChange={(e) =>
+                                    setpass({...changepassword, new: e.target.value})
+                                }
+                                className="form-group mt-3 col-sm-12 col-md-12"
+                            />
+                            <br/>
+                            <label>Confirm Password</label>
+                            <br/>
+                            <input
+                                type="password"
+                                onChange={(e) =>
+                                    setpass({...changepassword, confirm: e.target.value})
+                                }
+                                className="form-group mt-3 col-sm-12 col-md-12"
+                            />
+                            <br/>
+                            <div className="text-center">
+                                <input
+                                    type="submit"
+                                    className="btn  btn-dark col-12 col-md-5 mt-3"
+                                    value="Confirm"
+                                />
+                                <button
+                                    className="btn  btn-danger col-12 col-md-5 mt-3 ms-md-3"
+                                    onClick={show}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                ) : (
-                    <div></div>
-                )}
-            </div>
+                </div>
+            ) : (
+                <div></div>
+            )}
         </div>
-
-
     );
 }
 
