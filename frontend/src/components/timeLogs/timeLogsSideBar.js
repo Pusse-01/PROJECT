@@ -4,7 +4,7 @@ import "./timeLogs.css"
 
 
 
-function timeLogsSideBar({email,id}) {
+function TimeLogsSideBar({email,id}) {
   const [projectdata, setprojecttimeline] = useState([]);
   const [projectselected, setproject] = useState("");
   const[tasks,settasks]=useState([""]);
@@ -139,5 +139,5 @@ tasktotal();
   )
 }
 
-export default timeLogsSideBar
+export default TimeLogsSideBar
 
