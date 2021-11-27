@@ -2,7 +2,11 @@ import React, { Component, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import Sidebar from "./sideBar";
 import "./adminDashboard.css";
+// eslint-disable-next-line import/first
+import Reports from "../Reports/reports";
+import UserReports from "../Reports/userReports";
 const axios = require("axios").default;
+
 
 function AdminPanel() {
   const [projecttimeline, settimeline] = useState([]);
@@ -175,6 +179,9 @@ function AdminPanel() {
             
           </div>
           
+        </div>
+        <div>
+          <Reports/>
         </div>
       </div>
     </div>

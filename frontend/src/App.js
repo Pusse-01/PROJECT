@@ -173,12 +173,12 @@ function App() {
               <Route path="/adminPanel">
                 <AdminPanel />
               </Route>
-              <Route path="/reports">
-                <Reports />
+              {/*<Route path="/reports">
+              <Reports />
               </Route>
               <Route path="/userReports">
                 <UserReports />
-              </Route>
+              </Route>*/}
              
               <Route path="/hr/departments"><Departments/></Route>
               <Route path="/employees/addEmployee"><AddEmployee/></Route>
