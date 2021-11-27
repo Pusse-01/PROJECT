@@ -755,7 +755,7 @@ export default class ShowProject extends React.Component {
 
                       <StyledTableRow>
                         <TableCell colSpan={6} align='center' style={{ borderBottom: '1px solid white' }}>
-                          E  N D
+                         
 
                         </TableCell>
                       </StyledTableRow>

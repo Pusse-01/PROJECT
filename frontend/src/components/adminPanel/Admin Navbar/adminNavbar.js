@@ -103,7 +103,7 @@ class AdminNavbar extends Component{
             }
         },function (){
             localStorage.setItem('Nav', JSON.stringify(this.state.nav))
-            this.props.history.push("/projects");
+            this.props.history.push("/projects")
         })
     }
     changeColorHR(){
@@ -201,7 +201,7 @@ class AdminNavbar extends Component{
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
+                                <a  className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
                             }>Employees</a>
                             </li>
                         </ul>
