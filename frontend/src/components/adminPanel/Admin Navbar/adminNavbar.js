@@ -95,7 +95,7 @@ class AdminNavbar extends Component{
             selectedEmployees:true,
             selectedLogout:false
         })
-        this.props.history.push("/employees");
+        this.props.history.push("/employees/addEmployee");
     }
     render(){
 
@@ -136,13 +136,13 @@ class AdminNavbar extends Component{
                                 <a className={linkClassProjects} href="#" onClick={this.changeColorProjects.bind(this)}>Projects</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassHR} href="#" onClick={this.changeColorHR.bind(this)}>HR</a>
+                                <a className={linkClassHR} href="#" onClick={this.changeColorHR.bind(this)}>Departments</a>
                             </li>
                             <li className="nav-item">
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassEmployees} href="http://localhost:3000/projects" onClick={this.changeColorEmployees.bind(this)
+                                <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
                             }>Employees</a>
                             </li>
                             <div className="nav-item logOut" onClick={this.logOut.bind(this)}>

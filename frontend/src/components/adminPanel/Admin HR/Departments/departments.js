@@ -3,7 +3,6 @@ import {withRouter} from "react-router-dom";
 import axios from 'axios';
 import Sidebar from "./sidebar";
 import "./departments_style.css"
-import HRNavbar from "../HRNavBar/hr_navbar";
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
@@ -102,7 +101,7 @@ class Departments extends Component {
 
     clickMore = (department) => {
         this.props.history.push({
-            pathname: "/hr/designations",
+            pathname: "/designations",
             search: '?query=abc',
             state: {detail: department}
         })
@@ -112,7 +111,6 @@ class Departments extends Component {
         const {departments} = this.state
         return (
             <div className="departmentsMainComponent">
-                <HRNavbar/>
                 <Sidebar noDepEmployees={this.state.employees}/>
                 <div className="departmentsSubComponent">
                     <div className="addDepartmentsComponents">

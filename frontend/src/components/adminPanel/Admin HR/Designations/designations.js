@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Sidebar from "./sidebar";
 import "./designations_style.css"
-import HRNavbar from "../HRNavBar/hr_navbar";
 
 class Designations extends Component {
     constructor(props) {
@@ -137,7 +136,6 @@ class Designations extends Component {
         const {department} = this.state
         return(
             <div className="designationsMainComponent">
-                <HRNavbar/>
                 <Sidebar
                     employees={this.state.employeesOfSelectedDes}
                     sideBarTitle={this.state.sideBarTitle}
