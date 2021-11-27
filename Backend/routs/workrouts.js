@@ -73,7 +73,7 @@ router.put("/update/:id", (req, res) => {
 
 
 router.get("/total/:id", (req, res) => {
-  const id = req.params.id;//get email
+  const id = req.params.id;//get id
   let totalhours = 0,totalminutes = 0,totalseconds = 0,single=0;
   Workingproject.find({ id:id }).then((work) => {//findall matching email in workings
     if (work) {
@@ -281,8 +281,64 @@ router.get("/timelogs/",(req,res)=>{
     return res.json("error");
   })
 })
-
-
+router.get("/totalprojectwise", (req, res) => {
+  let id=req.query.id;
+  let projectn=req.query.projectname
+  let totalhours = 0,totalminutes = 0,totalseconds = 0,single=0;
+  Workingproject.find({ id:id,projectname:projectn }).then((work) => {//findall matching email in workings
+    if (work) {
+      let iter = work.values();
+      for (let times of iter) {
+        totalhours += times.hours ;
+        totalminutes += times.minutes;
+        totalseconds += times.seconds;   
+        if(totalseconds>59){
+          totalminutes++;
+          totalseconds-=60;
+        }
+        if(totalminutes>59){
+          totalhours++;
+          totalminutes-=60;
+        }   
+      }
+     
+      return res.json({
+        totalhours:totalhours,
+        totalminutes:totalminutes,
+        totalseconds:totalseconds
+      });
+    }
+  });
+});
+router.get("/totaltaskwise", (req, res) => {
+  let id=req.query.id;
+  let taskn=req.query.taskname
+  let totalhours = 0,totalminutes = 0,totalseconds = 0,single=0;
+  Workingproject.find({ id:id,taskname:taskn }).then((work) => {
+    if (work) {
+      let iter = work.values();
+      for (let times of iter) {
+        totalhours += times.hours ;
+        totalminutes += times.minutes;
+        totalseconds += times.seconds;   
+        if(totalseconds>59){
+          totalminutes++;
+          totalseconds-=60;
+        }
+        if(totalminutes>59){
+          totalhours++;
+          totalminutes-=60;
+        }   
+      }
+     
+      return res.json({
+        totalhours:totalhours,
+        totalminutes:totalminutes,
+        totalseconds:totalseconds
+      });
+    }
+  });
+});
 
 
 //**********************************Admin Panel Componenets

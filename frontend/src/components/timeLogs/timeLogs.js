@@ -45,7 +45,7 @@ constructor(props) {
         const {tasks} = this.state;
         return(
             <div className="timeLogsMainComponent">
-                 <Timelogssidebar/>
+                 <Timelogssidebar email={this.state.email} id={this.state.id}/>
                 <div className="timeLogsSubComponent">̵
                     <div className="searchBar">
                         <div className="blankColumn"></div>

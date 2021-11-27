@@ -26,23 +26,30 @@ function SideBar({id,email}) {
     return (
         <div className="dashboardsidemainComponent title">
             <div className="ps-3 pe-3  mt-3">
-            <div className="cpbutton col-12 " >
+            <a href="http://localhost:3000/tasks">
+            <button className="cpbutton col-12 " >
               Total Tasks
               <div className="siderbarfont">{totalcompletedprojects}</div>
               
-          </div>
+              
+          </button>
+          </a>
           </div>
           <div className="ps-3 pe-3  mt-3">
-            <div className="ptbutton col-12 ">
+          <a href="http://localhost:3000/tasks">
+            <button className="ptbutton col-12 ">
               Total Pending tasks
               <div className="siderbarfont">{totalpending}</div>
-              </div>
+              </button>
+              </a>
           </div>
           <div className="ps-3 pe-3  mt-3">
-            <div className="ctbutton col-12 ">
+          <a href="http://localhost:3000/tasks">
+            <button className="ctbutton col-12 ">
               Total Completed Tasks
               <div className="siderbarfont">{totalcompletedtasks}</div>
-              </div>
+              </button>
+              </a>
           </div>
         </div>
     )
