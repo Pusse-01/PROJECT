@@ -17,12 +17,11 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import "./viewTaskStyles.css";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Visibility from "@material-ui/icons/Visibility";
-import TrendingUp from "@material-ui/icons/TrendingUp";
 import { InputBase } from "@material-ui/core";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Helmet } from 'react-helmet'
 
+const TITLE ='Task View'
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
@@ -41,15 +40,6 @@ const StyledTableCellDue = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableCellCompleted = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    border: 0,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    color: "#00ff00",
-    opacity: 0.6,
-  },
-}));
 
 const StyledTableCellNotDue = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,7 +73,9 @@ class Row extends React.Component {
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {
+
+   }
 
   setOpen = (event) => {
     if (this.state.open) {
@@ -94,8 +86,9 @@ class Row extends React.Component {
   };
 
   taskDelete = (event) => {
-    console.log(this.state.row.history[event.target.value].task_id);
-    axios
+    console.log(event.target.value)
+  /*******************************
+     axios
       .post("http://localhost:8070/task/deleteTask", {
         task_id: this.state.row.history[event.target.value].task_id,
       })
@@ -103,6 +96,7 @@ class Row extends React.Component {
         console.log(response.data);
         window.location.reload(false);
       });
+   */
   };
 
   setProjectedit = (event) => {
@@ -165,7 +159,7 @@ class Row extends React.Component {
           </TableCell>
         </StyledTableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0,backgroundColor: '#525252' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box
                 sx={{
@@ -175,7 +169,7 @@ class Row extends React.Component {
                   width: "100%",
                 }}
               >
-                <Typography
+                <Typography 
                   row
                   variant="h6"
                   gutterBottom
@@ -183,15 +177,7 @@ class Row extends React.Component {
                   marginLeft="10px"
                 >
                   Tasks Status
-                  <button
-                    type="submit"
-                    class="buttondelete"
-                    onClick={this.DeleteProject}
-                  >
-                    Delete Project
-                  </button>
                 </Typography>
-
                 <Table size="small" aria-label="stat">
                   <TableHead>
                     <TableRow>
@@ -206,7 +192,7 @@ class Row extends React.Component {
                       <TableCell align="center"></TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody width="100%">
+                  <TableBody width="100%" >
                     {row.history.length === 0 ? (
                       <div>
                         No tasks have assigned
@@ -221,7 +207,7 @@ class Row extends React.Component {
                     ) : null}
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
-                        <TableCell align="left" onClick={this.handler}>
+                        <TableCell align="left">
                           {historyRow.task.substring(0, 50)}{" "}
                         </TableCell>
                         <TableCell align="left" colSpan={2}>
@@ -274,17 +260,14 @@ class Row extends React.Component {
                           ))}
                         </TableCell>
                         <TableCell align="left">
-                          <Box class="deleteicon">
-                            <button
+                        <button
                               class="taskdeletebutton"
                               type="submit"
-                              value={index}
                               onClick={this.taskDelete}
                             >
                               <DeleteForeverIcon />
                               Delete
                             </button>
-                          </Box>{" "}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -512,8 +495,6 @@ export default class Viewtasks extends React.Component {
         this.state.rows[i].name.toLowerCase().includes(value.toLowerCase()) ||
         value === ""
       ) {
-        console.log("inside " + value);
-        console.log("inside va " + this.state.rows[i].name);
         copyArray.push(this.state.rows[i]);
       }
     }
@@ -529,9 +510,23 @@ export default class Viewtasks extends React.Component {
   render() {
     const { filterdresult } = this.state;
 
+    if(filterdresult.length===0){
+      return(
+        <div>
+           <Helmet>
+          <title>{ TITLE }</title>
+        </Helmet>
+        <div><h3 style={{color:'white', marginLeft:'500px', font:'30px', marginTop:'200PX'}}>No data to show.</h3></div>
+        </div>
+      )
+    }
+
     return (
       <div>
         <div class="serachbar">
+        <Helmet>
+          <title>{ TITLE }</title>
+        </Helmet>
           <Box>
             <SearchIcon fontSize="large" htmlColor="#ffffff" />
             <InputBase
@@ -543,7 +538,7 @@ export default class Viewtasks extends React.Component {
         </div>
         <Paper class="PAPER">
           <TableContainer sx={{ maxHeight: 580 }}>
-            <Table
+            <Table 
               stickyHeader
               aria-label="collapsible table"
               sx={{
@@ -571,43 +566,6 @@ export default class Viewtasks extends React.Component {
             </Table>
           </TableContainer>
         </Paper>
-        <div>
-          <div class="bodyappear3viewproject">
-            <a href="http://localhost:3000/createproject">
-              <button class="buttonviewproject">
-                <AddCircleOutlineOutlinedIcon
-                  fontSize="large"
-                  htmlColor="#ffffff"
-                />
-                Create Project
-                <br />
-                <p class="p">create your new project</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear4viewproject">
-            <a href="http://localhost:3000/viewprojects">
-              <button class="buttonviewproject">
-                {" "}
-                <Visibility fontSize="large" htmlColor="#ffffff" />
-                Show Projects
-                <br />
-                <p class="p">view a summary all projects</p>
-              </button>
-            </a>
-          </div>
-          <div class="bodyappear5viewproject">
-            <a href="www.google.com">
-              <button class="buttonviewproject">
-                {" "}
-                <TrendingUp fontSize="large" htmlColor="#ffffff" />
-                Status
-                <br />
-                <p class="p">evaluate your work</p>
-              </button>
-            </a>
-          </div>
-        </div>
       </div>
     );
   }

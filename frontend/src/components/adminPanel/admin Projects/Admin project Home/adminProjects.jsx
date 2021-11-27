@@ -19,6 +19,7 @@ class ProjectAdmin extends React.Component {
     this.state = {
       projectsInfo: [],
       count: 0,
+      localCount:parseInt(localStorage.getItem("COUNT"))
     };
   }
 
@@ -26,6 +27,14 @@ class ProjectAdmin extends React.Component {
     this.adjustStats();
   }
 
+  componentDidUpdate(){
+    if(parseInt(localStorage.getItem("COUNT"))!==this.state.localCount){
+      this.setState({
+        localCount:parseInt(localStorage.getItem("COUNT")),
+        count:0
+      })
+    }
+  }
   adjustStats() {
     axios
       .get("http://localhost:8070/projects")
@@ -74,8 +83,6 @@ class ProjectAdmin extends React.Component {
                   }
                 }
               }
-              console.log(ProjecTStat);
-              console.log(this.state.projectsInfo[i]._id);
               let sendData = { projectStatus: ProjecTStat };
               axios
                 .post(
@@ -84,7 +91,7 @@ class ProjectAdmin extends React.Component {
                   sendData
                 )
                 .then((response) => {
-                  console.log(response.data);
+                  console.log('Status Updated');
                 });
             });
         }
@@ -98,7 +105,6 @@ class ProjectAdmin extends React.Component {
     })
   }
   gotoCreatetask = (event) => {
-
     this.setState({
       count: 2,
     })

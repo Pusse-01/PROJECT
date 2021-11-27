@@ -16,7 +16,6 @@ import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { InputBase } from "@material-ui/core";
 //icons
-import BeenhereIcon from "@mui/icons-material/Beenhere";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import MoreTimeIcon from "@mui/icons-material/MoreTime";
 import PendingIcon from "@mui/icons-material/Pending";
@@ -24,6 +23,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
+import RuleIcon from '@mui/icons-material/Rule';
 import { Helmet } from "react-helmet";
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,15 @@ export default class ShowProject extends React.Component {
                       taskLog.push(workingData[y]);
                       Time.hrs += parseInt(workingData[y][5].substring(0, 2));
                       Time.mins += parseInt(workingData[y][5].substring(3, 5));
+                      if(Time.mins -60 >1){
+                        Time.hrs++;
+                        Time.mins = Time.mins-60;
+                      }
                       Time.secs += parseInt(workingData[y][5].substring(6, 8));
+                      if(Time.secs -60 >1){
+                        Time.mins++;
+                        Time.secs = Time.secs-60;
+                      }
                     }
                   }
                   let aTask = {
@@ -321,7 +329,7 @@ export default class ShowProject extends React.Component {
                         color: "#FFFF00",
                       }}
                     >
-                      <MoreTimeIcon fontSize="small" htmlColor="#000000" />
+                      <RuleIcon fontSize="small" htmlColor="#000000" />
                     </Typography>
                     <Typography
                       variant="h7"
@@ -375,7 +383,7 @@ export default class ShowProject extends React.Component {
                     </Typography>
                   </Grid>
                 ) : null}
-                {gridData[pageCount].p_details.projectStatus === "Over due" ? (
+                {gridData[pageCount].p_details.projectStatus === "Overdue" ? (
                   <Grid
                     item
                     style={{
@@ -394,7 +402,7 @@ export default class ShowProject extends React.Component {
                         color: "#FFFF00",
                       }}
                     >
-                      <BeenhereIcon fontSize="small" htmlColor="#000000" />
+                      <MoreTimeIcon fontSize="small" htmlColor="#000000" />
                     </Typography>
                     <Typography
                       variant="h7"
@@ -1003,6 +1011,7 @@ class Editproject extends React.Component {
     console.log(this.state.employeesselected);
     console.log(this.state.projectname);
 
+    alert()
     for (var i = 0; i < this.state.selectedEmployees.length; i++) {
       let email_ = this.state.selectedEmployees[i].email;
       this.state.employeesselected.push(email_);
