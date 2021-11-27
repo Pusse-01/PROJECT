@@ -164,6 +164,11 @@
     font-size: 10px;
 }
 
+.logo {
+    width : 200px;
+    height : 60px;
+}
+
 @media only screen and (max-width: 991px) {
     .navbar{
         height: 250px;

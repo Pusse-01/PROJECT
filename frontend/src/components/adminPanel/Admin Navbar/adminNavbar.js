@@ -109,13 +109,7 @@ class AdminNavbar extends Component{
         return (
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="logoContainer">
-                    <h5 className="logo">P</h5>
-                    <h5 className="logo">R</h5>
-                    <h5 className="logoRed">O</h5>
-                    <h5 className="logo">J</h5>
-                    <h5 className="logo">E</h5>
-                    <h5 className="logo">C</h5>
-                    <h5 className="logo">T</h5>
+                <img  className = "logo" src={require('../../../assests/images/logo.png').default}/>
                 </div>
 
                 <div className="container-fluid">
