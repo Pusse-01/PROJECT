@@ -3,7 +3,6 @@ import {withRouter} from "react-router-dom";
 import axios from 'axios';
 import Sidebar from "../sidebar";
 import "../employees_style.css"
-import HRNavbar from "../../HRNavBar/hr_navbar";
 
 class DeleteEmployee extends Component {
     constructor(props) {
@@ -95,8 +94,7 @@ class DeleteEmployee extends Component {
     render() {
         return (
             <div className="hr_employeesMainComponent">
-                <HRNavbar/>
-                <Sidebar/>
+                <Sidebar elementStyle="delete"/>
                 <div className="hr_employeesSubComponent">
                     <div className="hr_deleteEmployee">
                         <h5 className="hrTitleText">Delete Employee</h5>
@@ -132,9 +130,6 @@ class DeleteEmployee extends Component {
                                 </div>
                             </div>
                             <div className="employeeButtonsContainer">
-                                <div className="hr_employee_menuButtonContainer" onClick={this.changeMenu}>
-                                    <h7 className="hr_employee_addButton">Go to Menu</h7>
-                                </div>
                                 <div className="hr_employee_addButtonContainer" onClick={this.deleteAccount}>
                                     <h7 className="hr_employee_addButton" >Delete Employee</h7>
                                 </div>

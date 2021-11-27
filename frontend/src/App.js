@@ -21,7 +21,6 @@ import AdminNavBar from "./components/adminPanel/Admin Navbar/adminNavbar.js";
 import Reports from "./components/adminPanel/Reports/reports";
 import UserReports from "./components/adminPanel/Reports/userReports";
 import Departments from "./components/adminPanel/Admin HR/Departments/departments";
-import Leave from "./components/adminPanel/Admin HR/Leave/leave";
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
 
 //Start of Employee Calendar TaskBacklog by Malaka
@@ -42,7 +41,6 @@ import AddEmployee from "./components/adminPanel/Admin HR/Employees/AddEmployee/
 import DeleteEmployee from "./components/adminPanel/Admin HR/Employees/DeleteEmployee/deleteEmployee";
 import UpdatePassword from "./components/adminPanel/Admin HR/Employees/UpdatePassword/updatePassword";
 import UpdatePosition from "./components/adminPanel/Admin HR/Employees/UpdatePosition/updatePosition";
-import Menu from "./components/adminPanel/Admin HR/Employees/Menu/menu";
 import Profile from "./components/Profilepage/Profile";
 const axios = require("axios").default;
 
@@ -182,43 +180,16 @@ function App() {
                 <UserReports />
               </Route>*/}
              
-              <Route path="/hr/departments">
-                <Departments/>
-              </Route>
-              <Route path="/hr/employees/menu">
-                <Menu/>
-              </Route>
-              <Route path="/hr/employees/addEmployee">
-                <AddEmployee/>
-              </Route>
-              <Route path="/hr/employees/deleteEmployee">
-                <DeleteEmployee/>
-              </Route>
-              <Route path="/hr/employees/updatePassword">
-                <UpdatePassword/>
-              </Route>
-              <Route path="/hr/employees/menu">
-                <Menu/>
-              </Route>
-              <Route path="/hr/employees/addEmployee">
-                <AddEmployee/>
-              </Route>
-              <Route path="/hr/employees/deleteEmployee">
-                <DeleteEmployee/>
-              </Route>
-              <Route path="/hr/employees/updatePassword">
-                <UpdatePassword/>
-              </Route>
-              <Route path="/hr/employees/updatePosition">
-                <UpdatePosition/>
-              </Route>
-              <Route path="/hr/leave">
-                <Leave/>
-              </Route>
-              <Route path="/hr/designations">
-                <Designations/>
+              <Route path="/hr/departments"><Departments/></Route>
+              <Route path="/employees/addEmployee"><AddEmployee/></Route>
+              <Route path="/employees/deleteEmployee"><DeleteEmployee/></Route>
+              <Route path="/employees/updatePassword"><UpdatePassword/></Route>
+              <Route path="/employees/updatePosition"><UpdatePosition/></Route>
+              <Route path="/designations"><Designations/></Route>
+
+
               {/*Start of Admin Panel - Projects */}
-              </Route> <Route path="/projects">
+              <Route path="/projects">
                 <ProjectAdmin />
               </Route>
               <Route path="/createproject">

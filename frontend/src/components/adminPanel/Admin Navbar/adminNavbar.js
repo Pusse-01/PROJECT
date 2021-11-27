@@ -8,16 +8,54 @@ class AdminNavbar extends Component{
         const loggedInUser = localStorage.getItem("user");
         const founduser = JSON.parse(loggedInUser);
         this.state = {
-            selectedHome: true,
-            //selectedReports:false,
-            selectedProjects:false,
-            selectedHR:false,
-            selectedClients:false,
-            selectedEmployees:false,
+            nav:{
+                selectedHome: true,
+                //selectedReports:false,
+                selectedProjects:false,
+                selectedHR:false,
+                selectedClients:false,
+                selectedEmployees:false,
+            },
             name: founduser.employee.name,
+            openProfileMenu:"employee_menu",
             id:founduser.employee.id,
-
+            profileImage:"http://localhost:8070/"+founduser.employee.profileImage
         }
+    }
+
+    componentDidMount() {
+        const nav = localStorage.getItem("Nav");
+        console.log("NAV",nav)
+        const data = JSON.parse(nav);
+        if(data!=null){
+            this.setState({
+                nav:{
+                    selectedHome: data.selectedHome,
+                    //selectedReports:false,
+                    selectedProjects:data.selectedProjects,
+                    selectedHR:data.selectedHR,
+                    selectedClients:data.selectedClients,
+                    selectedEmployees:data.selectedEmployees,
+                }
+            },function (){
+                console.log("Reloaded Nav ",this.state.nav)
+            })
+        }
+    }
+
+    openProfileMenu(){
+        if(this.state.openProfileMenu=="employee_menu"){
+            console.log("open menu",this.state.openProfileMenu)
+            this.setState({
+                openProfileMenu:"opened_employee_menu"
+            })
+        }else{
+            console.log("Close menu",this.state.openProfileMenu)
+            this.setState({
+                openProfileMenu:"employee_menu"
+            })
+        }
+
     }
 
     logOut(){
@@ -26,15 +64,19 @@ class AdminNavbar extends Component{
     }
     changeColorHome(){
         this.setState({
-            selectedHome:true,
-            //selectedReports:false,
-            selectedProjects:false,
-            selectedHR:false,
-            selectedClients:false,
-            selectedEmployees:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:true,
+                //selectedReports:false,
+                selectedProjects:false,
+                selectedHR:false,
+                selectedClients:false,
+                selectedEmployees:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/adminPanel");
         })
-        this.props.history.push("/adminPanel");
     }
     /*changeColorReports(){
         this.setState({
@@ -50,62 +92,79 @@ class AdminNavbar extends Component{
     }*/
     changeColorProjects(){
         this.setState({
-            selectedHome:false,
-            //selectedReports:false,
-            selectedProjects:true,
-            selectedHR:false,
-            selectedClients:false,
-            selectedEmployees:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                //selectedReports:false,
+                selectedProjects:true,
+                selectedHR:false,
+                selectedClients:false,
+                selectedEmployees:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/projects");
         })
-        this.props.history.push("/projects");
-        window.location.reload (false)
     }
     changeColorHR(){
         this.setState({
-            selectedHome:false,
-            //selectedReports:false,
-            selectedProjects:false,
-            selectedHR:true,
-            selectedClients:false,
-            selectedEmployees:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                //selectedReports:false,
+                selectedProjects:false,
+                selectedHR:true,
+                selectedClients:false,
+                selectedEmployees:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/hr/departments");
         })
-        this.props.history.push("/hr/departments");
     }
     changeColorClients(){
         this.setState({
-            selectedHome:false,
-            //selectedReports:false,
-            selectedProjects:false,
-            selectedHR:false,
-            selectedClients:true,
-            selectedEmployees:false,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                //selectedReports:false,
+                selectedProjects:false,
+                selectedHR:false,
+                selectedClients:true,
+                selectedEmployees:false,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/clients");
         })
-        this.props.history.push("/clients");
     }
+
     changeColorEmployees(){
         this.setState({
-            selectedHome:false,
-            //selectedReports:false,
-            selectedProjects:false,
-            selectedHR:false,
-            selectedClients:false,
-            selectedEmployees:true,
-            selectedLogout:false
+            nav:{
+                selectedHome:false,
+                //selectedReports:false,
+                selectedProjects:false,
+                selectedHR:false,
+                selectedClients:false,
+                selectedEmployees:true,
+                selectedLogout:false
+            }
+        },function (){
+            localStorage.setItem('Nav', JSON.stringify(this.state.nav))
+            this.props.history.push("/employees/addEmployee");
         })
-        this.props.history.push("/employees");
+
     }
     render(){
 
-        let linkClassHome = this.state.selectedHome ? "nav-link text-danger " : "nav-link text-light";
+        let linkClassHome = this.state.nav.selectedHome ? "nav-link text-danger " : "nav-link text-light";
       //  let linkClassReports = this.state.selectedReports ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassProjects = this.state.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassHR = this.state.selectedHR? "nav-link text-danger" : "nav-link text-light";
-        let linkClassClients = this.state.selectedClients ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassEmployees = this.state.selectedEmployees ? "nav-link text-danger" : "nav-link text-light";
-        let linkClassLogout = this.state.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassProjects = this.state.nav.selectedProjects ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassHR = this.state.nav.selectedHR? "nav-link text-danger" : "nav-link text-light";
+        let linkClassClients = this.state.nav.selectedClients ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassEmployees = this.state.nav.selectedEmployees ? "nav-link text-danger" : "nav-link text-light";
+        let linkClassLogout = this.state.nav.selectedLogout ? "nav-link text-danger" : "nav-link text-light";
         return (
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="logoContainer">
@@ -136,22 +195,34 @@ class AdminNavbar extends Component{
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassEmployees} href="http://localhost:3000/projects" onClick={this.changeColorEmployees.bind(this)
+                                <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
                             }>Employees</a>
                             </li>
-                            <div className="nav-item logOut" onClick={this.logOut.bind(this)}>
-                                <h7>Log out</h7>
-                            </div>
                         </ul>
                     </div>
                 </div>
-                <div className="user">
-                    <img className="notification" src={require('../../../assests/images/notifications.png').default}/>
-                    <div className="userText">
-                        <h7 className="userNameText">Welcome {this.state.name}</h7>
-                        <p></p>
+
+                <div className="employee_navbar_action"  style={{zIndex:10}}>
+                    <div className="employee_profile" onClick={this.openProfileMenu.bind(this)}>
+                        <img className="employee_avatar" src={this.state.profileImage}/>
                     </div>
-                    <img className="avatar" src={require('../../../assests/images/avatar.jpeg').default}/>
+                    <div className={this.state.openProfileMenu}>
+                        <h4 className="hiddenMenuTitle">
+                            Welcome
+                            <br/>
+                            <span className="hiddenMenuSpan">{this.state.name}</span>
+                        </h4>
+                        <ul>
+                            <li className="hiddenMenuListItem">
+                                <img className="hiddenMenuIcon" src={require('../../../assests/images/notifications.png').default}/>
+                                <h7 className="hiddenMenuListItemText">Notofications</h7>
+                            </li>
+                            <li className="hiddenMenuListItem">
+                                <img className="hiddenMenuIcon" src={require('../../../assests/images/logout.png').default}/>
+                                <h7 className="hiddenMenuListItemText" onClick={this.logOut.bind(this)}>Logout</h7>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
             </nav>

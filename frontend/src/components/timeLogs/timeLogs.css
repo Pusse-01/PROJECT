@@ -244,5 +244,14 @@
     box-shadow: 0px 5px 10px 1px rgb(14, 155, 237);
     font-size: 25px;
   }
-  
+  .dropdownfonts{
+    color: azure;
+    background-color: #1e272e;
+    border: #1e272e;
+    font-size: 3vh;
+    overflow: scroll;
+  }
+  .timefont{
+    font-size: 6vh;
+  }
   

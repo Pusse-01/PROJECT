@@ -13,6 +13,8 @@ body {
 .float-child-element2 { 
   float: left; 
   width: 18%; 
+  margin-left:82%;
+  position: fixed;
 } 
 .red { 
 
