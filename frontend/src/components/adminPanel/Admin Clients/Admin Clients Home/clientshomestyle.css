@@ -1,0 +1,164 @@
+
+.clientssMainComponent {
+    position: absolute;
+    top: 80px;
+    left :0px;
+    bottom: 0px;
+    width : 100%;
+    z-index: -1;
+    background-color: #1e272e;
+}
+.clientssMainComponent::-webkit-scrollbar{
+    display: none;
+}
+
+.clientsSubComponent {
+    position: absolute;
+    top: 70px;
+    left :0px;
+    bottom: 0px;
+    width : 82%;
+    z-index: -1;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 50% 50%;
+}
+
+.addClientsComponents{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding : 10px;
+    color: white;
+    overflow: scroll;
+}
+
+.addclientsSubComponent {
+    padding: 10px;
+}
+
+.addClientsComponents::-webkit-scrollbar{
+    display: none;
+}
+
+.hrTitleText{
+    color: #a4b0be;
+    font-weight: bolder;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hrForm{
+    display: grid;
+    grid-template-rows: 150px 80px;
+}
+
+.hrFormSub{
+    height: 100%;
+}
+
+.hrLabel{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 10px;
+}
+.hrTextInput{
+    background: #2f3640;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 5px;
+    border-radius: 50px;
+}
+.hrTextInput:focus{
+    outline: none;
+}
+.clients_addButtonContainer{
+    margin-top: 40px;
+    padding: 5px;
+    border-bottom : 3px solid red;
+    border-top : 2px solid #2f3640;
+    border-radius: 100px;
+    width: 200px;
+    justify-self: center;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+.clients_addButton {
+    padding :5px;
+    text-align: center;
+}
+.clients_addButtonContainer:hover {
+    background: red;
+}
+
+.hrText {
+    color: white;
+}
+.multiSelect{
+    background: #1e272e;
+}
+.clients_table_view{
+    overflow: scroll;
+    margin-bottom: 10px;
+}
+.clients_table_view::-webkit-scrollbar{
+    display: none;
+}
+.clientsTable{
+    margin-top: 10px;
+    align-items: center;
+    width: 100%;
+}
+.clients_table_head {
+    width : 20%;
+    color: #a4b0be;
+    background-color: #2f3640;
+    font-weight: bolder;
+    height: 40px;
+}
+
+.clients_table_data_odd{
+    width: 20%;
+    background-color: #1e272e;
+    color: white ;
+}
+
+.clients_table_data_even{
+    width: 20%;
+    background-color: #2f3640;
+    color: white ;
+
+}
+.clients_table_header_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+.clients_table_data_column {
+    border-right: 1px solid #57606f;
+    text-align: center;
+}
+
+
+
+@media only screen and (max-width: 991px) {
+    .clientsMainComponent {
+        position: absolute;
+        top: 250px;
+        left: 0px;
+        bottom: 0px;
+        padding-top: 80px;
+        width: 100%;
+        z-index: -1;
+        background-color: #1e272e;
+    }
+
+    .clientsSubComponent {
+        position: static;
+        width: 100%;
+        z-index: -1;
+        background-color: #1e272e;
+        padding-bottom: 20px;
+    }
+}
+
