@@ -29,11 +29,12 @@ export default class Sidebar extends Component{
                                     <h5 className="clients_sidebar_client_email">{client.Client.email}</h5>
                                     <h2 className="clients_sidebar_client_title">Projects</h2>
                                     {
+                                        client.Projects>0?
                                         client.Projects.map((project,index2)=>{
                                             return(
                                                 <h5 className="clients_sidebar_client_name">{project.name}</h5>
                                             )
-                                        })
+                                        }):<div></div>
                                     }
                                 </div>
                             )
