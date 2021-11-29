@@ -19,7 +19,8 @@ class AdminNavbar extends Component{
             name: founduser.employee.name,
             openProfileMenu:"employee_menu",
             id:founduser.employee.id,
-            profileImage:"http://localhost:8070/"+founduser.employee.profileImage
+            profileImage:"http://localhost:8070/"+founduser.employee.profileImage,
+            COUNT:0
         }
     }
 
@@ -91,7 +92,9 @@ class AdminNavbar extends Component{
         this.props.history.push("/reports")
     }*/
     changeColorProjects(){
+        localStorage.setItem("COUNT", this.state.COUNT);
         this.setState({
+            
             nav:{
                 selectedHome:false,
                 //selectedReports:false,
@@ -103,8 +106,9 @@ class AdminNavbar extends Component{
             }
         },function (){
             localStorage.setItem('Nav', JSON.stringify(this.state.nav))
-            this.props.history.push("/projects");
+            this.props.history.push("/projects")
         })
+        this.setState({COUNT:this.state.COUNT+1})
     }
     changeColorHR(){
         this.setState({
@@ -195,7 +199,7 @@ class AdminNavbar extends Component{
                                 <a className={linkClassClients} href="#" onClick={this.changeColorClients.bind(this)}>Clients</a>
                             </li>
                             <li className="nav-item">
-                                <a className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
+                                <a  className={linkClassEmployees} href="#" onClick={this.changeColorEmployees.bind(this)
                             }>Employees</a>
                             </li>
                         </ul>

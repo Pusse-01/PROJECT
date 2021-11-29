@@ -173,11 +173,6 @@ export default class Demo extends React.PureComponent {
     this.getCalendarLogs()
     this.getProjecLogs()
 
-    if (this.state.changes) {
-      // this.savesession();
-      console.log('lol             lol            lol')
-
-    }
 
     this.interval = setInterval(
       () => {
@@ -466,24 +461,11 @@ export default class Demo extends React.PureComponent {
             <li></li>
             <li></li>
           </ul>
-
-          <ul class="background1">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
         </div>
 
 <div>
 <div>{lastlog.length > 0?
-  <button class="changesmain">
+  <button class="changesmain"  style={{backgroundColor: "#2f3640"}}>
   Last Assigned Project<br/><br/>
 
   Title : {lastlog[0].title}<br/>
