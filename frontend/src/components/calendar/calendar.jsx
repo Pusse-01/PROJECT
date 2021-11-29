@@ -32,7 +32,7 @@ import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
-
+import WeatherApp from "./calendar-subcomponents/weather/weatherApp"
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
 
@@ -48,18 +48,18 @@ const styles = theme => ({
   },
 
   appointment: {
-    opacity: .9,
+    opacity: 1.0,
     backgroundColor: '#4b5ccd',
     borderRadius: '6px',
     '&:hover': {
-      opacity: 0.5,
+      opacity: 0.9,
     },
   },
   apptContent: {
     '&>div>div': {
       whiteSpace: 'normal !important',
       lineHeight: 1.2,
-      color: '#FFFFFF'
+      color: '#000000'
     },
   },
 
@@ -90,7 +90,7 @@ const FlexibleSpace = withStyles(styles, { name: 'ToolbarRoot' })(({ classes, ..
       <Typography variant="subtitle2" style={{
         marginLeft: '10px', marginRight: '20px', font: "10px",
         color: "#FF0000"
-      }}>C  A  L  E  N  D A  R</Typography>
+      }}></Typography>
     </div>
   </Toolbar.FlexibleSpace>
 ));
@@ -130,7 +130,6 @@ const AppointmentContent = withStyles(styles, {
   />
 ));
 
-
 export default class Demo extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -145,7 +144,7 @@ export default class Demo extends React.PureComponent {
       name: founduser.employee.name,
       id: founduser.employee.id,
       email: founduser.employee.email,
-      lastlog:[],
+      lastlog: [],
       currentDate: Date.now(),
       loading: false,
       loadinggetlogs: true,
@@ -162,11 +161,12 @@ export default class Demo extends React.PureComponent {
 
     };
 
-  }
+  }  
   componentWillMount() {
     this.getCalendarLogs()
     this.getProjecLogs()
   }
+
   componentDidMount() {
     document.title = "PROJECT Calendar"
 
@@ -255,10 +255,11 @@ export default class Demo extends React.PureComponent {
   getProjecLogs = () => {
     const userEamil = this.state.email;
     var resources = [];
-    var currentlog =[];
+    var currentlog = [];
     axios.get('http://localhost:8070/employee/projects/' + userEamil)
       .then((response => {
         var color;
+        var lastlogdata = []
         for (var i = 0; i < response.data.length; i++) {
           if (i % 7 === 0) {
             color = amber;
@@ -275,14 +276,19 @@ export default class Demo extends React.PureComponent {
             color = deepOrange
           }
 
-          if(i=== response.data.length-1){
-            currentlog =[{
-              title:response.data[i].name,
-              duedate:((response.data[i].overdue).toString()).substring(0, 10),
-              note:response.data[i].projectStatus,
+         
+            currentlog = [{
+              title: response.data[i].name,
+              duedate: ((response.data[i].overdue).toString()).substring(0, 10),
+              note: response.data[i].projectStatus,
             }]
-            this.setState({lastlog:currentlog});
-          }
+            lastlogdata.push(currentlog[0])
+
+            if (i === response.data.length - 1) {
+              this.setState({ lastlog: lastlogdata });
+             }
+
+          
 
 
 
@@ -298,17 +304,31 @@ export default class Demo extends React.PureComponent {
 
       })).then(() => {
         var memberslist = []
-        for (var j = 0; j < resources.length; j++) {
+        for (let j = 0; j < resources.length; j++) {
           //console.log(resources[j].text);
           axios.get('http://localhost:8070/projects/list/' + resources[j].text) //http://localhost:8070/projects/list/'+userEamil
             .then((response) => {
-              for (var i = 1; i < response.data.members.length; i++) {
+              for (var i = 0; i < response.data.members.length; i++) {
                 var member = [{
                   id: i,
                   text: response.data.members[i],
                 }]
                 memberslist.push(member[0]);
               }
+              var templist = []
+              for (let l = 0; l < memberslist.length; l++) {
+                let copy = false
+                for (let k = l + 1; k < memberslist.length; k++) {
+                  if (memberslist[l].text === memberslist[k].text) {
+                    copy = true
+                    break;
+                  }
+                }
+                if (!copy) {
+                  templist.push(memberslist[l])
+                }
+              }
+
 
               this.setState({
                 resources: [
@@ -321,7 +341,7 @@ export default class Demo extends React.PureComponent {
                     fieldName: 'members',
                     title: 'Members',
                     allowMultiple: true,
-                    instances: memberslist,
+                    instances: templist,
                   },
                 ],
                 loadinggetprojects: false,
@@ -448,36 +468,50 @@ export default class Demo extends React.PureComponent {
 
     return (
       <div>
+
+
         <div>
-          <ul class="background">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+          <div class="sidecontainer">
+
+            {lastlog.length > 0 ?
+              <button type='button' class="changesmain" style={{ backgroundColor: "#2f3640" }}>
+                <div class="lastprojects">
+                  <div style={{ marginLeft: '5px', marginTop: '10px' }}>
+
+                    <h6 style={{ color: "white" }}><br />&nbsp; Last Assigned Projects</h6>
+                  </div>
+                  {lastlog.map((lastlogs, index) => (
+                    <div style={{ marginLeft: '10px',marginTop: '10px', marginBottom: '10px', fontSize: '13px' }}>
+                      Title : {lastlogs.title}<br />
+                      Due Date : {lastlogs.duedate}<br />
+                      Status : {lastlogs.note}<br />
+                    </div>
+                  ))}
+
+                </div>
+
+              </button> : null
+            }
+          
+
+            {lastlog.length === 0 ?
+
+            
+                <div class="lastprojects" style={{ marginLeft: '10px' }}>
+                  <div style={{ marginLeft: '5px', marginTop: '10px' }}>
+                    <h6 style={{ color: "white" }}><br />&nbsp; Last Assigned Projects</h6><br />
+                  </div>
+                  <div style={{ marginLeft: '10px', fontSize: '13px' }}>
+                    No Projects have assigned.
+                  </div>
+
+                </div>
+
+
+              : null}
+            <WeatherApp />
+          </div>
         </div>
-
-<div>
-<div>{lastlog.length > 0?
-  <button class="changesmain"  style={{backgroundColor: "#2f3640"}}>
-  Last Assigned Project<br/><br/>
-
-  Title : {lastlog[0].title}<br/>
-  Due Date : {lastlog[0].duedate}<br/>
-  Status : {lastlog[0].note}<br/>
-</button>: <button class="changesmain">
-  No Projects have assigned!<br/>
-</button>
-}
-      
-      </div>
-</div>
 
 
         <div>
@@ -489,7 +523,6 @@ export default class Demo extends React.PureComponent {
               data={data}
             >
               <ViewState
-
                 defaultCurrentDate={currentDate}
                 currentViewName={currentViewName}
                 onCurrentViewNameChange={this.currentViewNameChange}
@@ -510,6 +543,7 @@ export default class Demo extends React.PureComponent {
               <DayView />
               <Appointments className="appointment"
                 appointmentContentComponent={AppointmentContent}
+
               />
               <AppointmentTooltip
                 contentComponent={Content}
@@ -517,7 +551,7 @@ export default class Demo extends React.PureComponent {
                 showDeleteButton
                 showOpenButton
               />
-              <AppointmentForm />
+              <AppointmentForm/>
 
               <Resources
                 data={resources}

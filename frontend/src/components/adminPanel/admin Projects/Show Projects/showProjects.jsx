@@ -1081,21 +1081,6 @@ class Editproject extends React.Component {
   };
 
   render() {
-    if (this.state.loading) {
-      return (
-        <div>
-          <div class="ring1">
-            Loading
-            <span class="span1"></span>
-          </div>
-          <div>
-            <button class="loadingbutton">
-              Please check your network connection.
-            </button>
-          </div>
-        </div>
-      );
-    }
 
     if (this.state.error) {
       return (
@@ -1104,8 +1089,8 @@ class Editproject extends React.Component {
             <span class="span1"></span>
           </div>
           <div>
-            <a href="http://localhost:3000/createproject">
-              <button class="loadingbutton">
+            <a href="http://localhost:3000/projects">
+              <button class="loadingbutton" onClick={this.backtoHome}>
                 {" "}
                 Invalid, Please Fill all the details.
                 <br />

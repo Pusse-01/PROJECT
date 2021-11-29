@@ -12,7 +12,7 @@
 
 .h5style {
   z-index:2;
-  color: rgb(151, 162, 224)
+  color: rgb(255, 255, 255)
 }
 
 .buttonweather {
@@ -48,13 +48,14 @@
 }
 
 .main-container {
-  height: 50%;
+  color:#1e2432;
+  height:10%;
   position: absolute;
-  top: 70px;
+  top: 00px;
   right: 10px;
   bottom: 0px;
-  padding-top: 75px;
-  width: 16.0%;
+  padding-top: 40px;
+  width: 90.0%;
   z-index: 2;
   display: flex;
   justify-content: top;
@@ -119,7 +120,7 @@ p {
   height: 100px;
 }
 
-.info {
+.info {margin-left: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -173,7 +173,7 @@ class ProjectAdmin extends React.Component {
                 />&nbsp;View All Task<br /><p class="p">view a summary of all tasks</p></button>
               </div>
               <div>
-                <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoanalyze}><TrendingUp
+                <button class="button" style={{ marginTop: '5px' , marginBottom: '15px'  }} onClick={this.gotoanalyze}><TrendingUp
                   fontSize="large"
                   htmlColor="#ffffff"
                 />&nbsp;Status<br /><p class="p">Evaluare your work</p></button>
