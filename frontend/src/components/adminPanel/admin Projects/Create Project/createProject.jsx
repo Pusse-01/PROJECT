@@ -102,12 +102,10 @@ class Createproject extends React.Component {
   }
 
   setProjectname = (event) => {
-    console.log(event.target.value);
     let value = event.target.value
     let lengthvalue = value.length
     for (let i = 0; i < this.state.currentProjects.length; i++) {
       if ((((this.state.currentProjects[i].name.toLowerCase())) === value.toLowerCase()) && lengthvalue !== 0) {
-        console.log('in')
         this.setState({
           sameName: true
         })
@@ -144,7 +142,6 @@ class Createproject extends React.Component {
 
   setSelectedManagers = (event) => {
     let index = event.target.value;
-    console.log(index);
     this.state.selectedManagers.push(this.state.employeesasadmins[index]);
 
     const newcontributorlist = this.state.employeesasadmins.filter((employeelist) => {
@@ -164,7 +161,6 @@ class Createproject extends React.Component {
     this.setState({
       startDate: date,
     });
-    console.log(date);
   };
 
   setendDate = (date) => {
@@ -185,18 +181,13 @@ class Createproject extends React.Component {
         this.setState({
           currentProjects: projectData
         })
-        console.log(projectData)
       })
   }
-
-
-
   getEmployees() {
     axios.get('http://localhost:8070/employee/allEmployees')
       .then((response) => {
         let employeelist = []
         for (var i = 0; i < response.data.length; i++) {
-          console.log(i + "name" + response.data[i].name)
           var employee = [
             {
               username: response.data[i].name,
@@ -227,7 +218,6 @@ class Createproject extends React.Component {
 
     for (let i = 0; i < this.state.currentProjects.length; i++) {
       if ((((this.state.currentProjects[i].name.toLowerCase())) === this.state.projectname.toLowerCase())) {
-        console.log('in')
         this.setState({
           error: true,
           sameName: true
@@ -285,33 +275,8 @@ clearForm = (event) => {
 }
 
 
-  deleteManagerChip = (event) => {
-    console.log("delete button")
-    console.log(event.name)
-
-  }
-
   render() {
 
-
-
-    if (this.state.loading) {
-      return (
-        <div>
-          <div class="ring1">
-            Loading
-            <span class="span1"></span>
-          </div>
-          <div>
-
-            <button class="loadingbutton">
-              Please check your network connection.
-            </button>
-          </div>
-        </div>
-
-      );
-    }
 
     if (this.state.error) {
       return (
@@ -320,7 +285,7 @@ clearForm = (event) => {
             <span class="span1"></span>
           </div>
           <div>
-            <a href="http://localhost:3000/createproject">
+            <a href="http://localhost:3000/projects">
               <button class="loadingbutton">
                 {" "}
                 Invalid, Please Fill all the details.<br />
@@ -456,8 +421,9 @@ clearForm = (event) => {
                   ))}
                 </FormControl>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
+                  color="black"
                     variant="inline"
                     inputVarient="outlined"
                     label="End Date"

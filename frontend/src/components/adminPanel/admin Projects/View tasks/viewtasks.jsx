@@ -19,7 +19,9 @@ import axios from "axios";
 import "./viewTaskStyles.css";
 import { InputBase } from "@material-ui/core";
 import Createtask from "../createTask/createTask"
+import Edittask from "../Edit tasks/edittask"
 import { Helmet } from 'react-helmet'
+
 
 const TITLE = 'Task View'
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -68,23 +70,21 @@ class Row extends React.Component {
     super(props);
     this.state = {
       row: this.props.row,
-      openProject: "",
       open: false,
-      edit: false,
     };
     this.createTaskfromthis.bind(this)
+    this.taskEdit.bind(this)
   }
 
   setOpen = (event) => {
     if (this.state.open) {
       this.setState({ open: false });
     } else if (!this.state.open) {
-      this.setState({ open: true, openProject: this.state.row.name });
+      this.setState({ open: true});
     }
   };
 
   taskDelete = (event) => {
-    console.log(event.target.value)
     var newrow = []
     for (let i = 0; i < this.state.row.history.length; i++) {
       if (i !== event.target.value) {
@@ -103,8 +103,14 @@ class Row extends React.Component {
   };
 
   createTaskfromthis = () => {
-    this.props.setStateOfParent("Geeks For Geeks");
+    this.props.setStateOfParent("Task created");
   }
+
+  taskEdit = (event) => {
+    let task_id = this.state.row.history[event.target.value].task_id
+    this.props.setStateOfParent2(task_id);
+  }
+
   render() {
     const { row, open } = this.state;
 
@@ -184,11 +190,11 @@ class Row extends React.Component {
                       <div>
                         No tasks have assigned
                         <StyledTableCell>
-                        
-                            <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
-                              Add Task
-                         </button>
-                         
+
+                          <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
+                            Add Task
+                          </button>
+
                         </StyledTableCell>
                       </div>
                     ) : null}
@@ -201,12 +207,12 @@ class Row extends React.Component {
                           {historyRow.date}
                         </TableCell>
                         {(historyRow.taskstat === 'Done' || (historyRow.taskstat === 'Review')) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#00ff00' }}>
+                          <TableCell align="left" colSpan={2} sx={{ color: '#00FF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'In Progress' && (new Date(historyRow.date) > Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#00FF00' }}>
+                          <TableCell align="left" colSpan={2} sx={{ color: '#FFFF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
@@ -226,7 +232,7 @@ class Row extends React.Component {
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'Bugs/Issues' && (new Date(historyRow.date) > Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#ffb300' }}>
+                          <TableCell align="left" colSpan={2} sx={{ color: '#ffff00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
@@ -252,9 +258,9 @@ class Row extends React.Component {
                             </Box>
                           ))}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell align="left" colSpan={2}>
 
-                          <button
+                          <button style={{ fontSize: 11, padding: 0, marginRight: '10px', marginLeft: '10px', backgroundColor: '#000000', width: '40px', textAlign: 'center' }}
                             class="taskdeletebutton"
                             type="button"
                             value={index}
@@ -263,6 +269,15 @@ class Row extends React.Component {
 
                             Delete
                           </button>
+                              
+                          <button style={{fontSize: 10, marginRight: "170px", backgroundColor:'#000000', width:'40px', textAlign:'center'}}
+                            class="taskdeletebutton"
+                            value={index}
+                            onClick={this.taskEdit}
+                          >
+
+                            Edit
+                          </button> *
 
                         </TableCell>
                       </TableRow>
@@ -270,11 +285,11 @@ class Row extends React.Component {
                     {row.history.length !== 0 ? (
                       <div>
                         <StyledTableCell>
-                         
-                            <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
-                              Add Task
-                            </button>
- 
+
+                          <button class="buttonsubmitactionaddtask" onClick={this.createTaskfromthis}>
+                            Add Task
+                          </button>
+
                         </StyledTableCell>
                       </div>
                     ) : null}
@@ -319,12 +334,15 @@ export default class Viewtasks extends React.Component {
   constructor(props) {
     super(props);
     this.setStateOfParent.bind(this)
+    this.setStateOfParent2.bind(this)
     this.state = {
       rows: [],
       filterdresult: [],
-      createTaskstat: false
+      createTaskstat: false,
+      edittaskstat: false,
+      editId: 0
     };
-   
+
   }
 
   componentDidMount() {
@@ -370,8 +388,6 @@ export default class Viewtasks extends React.Component {
                   var data = response.data.response[k];
 
                   if (data.assigned_to.length > 0) {
-                    console.log(data.assigned_to.length);
-
                     let employeelist = [];
                     for (var z = 0; z < data.assigned_to.length; z++) {
                       var name = data.assigned_to[z];
@@ -392,7 +408,6 @@ export default class Viewtasks extends React.Component {
                             }
                           }
                         }
-                        console.log(employeenamelist);
                         employeelist = employeenamelist;
                       })
                       .catch((error) => {
@@ -503,13 +518,19 @@ export default class Viewtasks extends React.Component {
   };
 
   setStateOfParent = (newState) => {
-   this.setState({
-    createTaskstat:true
-   })
- }
+    this.setState({
+      createTaskstat: true
+    })
+  }
+  setStateOfParent2 = (newState) => {
+    this.setState({
+      edittaskstat: true,
+      editId: newState
+    })
+  }
 
   render() {
-    const { filterdresult, createTaskstat } = this.state;
+    const { filterdresult, createTaskstat, edittaskstat } = this.state;
 
     if (filterdresult.length === 0) {
       return (
@@ -522,13 +543,27 @@ export default class Viewtasks extends React.Component {
       )
     }
 
+    
+    if(edittaskstat){
+    return(
+      <div>
+      <Helmet>
+        <title>{'Edit Task'}</title>
+      </Helmet>
+      <Edittask  id={this.state.editId} />
+
+
+    </div>
+    )
+    }
+
     if (createTaskstat) {
       return (
         <div>
           <Helmet>
             <title>{'Create Task'}</title>
           </Helmet>
-          <Createtask  />
+          <Createtask />
 
         </div>
 
@@ -573,7 +608,7 @@ export default class Viewtasks extends React.Component {
                 </TableHead>
                 <TableBody>
                   {filterdresult.map((row, index) => {
-                    return <Row key={row.name} row={row} setStateOfParent={this.setStateOfParent}></Row>;
+                    return <Row key={row.name} row={row} setStateOfParent={this.setStateOfParent} setStateOfParent2={this.setStateOfParent2}></Row>;
                   })}
                 </TableBody>
               </Table>
