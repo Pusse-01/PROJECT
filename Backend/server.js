@@ -7,6 +7,7 @@ require("dotenv").config();
 const TaskRouts = require('./routs/taskRouts')
 const DepartmentsRouts = require('./routs/departmentsRouts')
 const DesignationsRouts =  require('./routs/designationsRouts')
+const ClientsRouts = require('./routs/clientRouts')
 
 const app = express();
 
@@ -41,6 +42,8 @@ app.use('/dashboard',require('./routs/workrouts.js'));
 app.use('/task',TaskRouts)
 app.use('/departments',DepartmentsRouts)
 app.use('/designations',DesignationsRouts)
+app.use('/clients',ClientsRouts)
+
 const URL = config.get("MONGODB_URI");
 
 mongoose.connect(URL, { 

@@ -23,6 +23,8 @@ import UserReports from "./components/adminPanel/Reports/userReports";
 import Departments from "./components/adminPanel/Admin HR/Departments/departments";
 import Designations from "./components/adminPanel/Admin HR/Designations/designations";
 
+import Clients from "./components/adminPanel/Admin Clients/Admin Clients Home/clientshome";
+
 //Start of Employee Calendar TaskBacklog by Malaka
 import WeatherApp from "./components/calendar/calendar-subcomponents/weather/weatherApp"
 import ShowTaskBackLog from "./components/calendar/calendar";
@@ -186,6 +188,8 @@ function App() {
               <Route path="/employees/updatePassword"><UpdatePassword/></Route>
               <Route path="/employees/updatePosition"><UpdatePosition/></Route>
               <Route path="/designations"><Designations/></Route>
+
+              <Route path="/clients"><Clients/></Route>
 
 
               {/*Start of Admin Panel - Projects */}
