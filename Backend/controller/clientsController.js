@@ -111,7 +111,9 @@ const addProject = (req, res) => {
 
 function getProject(projectId){
     return new Promise((resolve,reject) => {
-        Project.findById(projectId,(err,pat) => resolve(pat))
+        Project.findById(projectId,(err,pat) => {
+            resolve(pat)
+        })
     })
 }
 
@@ -120,9 +122,14 @@ function getClient(client){
         let projects = client.projects
         Promise.all(projects.map(projectId=> getProject(projectId)))
             .then(arr => {
+                let temp = arr.filter(ele=>{
+                    if(ele!=null){
+                        return ele
+                    }
+                })
                 resolve({
                     'Client':client,
-                    'Projects':arr
+                    'Projects':temp
                 })
             })
     })
@@ -144,9 +151,25 @@ const getClients = (req, res, next) => {
         })
 }
 
+const deleteClient = (req,res) => {
+    let client_id = req.body.client_id
+    if(client_id==null){
+        res.json("Client Id is Null")
+    }else{
+        Clients.findByIdAndDelete(client_id)
+            .then(result=>{
+                res.json({message:"Successfully deleted the client",res:result})
+            })
+            .catch(error=>{
+                res.json({message:"Failed deleting the client"})
+            })
+    }
+}
+
 module.exports = {
     addClient,
     addMeeting,
     getClients,
-    addProject
+    addProject,
+    deleteClient
 }

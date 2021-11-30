@@ -23,18 +23,22 @@ export default class Sidebar extends Component{
                             }else if(index%4==3){
                                 client_style = "clients_sidebar_client3"
                             }
+                            console.log(client.Projects)
                             return(
                                 <div className="clients_sidebar_client"  id={client_style} key={index}>
-                                    <h5 className="clients_sidebar_client_name">{client.Client.clientName}</h5>
+                                    <h2 className="clients_sidebar_client_title">Client Name</h2>
+                                    <h5 className="clients_sidebar_client_email">{client.Client.clientName}</h5>
+                                    <h2 className="clients_sidebar_client_title">Client Email</h2>
                                     <h5 className="clients_sidebar_client_email">{client.Client.email}</h5>
-                                    <h2 className="clients_sidebar_client_title">Projects</h2>
+                                    <h2 className="clients_sidebar_client_title">Projects of the Client</h2>
                                     {
-                                        client.Projects>0?
                                         client.Projects.map((project,index2)=>{
-                                            return(
-                                                <h5 className="clients_sidebar_client_name">{project.name}</h5>
-                                            )
-                                        }):<div></div>
+                                            if(project!=null){
+                                                return(
+                                                    <h5 className="clients_sidebar_client_email">{project.name}</h5>
+                                                )
+                                            }
+                                        })
                                     }
                                 </div>
                             )

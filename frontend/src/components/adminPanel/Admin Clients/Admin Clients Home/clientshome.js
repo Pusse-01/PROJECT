@@ -39,6 +39,11 @@ class Clients extends Component {
             addProject:{
                 client_id:"",
                 project_id:""
+            },
+            errorMessage:"There is no errors",
+            errorStyle:"clients_no_error",
+            deleteClient:{
+                client_id:""
             }
         }
     }
@@ -65,7 +70,6 @@ class Clients extends Component {
                             clients: res.data,
                             meetings:meetings,
                             projects: res2.data
-                        }, () => {
                         })
                     })
                     .catch(error => {
@@ -78,69 +82,161 @@ class Clients extends Component {
     }
 
     addClient = () => {
-        axios.post('http://localhost:8070/clients/addClients', this.state.client)
-            .then((res) => {
-                axios.get('http://localhost:8070/clients/getClients')
+        if(this.state.client.clientName==""||this.state.client.email==""){
+            this.setState({
+                errorMessage: "Please Fill Client Name and Email",
+                errorStyle: "clients_error_message"
+            })
+        }else{
+            const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+            const result = pattern.test(this.state.client.email);
+            if (result === true) {
+                axios.post('http://localhost:8070/clients/addClients', this.state.client)
                     .then((res) => {
-                        this.setState({
-                            clients: res.data
-                        }, () => {
-                          alert("Successfully Added Client")
-                            window.location.reload();
-                        })
+                        axios.get('http://localhost:8070/clients/getClients')
+                            .then((res) => {
+                                this.setState({
+                                    clients: res.data,
+                                    client:{
+                                        email:"",
+                                        clientName:""
+                                    },
+                                    errorMessage: "Successfully Added Client",
+                                    errorStyle: "clients_error_message"
+                                })
+                            })
+                            .catch(error => {
+                                this.setState({
+                                    errorMessage: "An Error Occurred!",
+                                    errorStyle: "clients_error_message"
+                                })
+                            })
                     })
                     .catch(error => {
-                        console.log(error)
-                    })
-                alert(res.data.message)
-            })
-            .catch(error => {
-                alert(error.data)
-            })
+                        this.setState({
+                            errorMessage: "An Error Occurred!",
+                            errorStyle: "clients_error_message"
+                        })                    })
+            }else{
+                this.setState({
+                    errorMessage: "Invalid Email!",
+                    errorStyle: "clients_error_message"
+                })
+            }
+        }
     }
 
     addMeeting = () => {
-        axios.post('http://localhost:8070/clients/addMeeting', this.state.meeting)
-            .then((res) => {
-                axios.get('http://localhost:8070/clients/getClients')
-                    .then((res) => {
-                        this.setState({
-                            clients: res.data,
-                            meeting:null
-                        }, () => {
-                            alert("Successfully added Client")
+        if(this.state.meeting.client_id==""||this.state.meeting.date==""){
+            this.setState({
+                errorMessage: "Please Select a Client and Add Date",
+                errorStyle: "clients_error_message"
+            })
+        }else{
+            axios.post('http://localhost:8070/clients/addMeeting', this.state.meeting)
+                .then((res) => {
+                    axios.get('http://localhost:8070/clients/getClients')
+                        .then((res) => {
+                            let meetings = []
+                            res.data.map(client=>{
+                                client.Client.meetings.map(meeting=>{
+                                    meetings.push({
+                                        client_name:client.Client.clientName,
+                                        client_id:client.Client._id,
+                                        meeting:meeting
+                                    })
+                                })
+                            })
+                            this.setState({
+                                clients: res.data,
+                                meetings:meetings,
+                                errorMessage: "Successfully Added Meeting",
+                                errorStyle: "clients_error_message"
+                            })
                         })
+                        .catch(error => {
+                            this.setState({
+                                errorMessage: "Error Occurred!",
+                                errorStyle: "clients_error_message"
+                            })
+                        })
+                })
+                .catch(error => {
+                    this.setState({
+                        errorMessage: "Error Occurred!",
+                        errorStyle: "clients_error_message"
                     })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            })
-            .catch(error => {
-                alert(error.data)
-            })
+                })
+        }
     }
 
     addProject = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:8070/clients/addProject', this.state.addProject)
-            .then((res) => {
-                axios.get('http://localhost:8070/clients/getClients')
-                    .then((res) => {
+        if(this.state.addProject.client_id==""||this.state.addProject.project_id==""){
+            this.setState({
+                errorMessage: "Please Select a Client and a Project",
+                errorStyle: "clients_error_message"
+            })
+        }else{
+            axios.post('http://localhost:8070/clients/addProject', this.state.addProject)
+                .then((res) => {
+                    axios.get('http://localhost:8070/clients/getClients')
+                        .then((res) => {
 
-                        this.setState({
-                            clients: res.data,
-                            addProject:null
-                        }, () => {
-                            alert("Successfully added Project")
+                            this.setState({
+                                clients: res.data,
+                                errorMessage: "Successfully Added Project",
+                                errorStyle: "clients_error_message"
+                            })
                         })
+                        .catch(error => {
+                            this.setState({
+                                errorMessage: "Error Occurred!",
+                                errorStyle: "clients_error_message"
+                            })
+                        })
+                })
+                .catch(error => {
+                    this.setState({
+                        errorMessage: "Error Occurred!",
+                        errorStyle: "clients_error_message"
                     })
-                    .catch(error => {
-                        console.log(error)
+                })
+        }
+    }
+
+    deleteClient = () => {
+        if(this.state.deleteClient.client_id==""){
+            this.setState({
+                errorMessage: "Please Select a Client",
+                errorStyle: "clients_error_message"
+            })
+        }else{
+            axios.post('http://localhost:8070/clients/deleteClient', this.state.deleteClient)
+                .then((res) => {
+                    axios.get('http://localhost:8070/clients/getClients')
+                        .then((res) => {
+
+                            this.setState({
+                                clients: res.data,
+                                errorMessage: "Successfully Deleted Client",
+                                errorStyle: "clients_error_message"
+                            })
+                        })
+                        .catch(error => {
+                            this.setState({
+                                errorMessage: "Error Occurred!",
+                                errorStyle: "clients_error_message"
+                            })
+                        })
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.setState({
+                        errorMessage: "Error Occurred!",
+                        errorStyle: "clients_error_message"
                     })
-            })
-            .catch(error => {
-                alert(error.data)
-            })
+                })
+        }
     }
 
     setMeetingDate = (date) => {
@@ -158,12 +254,12 @@ class Clients extends Component {
             overrides: {
                 MuiPickersToolbar: {
                     toolbar: {
-                        backgroundColor: "black",
+                        backgroundColor: "#1e272e",
                     },
                 },
                 MuiPickersCalendarHeader: {
                     switchHeader: {
-                        backgroundColor: "red",
+                        backgroundColor: "#1e272e",
                         color: "white",
                     },
                 },
@@ -172,7 +268,7 @@ class Clients extends Component {
                         color: "red",
                     },
                     daySelected: {
-                        backgroundColor: "red",
+                        backgroundColor: "#1e272e",
                     },
                     dayDisabled: {
                         color: "red",
@@ -193,7 +289,10 @@ class Clients extends Component {
             <div className="clientsMainComponent">
                 <Clientsidebar clients={this.state.clients} meetings={this.state.meetings}/>
                 <div className="clientsSubComponent">
-                    <h5 className="clientsTitle">Scroll Horizonatally</h5>
+                    <div>
+                        <h5 className="clientsTitle">Scroll Horizontally</h5>
+                        <h7 className={this.state.errorStyle}>{this.state.errorMessage}</h7>
+                    </div>
                     <div className="addClientsComponents">
                         <div className="addclientsSubComponent">
                             <h5 className="hrTitleText">Add Client</h5>
@@ -338,8 +437,7 @@ class Clients extends Component {
                                                         style: {
                                                             fontSize: 14,
                                                             color:"white",
-                                                            backgroundColor:"red",
-                                                            borderRadius:10,
+                                                            backgroundColor:"#FF5349",
                                                             outline:"none",
                                                             border:"none",
                                                             paddingLeft:10
@@ -361,6 +459,59 @@ class Clients extends Component {
                                 </div>
                             </form>
                         </div>
+
+                        <div className="addclientsSubComponent">
+                            <h5 className="hrTitleText">Delete Client</h5>
+                            <form className="hrForm">
+                                <div className="hrFormSub">
+                                    <label className="hrLabel">
+                                        Client
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    deleteClient: {...this.state.deleteClient, client_id: e.target.value}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Client --</option>
+                                            {this.state.clients.map(item => {
+                                                return (<option key={item.Client._id}
+                                                                value={item.Client._id}>{item.Client.clientName}</option>);
+                                            })}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div className="clients_addButtonContainer" onClick={this.deleteClient}>
+                                    <h7 className="clients_addButton">Delete Client</h7>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div className="addclientsSubComponent">
+                            <h5 className="hrTitleText">Delete Client</h5>
+                            <form className="hrForm">
+                                <div className="hrFormSub">
+                                    <label className="hrLabel">
+                                        Client
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    deleteClient: {...this.state.deleteClient, client_id: e.target.value}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Client --</option>
+                                            {this.state.clients.map(item => {
+                                                return (<option key={item.Client._id}
+                                                                value={item.Client._id}>{item.Client.clientName}</option>);
+                                            })}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div className="clients_addButtonContainer" onClick={this.deleteClient}>
+                                    <h7 className="clients_addButton">Delete Client</h7>
+                                </div>
+                            </form>
+                        </div>
+                        
                     </div>
 
                     <div className="clients_table_view">

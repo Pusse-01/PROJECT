@@ -30,9 +30,20 @@
     text-align: center;
     margin-top: 3%;
 }
+.clients_no_error{
+    color: red;
+    text-align: center;
+    margin-left: 100px;
+    visibility: hidden;
+}
+.clients_error_message{
+    color: red;
+    text-align: center;
+    margin-left: 100px;
+}
 .addClientsComponents{
     display: grid;
-    grid-template-columns: 50% 50% 50%;
+    grid-template-columns: 50% 50% 50% 50%;
     padding : 10px;
     color: white;
     overflow: scroll;
@@ -96,11 +107,6 @@
 }
 .clients_addButtonContainer:hover {
     background: red;
-}
-.meetingDatePickerContainer{
-    background: #FF5349;
-    color: white;
-
 }
 
 .hrText {
@@ -246,6 +252,8 @@
     padding-top: 10px;
     font-size: 20px;
     font-weight: bolder;
+    border-bottom: 1px solid #a4b0be;
+    border-radius: 30px;
 }
 .clients_sidebar_client_email{
     color:red;
@@ -254,7 +262,6 @@
     font-size: 15px;
     font-weight: bolder;
 }
-
 @media only screen and (max-width: 991px) {
     .sideBarDepartmentsComponent {
         position: unset;

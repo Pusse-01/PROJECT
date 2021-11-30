@@ -7,4 +7,5 @@ router.post('/addClients',ClientsController.addClient)
 router.post('/addMeeting',ClientsController.addMeeting)
 router.post('/addProject',ClientsController.addProject)
 router.get('/getClients',ClientsController.getClients)
+router.post('/deleteClient',ClientsController.deleteClient)
 module.exports = router
