@@ -3,13 +3,17 @@ import {withRouter} from "react-router-dom";
 import axios from 'axios';
 import Clientsidebar from "./clientsidebar";
 import "./clientshomestyle.css"
-
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import {ThemeProvider} from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core";
+import {blankHeaderOpts} from "plotly.js/src/components/updatemenus/constants";
 
 const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
 
-  const currentt = new Date();
-             // By default US English uses 12hr time with AM/PM
+const currentt = new Date();
+// By default US English uses 12hr time with AM/PM
 const time = currentt.toLocaleTimeString("en-US");
 
 class Clients extends Component {
@@ -17,65 +21,73 @@ class Clients extends Component {
         super(props);
         this.state = {
             clients: [],
-            employees:[],
+            projects: [],
+            meetings:[],
             searchTerm: "Client1",
             client: {
                 client_name: "",
-                client_venue: "",
-                client_desc: ""
-                
+                projects: [],
+                email: ""
+
             },
-            contract: {
-                contract_name: "",
-                contract_desc: ""
+            meeting: {
+                client_id: "",
+                venue: "",
+                description: "",
+                date: ""
+            },
+            addProject:{
+                client_id:"",
+                project_id:""
             }
         }
     }
 
+
+
     componentDidMount() {
-        axios.get('http://localhost:8070/clients/')
+        axios.get('http://localhost:8070/clients/getClients')
             .then((res) => {
-                axios.get('http://localhost:8070/employee/allEmployees')
+                axios.get('http://localhost:8070/projects')
                     .then((res2) => {
-                        let temEmployees = res2.data
-                        console.log(temEmployees)
-                        let noDepEmployees = temEmployees.filter(val=>{
-                            if(val.client==""||val.client==null){
-                                return val
-                            }
+                        let clients = res.data
+                        let meetings = []
+                        clients.map(client=>{
+                            client.Client.meetings.map(meeting=>{
+                                meetings.push({
+                                    client_name:client.Client.clientName,
+                                    client_id:client.Client._id,
+                                    meeting:meeting
+                                })
+                            })
                         })
                         this.setState({
-                            employees: noDepEmployees
-                        },()=>console.log(this.state.employees))
+                            clients: res.data,
+                            meetings:meetings,
+                            projects: res2.data
+                        }, () => {
+                        })
                     })
                     .catch(error => {
                         console.log(error)
                     })
-                this.setState({
-                    clients: res.data
-                }, () => console.log("Clients", this.state.clients))
             })
             .catch(error => {
                 console.log(error)
             })
     }
 
-    addClient= () => {
+    addClient = () => {
         axios.post('http://localhost:8070/clients/addClients', this.state.client)
             .then((res) => {
-                axios.get('http://localhost:8070/clients/')
+                axios.get('http://localhost:8070/clients/getClients')
                     .then((res) => {
                         this.setState({
-                            clients: res.data,
-                            client: {
-                                client_name: "",
-                                client_venue: "",
-                                client_desc: "",
-                                client_date: {date},
-                                client_time: {time},
-                                
-                            },
-                        }, () => console.log("Clients", this.state.clients, "Client", this.state.client))
+                            clients: res.data
+                        }, () => {
+                          alert("Successfully Added Client")
+                            window.location.reload();
+                        })
                     })
                     .catch(error => {
                         console.log(error)
@@ -86,38 +98,102 @@ class Clients extends Component {
                 alert(error.data)
             })
     }
-    addDesignation = () => {
-        axios.post('http://localhost:8070/contracts/addContract', this.state.designation)
+
+    addMeeting = () => {
+        axios.post('http://localhost:8070/clients/addMeeting', this.state.meeting)
             .then((res) => {
-                axios.get('http://localhost:8070/clients/')
+                axios.get('http://localhost:8070/clients/getClients')
                     .then((res) => {
                         this.setState({
                             clients: res.data,
-                            designation: {
-                                contract_name: "",
-                                contract_desc: "",
-                                
-                            }
-                        }, () => console.log("Clients", this.state.clients))
+                            meeting:null
+                        }, () => {
+                            alert("Successfully added Client")
+                        })
                     })
                     .catch(error => {
                         console.log(error)
                     })
-                alert(res.data.message)
             })
             .catch(error => {
                 alert(error.data)
             })
     }
 
+    addProject = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:8070/clients/addProject', this.state.addProject)
+            .then((res) => {
+                axios.get('http://localhost:8070/clients/getClients')
+                    .then((res) => {
 
+                        this.setState({
+                            clients: res.data,
+                            addProject:null
+                        }, () => {
+                            alert("Successfully added Project")
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            })
+            .catch(error => {
+                alert(error.data)
+            })
+    }
+
+    setMeetingDate = (date) => {
+        this.setState({
+            meeting:{
+                ...this.state.meeting,
+                date:date
+            }
+        })
+    }
 
     render() {
         const {clients} = this.state
+        const materialTheme = createMuiTheme({
+            overrides: {
+                MuiPickersToolbar: {
+                    toolbar: {
+                        backgroundColor: "black",
+                    },
+                },
+                MuiPickersCalendarHeader: {
+                    switchHeader: {
+                        backgroundColor: "red",
+                        color: "white",
+                    },
+                },
+                MuiPickersDay: {
+                    day: {
+                        color: "red",
+                    },
+                    daySelected: {
+                        backgroundColor: "red",
+                    },
+                    dayDisabled: {
+                        color: "red",
+                    },
+                    current: {
+                        color: "white",
+                    },
+                },
+                MuiPickersModal: {
+                    dialogAction: {
+                        color: "green",
+                    },
+                },
+            },
+        });
+
         return (
             <div className="clientsMainComponent">
-                <Clientsidebar noDepEmployees={this.state.employees}/>
+                <Clientsidebar clients={this.state.clients} meetings={this.state.meetings}/>
                 <div className="clientsSubComponent">
+                    <h5 className="clientsTitle">Scroll Horizonatally</h5>
                     <div className="addClientsComponents">
                         <div className="addclientsSubComponent">
                             <h5 className="hrTitleText">Add Client</h5>
@@ -128,33 +204,37 @@ class Clients extends Component {
                                         <input className="hrTextInput" type="text" name="dName"
                                                value={this.state.client.client_name}
                                                onChange={e => this.setState({
-                                                client: {
+                                                   client: {
                                                        ...this.state.client,
                                                        client_name: e.target.value
                                                    }
                                                })}/>
                                     </label>
                                     <label className="hrLabel">
-                                        Venue
+                                        Email
                                         <input className="hrTextInput" type="text" name="dDesc"
-                                               value={this.state.client.client_desc}
+                                               value={this.state.client.client_venue}
                                                onChange={e => this.setState({
-                                                client: {
+                                                   client: {
                                                        ...this.state.client,
-                                                       client_desc: e.target.value
+                                                       email: e.target.value
                                                    }
                                                })}/>
                                     </label>
                                     <label className="hrLabel">
-                                        Description
-                                        <input className="hrTextInput" type="text" name="dDesc"
-                                               value={this.state.client.client_venue}
-                                               onChange={e => this.setState({
-                                                client: {
-                                                       ...this.state.client,
-                                                       client_venue: e.target.value
-                                                   }
-                                               })}/>
+                                        Project
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    client: {...this.state.client, projects: [e.target.value]}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Project --</option>
+                                            {this.state.projects.map(item => {
+                                                return (<option key={item._id}
+                                                                value={item._id}>{item.name}</option>);
+                                            })}
+                                        </select>
                                     </label>
                                 </div>
                                 <div className="clients_addButtonContainer" onClick={this.addClient}>
@@ -164,55 +244,161 @@ class Clients extends Component {
                         </div>
 
                         <div className="addclientsSubComponent">
-                            <h5 className="hrTitleText">Add Contract</h5>
+                            <h5 className="hrTitleText">Add Project</h5>
                             <form className="hrForm">
                                 <div className="hrFormSub">
                                     <label className="hrLabel">
-                                        Contract
-                                        <input className="hrTextInput" type="text" name="name"
-                                               value={this.state.designation.designation_name}
-                                               onChange={e => this.setState({
+                                        Client
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    addProject: {...this.state.addProject, client_id: e.target.value}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Client --</option>
+                                            {this.state.clients.map(item => {
+                                                return (<option key={item.Client._id}
+                                                                value={item.Client._id}>{item.Client.clientName}</option>);
+                                            })}
+                                        </select>
+                                    </label>
+                                    <label className="hrLabel">
+                                        Project
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    addProject: {...this.state.addProject, project_id: e.target.value}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Project --</option>
+                                            {this.state.projects.map(item => {
+                                                return (<option key={item._id}
+                                                                value={item._id}>{item.name}</option>);
+                                            })}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div className="clients_addButtonContainer" onClick={this.addProject}>
+                                    <h7 className="clients_addButton">Add Project</h7>
+                                </div>
+                            </form>
+                        </div>
 
-                                                   designation: {designation_name: e.target.value}
+
+                        <div className="addclientsSubComponent">
+                            <h5 className="hrTitleText">Add Meeting</h5>
+                            <form className="hrForm">
+                                <div className="hrFormSub">
+                                    <label className="hrLabel">
+                                        Client
+                                        <select className="form-select form-select-sm departments_select "
+                                                defaultValue={""}
+                                                onChange={e => this.setState({
+                                                    meeting: {...this.state.meeting, client_id: e.target.value}
+                                                })}
+                                        >
+                                            <option disabled value={""}> -- Select a Client --</option>
+                                            {this.state.clients.map(item => {
+                                                return (<option key={item.Client._id}
+                                                                value={item.Client._id}>{item.Client.clientName}</option>);
+                                            })}
+                                        </select>
+                                    </label>
+                                    <label className="hrLabel">
+                                        Venue
+                                        <input className="hrTextInput" type="text" name="dName"
+                                               value={this.state.meeting.venue}
+                                               onChange={e => this.setState({
+                                                   meeting: {
+                                                       ...this.state.meeting,
+                                                       venue: e.target.value
+                                                   }
                                                })}/>
                                     </label>
                                     <label className="hrLabel">
                                         Description
-                                        <input className="hrTextInput" type="text" name="name"
+                                        <input className="hrTextInput" type="text" name="dDesc"
+                                               value={this.state.meeting.description}
                                                onChange={e => this.setState({
-                                                   designation: {
-                                                       ...this.state.designation,
-                                                       designation_desc: e.target.value
+                                                   meeting: {
+                                                       ...this.state.meeting,
+                                                       description: e.target.value
                                                    }
                                                })}/>
                                     </label>
+                                    <label className="hrLabel">
+                                        Date
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils} className="meetingDatePickerContainer">
+                                            <ThemeProvider theme={materialTheme}>
+                                                <KeyboardDatePicker
+                                                    variant="inline"
+                                                    inputVarient="outlined"
+                                                    value={this.state.meeting.date}
+                                                    InputProps={{
+                                                        style: {
+                                                            fontSize: 14,
+                                                            color:"white",
+                                                            backgroundColor:"red",
+                                                            borderRadius:10,
+                                                            outline:"none",
+                                                            border:"none",
+                                                            paddingLeft:10
+                                                        }
+                                                    }}
+                                                    formate="MM/dd/yyy"
+                                                    style={{height:"44px",color:"white"}}
+                                                    onChange={this.setMeetingDate}
+                                                ></KeyboardDatePicker>
+                                            </ThemeProvider>
+                                        </MuiPickersUtilsProvider>
+                                    </label>
+                                    <div className="meetingDatePickerContainer">
 
+                                    </div>
                                 </div>
-                                <div className="clients_addButtonContainer">
-                                    <h7 className="clients_addButton" onClick={this.addDesignation}>Add
-                                    Contract
-                                    </h7>
+                                <div className="clients_addButtonContainer" onClick={this.addMeeting}>
+                                    <h7 className="clients_addButton">Add Meeting</h7>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-    
-                    <div>
-      <div class="bodyapper1">
-        <a href="http://localhost:3000/showclients">
-          <button class="button h-50 border border-success rounded text-light bg-dark"><br></br><br></br><br></br><br></br><h1>Meeting</h1></button>
-        </a>
-      </div>
-  
-      </div>
+                    <div className="clients_table_view">
+                        <table className="clientsTable">
+                            <tr className="clients_table_head">
+                                <th className="clients_table_header_column">Client Name</th>
+                                <th className="clients_table_header_column">Venue</th>
+                                <th className="clients_table_header_column">Date</th>
+                                <th className="clients_table_header_column">Description</th>
+                            </tr>
 
-           
-           
-
-      </div>
-
-</div>
+                            {
+                                this.state.meetings.map((meeting,index)=>{
+                                    if(index%2==0){
+                                        return(
+                                            <tr className="clients_table_data_odd" key={index}>
+                                                <td className="clients_table_data_column">{meeting.client_name}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.venue}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.date}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.description}</td>
+                                            </tr>
+                                        )
+                                    }else{
+                                        return(
+                                            <tr className="clients_table_data_even" key={index}>
+                                                <td className="clients_table_data_column">{meeting.client_name}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.venue}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.date}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.description}</td>
+                                            </tr>
+                                        )
+                                    }
+                                })
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

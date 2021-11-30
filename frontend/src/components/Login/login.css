@@ -2,12 +2,11 @@
     width: 100vw;
     height: 100vh;
     display: inline-block;
-    background-image: url("./bg.png");
     background-size: cover;
 }
 
 .subLoginForm {
-    margin-top: 35%;
+    padding-top: 50%;
 }
 
 .loginformTitle {
@@ -62,7 +61,7 @@
     border-color: #FF5349;
     background-color: #1e272e;
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 30% 70%;
 }
 
 .loginbutton {
@@ -105,11 +104,10 @@
 }
 
 .loginImage {
-    width: 80%;
-    height: 60%;
-    margin-top: 20%;
-    margin-left: 10%;
-    border-radius: 50px;
+    width: 90%;
+    height: 70%;
+    margin-top: 15%;
+    margin-left: 5%;
     opacity: 0.6;
     box-shadow: 0px 0px 20px 1px grey;
     animation-name: titleAnimation;

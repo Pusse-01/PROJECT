@@ -79,8 +79,6 @@ function LoginForm({Login, Logerror, error, check}) {
                     {/*<div className="loginImage"></div>*/}
                 </div>
             </div>
-
-
         </div>
     );
 

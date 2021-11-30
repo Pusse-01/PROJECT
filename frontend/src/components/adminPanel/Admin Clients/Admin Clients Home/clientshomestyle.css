@@ -21,12 +21,18 @@
     z-index: -1;
     padding: 10px;
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 10% 50% 40%;
 }
 
+.clientsTitle{
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 3%;
+}
 .addClientsComponents{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 50% 50% 50%;
     padding : 10px;
     color: white;
     overflow: scroll;
@@ -90,6 +96,11 @@
 }
 .clients_addButtonContainer:hover {
     background: red;
+}
+.meetingDatePickerContainer{
+    background: #FF5349;
+    color: white;
+
 }
 
 .hrText {
@@ -159,6 +170,100 @@
         z-index: -1;
         background-color: #1e272e;
         padding-bottom: 20px;
+    }
+}
+
+/******************************* SIDE BAR ***********************************/
+.sideBarClientsComponent {
+    position: absolute;
+    top: 00px;
+    right :0px;
+    bottom: 0px;
+    width : 18%;
+    z-index: -1;
+    background-color: #2f3640;
+}
+
+.clientsSideBarTitle{
+    position: absolute;
+    top: 80px;
+    color: #a4b0be;
+    text-align: center;
+    margin: 10px;
+    height: 80px;
+    width: 100%;
+}
+
+.clients_sidebar_client_container{
+    position: absolute;
+    top: 160px;
+    padding-top: 10px;
+    bottom: 0px;
+    overflow: scroll;
+    width: 100%;
+}
+.clients_sidebar_client_container::-webkit-scrollbar{
+    display: none;
+}
+.clients_sidebar_client{
+    height: 250px;
+    width:90%;
+    margin-left: 5%;
+    margin-bottom: 30px;
+    background: #1e272e;
+    padding-top: 10px;
+    padding-left: 10px;
+    overflow: scroll;
+}
+#clients_sidebar_client0 {
+    box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
+}
+#clients_sidebar_client1 {
+    box-shadow: 0px 0px 10px 1px rgb(101, 59, 141);
+}
+#clients_sidebar_client2 {
+    box-shadow: 0px 0px 10px 1px rgb(248, 171, 4);
+}
+#clients_sidebar_client3 {
+    box-shadow: 0px 0px 10px 1px blue;
+}
+.clients_sidebar_error{
+    margin:10px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+.clients_sidebar_client_name{
+    color:#a4b0be;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+.clients_sidebar_client_title{
+    color:#a4b0be;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.clients_sidebar_client_email{
+    color:red;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+@media only screen and (max-width: 991px) {
+    .sideBarDepartmentsComponent {
+        position: unset;
+        bottom: unset;
+        width: 100%;
+        padding-top: 10px;
+        height: 200px;
+        z-index: -1;
+        background-color: #2f3640;
     }
 }
 

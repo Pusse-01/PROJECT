@@ -1,72 +1,77 @@
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
 .Paper {
   position: absolute;
   top: 80px;
   bottom: 0px;
   left: 29.5px;
-  width : 80.7%;
+  width: 80.7%;
   z-index: 0;
-  font-family:sans-serif;
+  font-family: sans-serif;
   background-color: #1e272e;
 }
-body{
+body {
   background-color: #1e272e;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
-.sidecontainer{
-  position: absolute;
-  top: 0px;
-  right :0px;
+.sidecontainer {
+  position: fixed;
+  top: 80px;
+  right: 0px;
   bottom: 0px;
-  padding-top: 80px;
-  width : 30%;
-  z-index: 2;
+  padding-top: 0px;
+  width: 18%;
+  z-index: 0;
   color: white;
   background-color: #2f3640;
 }
 
-.tabledata{
+.tabledata {
   z-index: 50;
   color: #ffffff;
 }
 
-.Shedular{
+.Shedular {
   position: absolute;
   z-index: 0;
 }
 
-table{
+table {
   z-index: 0;
   background-color: #1e272e;
 }
 
-
 .mainComponent {
   position: absolute;
   top: 0px;
-  right :0px;
+  right: 0px;
   bottom: 0px;
   padding-top: 80px;
-  width : 30%;
+  width: 30%;
   z-index: -1;
   background-color: #1e272e;
 }
 
 @media only screen and (max-width: 991px) {
-  .mainComponent{
-      position: absolute;
-      top: 450px;
-      right :0px;
-      bottom: 0px;
-      padding-top: 10px;
-      width : 30%;
-      z-index: -1;
-      background-color: #1e272e;
+  .mainComponent {
+    position: absolute;
+    top: 450px;
+    right: 0px;
+    bottom: 0px;
+    padding-top: 10px;
+    width: 30%;
+    z-index: -1;
+    background-color: #1e272e;
   }
 }
 
 .title {
-  color : white;
+  color: white;
 }
 
 .loadingbuttonmain {
@@ -79,28 +84,50 @@ table{
   z-index: 21;
   position: absolute;
   border: 0px;
-  font-family:sans-serif;
-
+  font-family: sans-serif;
 }
 
-
-
 .changesmain {
-  cursor: none;
   text-align: left;
-  color: #7477b1;;
   font-family: Tahoma;
-  font-size: 18px;
+  font-size: 15px;
   position: absolute;
   top: 90px;
-  left: 1160px;
-  padding-top: 350px;
-  width: 18%;
-  padding-left:20px;
-  padding-bottom: 140px;
-  background-color: transparent;
+  left: 0%;
+  height: 40%;
+  margin-top: 200px;
+  width: 100%;
+  padding-left: 20px;
+  padding-bottom: 35px;
+  z-index: 0;
+  position: absolute;
+  border: 0px;
+}
+.changesmainwithdata {
+  text-align: left;
+  font-family: Tahoma;
+  font-size: 15px;
+  top: 90px;
+  left: 0%;
+  height: 40%;
+  margin-top: 200px;
+  width: 100%;
+  padding-left: 20px;
+  padding-bottom: 35px;
   z-index: 0;
   position: absolute;
   border: 0px;
 }
 
+.lastprojects {
+  margin-top:0%;
+  width:90%;
+  margin-left:12px;
+  margin-right:10px;
+  box-shadow: 0px 5px 10px 1px rgb(250, 12, 4);
+  font-size: 2.5vh;
+  border-radius: 10px;
+  color: #ffffff;
+  overflow: auto;
+  max-height: 300px;
+}

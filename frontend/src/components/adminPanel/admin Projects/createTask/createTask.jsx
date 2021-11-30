@@ -516,11 +516,18 @@ export default class Createtask extends React.Component {
             <div>
               <Grid>
                 <Paper elevation={20} style={paperStyle}>
-                  <div>
-                    <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
+                  {!submitted ?
+                    <div>
+                      <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
+                      <a href="http://localhost:3000/projects#">
+                    <button class="closebuttonactualproject">
+                      C L O S E
+                    </button>
+                  </a>
 
+                    </div> : null
+                  }
 
-                  </div>
 
 
                   <Grid align="left">
@@ -535,11 +542,13 @@ export default class Createtask extends React.Component {
 
                     <h1 class="h1tasks">MANAGE TASKS</h1>
                     <Typography variant="caption">
-                      <p>
-                        Please use this form to create tasks
-                        <br />
-                        All fields are required.
-                      </p>
+                      {!submitted ?
+                          <p>
+                          Please use this form to create tasks
+                          <br />
+                          All fields are required.
+                        </p>:null}
+                  
                     </Typography>
                   </Grid>
                   <Grid>
@@ -564,14 +573,12 @@ export default class Createtask extends React.Component {
                       <div>
                         Reqired Data is missing.
                         <br />
-                        <button class="buttonsubmittask">Go Back</button>
                       </div>
                     ) : null}
                     {submitted ? (
                       <div>
                         Task Added Successfully
                         <br />
-                        <button type='submit' class="buttonsubmittask" onClick={this.goBack}>Go Back</button>
                       </div>
                     ) : null}
                     {showcustomoption && !showgrid ? (
