@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import "./navBarStyle.css"
 import { withRouter } from "react-router-dom";
+import Notification from '../../assests/images/notifications.png'
 
 class Navbar extends Component{
     constructor(props) {
@@ -149,13 +150,7 @@ class Navbar extends Component{
         return (
             <nav className="navbar navbar-expand-lg navbar-dark" id="employeeNavbar">
                 <div className="logoContainer">
-                    <h5 className="logo">P</h5>
-                    <h5 className="logo">R</h5>
-                    <h5 className="logoRed">O</h5>
-                    <h5 className="logo">J</h5>
-                    <h5 className="logo">E</h5>
-                    <h5 className="logo">C</h5>
-                    <h5 className="logo">T</h5>
+                <img  className = "logo" src={require('../../assests/images/logo.png').default}/>
                 </div>
 
                 <div className="container-fluid">
@@ -186,6 +181,14 @@ class Navbar extends Component{
                 </div>
 
                 <div className="employee_navbar_action"  style={{zIndex:10}}>
+                    <div>
+                    <div className = "icons">
+                                <img className="notificationE" src={Notification}/>
+                                <div className = "notificationCounter">
+                            2
+                        </div>
+                    </div>
+                    </div>
                     <div className="employee_profile" onClick={this.openProfileMenu.bind(this)}>
                         <img className="employee_avatar" src={this.state.profileImage}/>
                     </div>
@@ -196,10 +199,6 @@ class Navbar extends Component{
                             <span className="hiddenMenuSpan">{this.state.name}</span>
                         </h4>
                         <ul>
-                            <li className="hiddenMenuListItem">
-                                <img className="hiddenMenuIcon" src={require('../../assests/images/notifications.png').default}/>
-                                <h7 className="hiddenMenuListItemText">Notofications</h7>
-                            </li>
                             <li className="hiddenMenuListItem">
                             <img className="hiddenMenuIcon" src={require('../../assests/images/settings.png').default}/>
                                 <a href="http://localhost:3000/Profile">

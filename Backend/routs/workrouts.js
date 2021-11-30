@@ -8,6 +8,7 @@ const Task = require('../models/task');
 const Project = require('../models/projects');
 const { Router } = require("express");
 const working = require("../models/working");
+const Clients = require('../models/clients')
 
 router.post("/record", (req, res) => {
   const { projectname, taskname, memo } = req.body;
@@ -428,8 +429,18 @@ router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a pr
 })
 
 router.get("/overdueprojects/",(req,res)=>{//get overdue projects
-  Project.find({projectStatus:"Over due"}).then(response=>{
-    return res.json(response)
+  Project.find({}).then(response=>{
+    let count=0;
+    if(response){
+    let iter=response.values()
+      for(let times of iter){
+        if(times.overdue<new Date()&&times.projectStatus!="Compeleted"){
+          count++;
+        }
+      }
+
+    }
+    return res.json(count)
   }).catch(()=>{
     return res.json("error");
   })
@@ -450,4 +461,10 @@ router.get("/overduetaskstotal/",(req,res)=>{//get overdue projects
     return res.json(count)
   })
 })
+router.get("/totalclients",(req,res)=>{
+  Clients.find({}).then((clients)=>{
+   return res.json(clients.length);
+  })
+})
+
 module.exports = router;

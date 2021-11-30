@@ -151,11 +151,13 @@
     justify-items: center;
     margin-right: 5px;
 }
-.notification{
-    top:0px;
-    width: 30px;
-    height:30px;
-    justify-items: center;
+.notificationE{
+    top: 20px;
+    width: 25px;
+    height: 25px;
+    margin-left: 15px;
+    cursor: pointer;
+    position: relative;
 }
 .userText {
     padding-right: 10px;
@@ -163,6 +165,33 @@
     width: 60%;
     font-size: 10px;
 }
+
+.logo {
+    width : 200px;
+    height : 60px;
+}
+
+.notificationCounter{
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 18px;
+    left: 28px;
+    color: white;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+  }
+
 
 @media only screen and (max-width: 991px) {
     .navbar{

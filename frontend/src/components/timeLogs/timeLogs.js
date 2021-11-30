@@ -46,7 +46,9 @@ constructor(props) {
         return(
             <div className="timeLogsMainComponent">
                  <Timelogssidebar email={this.state.email} id={this.state.id}/>
-                <div className="timeLogsSubComponent">̵
+                
+                <div className="timeLogsSubComponent">
+                <h2 className="hedingfont text-center">TIME L<span className="Oletter">O</span>GS</h2>̵
                     <div className="searchBar">
                         <div className="blankColumn"></div>
                         <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
@@ -57,8 +59,8 @@ constructor(props) {
                             },()=>{console.log(this.state.searchTerm)})
                         }}/>
                     </div>
-
-                    <table className="timeLogsTable">
+                      <div className="tableover">
+                    <table className="timeLogsTable mt-3">
                         <tr className="table_head">
                             <th className="table_header_column">Name</th>
                             <th className="table_header_column">Project</th>
@@ -115,6 +117,7 @@ constructor(props) {
                             }) : <tr><td colSpan="5">Loading...</td></tr>
                             }
                         </table>
+                        </div>
                 </div>
             </div>
         )
