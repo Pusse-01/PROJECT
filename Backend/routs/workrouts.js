@@ -8,6 +8,7 @@ const Task = require('../models/task');
 const Project = require('../models/projects');
 const { Router } = require("express");
 const working = require("../models/working");
+const Clients = require('../models/clients')
 
 router.post("/record", (req, res) => {
   const { projectname, taskname, memo } = req.body;
@@ -450,4 +451,10 @@ router.get("/overduetaskstotal/",(req,res)=>{//get overdue projects
     return res.json(count)
   })
 })
+router.get("/totalclients",(req,res)=>{
+  Clients.find({}).then((clients)=>{
+   return res.json(clients.length);
+  })
+})
+
 module.exports = router;
