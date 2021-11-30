@@ -2,7 +2,7 @@
 .adminmain{
     width: 80hw;
     height: 100vh;
-    overflow: scroll;
+    
     
 }
 .admintimeline{
@@ -67,8 +67,8 @@
 .overdueprojectadmin{
     margin-left: 35px;
     margin-right: 35px;
-    height: 700px;
-    box-shadow: 0px 0px 10px 1px rgb(203, 6, 230);
+    height: 300px;
+    box-shadow: 0px 0px 10px 1px rgb(248, 81, 4);
 
 }
 .overduebutton{

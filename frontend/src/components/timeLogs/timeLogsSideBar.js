@@ -51,6 +51,7 @@ function TimeLogsSideBar({email,id}) {
           Minutes: m,
           seconds: s,
         });
+       
         })
   }
   async function tasktotal(){
@@ -96,12 +97,17 @@ getpids();
 gettasks();
 projecttotal();
 tasktotal();
-
+Settasktime({
+  Hours: "00",
+  Minutes: "00",
+  seconds: "00",
+});
+settasks([""]);
 
 }, [projectselected,stask,pid]);
   return (
     <div>
-       <div className="dashboardmainComponent title">
+       <div className="timelogsmainComponent title">
             
             <div className="ps-3 pe-3  mt-3">
              

@@ -1,5 +1,5 @@
 .admindashboardsidemainComponent {
-  position: absolute;
+  position: fixed;
   top: 80px;
   right :0px;
   bottom: 0px;

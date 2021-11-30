@@ -11,7 +11,7 @@ const axios = require("axios").default;
 function AdminPanel() {
   const [projecttimeline, settimeline] = useState([]);
   const [searchterm, setsearchterm] = useState("");
-  const [overdueprojects, setoverdueprojects] = useState({});
+  const [overdueprojects, setoverdueprojects] = useState(0);
   const[overduetasks,setoverduetasks]=useState(0);
   async function admintimeline() {
     await axios
@@ -26,9 +26,9 @@ function AdminPanel() {
     await axios
       .get("http://localhost:8070/Dashboard/overdueprojects/")
       .then(function (response) {
-        if (response.data.length > 0) {
+       
           setoverdueprojects(response.data);
-        }
+        
       });
   }
   async function overduetask() {
@@ -114,7 +114,7 @@ function AdminPanel() {
             )}
           </div>
           <div className="col-lg-4 col-sm-12 timelinetext mt-3 overdueprojectadmin">
-            {overdueprojects.length > 0 ? (
+            {overdueprojects > 0 ? (
               <div className="row">
                 <div className="col-3 text-center">
                   <img
@@ -126,7 +126,7 @@ function AdminPanel() {
                   <h1 className="noverdueadmin ">Overdue Projects</h1>
                   <div>
                     <p className=" overduebuttonnumber">
-                      {overdueprojects.length}
+                      {overdueprojects}
                     </p>
                   </div>
                 </div>

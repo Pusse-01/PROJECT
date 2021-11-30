@@ -429,8 +429,18 @@ router.get("/gettotaltimeofproject/:id",(req,res)=>{//get total workings of a pr
 })
 
 router.get("/overdueprojects/",(req,res)=>{//get overdue projects
-  Project.find({projectStatus:"Over due"}).then(response=>{
-    return res.json(response)
+  Project.find({}).then(response=>{
+    let count=0;
+    if(response){
+    let iter=response.values()
+      for(let times of iter){
+        if(times.overdue<new Date()&&times.projectStatus!="Compeleted"){
+          count++;
+        }
+      }
+
+    }
+    return res.json(count)
   }).catch(()=>{
     return res.json("error");
   })
