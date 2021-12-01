@@ -60,7 +60,7 @@ const updateStatus = (req, res) => {
     } else {
 
         if (status == "To Do" || status == "In Progress" || status == "Done" ||
-            status == "Bugs/Issues" || status == "Review") {
+            status == "Bugs/Issues" || status == "Review"|| status == "Overdue") {
             let updated_task = {
                 task_status: req.body.task_status
             }
@@ -201,7 +201,7 @@ const addTask = (req, res) => {
     } else {
 
         if (task_status == "To Do" || task_status == "In Progress" || task_status == "Done" ||
-            task_status == "Bugs/Issues" || task_status == "Review") {
+            task_status == "Bugs/Issues" || task_status == "Review"|| task_status == "Overdue") {
 
             let task = new Task({
                 task_name: task_name,
@@ -249,7 +249,7 @@ const update = (req, res) => {
         })
     } else {
         if (task_status == "To Do" || task_status == "In Progress" || task_status == "Done" ||
-            task_status == "Bugs/Issues" || task_status == "Review") {
+            task_status == "Bugs/Issues" || task_status == "Review" || task_status == "Overdue") {
             let updated_task = {
                 task_name: task_name,
                 due_date: due_date,
