@@ -152,7 +152,7 @@ class ProjectAdmin extends React.Component {
                 <button class="button" style={{ marginTop: '5px', marginBottom: '5px' }} onClick={this.gotohome}><Visibility
                   fontSize="large"
                   htmlColor="#ffffff"
-                />&nbsp;View Project Details<br /><p class="p">view a summary project details</p></button>
+                />&nbsp;View and Edit Projects<br /><p class="p">view a summary project details</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoCreateproject}><AddCircleOutlineOutlinedIcon
@@ -170,7 +170,7 @@ class ProjectAdmin extends React.Component {
                 <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoviewtask}><Visibility
                   fontSize="large"
                   htmlColor="#ffffff"
-                />&nbsp;View All Task<br /><p class="p">view a summary of all tasks</p></button>
+                />&nbsp;View and Edit Tasks<br /><p class="p">view a summary of all tasks</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' , marginBottom: '15px'  }} onClick={this.gotoanalyze}><TrendingUp

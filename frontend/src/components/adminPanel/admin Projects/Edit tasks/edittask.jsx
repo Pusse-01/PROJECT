@@ -126,7 +126,6 @@ export default class Edittask extends React.Component {
 
     //submit click of the form
     handleClick = (event) => {
-        alert()
         var temp = [
             {
                 taskname: this.state.taskname,

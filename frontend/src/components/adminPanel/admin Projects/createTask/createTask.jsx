@@ -520,10 +520,10 @@ export default class Createtask extends React.Component {
                     <div>
                       <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
                       <a href="http://localhost:3000/projects#">
-                    <button class="closebuttonactualproject">
-                      C L O S E
-                    </button>
-                  </a>
+                        <button class="closebuttonactualproject">
+                          C L O S E
+                        </button>
+                      </a>
 
                     </div> : null
                   }
@@ -543,12 +543,12 @@ export default class Createtask extends React.Component {
                     <h1 class="h1tasks">MANAGE TASKS</h1>
                     <Typography variant="caption">
                       {!submitted ?
-                          <p>
+                        <p>
                           Please use this form to create tasks
                           <br />
                           All fields are required.
-                        </p>:null}
-                  
+                        </p> : null}
+
                     </Typography>
                   </Grid>
                   <Grid>
@@ -614,7 +614,7 @@ export default class Createtask extends React.Component {
                     </div>
                   ) : null}
 
-                  {showend && showgrid && !missingdata ? (
+                  {showend && showgrid && !missingdata && !showsubmit ? (
                     <div>
                       <br />
                       <p>No more contributers for this project.</p>
@@ -680,6 +680,7 @@ export default class Createtask extends React.Component {
 
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
+                          color="secondary"
                           variant="inline"
                           inputVarient="outlined"
                           label="End Date"
@@ -691,7 +692,7 @@ export default class Createtask extends React.Component {
 
                       <Box
                         component="form"
-                        sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }}
+                        sx={{ "& .MuiTextField-root": { m: 1, width: "50ch"} }}
                         noValidate
                         autoComplete="off"
                       >

@@ -26,7 +26,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Helmet } from 'react-helmet'
-import ProjectAdmin from '../Admin project Home/adminProjects'
+
 const TITLE = 'Create Project'
 
 const paperStyle = {
@@ -77,7 +77,6 @@ class Createproject extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "PROJECT Projects";
     this.getEmployees()
     this.getProjects()
     this.interval = setInterval(
@@ -255,24 +254,24 @@ class Createproject extends React.Component {
 
   };
 
-clearForm = (event) => {
-  this.setState({
-    employees: this.state.employeesCopy,
-    employeesasadmins: this.state.employeesCopy,
-    projectname: "",
-    adminstrsselected: [],
-    employeesselected: [],
-    sameName: false,
-    description: "",
-    datenow: new Date(),
-    endDate: new Date(),
-    selectedEmployees: [],
-    selectedManagers: [],
-    category: "Pending",
-    loading: false,
-    error: false,
-  })
-}
+  clearForm = (event) => {
+    this.setState({
+      employees: this.state.employeesCopy,
+      employeesasadmins: this.state.employeesCopy,
+      projectname: "",
+      adminstrsselected: [],
+      employeesselected: [],
+      sameName: false,
+      description: "",
+      datenow: new Date(),
+      endDate: new Date(),
+      selectedEmployees: [],
+      selectedManagers: [],
+      category: "Pending",
+      loading: false,
+      error: false,
+    })
+  }
 
 
   render() {
@@ -314,7 +313,7 @@ clearForm = (event) => {
                 <div>
 
                   <button
-                    class="buttonsubmitclearproject" type='button'  onClick={this.clearForm}>
+                    class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
                     C L E A R
                   </button>
 
@@ -390,8 +389,8 @@ clearForm = (event) => {
                     ))}
                   </Select>
                   {selectedEmployees.map((selectedm, number) => (
-                    <Chip variant="outlined"
-                      size="sizeSmall"
+                    <Chip variant="outlined" direction="column"
+                      size="small"
                       key={number}
                       label={selectedm.username}
                     ></Chip>
@@ -412,9 +411,9 @@ clearForm = (event) => {
                     ))}
                   </Select>
                   {selectedManagers.map((selected, number) => (
-                    <Chip variant="outlined"
+                    <Chip variant="outlined" direction="column"
                       key={number}
-                      size="sizeSmall"
+                      size="small"
                       label={selected.username}
                     ></Chip>
 
@@ -422,8 +421,8 @@ clearForm = (event) => {
                 </FormControl>
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                  color="black"
+                  <KeyboardDatePicker 
+                    color="secondary"
                     variant="inline"
                     inputVarient="outlined"
                     label="End Date"
