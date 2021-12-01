@@ -486,32 +486,6 @@ class Clients extends Component {
                             </form>
                         </div>
 
-                        <div className="addclientsSubComponent">
-                            <h5 className="hrTitleText">Delete Client</h5>
-                            <form className="hrForm">
-                                <div className="hrFormSub">
-                                    <label className="hrLabel">
-                                        Client
-                                        <select className="form-select form-select-sm departments_select "
-                                                defaultValue={""}
-                                                onChange={e => this.setState({
-                                                    deleteClient: {...this.state.deleteClient, client_id: e.target.value}
-                                                })}
-                                        >
-                                            <option disabled value={""}> -- Select a Client --</option>
-                                            {this.state.clients.map(item => {
-                                                return (<option key={item.Client._id}
-                                                                value={item.Client._id}>{item.Client.clientName}</option>);
-                                            })}
-                                        </select>
-                                    </label>
-                                </div>
-                                <div className="clients_addButtonContainer" onClick={this.deleteClient}>
-                                    <h7 className="clients_addButton">Delete Client</h7>
-                                </div>
-                            </form>
-                        </div>
-                        
                     </div>
 
                     <div className="clients_table_view">
