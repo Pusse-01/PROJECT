@@ -10,12 +10,12 @@ float-parent-element {
   float: left; 
   width: 18%; 
 } 
-.red { 
+.maincomponentshowproject { 
 
   margin-left: 0%; 
   height: 100%; 
 } 
-.yellow { 
+.sidebarshowproject { 
   margin-left: 0; 
   height: 100%; 
   background-color: #2f3640;

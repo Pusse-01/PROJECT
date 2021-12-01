@@ -39,6 +39,8 @@ const StyledTableCellDue = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     color: "#ff0000",
+    border: 0,
+
   },
 }));
 
@@ -49,6 +51,8 @@ const StyledTableCellNotDue = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     color: "#00ff00",
+    border: 0,
+
   },
 }));
 
@@ -80,7 +84,7 @@ class Row extends React.Component {
     if (this.state.open) {
       this.setState({ open: false });
     } else if (!this.state.open) {
-      this.setState({ open: true});
+      this.setState({ open: true });
     }
   };
 
@@ -96,7 +100,6 @@ class Row extends React.Component {
         task_id: this.state.row.history[event.target.value].task_id,
       })
       .then((response) => {
-        console.log(response.data);
         this.setState({ open: false });
       });
 
@@ -116,7 +119,7 @@ class Row extends React.Component {
 
     return (
       <React.Fragment>
-        <StyledTableRow
+        <StyledTableRow key={this.props.key}
           sx={{ "& > *": { borderBottom: "0px", border: "0px" } }}>
           <TableCell>
             <IconButton
@@ -269,15 +272,15 @@ class Row extends React.Component {
 
                             Delete
                           </button>
-                              
-                          <button style={{fontSize: 10, marginRight: "170px", backgroundColor:'#000000', width:'40px', textAlign:'center'}}
+
+                          <button style={{ fontSize: 10, marginRight: "170px", backgroundColor: '#000000', width: '40px', textAlign: 'center' }}
                             class="taskdeletebutton"
                             value={index}
                             onClick={this.taskEdit}
                           >
 
                             Edit
-                          </button> *
+                          </button>
 
                         </TableCell>
                       </TableRow>
@@ -374,15 +377,11 @@ export default class Viewtasks extends React.Component {
 
         for (let i = 0; i < resources.length; i++) {
           let historyArray = [];
-          console.log("length" + resources.length);
-
           axios
             .post("http://localhost:8070/task/getTasksOfProject", {
               project_id: resources[i].id,
             })
             .then((response) => {
-              // console.log("resonse data " + response.data.response.length);
-
               if (response.data.response.length > 0) {
                 for (let k = 0; k < response.data.response.length; k++) {
                   var data = response.data.response[k];
@@ -432,35 +431,37 @@ export default class Viewtasks extends React.Component {
             .then(() => {
               var ProjecTStat = "-";
 
-              if (
-                historyArray.length === 0 &&
-                resources[i].projectStatus !== "Pending"
+              if ( new Date(resources[i].overdue) < Date.now()
               ) {
-                ProjecTStat = "Not Started";
+                ProjecTStat = "Overdue";
+              } 
+              else if (
+                resources[i].projectStatus === "Pending"
+              ) { //pending status for initial tasks
+                ProjecTStat = "Pending";
               } else if (
                 historyArray.length === 0 &&
-                resources[i].projectStatus === "Pending"
-              ) {
-                ProjecTStat = "Pending";
+                resources[i].projectStatus !== "Pending"
+              ) { //Not strated status for projects that are approved but not yet tasks are assignnd
+                ProjecTStat = "Not Started";
               } else {
-                var Completed = false;
                 for (let y = 0; y < historyArray.length; y++) {
-                  console.log(historyArray[y].taskstat);
-                  if (
+                  if (historyArray[y].taskstat === "Overdue") {
+                    ProjecTStat = "Overdue";
+                    break;
+                  }
+                  else if (
                     historyArray[y].taskstat === "To Do" ||
                     historyArray[y].taskstat === "In Progress" ||
                     historyArray[y].taskstat === "Bugs/Issues"
                   ) {
                     ProjecTStat = "On going";
-                    break;
+                    continue;
                   } else if (
                     historyArray[y].taskstat === "Review" ||
                     historyArray[y].taskstat === "Done"
                   ) {
                     ProjecTStat = "Completed";
-                    Completed = true;
-                  } else if (!Completed) {
-                    ProjecTStat = "Overdue";
                   }
                 }
               }
@@ -497,9 +498,6 @@ export default class Viewtasks extends React.Component {
 
   filterProjects = (event) => {
     var value = event.target.value;
-    console.log(event.target.value);
-    console.log("fired");
-
     this.setState({
       filterdresult: this.state.rows,
     });
@@ -543,18 +541,18 @@ export default class Viewtasks extends React.Component {
       )
     }
 
-    
-    if(edittaskstat){
-    return(
-      <div>
-      <Helmet>
-        <title>{'Edit Task'}</title>
-      </Helmet>
-      <Edittask  id={this.state.editId} />
+
+    if (edittaskstat) {
+      return (
+        <div>
+          <Helmet>
+            <title>{'Edit Task'}</title>
+          </Helmet>
+          <Edittask id={this.state.editId} />
 
 
-    </div>
-    )
+        </div>
+      )
     }
 
     if (createTaskstat) {

@@ -47,6 +47,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
+import { TableBody } from "@mui/material";
 /////////
 
 const TITLE = "Project View";
@@ -332,7 +333,7 @@ export default class ShowProject extends React.Component {
                       <RuleIcon fontSize="small" htmlColor="#000000" />
                     </Typography>
                     <Typography
-                      variant="h7"
+                      variant="h6"
                       style={{
                         marginLeft: "10px",
                         font: "5px",
@@ -370,7 +371,7 @@ export default class ShowProject extends React.Component {
                       />
                     </Typography>
                     <Typography
-                      variant="h7"
+                      variant="h6"
                       style={{
                         marginLeft: "10px",
                         font: "5px",
@@ -405,7 +406,7 @@ export default class ShowProject extends React.Component {
                       <MoreTimeIcon fontSize="small" htmlColor="#000000" />
                     </Typography>
                     <Typography
-                      variant="h7"
+                      variant="h6"
                       style={{
                         marginLeft: "10px",
                         font: "5px",
@@ -442,7 +443,7 @@ export default class ShowProject extends React.Component {
                       <PendingIcon fontSize="small" htmlColor="#000000" />
                     </Typography>
                     <Typography
-                      variant="h7"
+                      variant="h6"
                       style={{
                         marginLeft: "10px",
                         font: "5px",
@@ -460,7 +461,6 @@ export default class ShowProject extends React.Component {
                 {" "}
                 <Box style={{ width: "200px" }}>
                   <p
-                    row
                     style={{
                       color: "#e8e8e8",
                       opacity: "0.8",
@@ -556,7 +556,7 @@ export default class ShowProject extends React.Component {
           </Box>
 
           <Box>
-            <Grid container item>
+            <Grid container>
               <Grid style={{ marginLeft: "30px", marginTopt: "30px" }}>
               </Grid>
             </Grid>
@@ -627,6 +627,7 @@ export default class ShowProject extends React.Component {
                           <TableCell style={{ border: "none" }}></TableCell>
                         </StyledTableRow>
                       </TableHead>
+                      <TableBody>
                       <StyledTableRow>
                         <TableCell
                           style={{
@@ -767,6 +768,7 @@ export default class ShowProject extends React.Component {
 
                         </TableCell>
                       </StyledTableRow>
+                      </TableBody>
 
                     </Table>
 
@@ -1114,7 +1116,7 @@ class Editproject extends React.Component {
     return (
       <div class="float-parent-element">
         <div class="float-child-element">
-          <div class="red">
+          <div class="maincomponentshowproject">
             <Grid class>
               <form>
                 <div>
@@ -1234,7 +1236,7 @@ class Editproject extends React.Component {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           variant="inline"
-                          inputVarient="outlined"
+                          inputvarient="outlined"
                           label="End Date"
                           value={this.state.endDate}
                           formate="MM/dd/yyy"
@@ -1284,7 +1286,7 @@ class Editproject extends React.Component {
           </div>
         </div>
         <div class="float-child-element">
-          <div class="yellow"></div>
+          <div class="sidebarshowproject"></div>
         </div>
       </div>
     );
