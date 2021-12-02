@@ -23,6 +23,7 @@ export default class Sidebar extends Component{
         let doneStyle = this.state.selected=="Done" ? "tasksDoneSelected" : "tasksDone"
         let bugsStyle = this.state.selected=="Bugs/Issues" ? "tasksBugsSelected" : "tasksBugs"
         let reviewStyle = this.state.selected=="Review" ? "tasksReviewSelected" : "tasksReview"
+        let overdueStyle = this.state.selected=="Overdue" ? "tasksOverdueSelected" : "tasksOverdue"
 
         let allInnerStyle = this.state.selected=="All" ? "tasksAllInnerSelected" : "tasksAllInner"
         let toDoInnerStyle = this.state.selected=="To Do" ? "tasksToDoInnerSelected" : "tasksToDoInner"
@@ -30,6 +31,7 @@ export default class Sidebar extends Component{
         let doneInnerStyle = this.state.selected=="Done" ? "tasksDoneInnerSelected" : "tasksDoneInner"
         let bugsInnerStyle = this.state.selected=="Bugs/Issues" ? "tasksBugsInnerSelected" : "tasksBugsInner"
         let reviewInnerStyle = this.state.selected=="Review" ? "tasksReviewInnerSelected" : "tasksReviewInner"
+        let overdueInnerStyle = this.state.selected=="Overdue" ? "tasksOverdueInnerSelected" : "tasksOverdueInner"
 
         return(
             <div className="sideBarTasksComponent">
@@ -70,6 +72,12 @@ export default class Sidebar extends Component{
                     }}>
                         <div className="tasksOutCircle"><div className="tasksInnerCircle" id={reviewInnerStyle}></div></div>
                         <h6 className="taskElementText">Review</h6>
+                    </div>
+                    <div className="taskElement" id={overdueStyle} onClick= {() => {
+                        this.filterTasks("Overdue")
+                    }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={overdueInnerStyle}></div></div>
+                        <h6 className="taskElementText">Overdue</h6>
                     </div>
                 </div>
             </div>
