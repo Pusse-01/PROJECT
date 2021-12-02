@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Sidebar from "./sideBar";
 import "./adminDashboard.css";
@@ -6,6 +7,7 @@ import "./adminDashboard.css";
 import Reports from "../Reports/reports";
 import UserReports from "../Reports/userReports";
 const axios = require("axios").default;
+
 
 
 function AdminPanel() {
@@ -183,6 +185,7 @@ function AdminPanel() {
         <div>
           <Reports/>
         </div>
+        
       </div>
     </div>
   );

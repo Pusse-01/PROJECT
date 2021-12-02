@@ -14,7 +14,8 @@ class Projects extends Component {
             projects: [],
             name: founduser.employee.name,
             id: founduser.employee.id,
-            email: founduser.employee.email
+            email: founduser.employee.email,
+            searchTerm:""
         }
     }
     componentDidMount() {
@@ -35,16 +36,20 @@ class Projects extends Component {
     render() {
 
         const { projects } = this.state;
-
+console.log(this.state.projects);
         return (
 
             <div className="projectsMainComponent">
                 <Sidebar />
                 <div className="projectsSubComponent">̵
-                    <div className="searchBar">
-                        <div className="blankColumn"></div>
-                        <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default} />
-                        <h5 className="searchText">Search</h5>
+                <div className="tasks_searchBar">
+                        <div className="tasks_blankColumn"></div>
+                        <img className="tasks_searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
+                        <input type="text" placeholder="Search by Project or Task" className="tasks_taskSearchBox" onChange={event =>{
+                            this.setState({
+                                searchTerm:event.target.value
+                            },()=>{console.log(this.state.searchTerm)})
+                        }}/>
                     </div>
 
                     <table className="projectsTable">
@@ -58,7 +63,13 @@ class Projects extends Component {
                             <th className="table_header_column">Special Notes</th>
                         </tr>
 
-                        {(projects.length > 0) ? projects.map((projects, index) => {
+                        {(projects.length > 0) ? projects.filter((val)=>{
+                                if(this.state.searchTerm==""){
+                                    return val;
+                                }else if(val.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())){
+                                    return val;
+                                }
+                            }).map((projects, index) => {
 
                             return (
                                 <tr className="table_data_odd" key={index}>
