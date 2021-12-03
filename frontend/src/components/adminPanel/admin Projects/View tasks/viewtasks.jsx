@@ -21,6 +21,7 @@ import { InputBase } from "@material-ui/core";
 import Createtask from "../createTask/createTask"
 import Edittask from "../Edit tasks/edittask"
 import { Helmet } from 'react-helmet'
+import { enGB } from "date-fns/locale";
 
 
 const TITLE = 'Task View'
@@ -34,24 +35,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const StyledTableCellDue = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    border: 0,
-  },
   [`&.${tableCellClasses.body}`]: {
     color: "#ff0000",
-    border: 0,
-
   },
 }));
 
 
 const StyledTableCellNotDue = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    border: 0,
-  },
   [`&.${tableCellClasses.body}`]: {
     color: "#00ff00",
-    border: 0,
 
   },
 }));
@@ -208,7 +200,12 @@ class Row extends React.Component {
                         <TableCell align="left" colSpan={2}>
                           {historyRow.date}
                         </TableCell>
-                        {(historyRow.taskstat === 'Done' || (historyRow.taskstat === 'Review')) ?
+                        {(historyRow.taskstat === 'Done') ?
+                          <TableCell align="left" sx={{ color: '#00FF00' }}>
+                            {historyRow.taskstat}&emsp;&emsp;
+                          </TableCell>
+                          : null}
+                        {((historyRow.taskstat === 'Review')) ?
                           <TableCell align="left" sx={{ color: '#00FF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
@@ -219,7 +216,7 @@ class Row extends React.Component {
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'In Progress' && (new Date(historyRow.date) < Date.now())) ?
-                          <TableCell align="left"sx={{ color: '#FF0000' }}>
+                          <TableCell align="left" sx={{ color: '#FF0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
@@ -584,7 +581,7 @@ export default class Viewtasks extends React.Component {
                 aria-label="collapsible table"
                 sx={{
                   "& .MuiTableRow-root:hover": {
-                    backgroundColor: "#93aeb0",
+                    backgroundColor: "#1e272e",
                     opacity: 0.8,
                   },
                 }}

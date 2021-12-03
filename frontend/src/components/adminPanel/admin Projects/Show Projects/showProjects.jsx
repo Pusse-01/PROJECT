@@ -1131,7 +1131,7 @@ class Editproject extends React.Component {
                           </Avatar>
                         </div>
 
-                        <h1 class="h1project">Edit project</h1>
+                        <h1 class="h1project">EDIT PROJECT</h1>
                         <Typography variant="caption">
                           <p>Please fill this from to edit a project</p>
                         </Typography>

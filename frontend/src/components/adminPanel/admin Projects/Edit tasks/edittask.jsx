@@ -246,7 +246,7 @@ export default class Edittask extends React.Component {
                                             </Avatar>
                                         </div>
 
-                                        <h1 class="h1tasks">EDIT TASKS</h1>
+                                        <h1 style={{color:'white'}}>EDIT TASKS</h1>
 
                                         {!submitted || !missingdata ?
                                             <Typography variant="caption">
