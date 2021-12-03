@@ -376,12 +376,12 @@ export default class Projectperformancecharts extends React.Component {
       >
         <Grid container>
 
-          <Box row style={{ backgroundColor: "#525252", marginLeft: '20px', marginBottom: '20px', marginTop: '10px', width: '100%' }}>
+          <Box row style={{ backgroundColor: "#2f3640", marginLeft: '20px', marginBottom: '20px', marginTop: '10px', width: '97%' }}>
             <Grid container>
               <Grid item style={{ marginLeft: "4%", marginTop: "0px", marginBottom: '10px' }}>
                 <button class="directionButtons"
                   type="button"
-                  style={{ marginLeft: "20px", marginTop: "5px" }}
+                  style={{ marginLeft: "20px", marginTop: "5px"}}
                   onClick={this.gridPageChangetoOne}
                 >
                   Daily Project Activity Chart

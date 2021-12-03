@@ -135,12 +135,12 @@ class Row extends React.Component {
           </TableCell>
           <TableCell align="left">{row.overdue}</TableCell>
           {new Date(row.overdue) > Date.now() || row.status === "Completed" ? (
-            <StyledTableCellNotDue style={{borderBottom:'1px solid white'}} align="left">
+            <StyledTableCellNotDue align="left">
               {row.status}
             </StyledTableCellNotDue>
           ) : null}
           {new Date(row.overdue) <= Date.now() && row.status !== "Completed" ? (
-            <StyledTableCellDue style={{borderBottom:'1px solid white'}} align="left" >{row.status}</StyledTableCellDue>
+            <StyledTableCellDue align="left" >{row.status}</StyledTableCellDue>
           ) : null}
 
           <TableCell align="left">{row.description}</TableCell>

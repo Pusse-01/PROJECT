@@ -162,31 +162,33 @@ export default class AnalyzeProjectEmployees extends React.Component {
     return (
       <div>
 
-        <Box style={{ marginLeft: "70%" }}>
-          <SearchIcon fontSize="large" htmlColor="#000000" />
+        <Box style={{ marginLeft: "74%" }}>
+          <SearchIcon fontSize="large" htmlColor="#ff0000" />
           <InputBase
             style={{
-              borderBottom: "2px solid black",
               marginTop: "10px",
+              backgroundColor:'#2f3640',
+              width:'250px'
             }}
-            placeholder="Search for a name....."
+            placeholder="Search by name....."
             onChange={this.filterProjects}
           ></InputBase>
 
 
         </Box>
-        <Paper style={{ marginLeft: "2%", marginRight: "0%" }}>
+        <Paper style={{ marginLeft: "2%", marginRight: "1%" }}>
           <TableContainer sx={{ maxHeight: 580 }}>
             {data.length ? (
               <div>
                 {data.map((employee, index) => (
-                  <Table style={{ backgroundColor: "#525252" }}>
+                  <Table style={{ backgroundColor: "#2f3640" }}>
                     <StyledTableRow style={{ border: "none" }}>
                       <TableCell colSpan={9}
                         style={{
                           border: "none",
-                          color: "black",
-                          fontSize: "15px",
+                          color: "white",
+                          opacity:'0.7',
+                          fontSize: "13px",
 
                         }}
                       >
@@ -227,7 +229,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
           <Grid>
             <Box
               style={{
-                backgroundColor: "#a99a86",
+                backgroundColor: "#2f3640",
                 width: "100%",
                 textAlign: "center",
               }}
