@@ -475,10 +475,11 @@ export default class Demo extends React.PureComponent {
 
             {lastlog.length > 0 ?
               <button type='button' class="changesmain" style={{ backgroundColor: "#2f3640" }}>
+                    <h6 style={{ color: "white" }}><br />&nbsp; Last Assigned Projects</h6>
+
                 <div class="lastprojects">
                   <div style={{ marginLeft: '5px', marginTop: '10px' }}>
 
-                    <h6 style={{ color: "white" }}><br />&nbsp; Last Assigned Projects</h6>
                   </div>
                   {lastlog.map((lastlogs, index) => (
                     <div style={{ marginLeft: '10px',marginTop: '10px', marginBottom: '10px', fontSize: '13px' }}>

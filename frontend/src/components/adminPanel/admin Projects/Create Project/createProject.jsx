@@ -34,6 +34,7 @@ const paperStyle = {
   width: "700px",
   margin: "20px auto",
   backgroundColor: "#2f3640",
+  color: "#000000",
   opacity: 0.8,
 };
 const avatarStyle = {
@@ -104,11 +105,14 @@ class Createproject extends React.Component {
   setProjectname = (event) => {
     let value = event.target.value
     let lengthvalue = value.length
+    console.log(this.state.currentProjects)
+    console.log(value)
     for (let i = 0; i < this.state.currentProjects.length; i++) {
-      if ((((this.state.currentProjects[i].name.toLowerCase())) === value.toLowerCase()) && lengthvalue !== 0) {
+      if ((((this.state.currentProjects[i].name).toLowerCase()) === value.toLowerCase()) && lengthvalue !== 0) {
         this.setState({
           sameName: true
         })
+        break;
       } else {
         this.setState({
           sameName: false
@@ -222,6 +226,7 @@ class Createproject extends React.Component {
           error: true,
           sameName: true
         })
+        break;
       }
     }
 
@@ -428,9 +433,9 @@ class Createproject extends React.Component {
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
-                    color="secondary"
+                    color="primary"
                     variant="inline"
-                    inputVarient="outlined"
+                    inputvarient="outlined"
                     label="End Date"
                     value={this.state.endDate}
                     formate="MM/dd/yyy"
