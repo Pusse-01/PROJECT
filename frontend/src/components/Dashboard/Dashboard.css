@@ -1,5 +1,5 @@
 div{
-   font-family: 'Lato';
+   font-family: 'Helvetica';
    
 }
 .dashMainComponent {
@@ -52,10 +52,14 @@ div{
    background-color: #1e272e;
 }
 .buttonclock{
-position: static;
+position: relative;
 width: 200px;
+left: 75%;
+
 }
 .overdue{
    position: static;
+   margin-left: 30%;
+   width: 25%;
 }
 

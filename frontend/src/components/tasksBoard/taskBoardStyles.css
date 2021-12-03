@@ -18,9 +18,7 @@
     overflow: scroll;
     background-color: #1e272e;
 }
-.tasksBoardSubComponent::-webkit-scrollbar{
-    display: none;
-}
+
 .header{
     position: absolute;
     width: 82%;
@@ -44,9 +42,7 @@
     overflow: scroll;
     padding: 0;
 }
-.statusBar::-webkit-scrollbar{
-    display: none;
-}
+
 
 .taskHeader {
     color: #a4b0be;
@@ -152,22 +148,22 @@
 }
 #done {
     border-top: 1px solid #4834d4;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-width: 2px;
     box-shadow: 0px 1px 1px #4834d4;
 }
 #bugs {
     border-top : 1px solid #535c68;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-width: 2px;
     box-shadow: 0px 1px 1px #535c68;
 }
 #review {
     border-top: 1px solid #8e44ad;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-width: 2px;
     box-shadow: 0px 1px 1px #8e44ad;
 }
@@ -196,18 +192,20 @@
 /******************************* SIDE BAR ***********************************/
 .taskBoardSideBarComponent {
     position: absolute;
-    top: 00px;
+    top: 80px;
     right :0px;
     width : 18%;
     height: 100%;
     z-index: -1;
-    padding-top: 10%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: #2f3640;
 }
 .taskBoardSideBarTitle{
     color: white;
     width: 100%;
     text-align: center;
+    font-size: 25px;
 }
 
 .taskBoardSideBarElement {
@@ -217,7 +215,6 @@
     text-align: center;
     text-decoration: none;
     /*display: inline-block;*/
-    margin: 4px 2px;
     cursor: pointer;
     border-radius: 15px;
     height: 15vh;
@@ -225,7 +222,7 @@
     display: grid;
     text-align: center;
     align-content: center;
-    margin: 15px;
+    margin: 25px;
 }
 
 #task{

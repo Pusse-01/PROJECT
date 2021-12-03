@@ -78,6 +78,7 @@
     background-color: #2f3640 ;
     margin-left: 5%;
     margin-right: 5%;
+  
     padding: 0;
     width: 90%;
 }
@@ -100,6 +101,7 @@
     align-self: center;
     margin: 5px;
     height: 25px;
+    border-radius: 10%;
 }
 .taskBoardButton {
     position: absolute;
@@ -217,4 +219,11 @@
 
 .title {
     color : white;
+}
+.SEARCHR{
+    border-radius: 10px;
+    background-color: #2f3640;
+}
+li{
+    list-style: none;
 }

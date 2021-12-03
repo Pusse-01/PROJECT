@@ -95,7 +95,7 @@ function Dashboard({ id, email, name ,workisornot}) {
     width: "300px",
     height: "300px",
     borderRadius: "50%",
-    left: "350px"
+    left: "50%"
   };
   const circlestyleon = {
     dispay: "block",
@@ -174,7 +174,7 @@ function Dashboard({ id, email, name ,workisornot}) {
         </div>
         <div className="col-sm-12 col-md-8">
           <div className="row">
-            <div className="col-md-4 col-sm-12  ">
+            <div className=" col-sm-12  ">
               
               <div 
                 style={containerstyle}
@@ -212,7 +212,7 @@ function Dashboard({ id, email, name ,workisornot}) {
               </div>
              
               <div className="row ">
-              <div className="ms-5 mt-5 ">
+              <div className="ms-5  ">
                 {showform ? (
                   <div>
                     <button
@@ -243,7 +243,7 @@ function Dashboard({ id, email, name ,workisornot}) {
                   </div>
                 ) : (
                   <button
-                    className="btn btn-danger bg-gradient buttonclock ms-3"
+                    className="btn btn-danger bg-gradient buttonclock "
                     onClick={show}
                   >
                     Clock In
@@ -253,13 +253,16 @@ function Dashboard({ id, email, name ,workisornot}) {
               </div>
             </div>
             </div>
-            <div className="col-sm-12 col-md-9 col-lg-4 offset-md-4 overdue mt-2 ">
-              <Overdue id={id} />
-            </div>
+           
           </div>
         </div>
+        
         <Timelines id={id} email={email} />
+        
       </div>
+      <div className="col-sm-12 col-md-9  overdue mt-5 ">
+              <Overdue id={id} />
+            </div>
     </div>
 
   );

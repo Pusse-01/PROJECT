@@ -48,17 +48,19 @@ constructor(props) {
                  <Timelogssidebar email={this.state.email} id={this.state.id}/>
                 
                 <div className="timeLogsSubComponent">
-                <h2 className="hedingfont text-center">TIME L<span className="Oletter">O</span>GS</h2>̵
-                    <div className="searchBar">
-                        <div className="blankColumn"></div>
-                        <img className="searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
-                        
-                        <input type="text" placeholder="Search by Project or Task or Name or Date" className="tasks_taskSearchBox" onChange={event =>{
+               ̵
+               <div className="tasks_searchBar">
+                        <div className="tasks_blankColumn"></div>
+                        <div className="SEARCHR">
+                        <img className="tasks_searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
+                        <input type="text" placeholder="Search" className="tasks_taskSearchBox" onChange={event =>{
                             this.setState({
                                 searchTerm:event.target.value
                             },()=>{console.log(this.state.searchTerm)})
                         }}/>
+                        </div>
                     </div>
+
                       <div className="tableover">
                     <table className="timeLogsTable mt-3">
                         <tr className="table_head">

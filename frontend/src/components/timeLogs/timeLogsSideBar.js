@@ -97,12 +97,7 @@ getpids();
 gettasks();
 projecttotal();
 tasktotal();
-Settasktime({
-  Hours: "00",
-  Minutes: "00",
-  seconds: "00",
-});
-settasks([""]);
+
 
 }, [projectselected,stask,pid]);
   return (

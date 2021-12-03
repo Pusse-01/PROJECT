@@ -39,7 +39,7 @@
     margin-bottom: 0px;
     overflow: scroll;
     border-top: 1px solid #eb4d4b;
-    border-radius: 100px;
+    border-radius: 20px;
     border-width: 2px;
     box-shadow: 0px 1px 20px #eb4d4b;
 }
@@ -53,6 +53,7 @@
     margin: 0px;
     padding: 30px;
     border-radius: 100px;
+    
 }
 .taskMoreDetails{
     padding: 30px;
@@ -136,8 +137,8 @@
     width: 100% ;
     color: #a4b0be;
     font-weight: bolder;
-    font-size: 30px;
-    height: 20%;
+    font-size: 25px;
+    height: 10%;
     margin: 0px;
     text-align: center;
     padding-top: 10%;
@@ -156,7 +157,7 @@
 .taskMoreElement{
     padding:10px;
     background: #1e272e;
-    margin: 10px;
+    margin: 20px;
     display: flex;
     flex-direction: column;
     height: 130px;

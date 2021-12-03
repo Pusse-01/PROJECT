@@ -38,7 +38,7 @@ function Timelines({id , email}) {
   }, [projectselected]);
   return (
     <div className="row">
-      <div className="col-sm-12 col-md-4 mt-5   ms-md-5 mr-md-5">
+      <div className="col-sm-12 col-md-5 mt-5   ms-md-5 mr-md-5">
       <h4 className="text-center bg theader"> User Activity Timeline</h4>
         <div className="scroll1 hides">
         

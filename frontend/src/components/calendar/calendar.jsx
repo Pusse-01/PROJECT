@@ -23,7 +23,7 @@ import {
 //import { resourcesData } from './resources';
 //import { appointments } from './resources';
 import "./calendarStyles.css"
-import "./calendarAnimatedbackground.css"
+
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
@@ -32,7 +32,7 @@ import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
-import WeatherApp from "./calendar-subcomponents/weather/weatherApp"
+
 
 const theme = createTheme({ palette: { type: "dark", primary: indigo } });
 
@@ -471,7 +471,7 @@ export default class Demo extends React.PureComponent {
 
 
         <div>
-          <div class="sidecontainer">
+{/*           <div class="sidecontainer">
 
             {lastlog.length > 0 ?
               <button type='button' class="changesmain" style={{ backgroundColor: "#2f3640" }}>
@@ -510,8 +510,26 @@ export default class Demo extends React.PureComponent {
 
 
               : null}
-            <WeatherApp />
-          </div>
+           
+          </div> */}
+          
+          <div className="sideBarcalendar">
+                <h4 className="sidebarMoreHeader">Deadlines</h4>
+                <div className="sideBarMorecal">
+                    {
+                        (lastlog.length!=null && lastlog.length > 0 )?
+                        lastlog.map((member, index)=>{
+                            return (
+                                <div className="taskMoreElementcal">
+                                    <h7 className="taskMoreElementName">{member.title}</h7>
+                                    <h7 className="taskMoreElementPosition">{member.duedate}</h7>
+                                    <h7 className="taskMoreElementEmailcal">{member.note}</h7>
+                                </div>
+                            )
+                        }) : <h5 className="taskMore_errorMessage">No members are assigned to the task</h5>
+                    }
+                </div>
+            </div>
         </div>
 
 

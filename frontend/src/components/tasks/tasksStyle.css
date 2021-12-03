@@ -83,12 +83,13 @@
     align-items: center;
     border-color: #1e272e;
     display: grid;
-    grid-template-columns: 70% 5% 25%;
-    background-color: #2f3640 ;
+    grid-template-columns: 70% 30%;
+    background-color: #1e272e ;
     margin-left: 5%;
     margin-right: 5%;
     padding: 0;
     width: 90%;
+    border-radius: 10px;
 }
 .tasks_blankColumn {
     height: 100%;
@@ -239,7 +240,7 @@
 .taskElement{
     padding:10px;
     background: #1e272e;
-    margin: 10px;
+    margin: 20px;
     display: grid;
     grid-template-columns: 20% 80%;
     height: 80px;
@@ -259,7 +260,7 @@
 
 #tasksAll{box-shadow: 0px 1px 10px 1px #40739e;}
 #tasksToDo{box-shadow: 0px 1px 10px 1px #eb4d4b;}
-#tasksInProgress{box-shadow: 0px 10px 1px 1px  #4834d4;}
+#tasksInProgress{box-shadow: 0px 1px 10px 1px rgb(206, 224, 123);}
 #tasksDone{box-shadow: 0px 1px 10px 1px #535c68;}
 #tasksBugs{box-shadow: 0px 1px 10px 1px #8e44ad;}
 #tasksReview{box-shadow: 0px 1px 10px  1px red;}

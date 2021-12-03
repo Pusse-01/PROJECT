@@ -1,10 +1,10 @@
 .scroll1{
-    max-height: 380px;
+    max-height: 200px;
     overflow: scroll;
    
 }
 .scroll2{
- max-height: 350px;
+ max-height: 170px;
   overflow: scroll;
  
 }

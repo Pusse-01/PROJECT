@@ -84,12 +84,14 @@ class Tasks extends Component{
                 <div className="tasksSubComponent">̵
                     <div className="tasks_searchBar">
                         <div className="tasks_blankColumn"></div>
+                        <div className="SEARCHR">
                         <img className="tasks_searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
                         <input type="text" placeholder="Search by Project or Task" className="tasks_taskSearchBox" onChange={event =>{
                             this.setState({
                                 searchTerm:event.target.value
                             },()=>{console.log(this.state.searchTerm)})
                         }}/>
+                    </div>
                     </div>
 
                     <div className="tasksScroll hides">
@@ -123,7 +125,7 @@ class Tasks extends Component{
 
                                             <td className="tasks_table_data_column">{task.task_name}</td>
                                             <td className="tasks_table_data_column">{task.project_name}</td>
-                                            <td className="tasks_table_data_column">{task.due_date}</td>
+                                            <td className="tasks_table_data_column">{task.due_date.substring(0,10)}</td>
                                             <td className="tasks_table_data_column">{task.task_status}</td>
                                             <td className="tasks_table_data_column_more">
                                                 <div
@@ -143,7 +145,7 @@ class Tasks extends Component{
 
                                         <td className="tasks_table_data_column">{task.task_name}</td>
                                         <td className="tasks_table_data_column">{task.project_name}</td>
-                                        <td className="tasks_table_data_column">{task.due_date}</td>
+                                        <td className="tasks_table_data_column">{task.due_date.substring(0,10)}</td>
                                         <td className="tasks_table_data_column">{task.task_status}</td>
                                         <td className="tasks_table_data_column_more">
                                             <div

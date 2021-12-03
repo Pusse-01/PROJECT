@@ -44,12 +44,14 @@ console.log(this.state.projects);
                 <div className="projectsSubComponent">̵
                 <div className="tasks_searchBar">
                         <div className="tasks_blankColumn"></div>
+                        <div className="SEARCHR">
                         <img className="tasks_searchIcon" src={require('../../assests/images/redSearch2.png').default}/>
-                        <input type="text" placeholder="Search by Project or Task" className="tasks_taskSearchBox" onChange={event =>{
+                        <input type="text" placeholder="Search by Project" className="tasks_taskSearchBox" onChange={event =>{
                             this.setState({
                                 searchTerm:event.target.value
                             },()=>{console.log(this.state.searchTerm)})
                         }}/>
+                        </div>
                     </div>
 
                     <table className="projectsTable">
@@ -70,20 +72,44 @@ console.log(this.state.projects);
                                     return val;
                                 }
                             }).map((projects, index) => {
-
-                            return (
-                                <tr className="table_data_odd" key={index}>
-
-                                    <td className="table_data_column">{projects.name}</td>
-                                    <td className="table_data_column">{projects.discription}</td>
-                                    <td className="table_data_column">{[projects.members.join("/\n")]}</td>
-                                    <td className="table_data_column">{projects.overdue}</td>
-                                    <td className="table_data_column">{projects.status}</td>
-                                    <td className="table_data_column">{projects.notes}</td>
-                                </tr>
-
-                            )
+                                if(index%2==0){
+                                    return (
+                                        <tr className="table_data_odd" key={index}>
+        
+                                            <td className="table_data_column">{projects.name}</td>
+                                            <td className="table_data_column">{projects.discription}</td>
+                                            <td className="table_data_column">{[projects.members.map((member,index2)=>{
+                                                return(<li>
+                                                    {member}
+                                                </li>)
+                                            })]}</td>
+                                            <td className="table_data_column">{projects.overdue.substring(0,10)}</td>
+                                            <td className="table_data_column">{projects.projectStatus}</td>
+                                            <td className="table_data_column">{projects.notes}</td>
+                                        </tr>
+        
+                                    )
+                                }else{
+                                    return (
+                                        <tr className="table_data_even" key={index}>
+        
+                                            <td className="table_data_column">{projects.name}</td>
+                                            <td className="table_data_column">{projects.discription}</td>
+                                            <td className="table_data_column">{[projects.members.map((member,index2)=>{
+                                                return(<li>
+                                                    {member}
+                                                </li>)
+                                            })]}</td>
+                                           <td className="table_data_column">{projects.overdue.substring(0,10)}</td>
+                                            <td className="table_data_column">{projects.projectStatus}</td>
+                                            <td className="table_data_column">{projects.notes}</td>
+                                        </tr>
+        
+                                    )
+                                }
+                            
                         }) : <tr><td colSpan="5">Loading...</td></tr>}
+                    
 
                     </table>
                 </div>

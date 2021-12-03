@@ -34,7 +34,7 @@ export default class Sidebar extends Component{
         return(
             <div className="dashboardsidemainComponent title">
             <div className="ps-3 pe-3  mt-3">
-            <div className="cpbuttonP col-12 " >
+            <div className="ctbuttonP col-12 " >
               Pending Projects
               <div className="siderbarfontP">{projects.pending}</div>             
           </div>
@@ -46,7 +46,7 @@ export default class Sidebar extends Component{
               </div>
           </div>
           <div className="ps-3 pe-3  mt-3">
-            <div className="ctbuttonP col-12 ">
+            <div className="ctbuttonP1 col-12 ">
               Ongoing Projects
               <div className="siderbarfontP">{projects.ongoing}</div>
               </div>             
@@ -57,7 +57,7 @@ export default class Sidebar extends Component{
               <div className="siderbarfontP">{projects.completed}</div>             
           </div>
           </div><div className="ps-3 pe-3  mt-3">
-            <div className="cpbuttonP col-12 " >
+            <div className="ctbuttonP2 col-12 " >
             Projects Over due
               <div className="siderbarfontP">{projects.over_due}</div>             
           </div>
