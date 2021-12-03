@@ -139,6 +139,13 @@ class Navbar extends Component{
         })
     }
 
+    displayNotification = ({ senderName, type }) => {
+        let action;
+        return (
+          <span className="notification">Notification</span>
+        );
+      };
+
     render(){
 
         let linkClassHome = this.state.nav.selectedHome ? "nav-link text-danger " : "nav-link text-light";
@@ -182,7 +189,7 @@ class Navbar extends Component{
 
                 <div className="employee_navbar_action"  style={{zIndex:10}}>
                     <div>
-                    <div className = "icons">
+                    <div className = "icons" onClick={this.displayNotification.bind(this)}>
                                 <img className="notificationE" src={Notification}/>
                                 <div className = "notificationCounter">
                             2

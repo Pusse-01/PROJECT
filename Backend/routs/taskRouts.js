@@ -37,6 +37,7 @@ router.get ('/userTasks/:id',(req, res)=>{
       let done = 0;
       let bugs = 0;
       let review = 0;
+      let overdue = 0
       allTasks.forEach((Task)=> {
           switch (Task.task_status) {
               case "To Do":
@@ -54,6 +55,9 @@ router.get ('/userTasks/:id',(req, res)=>{
               case "Review":
                   review++;
                   break; 
+            case "Overdue":
+                overdue++;
+                    break;
               default:
                   break;          
           }
@@ -65,6 +69,7 @@ router.get ('/userTasks/:id',(req, res)=>{
           done,
           bugs,
           review,
+          overdue
       };
   
       res.send(statusObject);
@@ -78,6 +83,7 @@ router.get ('/userTasks/:id',(req, res)=>{
     let done = 0;
     let bugs = 0;
     let review = 0;
+    let overdue = 0
     allTasks.forEach((Task)=> {
         switch (Task.task_status) {
             case "To Do":
@@ -95,6 +101,9 @@ router.get ('/userTasks/:id',(req, res)=>{
             case "Review":
                 review++;
                 break; 
+            case "Overdue":
+                overdue++;
+                    break;
             default:
                 break;          
         }
@@ -106,6 +115,7 @@ router.get ('/userTasks/:id',(req, res)=>{
         done,
         bugs,
         review,
+        overdue
     };
 
     res.send(statusObject);

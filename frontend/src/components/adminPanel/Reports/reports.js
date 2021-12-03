@@ -123,8 +123,12 @@ animation: {
 
         
 const chart2 = {
-  labels: ['Pending', 'Not started', 'Ongoing',
-       'Completed', 'Overdue'],
+  labels: ['To do',
+    'In Progress',
+    'Done',
+    'Bugs',
+    'Review',
+    'Over due'],
 datasets: [
 {
   label: 'Tasks',
@@ -133,7 +137,8 @@ datasets: [
     '#C9DE00',
     '#2FDE00',
     '#00A6B4',             
-    '#ff0000 '
+    '#ff0000 ',
+    '#0000FF'
   ],
   hoverBackgroundColor: [
       '#6800B4',
