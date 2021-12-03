@@ -95,6 +95,7 @@ function Dashboard({ id, email, name ,workisornot}) {
     width: "300px",
     height: "300px",
     borderRadius: "50%",
+    left: "350px"
   };
   const circlestyleon = {
     dispay: "block",
