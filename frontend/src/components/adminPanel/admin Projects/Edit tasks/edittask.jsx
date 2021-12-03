@@ -322,6 +322,11 @@ export default class Edittask extends React.Component {
                                                         control={<Radio />}
                                                         label="Review"
                                                     />
+                                                    <FormControlLabel
+                                                        value="Overdue"
+                                                        control={<Radio />}
+                                                        label="Overdue"
+                                                    />
                                                 </RadioGroup>
                                             </FormControl>
 

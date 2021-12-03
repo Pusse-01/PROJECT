@@ -338,7 +338,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "120px",
                     }}
                   >
                     <Typography
@@ -413,7 +413,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "120px",
                     }}
                   >
                     <Typography
@@ -490,7 +490,7 @@ export default class ShowProject extends React.Component {
                       Next Project
                     </button>
                     <br />
-                    <p style={{ marginLeft: "30px" }}>
+                    <p style={{ marginLeft: "30px", color:'#969696' }}>
                       {" "}
                       Page {pageCount + 1} of {gridData.length}
                     </p>
