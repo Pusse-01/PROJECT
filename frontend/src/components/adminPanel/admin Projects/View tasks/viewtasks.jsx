@@ -26,7 +26,7 @@ import { Helmet } from 'react-helmet'
 const TITLE = 'Task View'
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: '#2f3640',
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -58,8 +58,7 @@ const StyledTableCellNotDue = styled(TableCell)(({ theme }) => ({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
+    backgroundColor: "#2f3640",
     border: 0,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -141,7 +140,7 @@ class Row extends React.Component {
             </StyledTableCellNotDue>
           ) : null}
           {new Date(row.overdue) <= Date.now() && row.status !== "Completed" ? (
-            <StyledTableCellDue align="left">{row.status}</StyledTableCellDue>
+            <StyledTableCellDue align="left" >{row.status}</StyledTableCellDue>
           ) : null}
 
           <TableCell align="left">{row.description}</TableCell>
@@ -155,38 +154,38 @@ class Row extends React.Component {
           </TableCell>
         </StyledTableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: '#525252' }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: '#1e272e', color: 'white' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box
                 sx={{
                   margin: 1,
-                  backgroundColor: "#394b5b",
+                  backgroundColor: "#1e272e",
                   borderRadius: "3px",
                   width: "100%",
                 }}
               >
                 <Typography
                   row
-                  variant="h6"
+                  variant="subtitle"
                   gutterBottom
                   component="div"
                   marginLeft="10px"
                 >
-                  Tasks Status
+                  T A S K&nbsp;&nbsp;  S T A T U S
                 </Typography>
                 <Table size="small" aria-label="stat">
                   <TableHead>
-                    <TableRow>
+                    <StyledTableRow>
                       <TableCell align="left">Task Name</TableCell>
                       <TableCell align="left">Due Date</TableCell>
                       <TableCell align="left"></TableCell>
 
-                      <TableCell align="left" colSpan={2}>
+                      <TableCell align="left" >
                         Status
                       </TableCell>
-                      <TableCell align="center">Contributers</TableCell>
-                      <TableCell align="center"></TableCell>
-                    </TableRow>
+                      <TableCell align="center" colSpan={1}>Contributers</TableCell>
+                      <TableCell align="center" colSpan={1}></TableCell>
+                    </StyledTableRow>
                   </TableHead>
                   <TableBody width="100%" >
                     {row.history.length === 0 ? (
@@ -203,49 +202,49 @@ class Row extends React.Component {
                     ) : null}
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
-                        <TableCell align="left" onClick={this.handler}>
+                        <TableCell align="left">
                           {historyRow.task.substring(0, 50)}{" "}
                         </TableCell>
                         <TableCell align="left" colSpan={2}>
                           {historyRow.date}
                         </TableCell>
                         {(historyRow.taskstat === 'Done' || (historyRow.taskstat === 'Review')) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#00FF00' }}>
+                          <TableCell align="left" sx={{ color: '#00FF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'In Progress' && (new Date(historyRow.date) > Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#FFFF00' }}>
+                          <TableCell align="left" sx={{ color: '#FFFF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'In Progress' && (new Date(historyRow.date) < Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#FF0000' }}>
+                          <TableCell align="left"sx={{ color: '#FF0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'To Do' && (new Date(historyRow.date) > Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#00FF00' }}>
+                          <TableCell align="left" sx={{ color: '#00FF00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'To Do' && (new Date(historyRow.date) < Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#FF0000' }}>
+                          <TableCell align="left" sx={{ color: '#FF0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'Bugs/Issues' && (new Date(historyRow.date) > Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#ffff00' }}>
+                          <TableCell align="left" sx={{ color: '#ffff00' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'Bugs/Issues' && (new Date(historyRow.date) < Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#ff0000' }}>
+                          <TableCell align="left" sx={{ color: '#ff0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
                         {(historyRow.taskstat === 'Overdue' && (new Date(historyRow.date) < Date.now())) ?
-                          <TableCell align="left" colSpan={2} sx={{ color: '#ff0000' }}>
+                          <TableCell align="left" sx={{ color: '#ff0000' }}>
                             {historyRow.taskstat}
                           </TableCell>
                           : null}
@@ -261,26 +260,28 @@ class Row extends React.Component {
                             </Box>
                           ))}
                         </TableCell>
-                        <TableCell align="left" colSpan={2}>
+                        <TableCell align="left">
 
-                          <button style={{ fontSize: 11, padding: 0, marginRight: '10px', marginLeft: '10px', backgroundColor: '#000000', width: '40px', textAlign: 'center' }}
-                            class="taskdeletebutton"
-                            type="button"
-                            value={index}
-                            onClick={this.taskDelete}
-                          >
+                          <div>
+                            <button style={{ fontSize: '9px', marginRight: "0px", backgroundColor: '#2f3640', width: '35px', textAlign: 'center' }}
+                              class="taskdeletebutton"
+                              type="button"
+                              value={index}
+                              onClick={this.taskDelete}
+                            >
 
-                            Delete
-                          </button>
+                              Delete
+                            </button>
 
-                          <button style={{ fontSize: 10, marginRight: "170px", backgroundColor: '#000000', width: '40px', textAlign: 'center' }}
-                            class="taskdeletebutton"
-                            value={index}
-                            onClick={this.taskEdit}
-                          >
+                            <button style={{ fontSize: '9px', marginLeft: "0px", marginRight: "220px", backgroundColor: '#2f3640', width: '35px', textAlign: 'center' }}
+                              class="taskdeletebutton"
+                              value={index}
+                              onClick={this.taskEdit}
+                            >
 
-                            Edit
-                          </button>
+                              Edit
+                            </button>
+                          </div>
 
                         </TableCell>
                       </TableRow>
@@ -431,10 +432,10 @@ export default class Viewtasks extends React.Component {
             .then(() => {
               var ProjecTStat = "-";
 
-              if ( new Date(resources[i].overdue) < Date.now()
+              if (new Date(resources[i].overdue) < Date.now()
               ) {
                 ProjecTStat = "Overdue";
-              } 
+              }
               else if (
                 resources[i].projectStatus === "Pending"
               ) { //pending status for initial tasks
@@ -502,17 +503,20 @@ export default class Viewtasks extends React.Component {
       filterdresult: this.state.rows,
     });
     var copyArray = [];
-    for (var i = 0; i < this.state.rows.length; i++) {
-      if (
-        this.state.rows[i].name.toLowerCase().includes(value.toLowerCase()) ||
-        value === ""
-      ) {
-        copyArray.push(this.state.rows[i]);
+    if (value.length !== 0) {
+      for (var i = 0; i < this.state.rows.length; i++) {
+        if (
+          this.state.rows[i].name.toLowerCase().includes(value.toLowerCase()) || value === ""
+        ) {
+          copyArray.push(this.state.rows[i]);
+        }
       }
+      this.setState({
+        filterdresult: copyArray,
+      });
     }
-    this.setState({
-      filterdresult: copyArray,
-    });
+
+
   };
 
   setStateOfParent = (newState) => {
@@ -530,16 +534,7 @@ export default class Viewtasks extends React.Component {
   render() {
     const { filterdresult, createTaskstat, edittaskstat } = this.state;
 
-    if (filterdresult.length === 0) {
-      return (
-        <div>
-          <Helmet>
-            <title>{TITLE}</title>
-          </Helmet>
-          <div><h3 style={{ color: 'white', marginLeft: '500px', font: '30px', marginTop: '200PX' }}>No data to show.</h3></div>
-        </div>
-      )
-    }
+
 
 
     if (edittaskstat) {
@@ -574,16 +569,16 @@ export default class Viewtasks extends React.Component {
               <title>{TITLE}</title>
             </Helmet>
             <Box>
-              <SearchIcon fontSize="large" htmlColor="#ffffff" />
+              <SearchIcon fontSize="small" htmlColor="#ff0000" />
               <InputBase
-                sx={{ htmlcolor: "white" }}
-                placeholder="Search for project name....."
+                style={{ backgroundColor: "#2f3640 ", fontSize: '12px', width: '200px' }}
+                placeholder="    Search by project name "
                 onChange={this.filterProjects}
               ></InputBase>
             </Box>
           </div>
           <Paper class="PAPER">
-            <TableContainer sx={{ maxHeight: 580 }}>
+            <TableContainer sx={{ maxHeight: '40%' }}> {/*check this */}
               <Table
                 stickyHeader
                 aria-label="collapsible table"

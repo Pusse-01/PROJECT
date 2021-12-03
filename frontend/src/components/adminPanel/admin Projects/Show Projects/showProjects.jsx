@@ -124,14 +124,14 @@ export default class ShowProject extends React.Component {
                       taskLog.push(workingData[y]);
                       Time.hrs += parseInt(workingData[y][5].substring(0, 2));
                       Time.mins += parseInt(workingData[y][5].substring(3, 5));
-                      if(Time.mins -60 >1){
+                      if (Time.mins - 60 > 1) {
                         Time.hrs++;
-                        Time.mins = Time.mins-60;
+                        Time.mins = Time.mins - 60;
                       }
                       Time.secs += parseInt(workingData[y][5].substring(6, 8));
-                      if(Time.secs -60 >1){
+                      if (Time.secs - 60 > 1) {
                         Time.mins++;
-                        Time.secs = Time.secs-60;
+                        Time.secs = Time.secs - 60;
                       }
                     }
                   }
@@ -265,7 +265,7 @@ export default class ShowProject extends React.Component {
         <div>
           <Box
             style={{
-              backgroundColor: "#525252",
+              backgroundColor: "#2f3640",
               marginLeft: "20px",
               marginRight: "10px",
               marginTop: "0px",
@@ -459,7 +459,7 @@ export default class ShowProject extends React.Component {
               </Grid>
               <Grid>
                 {" "}
-                <Box style={{ width: "200px" }}>
+                <Box style={{ width: "200px", marginLeft: "30px"}}>
                   <p
                     style={{
                       color: "#e8e8e8",
@@ -577,7 +577,7 @@ export default class ShowProject extends React.Component {
                   marginLeft: "30px",
                   marginTop: "10px",
                   marginBottom: "0px",
-                  color: "#dec8ab",
+                  color: "#ffffff",
                   fontSize: "10px",
                 }}
               >
@@ -593,7 +593,7 @@ export default class ShowProject extends React.Component {
                           marginLeft: "20px",
                           marginTopt: "0px",
                           border: "none",
-                          color: "#eadbc8",
+                          color: "#ffffff",
                           fontSize: "10px",
                         }}
                       >
@@ -607,20 +607,20 @@ export default class ShowProject extends React.Component {
               <Paper style={{ marginLeft: "30px", marginRight: "10px" }}>
                 <TableContainer sx={{ maxHeight: 580 }}>
                   {gridData[pageCount].t_details.map((tasks, index) => (
-                    <Table style={{ backgroundColor: "#525252" }}>
+                    <Table style={{ backgroundColor: "#2f3640" }}>
                       <TableHead>
                         <StyledTableRow
                           style={{ border: "none" }}
                           value={index}
                         >
-                          <TableCell colSpan={5}
+                          <TableCell colSpan={4}
                             style={{
                               border: "none",
-                              color: "black",
-                              fontSize: "16px",
+                              color: "#000000",
+                              fontSize: "15px",
                             }}
                           >
-                            Task Name -   {tasks.taskName}
+                            {tasks.taskName}
                           </TableCell>
 
 
@@ -628,147 +628,165 @@ export default class ShowProject extends React.Component {
                         </StyledTableRow>
                       </TableHead>
                       <TableBody>
-                      <StyledTableRow>
-                        <TableCell
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          Task Status :-  {tasks.taskStatus}
-                        </TableCell>
-                        <TableCell colSpan={5}
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          Total Time Spent :-  {tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins{" "}
-                          {tasks.tasktime.secs} Secs
-                        </TableCell>
-
-                      </StyledTableRow>
-                      <StyledTableRow>
-                        <TableCell colSpan={6} align='center' style={{ border: 'none' }}>
-                          &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
-
-                        </TableCell>
-                      </StyledTableRow>
-                      <StyledTableRow style={{ border: "none" }}>
-                        <TableCell
-                          colSpan={1}
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Employee Name
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Task Start Time
-                        </TableCell>
-                        <TableCell
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Task End Time
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Total Time
-                        </TableCell>
-                        <TableCell
-                          colSpan={3}
-                          style={{
-                            border: "none",
-                            color: "black",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Memo
-                        </TableCell>
-                      </StyledTableRow>
-                      {tasks.taskWorking.map((taskwork, indextask) => (
                         <StyledTableRow>
                           <TableCell
-                            colSpan={1}
                             style={{
                               border: "none",
-                              color: "#1b1b1b",
-                              fontSize: "14px",
+                              color: "black",
+                              fontSize: "13px",
                             }}
                           >
-                            {taskwork[0]}
+                            Task Status :-  {tasks.taskStatus}
                           </TableCell>
-                          <TableCell
-                            colSpan={1}
+                          <TableCell colSpan={4}
                             style={{
                               border: "none",
-                              color: "#1b1b1b",
-                              fontSize: "14px",
+                              color: "black",
+                              fontSize: "13px",
                             }}
                           >
-                            {taskwork[3]}
+                            Total Time Spent :-  {tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins{" "}
+                            {tasks.tasktime.secs} Secs
                           </TableCell>
-                          <TableCell
-                            style={{
-                              border: "none",
-                              color: "#1b1b1b",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {taskwork[4]}
-                          </TableCell>
-                          <TableCell
-                            colSpan={1}
-                            style={{
-                              border: "none",
-                              color: "#1b1b1b",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {taskwork[5]}
-                          </TableCell>
-                          <TableCell
-                            colSpan={3}
-                            style={{
-                              border: "none",
-                              color: "#1b1b1b",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {taskwork[6]}
-                          </TableCell>
+
                         </StyledTableRow>
-                      ))}
+                      </TableBody>
+                      {tasks.taskWorking.length ?
+
+                        <TableBody>
+
+                          <StyledTableRow>
+                            <TableCell colSpan={5} align='center' style={{ border: 'none' }}>
+                              &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
+                            </TableCell>
+
+                          </StyledTableRow>
+                          <StyledTableRow style={{ border: "none" }}>
+                            <TableCell
+
+                              style={{
+                                border: "none",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              Employee Name
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              style={{
+                                border: "none",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              Task Start Time
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                border: "none",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              Task End Time
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              style={{
+                                border: "none",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              Total Time
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                border: "none",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              Memo
+                            </TableCell>
+                          </StyledTableRow>
+
+                          {tasks.taskWorking.map((taskwork, indextask) => (
+                            <StyledTableRow>
+                              <TableCell
+                                colSpan={1}
+                                style={{
+                                  border: "none",
+                                  color: "#969696",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {taskwork[0]}
+                              </TableCell>
+                              <TableCell
+                                colSpan={1}
+                                style={{
+                                  border: "none",
+                                  color: "#969696",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {taskwork[3]}
+                              </TableCell>
+                              <TableCell
+                                style={{
+                                  border: "none",
+                                  color: "#969696",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {taskwork[4]}
+                              </TableCell>
+                              <TableCell
+                                colSpan={1}
+                                style={{
+                                  border: "none",
+                                  color: "#969696",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {taskwork[5]}
+                              </TableCell>
+                              <TableCell
+
+                                style={{
+                                  border: "none",
+                                  color: "#969696",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {taskwork[6]}
+                              </TableCell>
+                            </StyledTableRow>
+                          ))}
+
+                        </TableBody>
+
+
+
+                        :  <StyledTableRow>
+                        <TableCell colSpan={5} align='center' style={{ border: 'none' }}>
+                          &nbsp;&nbsp;       No active activities
+                        </TableCell>
+
+                      </StyledTableRow>}
+
+
                       <StyledTableRow />
 
                       <StyledTableRow>
                         <TableCell colSpan={6} align='center' style={{ borderBottom: '1px solid white' }}>
-                         
+
 
                         </TableCell>
                       </StyledTableRow>
-                      </TableBody>
+
 
                     </Table>
 
@@ -777,7 +795,7 @@ export default class ShowProject extends React.Component {
                 <Grid>
                   <Box
                     style={{
-                      backgroundColor: "#a99a86",
+                      backgroundColor: "#2f3640",
                       width: "100%",
                       textAlign: "center",
                     }}

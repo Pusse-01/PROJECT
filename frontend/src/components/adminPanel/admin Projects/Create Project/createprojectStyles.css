@@ -6,7 +6,7 @@
 
 .h1project{
   padding-top: 10px;
-  color:#0d2592;
+  color:#ffffff;
 }
 
 
@@ -21,7 +21,7 @@
 .buttonsubmit {
   display: inline-block;
   border-radius: 4px;
-  background-color: rgb(10, 10, 73);
+  background-color: #1e272e;;
   border: none;
   color: #ffffff;
   text-align: center;
@@ -79,7 +79,7 @@
 .loadingbutton {
     position: absolute;
     top: 420px;
-    left: 570px;
+    left:37%;
     padding: 10px;
     background-color: transparent;
     color: rgb(190, 33, 33);
@@ -171,7 +171,7 @@
     transition: 0.5s;
   }
   .buttoncreateproject:hover {
-    background-color: #191b3a;
+    background-color: #2f3640;
     opacity: 0.5;
   }
   .buttoncreateproject:hover span {
@@ -180,4 +180,7 @@
   .buttoncreateproject:hover span:after {
     opacity: 1;
     right: 0;
+  }
+  .ring1{
+    left:45%
   }

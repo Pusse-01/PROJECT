@@ -33,7 +33,7 @@ const paperStyle = {
   padding: "50px 20px",
   width: "700px",
   margin: "20px auto",
-  backgroundColor: "#425e6e",
+  backgroundColor: "#2f3640",
   opacity: 0.8,
 };
 const avatarStyle = {
@@ -73,6 +73,7 @@ class Createproject extends React.Component {
       category: "Pending",
       loading: false,
       error: false,
+      submitted: false
     };
   }
 
@@ -237,6 +238,9 @@ class Createproject extends React.Component {
       });
     } else {
 
+      this.setState({
+        submitted: true,
+      })
       var temp_project = [{
         name: this.state.projectname,
         members: this.state.employeesselected,
@@ -270,35 +274,26 @@ class Createproject extends React.Component {
       category: "Pending",
       loading: false,
       error: false,
+      submitted: false
     })
   }
 
+  returntoPage = (event) => {
+    this.setState({
+      error: false,
+      loading: false,
+      submitted: false
+    })
+  }
 
   render() {
 
 
-    if (this.state.error) {
-      return (
-        <div>
-          <div class="ring1">
-            <span class="span1"></span>
-          </div>
-          <div>
-            <a href="http://localhost:3000/projects">
-              <button class="loadingbutton">
-                {" "}
-                Invalid, Please Fill all the details.<br />
-                Click here to continue
-              </button>
-            </a>
-          </div>
-        </div>
-      );
-    }
 
 
 
-    const { selectedEmployees, employees, employeesasadmins, selectedManagers, category, sameName } =
+
+    const { selectedEmployees, employees, employeesasadmins, selectedManagers, category, sameName, error, submitted } =
       this.state;
 
     return (
@@ -311,11 +306,13 @@ class Createproject extends React.Component {
             <Grid>
               <Paper elevation={20} style={paperStyle}>
                 <div>
+                  {!submitted || error ?
+                    <button
+                      class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
+                      C L E A R
+                    </button> : null
+                  }
 
-                  <button
-                    class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
-                    C L E A R
-                  </button>
 
                   <a href="http://localhost:3000/projects#">
                     <button class="closebuttonactualproject">
@@ -333,13 +330,22 @@ class Createproject extends React.Component {
                     </Avatar>
                   </div>
 
-                  <h1 class='h1project'>Create project</h1>
+                  <h1 class='h1project'>CREATE PROJECT</h1>
                   <Typography variant="caption">
-                    <p>Please fill this from to create a project</p>
+                    {!submitted || error ? <p>Please fill this from to create a project</p>
+                      : null}
+
                   </Typography>
                 </Grid>
+                {error ? <Grid>
+                  <div>
+                    Reqired Data is missing.
+                    <br />
+                  </div>
+                </Grid> : null}
+                {!error ? <Grid>
 
-                <TextField
+                  <TextField
                   fullWidth
                   label="Project Name"
                   value={this.state.projectname}
@@ -421,7 +427,7 @@ class Createproject extends React.Component {
                 </FormControl>
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker 
+                  <KeyboardDatePicker
                     color="secondary"
                     variant="inline"
                     inputVarient="outlined"
@@ -461,6 +467,10 @@ class Createproject extends React.Component {
                     Submit and Create{" "}
                   </button>
                 </div>
+
+
+                </Grid> : null}
+
               </Paper>
             </Grid>
 
@@ -477,6 +487,4 @@ class Createproject extends React.Component {
 }
 
 export default Createproject;
-/*******************************
 
- */

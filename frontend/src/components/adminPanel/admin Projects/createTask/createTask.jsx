@@ -34,14 +34,14 @@ const paperStyle = {
   padding: "50px 20px",
   width: "700px",
   margin: "20px auto",
-  backgroundColor: "#425e6e",
+  backgroundColor: "#2f3640",
   opacity: 0.8,
 };
 const avatarStyle = {
   backgroundColor: "black",
 };
 const radioStyle = {
-  backgroundColor: "#425e6e",
+  backgroundColor: "#2f3640",
   opacity: 0.8,
 };
 
@@ -540,7 +540,7 @@ export default class Createtask extends React.Component {
                       </Avatar>
                     </div>
 
-                    <h1 class="h1tasks">MANAGE TASKS</h1>
+                    <h1 style={{color:'white'}}>MANAGE TASKS</h1>
                     <Typography variant="caption">
                       {!submitted ?
                         <p>

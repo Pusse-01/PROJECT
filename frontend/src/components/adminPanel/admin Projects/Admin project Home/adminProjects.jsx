@@ -149,33 +149,33 @@ class ProjectAdmin extends React.Component {
           <div class="float-child-element2">
             <div class="sidebarProject">
             <div>
-                <button class="button" style={{ marginTop: '5px', marginBottom: '5px' }} onClick={this.gotohome}><Visibility
+                <button class="button" style={{ marginTop: '10px'}} onClick={this.gotohome}><Visibility
                   fontSize="large"
-                  htmlColor="#ffffff"
+                  htmlColor="#ff0000"
                 />&nbsp;View and Edit Projects<br /><p class="p">view a summary project details</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoCreateproject}><AddCircleOutlineOutlinedIcon
                   fontSize="large"
-                  htmlColor="#ffffff"
+                  htmlColor="#ff0000"
                 />&nbsp;Create Project<br /><p class="p">add new task to existing projects</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoCreatetask}><AddCircleOutlineOutlinedIcon
                   fontSize="large"
-                  htmlColor="#ffffff"
+                  htmlColor="#ff0000"
                 />&nbsp;Add New Task<br /><p class="p">create your new project at glance</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' }} onClick={this.gotoviewtask}><Visibility
                   fontSize="large"
-                  htmlColor="#ffffff"
+                  htmlColor="#ff0000"
                 />&nbsp;View and Edit Tasks<br /><p class="p">view a summary of all tasks</p></button>
               </div>
               <div>
                 <button class="button" style={{ marginTop: '5px' , marginBottom: '15px'  }} onClick={this.gotoanalyze}><TrendingUp
                   fontSize="large"
-                  htmlColor="#ffffff"
+                  htmlColor="#ff0000"
                 />&nbsp;Status<br /><p class="p">Evaluare your work</p></button>
               </div>
 

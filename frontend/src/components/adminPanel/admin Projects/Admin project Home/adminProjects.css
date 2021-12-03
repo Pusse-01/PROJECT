@@ -70,7 +70,7 @@ body {
   color: rgb(153, 28, 28);
   box-sizing: content-box;
   height: 80px;
-  background: #1e272e;
+  background-color: #1e272e;
   content: center;
   text-align: center;
   font-size: 28px;
@@ -87,7 +87,7 @@ body {
   padding-left: 0px;
   padding-right: 10px;
   padding-top: 10px;
-  color: rgb(189, 27, 27);
+  color: #ffffff;
   box-sizing: content-box;
   height: 100px;
   background: #252e35;
