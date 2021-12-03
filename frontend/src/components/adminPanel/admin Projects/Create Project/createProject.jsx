@@ -252,8 +252,8 @@ class Createproject extends React.Component {
 
       axios.post("http://localhost:8070/projects", temp_project[0])
         .then((response) => {
-          console.log(response);
-        })
+
+        }).catch((error) => {console.log(error);})
     }
 
   };

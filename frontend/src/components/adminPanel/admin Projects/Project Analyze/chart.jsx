@@ -4,8 +4,6 @@ import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import './AnalyzeStyles.css'
-import Visibility from "@material-ui/icons/Visibility";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import AnalyzeProjectEmployees from './EmployeesContribution'
 const tempData = [
   {
@@ -122,7 +120,6 @@ export default class Projectperformancecharts extends React.Component {
                   this.setState({
                     gridData: GridStructure,
                   });
-                  console.log(this.state.gridData);
                   this.setState({
                     loading: false,
                   });
@@ -142,13 +139,11 @@ export default class Projectperformancecharts extends React.Component {
     if (!this.state.loading) {
       let chartData = [];
       let GridStructure = this.state.gridData
-      console.log('grid' + GridStructure);
       let monthinNumber = "";
       for (let k = 0; k < GridStructure.length; k++) {
         let year
         let date
         let month
-        let fill
         let mode
         let name
         let date_of_interest
@@ -202,7 +197,7 @@ export default class Projectperformancecharts extends React.Component {
                     monthinNumber = "12";
                     break;
                   default:
-                    console.log("error occurred", month.length, monthinNumber);
+                    console.log("error occurred");
                 }
                 date_of_interest = year + "-" + monthinNumber + "-" + date
                 let alreadyin = false
@@ -280,7 +275,7 @@ export default class Projectperformancecharts extends React.Component {
           overDue++
           break
         default:
-          console.log('error occurred', i)
+          console.log('error occurred')
       }
       xAxis.push(GridStructure[i].p_details.name)
     }
@@ -324,7 +319,7 @@ export default class Projectperformancecharts extends React.Component {
             Review++
             break
           default:
-            console.log('error')
+            console.log('error occurred')
         }
       }
 
