@@ -163,15 +163,12 @@ export default class ShowProject extends React.Component {
                   },
                 ];
                 GridStructure.push(Structure[0]);
-
-                console.log(this.state.gridData.length, this.state.MAX_PAGES);
                 if (GridStructure.length - 1 === this.state.MAX_PAGES) {
                   this.setState({
                     gridData: GridStructure,
                     gridDataSave: GridStructure,
                     loading: false,
                   });
-                  console.log(this.state.gridData);
                 } else {
                   this.setState({
                     loading: true,
@@ -182,10 +179,6 @@ export default class ShowProject extends React.Component {
       }
     });
   }
-
-  cellDoubleClick = (event) => {
-    console.log(event);
-  };
 
   gridPageChangeNext = (event) => {
     let id = this.state.pageCount;
@@ -205,15 +198,10 @@ export default class ShowProject extends React.Component {
     }
   };
 
-  Click = (event) => {
-    console.log(
-      this.state.gridData[this.state.pageCount].t_details[0].taskName
-    );
-  };
+
 
   filterProjects = (event) => {
     var value = event.target.value;
-    console.log(value);
     var searchPage = 0;
     for (var i = 0; i < this.state.gridData.length; i++) {
       if (
@@ -234,11 +222,9 @@ export default class ShowProject extends React.Component {
     axios
       .delete("http://localhost:8070/employee/projectdelete/" + ID)
       .then((response) => {
-        console.log(response);
         axios
           .delete("http://localhost:8070/task/deleteallTaskofthisproject/" + ID)
           .then((response) => {
-            console.log(response);
             window.location.reload(false);
           });
       })
@@ -352,7 +338,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "120px",
                     }}
                   >
                     <Typography
@@ -427,7 +413,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "120px",
                     }}
                   >
                     <Typography
@@ -504,7 +490,7 @@ export default class ShowProject extends React.Component {
                       Next Project
                     </button>
                     <br />
-                    <p style={{ marginLeft: "30px" }}>
+                    <p style={{ marginLeft: "30px", color:'#969696' }}>
                       {" "}
                       Page {pageCount + 1} of {gridData.length}
                     </p>
@@ -907,8 +893,6 @@ class Editproject extends React.Component {
     this.setState({
       description: this.props.details.discription,
     })
-    console.log('this d' + this.props.details.discription)
-    console.log('hello' + this.state.description)
   }
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -923,7 +907,6 @@ class Editproject extends React.Component {
         value.toLowerCase() &&
         lengthvalue !== 0
       ) {
-        console.log("in");
         this.setState({
           sameName: true,
         });
@@ -959,7 +942,6 @@ class Editproject extends React.Component {
 
   setSelectedManagers = (event) => {
     let index = event.target.value;
-    console.log(index);
     this.state.selectedManagers.push(this.state.employeesasadmins[index]);
 
     const newcontributorlist = this.state.employeesasadmins.filter(
@@ -979,7 +961,6 @@ class Editproject extends React.Component {
     this.setState({
       startDate: date,
     });
-    console.log(date);
   };
 
   setendDate = (date) => {
@@ -999,7 +980,6 @@ class Editproject extends React.Component {
       this.setState({
         currentProjects: projectData,
       });
-      console.log(projectData);
     });
   }
 
@@ -1009,7 +989,6 @@ class Editproject extends React.Component {
       .then((response) => {
         let employeelist = [];
         for (var i = 0; i < response.data.length; i++) {
-          console.log(i + "name" + response.data[i].name);
           var employee = [
             {
               username: response.data[i].name,
@@ -1028,10 +1007,6 @@ class Editproject extends React.Component {
   }
 
   handleClick = (event) => {
-    console.log(this.state.employeesselected);
-    console.log(this.state.projectname);
-
-    alert()
     for (var i = 0; i < this.state.selectedEmployees.length; i++) {
       let email_ = this.state.selectedEmployees[i].email;
       this.state.employeesselected.push(email_);
@@ -1068,8 +1043,7 @@ class Editproject extends React.Component {
       axios
         .put("http://localhost:8070/projectdetail/" + this.props.details._id, temp_project[0])
         .then((response) => {
-          console.log(response);
-        });
+        }).catch((error) => {console.log(error);});
     }
 
   };
@@ -1094,7 +1068,7 @@ class Editproject extends React.Component {
   }
 
 
-
+//still checking - does not print to console
   deleteManagerChip = (event) => {
     console.log("delete button");
     console.log(event.name);

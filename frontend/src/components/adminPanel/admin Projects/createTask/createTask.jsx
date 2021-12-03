@@ -225,7 +225,6 @@ export default class Createtask extends React.Component {
             }
           }
         }
-        console.log(saveIndex)
 
         if (!this.state.customView && !this.state.missingdata) {
           for (let i = 0; i < this.state.taskDetail.length; i++) {
@@ -245,7 +244,6 @@ export default class Createtask extends React.Component {
             axios
               .post("http://localhost:8070/task/addTask", taskBody[0])
               .then((response) => {
-                console.log(response);
               })
               .catch((error) => {
                 alert("error");
@@ -268,7 +266,6 @@ export default class Createtask extends React.Component {
             axios
               .post("http://localhost:8070/task/addTask", taskBody[0])
               .then((response) => {
-                console.log(response);
               })
               .catch((error) => {
                 alert("error");
@@ -309,7 +306,6 @@ export default class Createtask extends React.Component {
               sendData
             )
             .then((response) => {
-              console.log(response);
             });
         }
 
@@ -674,6 +670,11 @@ export default class Createtask extends React.Component {
                             value="Review"
                             control={<Radio />}
                             label="Review"
+                          />
+                            <FormControlLabel
+                            value="Overdue"
+                            control={<Radio />}
+                            label="Overdue"
                           />
                         </RadioGroup>
                       </FormControl>

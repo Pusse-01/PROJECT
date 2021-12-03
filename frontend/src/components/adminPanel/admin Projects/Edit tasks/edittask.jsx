@@ -74,7 +74,6 @@ export default class Edittask extends React.Component {
             .post("http://localhost:8070/task/getTaskById", { task_id: this.state.editId })
             .then((response) => {
                 let data = response.data.response;
-                console.log(data);
                 this.setState({
                     description: data.action,
                     taskname: data.task_name,
@@ -135,7 +134,6 @@ export default class Edittask extends React.Component {
             },
         ];
 
-        console.log(temp[0])
         //end of getting data
 
 
@@ -175,7 +173,6 @@ export default class Edittask extends React.Component {
             axios
                 .post("http://localhost:8070/task/update", taskBody[0])
                 .then((response) => {
-                    console.log(response);
                 })
                 .catch((error) => {
                     alert("error");
@@ -324,6 +321,11 @@ export default class Edittask extends React.Component {
                                                         value="Review"
                                                         control={<Radio />}
                                                         label="Review"
+                                                    />
+                                                    <FormControlLabel
+                                                        value="Overdue"
+                                                        control={<Radio />}
+                                                        label="Overdue"
                                                     />
                                                 </RadioGroup>
                                             </FormControl>
