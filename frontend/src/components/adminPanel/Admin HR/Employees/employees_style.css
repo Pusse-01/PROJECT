@@ -256,7 +256,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
 
 .employees_sidebar_employees_container{
     position: absolute;
-    top: 0px;
+    top: 10px;
     padding-top: 10px;
     bottom: 0px;
     overflow: scroll;
@@ -276,6 +276,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     cursor: pointer;
     padding-right: 10px;
     transition: 1s;
+    border-radius: 20px;
 }
 #employees_sidebar_employee0 {
     color:#a4b0be;
