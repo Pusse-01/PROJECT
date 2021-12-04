@@ -87,7 +87,7 @@ class UpdatePassword extends Component {
     render() {
         return (
             <div className="hr_employeesMainComponent">
-                <Sidebar elementStyle="password"/>
+                <Sidebar elementStyle="To Do"/>
                 <div className="hr_employeesSubComponent">
                     <div className="hr_updateEmployee">
                         <h5 className="hrTitleText">Update Employee's Password</h5>

@@ -140,7 +140,7 @@ class UpdatePosition extends Component {
 
         return (
             <div className="hr_employeesMainComponent">
-                <Sidebar elementStyle="position"/>
+                <Sidebar elementStyle="In Progress"/>
                 <div className="hr_employeesSubComponent">
                     <div className="hr_updatePosition">
                         <h5 className="hrTitleText">Update Employee's Position</h5>

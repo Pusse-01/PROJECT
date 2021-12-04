@@ -8,51 +8,81 @@ class Sidebar extends Component{
         super(props);
 
         this.state={
+            selected:"All",
             addElementStyle : "employees_sidebar_employee0",
             deleteElementStyle : "employees_sidebar_employee3",
             updatePasswordStyle : "employees_sidebar_employee1",
             updatePositionStyle : "employees_sidebar_employee2"
         }
-        if(this.props.elementStyle=="add"){
-            this.state.addElementStyle="selected_employees_sidebar_employee0"
-        }else if(this.props.elementStyle=="password"){
-            this.state.updatePasswordStyle="selected_employees_sidebar_employee1"
-        }
-        else if(this.props.elementStyle=="position"){
-            this.state.updatePositionStyle="selected_employees_sidebar_employee2"
-        }
-        else if(this.props.elementStyle=="delete"){
-            this.state.deleteElementStyle="selected_employees_sidebar_employee3"
-        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            selected:this.props.elementStyle
+        })
     }
 
     changeMenu = (menu) => {
-        if(menu=="add"){
+        if(menu=="All"){
+            this.setState({
+                selected:menu
+            })
             this.props.history.push("/employees/addEmployee")
-        }else if(menu=="password"){
+        }else if(menu=="To Do"){
+            this.setState({
+                selected:menu
+            })
             this.props.history.push("/employees/updatePassword")
-        }else if(menu=="position"){
+        }else if(menu=="In Progress"){
+            this.setState({
+                selected:menu
+            })
             this.props.history.push("/employees/updatePosition")
-        }else if(menu=="delete"){
+        }else if(menu=="Done"){
+            this.setState({
+                selected:menu
+            })
             this.props.history.push("/employees/deleteEmployee")
         }
     }
 
     render(){
+        let allStyle = this.state.selected=="All" ? "tasksAllSelected" : "tasksAll"
+        let toDoStyle = this.state.selected=="To Do" ? "tasksToDoSelected" : "tasksToDo"
+        let inProgressStyle = this.state.selected=="In Progress" ? "tasksInProgressSelected" : "tasksInProgress"
+        let doneStyle = this.state.selected=="Done" ? "tasksDoneSelected" : "tasksDone"
+
+        let allInnerStyle = this.state.selected=="All" ? "tasksAllInnerSelected" : "tasksAllInner"
+        let toDoInnerStyle = this.state.selected=="To Do" ? "tasksToDoInnerSelected" : "tasksToDoInner"
+        let inProgressInnerStyle = this.state.selected=="In Progress" ? "tasksInProgressInnerSelected" : "tasksInProgressInner"
+        let doneInnerStyle = this.state.selected=="Done" ? "tasksDoneInnerSelected" : "tasksDoneInner"
+
         return(
-            <div className="sideBarEmployeesComponent">
-                <div className="employees_sidebar_employees_container">
-                    <div className="employees_sidebar_employee"  id={this.state.addElementStyle} onClick={()=>this.changeMenu("add")} >
-                        <h5 className="employees_sidebar_employee_name">Add Employee</h5>
+            <div className="sideBarTasksComponent">
+                <div className="sideBarEmployeesSubContainer">
+                    <div className="employeesElement" id={allStyle} onClick= {() => {
+                        this.changeMenu("All")
+                    }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={allInnerStyle}></div></div>
+                        <h6 className="taskElementText">All</h6>
                     </div>
-                    <div className="employees_sidebar_employee"  id={this.state.updatePasswordStyle} onClick={()=>this.changeMenu("password")} >
-                        <h5 className="employees_sidebar_employee_name">Update Employee's Password</h5>
+                    <div className="employeesElement" id={toDoStyle} onClick= {() => {
+                        this.changeMenu("To Do")
+                    }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={toDoInnerStyle}></div></div>
+                        <h6 className="taskElementText">To Do</h6>
                     </div>
-                    <div className="employees_sidebar_employee"  id={this.state.updatePositionStyle} onClick={()=>this.changeMenu("position")} >
-                        <h5 className="employees_sidebar_employee_name">Update Employee's Position</h5>
+                    <div className="employeesElement" id={inProgressStyle} onClick= {() => {
+                        this.changeMenu("In Progress")
+                    }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={inProgressInnerStyle}></div></div>
+                        <h6 className="taskElementText">In Progress</h6>
                     </div>
-                    <div className="employees_sidebar_employee"  id={this.state.deleteElementStyle} onClick={()=>this.changeMenu("delete")} >
-                        <h5 className="employees_sidebar_employee_name">Delete Employee</h5>
+                    <div className="employeesElement" id={doneStyle} onClick= {() => {
+                        this.changeMenu("Done")
+                    }}>
+                        <div className="tasksOutCircle"><div className="tasksInnerCircle" id={doneInnerStyle}></div></div>
+                        <h6 className="taskElementText">Done</h6>
                     </div>
                 </div>
             </div>

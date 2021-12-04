@@ -253,7 +253,23 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     /*display: grid;*/
     /*grid-template-rows: 20% 80%;*/
 }
-
+.employeesElement{
+    padding:10px;
+    background: #1e272e;
+    margin: 20px;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 80px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.sideBarEmployeesSubContainer{
+    padding-top: 100px;
+}
 .employees_sidebar_employees_container{
     position: absolute;
     top: 10px;

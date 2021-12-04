@@ -156,7 +156,7 @@ class AddEmployee extends Component {
     render() {
         return (
             <div className="hr_employeesMainComponent">
-                <Sidebar elementStyle="add"/>
+                <Sidebar elementStyle="All"/>
                 <div className="hr_employeesSubComponent">
                     <div className="hr_addEmployee">
                         <h5 className="hrTitleText">Add Employee</h5>

@@ -94,7 +94,7 @@ class DeleteEmployee extends Component {
     render() {
         return (
             <div className="hr_employeesMainComponent">
-                <Sidebar elementStyle="delete"/>
+                <Sidebar elementStyle="Done"/>
                 <div className="hr_employeesSubComponent">
                     <div className="hr_deleteEmployee">
                         <h5 className="hrTitleText">Delete Employee</h5>
