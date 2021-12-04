@@ -621,7 +621,7 @@ export default class ShowProject extends React.Component {
                         >
                           <TableCell
                             style={{
-                              width: "20%",
+                              width: "30%",
                               border: "none",
                               color: "white",
                               fontSize: "18px",
