@@ -184,7 +184,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
 
 
         </Box>
-        <Paper style={{ marginLeft: "2%", marginRight: "1%" }}>
+        <Paper style={{ marginLeft: "2%", marginRight: "3%" }}>
           <TableContainer sx={{ maxHeight: 580 }}>
             {data.length ? (
               <div>
