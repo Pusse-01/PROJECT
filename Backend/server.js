@@ -9,7 +9,6 @@ const TaskRouts = require('./routs/taskRouts')
 const DepartmentsRouts = require('./routs/departmentsRouts')
 const DesignationsRouts =  require('./routs/designationsRouts')
 const ClientsRouts = require('./routs/clientRouts')
-const moment = require('moment');
 const nodeCron = require("node-cron");
 
 

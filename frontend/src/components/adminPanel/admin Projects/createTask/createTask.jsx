@@ -62,6 +62,7 @@ export default class Createtask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error:"",
       employees: [],
       projects: [],
       selectedValue: 0,
@@ -520,7 +521,7 @@ export default class Createtask extends React.Component {
                   
                     <div>
                     <div style={{marginLeft:"90%"}}>
-                  {!submitted || error ?
+                  {!submitted || this.state.error ?
                     <button
                       class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
                       C L E A R

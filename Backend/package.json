@@ -19,6 +19,8 @@
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.5",
     "multer": "^1.4.3",
+    "node-cron": "^3.0.0",
+    "nodecron": "^0.2.0",
     "react-fetch-hook": "^1.8.5"
   }
 }
