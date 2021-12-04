@@ -279,31 +279,29 @@ export default class ShowProject extends React.Component {
                   opacity: 0.8,
                   marginLeft: "20px",
                   borderRadius: "8px",
-                  borderwidth: "1px",
-                  border: "5px solid black",
+                  color:"white",
                   alignItems: "center",
                   width: "300px",
                 }}
               >
                 <h1
                   style={{
-                    color: "#000000",
+                    color: "white",
                     font: "30px Helvetica",
                     textAlign: "center",
-                    marginTop: "20px",
+                    marginTop: "30%",
                   }}
                 >
                   {gridData[pageCount].p_details.name}
                 </h1>
-              </Grid>
-              <Grid>
+                <Grid>
                 {gridData[pageCount].p_details.projectStatus === "On going" ? (
                   <Grid
                     item
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "400px",
                     }}
                   >
                     <Typography
@@ -314,19 +312,22 @@ export default class ShowProject extends React.Component {
                         marginBottom: "0px",
                         paddingTop: "10px",
                         color: "#FFFF00",
+                        
                       }}
                     >
-                      <RuleIcon fontSize="small" htmlColor="#000000" />
+                      
                     </Typography>
                     <Typography
                       variant="h6"
                       style={{
-                        marginLeft: "10px",
+                        marginLeft: "70px",
                         font: "5px",
                         marginTop: "0px",
                         color: "#FFFF00",
+                        width:"400px"
                       }}
                     >
+                      <RuleIcon fontSize="small" htmlColor="#FFFF00" />
                       {" "}
                       {gridData[pageCount].p_details.projectStatus}{" "}
                     </Typography>
@@ -338,7 +339,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "120px",
+                      width: "400px",
                     }}
                   >
                     <Typography
@@ -351,20 +352,22 @@ export default class ShowProject extends React.Component {
                         color: "#FFFF00",
                       }}
                     >
-                      <AssignmentTurnedInIcon
-                        fontSize="small"
-                        htmlColor="#000000"
-                      />
+                     
                     </Typography>
                     <Typography
                       variant="h6"
                       style={{
-                        marginLeft: "10px",
+                        marginLeft: "70px",
                         font: "5px",
                         marginTop: "0px",
                         color: "#00FF00",
+                        width: "400px",
                       }}
                     >
+                       <AssignmentTurnedInIcon
+                        fontSize="small"
+                        htmlColor="#00FF00"
+                      />
                       {" "}
                       {gridData[pageCount].p_details.projectStatus}{" "}
                     </Typography>
@@ -376,7 +379,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "100px",
+                      width: "400px",
                     }}
                   >
                     <Typography
@@ -389,17 +392,19 @@ export default class ShowProject extends React.Component {
                         color: "#FFFF00",
                       }}
                     >
-                      <MoreTimeIcon fontSize="small" htmlColor="#000000" />
+                      
                     </Typography>
                     <Typography
                       variant="h6"
                       style={{
-                        marginLeft: "10px",
+                        marginLeft: "70px",
                         font: "5px",
                         marginTop: "0px",
-                        color: "#FF0000",
+                        color: "red",
+                        width: "400px",
                       }}
                     >
+                      <MoreTimeIcon fontSize="small" htmlColor="red" />
                       {" "}
                       {gridData[pageCount].p_details.projectStatus}{" "}
                     </Typography>
@@ -413,7 +418,7 @@ export default class ShowProject extends React.Component {
                     style={{
                       backgroundColor: "trasnparent",
                       padding: "0px",
-                      width: "120px",
+                      width: "400px",
                     }}
                   >
                     <Typography
@@ -426,55 +431,65 @@ export default class ShowProject extends React.Component {
                         color: "#FFFF00",
                       }}
                     >
-                      <PendingIcon fontSize="small" htmlColor="#000000" />
+                      
                     </Typography>
                     <Typography
                       variant="h6"
                       style={{
-                        marginLeft: "10px",
+                        marginLeft: "70px",
                         font: "5px",
                         marginTop: "0px",
-                        color: "#0000FF",
+                        color: "#4bcffa",
+                        width: "400px",
                       }}
                     >
+                      <PendingIcon fontSize="small" htmlColor="#4bcffa" />
                       {" "}
                       {gridData[pageCount].p_details.projectStatus}{" "}
                     </Typography>
                   </Grid>
                 ) : null}
               </Grid>
+              </Grid>
+
               <Grid>
                 {" "}
-                <Box style={{ width: "200px", marginLeft: "30px"}}>
+                <Box style={{ width: "400px", marginLeft: "30px"}}>
                   <p
                     style={{
                       color: "#e8e8e8",
                       opacity: "0.8",
                       fontSize: "20PX",
+                      marginTop: "20%",
                     }}
                   >
-                    Project Description :{" "}
-                    <span row style={{ color: "#969696", fontSize: "18PX" }}>
+                    Project Description 
+                    <br/>
+                    <span row style={{ color: "white", fontSize: "18PX" }}>
                       {gridData[pageCount].p_details.discription}
                     </span>{" "}
                   </p>
                 </Box>
               </Grid>
               <Grid>
-                <Box style={{ marginLeft: "100px" }}>
-                  <SearchIcon fontSize="large" htmlColor="#000000" />
+                <div className="searchbox">
+                <Box style={{ marginLeft: "200px",width:"650px" }}>
+                  <SearchIcon marginLeft="20px" fontSize="large" htmlColor="red" />
                   <InputBase
                     style={{
-                      borderBottom: "2px solid black",
+                      borderBottom: "2px solid red",
                       marginTop: "10px",
+                      color:"white",
+                      
+                      
                     }}
                     placeholder="Search for project name....."
                     onChange={this.filterProjects}
                   ></InputBase>
 
-                  <Grid style={{ marginLeft: "0px", marginTop: "10px" }}>
+                  <Grid style={{ marginLeft: "0px", marginTop: "10px"}}>
                     <button
-                      class="directionButtons"
+                      class="directionButtons project_addButtonContainer"
                       type="submit"
                       style={{ marginLeft: "20px", marginTop: "5px" }}
                       onClick={this.gridPageChangePrev}
@@ -482,7 +497,7 @@ export default class ShowProject extends React.Component {
                       Prev Project
                     </button>
                     <button
-                      class="directionButtons"
+                      class="directionButtons project_addButtonContainer"
                       type="submit"
                       style={{ marginLeft: "20px", marginTop: "5px" }}
                       onClick={this.gridPageChangeNext}
@@ -490,18 +505,19 @@ export default class ShowProject extends React.Component {
                       Next Project
                     </button>
                     <br />
-                    <p style={{ marginLeft: "30px", color:'#969696' }}>
+                    <p style={{ marginLeft: "30px",color: "white" }}>
                       {" "}
                       Page {pageCount + 1} of {gridData.length}
                     </p>
 
                     <button
                       type="submit"
+                      class="project_addButtonContainer"
                       onClick={this.deleteProject}
                       style={{
-                        backgroundColor: "transparent",
-                        border: "1px solid black",
-                        marginLeft: "10px",
+                        //backgroundColor: "transparent",
+                        //border: "1px solid black",
+                        marginLeft: "20px",
                       }}
                     >
                       <DeleteForeverIcon />
@@ -510,10 +526,13 @@ export default class ShowProject extends React.Component {
                     <button
                       type="button"
                       onClick={this.editProject}
+                      class="project_addButtonContainer"
                       style={{
-                        backgroundColor: "transparent",
-                        border: "1px solid black",
-                        marginLeft: "5px",
+                       
+                       
+                       // border: "1px solid black",
+                        marginLeft: "20px",
+                        //color: "white"
                       }}
                     >
                       <EditIcon />
@@ -521,6 +540,7 @@ export default class ShowProject extends React.Component {
                     </button>
                   </Grid>
                 </Box>
+                </div>
               </Grid>
               <Grid
                 style={{
@@ -529,7 +549,7 @@ export default class ShowProject extends React.Component {
                   width: "100%",
                 }}
               >
-                <p style={{ font: "15px Helvetica", color: "#000000" }}>
+                <p style={{ font: "15px Helvetica", color: "white" }}>
                   End Date&ensp; :&emsp;
                   {gridData[pageCount].p_details.overdue.substring(0, 10)}{" "}
                   &emsp;&emsp; Total Time spent&ensp; :&emsp;
@@ -564,7 +584,7 @@ export default class ShowProject extends React.Component {
                   marginTop: "10px",
                   marginBottom: "0px",
                   color: "#ffffff",
-                  fontSize: "10px",
+                  fontSize: "20px",
                 }}
               >
                 <h6>Team Members</h6>
@@ -580,7 +600,7 @@ export default class ShowProject extends React.Component {
                           marginTopt: "0px",
                           border: "none",
                           color: "#ffffff",
-                          fontSize: "10px",
+                          fontSize: "15px",
                         }}
                       >
                         {memberindex + 1}.{members}
@@ -602,8 +622,8 @@ export default class ShowProject extends React.Component {
                           <TableCell colSpan={4}
                             style={{
                               border: "none",
-                              color: "#000000",
-                              fontSize: "15px",
+                              color: "white",
+                              fontSize: "18px",
                             }}
                           >
                             {tasks.taskName}
@@ -618,8 +638,8 @@ export default class ShowProject extends React.Component {
                           <TableCell
                             style={{
                               border: "none",
-                              color: "black",
-                              fontSize: "13px",
+                              color: "white",
+                              fontSize: "18px",
                             }}
                           >
                             Task Status :-  {tasks.taskStatus}
@@ -627,8 +647,8 @@ export default class ShowProject extends React.Component {
                           <TableCell colSpan={4}
                             style={{
                               border: "none",
-                              color: "black",
-                              fontSize: "13px",
+                              color: "white",
+                              fontSize: "18px",
                             }}
                           >
                             Total Time Spent :-  {tasks.tasktime.hrs} Hrs {tasks.tasktime.mins} Mins{" "}
@@ -642,7 +662,7 @@ export default class ShowProject extends React.Component {
                         <TableBody>
 
                           <StyledTableRow>
-                            <TableCell colSpan={5} align='center' style={{ border: 'none' }}>
+                            <TableCell colSpan={5} align='center' style={{ border: 'none',color:"white" }}>
                               &nbsp;&nbsp;       T A S K &nbsp;&nbsp; A C T I V I T I E S
                             </TableCell>
 
@@ -652,8 +672,8 @@ export default class ShowProject extends React.Component {
 
                               style={{
                                 border: "none",
-                                color: "black",
-                                fontSize: "13px",
+                                color: "white",
+                                fontSize: "16px",
                               }}
                             >
                               Employee Name
@@ -662,8 +682,8 @@ export default class ShowProject extends React.Component {
                               colSpan={1}
                               style={{
                                 border: "none",
-                                color: "black",
-                                fontSize: "13px",
+                                color: "white",
+                                fontSize: "16px",
                               }}
                             >
                               Task Start Time
@@ -671,8 +691,8 @@ export default class ShowProject extends React.Component {
                             <TableCell
                               style={{
                                 border: "none",
-                                color: "black",
-                                fontSize: "13px",
+                                color: "white",
+                                fontSize: "16px",
                               }}
                             >
                               Task End Time
@@ -681,8 +701,8 @@ export default class ShowProject extends React.Component {
                               colSpan={1}
                               style={{
                                 border: "none",
-                                color: "black",
-                                fontSize: "13px",
+                                color: "white",
+                                fontSize: "16px",
                               }}
                             >
                               Total Time
@@ -690,74 +710,134 @@ export default class ShowProject extends React.Component {
                             <TableCell
                               style={{
                                 border: "none",
-                                color: "black",
-                                fontSize: "13px",
+                                color: "white",
+                                fontSize: "16px",
                               }}
                             >
                               Memo
                             </TableCell>
                           </StyledTableRow>
 
-                          {tasks.taskWorking.map((taskwork, indextask) => (
-                            <StyledTableRow>
-                              <TableCell
-                                colSpan={1}
-                                style={{
-                                  border: "none",
-                                  color: "#969696",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {taskwork[0]}
-                              </TableCell>
-                              <TableCell
-                                colSpan={1}
-                                style={{
-                                  border: "none",
-                                  color: "#969696",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {taskwork[3]}
-                              </TableCell>
-                              <TableCell
-                                style={{
-                                  border: "none",
-                                  color: "#969696",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {taskwork[4]}
-                              </TableCell>
-                              <TableCell
-                                colSpan={1}
-                                style={{
-                                  border: "none",
-                                  color: "#969696",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {taskwork[5]}
-                              </TableCell>
-                              <TableCell
+                          {tasks.taskWorking.map((taskwork, indextask) => {
+                               if(indextask%2==0){
+                                 return(<StyledTableRow style={{backgroundColor:"#1e272e"}}>
+                                 <TableCell
+                                   colSpan={1}
+                                   style={{
+                                     border: "none",
+                                     color: "#969696",
+                                     fontSize: "16px",
+                                     
+                                   }}
+                                 >
+                                   {taskwork[0]}
+                                 </TableCell>
+                                 <TableCell
+                                   colSpan={1}
+                                   style={{
+                                     border: "none",
+                                     color: "#969696",
+                                     fontSize: "16px",
+                                   }}
+                                 >
+                                   {taskwork[3]}
+                                 </TableCell>
+                                 <TableCell
+                                   style={{
+                                     border: "none",
+                                     color: "#969696",
+                                     fontSize: "16px",
+                                   }}
+                                 >
+                                   {taskwork[4]}
+                                 </TableCell>
+                                 <TableCell
+                                   colSpan={1}
+                                   style={{
+                                     border: "none",
+                                     color: "#969696",
+                                     fontSize: "16px",
+                                   }}
+                                 >
+                                   {taskwork[5]}
+                                 </TableCell>
+                                 <TableCell
+   
+                                   style={{
+                                     border: "none",
+                                     color: "#969696",
+                                     fontSize: "16px",
+                                   }}
+                                 >
+                                   {taskwork[6]}
+                                 </TableCell>
+                               </StyledTableRow>)
+                                
 
-                                style={{
-                                  border: "none",
-                                  color: "#969696",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {taskwork[6]}
-                              </TableCell>
-                            </StyledTableRow>
-                          ))}
+                               }else{
+                                return(<StyledTableRow style={{backgroundColor:"#2f3640"}}>
+                                <TableCell
+                                  colSpan={1}
+                                  style={{
+                                    border: "none",
+                                    color: "#969696",
+                                    fontSize: "16px",
+                                    
+                                  }}
+                                >
+                                  {taskwork[0]}
+                                </TableCell>
+                                <TableCell
+                                  colSpan={1}
+                                  style={{
+                                    border: "none",
+                                    color: "#969696",
+                                    fontSize: "16px",
+                                  }}
+                                >
+                                  {taskwork[3]}
+                                </TableCell>
+                                <TableCell
+                                  style={{
+                                    border: "none",
+                                    color: "#969696",
+                                    fontSize: "16px",
+                                  }}
+                                >
+                                  {taskwork[4]}
+                                </TableCell>
+                                <TableCell
+                                  colSpan={1}
+                                  style={{
+                                    border: "none",
+                                    color: "#969696",
+                                    fontSize: "16px",
+                                  }}
+                                >
+                                  {taskwork[5]}
+                                </TableCell>
+                                <TableCell
+  
+                                  style={{
+                                    border: "none",
+                                    color: "#969696",
+                                    fontSize: "16px",
+                                  }}
+                                >
+                                  {taskwork[6]}
+                                </TableCell>
+                              </StyledTableRow>)
+
+                               }   
+
+  })}
 
                         </TableBody>
 
 
 
                         :  <StyledTableRow>
-                        <TableCell colSpan={5} align='center' style={{ border: 'none' }}>
+                        <TableCell colSpan={5} align='center' style={{ border: 'none',color:"white" }}>
                           &nbsp;&nbsp;       No active activities
                         </TableCell>
 
@@ -784,6 +864,7 @@ export default class ShowProject extends React.Component {
                       backgroundColor: "#2f3640",
                       width: "100%",
                       textAlign: "center",
+                      color:"white"
                     }}
                   >
                     End of Rows

@@ -25,9 +25,7 @@ class UserSidebar extends Component{
                 
                     <div class="container">
                         <img src={require('../../../assests/images/avatar.jpeg').default}  className="image" />
-                        *<div className="middle">
-                            <div className="usersidebartext">{user.name}</div>
-                        </div>
+                    
         </div>
 
                     <h6 className="reportsSidebarText">{user.name}</h6>

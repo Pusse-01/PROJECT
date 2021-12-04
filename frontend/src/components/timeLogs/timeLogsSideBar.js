@@ -102,14 +102,14 @@ tasktotal();
 }, [projectselected,stask,pid]);
   return (
     <div>
-       <div className="timelogsmainComponent title">
+       <div className="timelogsComponent title">
             
             <div className="ps-3 pe-3  mt-3">
              
             <div className="timelogcpbutton col-12 " >
             
            
-            <select className="form-select form-select-sm text-center dropdownfonts " defaultValue={""} onChange={(e) =>
+            <select className=" form-select form-select-sm text-center dropdownfonts " defaultValue={""} onChange={(e) =>
                   setproject( e.target.value)} >
                     <option disabled  value={""} > Select Project </option>
               {projectdata.map(item => {

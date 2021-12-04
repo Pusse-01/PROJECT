@@ -17,11 +17,11 @@ export default class Sidebar extends Component{
                             if(index%4==0){
                                 employee_style = "departments_sidebar_employee0"
                             }else if(index%4==1){
-                                employee_style = "departments_sidebar_employee1"
+                                employee_style = "departments_sidebar_employee0"
                             }else if(index%4==2){
-                                employee_style = "departments_sidebar_employee2"
+                                employee_style = "departments_sidebar_employee0"
                             }else if(index%4==3){
-                                employee_style = "departments_sidebar_employee3"
+                                employee_style = "departments_sidebar_employee0"
                             }
                             return(
                                 <div className="departments_sidebar_employee"  id={employee_style} key={index}>

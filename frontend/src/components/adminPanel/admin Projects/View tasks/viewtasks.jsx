@@ -28,6 +28,7 @@ const TITLE = 'Task View'
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: '#2f3640',
+    color:"white"
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -568,7 +569,7 @@ export default class Viewtasks extends React.Component {
             <Box>
               <SearchIcon fontSize="small" htmlColor="#ff0000" />
               <InputBase
-                style={{ backgroundColor: "#2f3640 ", fontSize: '12px', width: '200px' }}
+                style={{ backgroundColor: "#2f3640 ", fontSize: '12px', width: '200px',color:'white',borderRadius:"10px" }}
                 placeholder="    Search by project name "
                 onChange={this.filterProjects}
               ></InputBase>
@@ -598,8 +599,20 @@ export default class Viewtasks extends React.Component {
                 </TableHead>
                 <TableBody>
                   {filterdresult.map((row, index) => {
-                    return <Row key={row.name} row={row} setStateOfParent={this.setStateOfParent} setStateOfParent2={this.setStateOfParent2}></Row>;
-                  })}
+                    
+                      if(index%2==0){
+                        return(
+                         <Row  key={row.name} row={row} setStateOfParent={this.setStateOfParent} setStateOfParent2={this.setStateOfParent2}></Row>
+                        )
+                      }else{
+                        return(
+                        <Row key={row.name} row={row} setStateOfParent={this.setStateOfParent} setStateOfParent2={this.setStateOfParent2}></Row>
+                        )
+                      }
+                      
+                    })}
+                  
+                 
                 </TableBody>
               </Table>
             </TableContainer>

@@ -13,8 +13,6 @@ const axios = require("axios").default;
 function AdminPanel() {
   const [projecttimeline, settimeline] = useState([]);
   const [searchterm, setsearchterm] = useState("");
-  const [overdueprojects, setoverdueprojects] = useState(0);
-  const[overduetasks,setoverduetasks]=useState(0);
   async function admintimeline() {
     await axios
       .get("http://localhost:8070/dashboard/admintimeline/")
@@ -24,31 +22,11 @@ function AdminPanel() {
         }
       });
   }
-  async function overdueproject() {
-    await axios
-      .get("http://localhost:8070/Dashboard/overdueprojects/")
-      .then(function (response) {
-       
-          setoverdueprojects(response.data);
-        
-      });
-  }
-  async function overduetask() {
-    await axios
-      .get("http://localhost:8070/Dashboard/overduetaskstotal/")
-      .then(function (response) {
-      
-          setoverduetasks(response.data);
-         
-         
-        
-      });
-  }
+  
 
   useEffect(() => {
     admintimeline();
-    overdueproject();
-    overduetask();
+   
     
   }, []);
   return (
@@ -57,9 +35,11 @@ function AdminPanel() {
         <div>
           <Sidebar />
         </div>
-        <div className="row">
-          <div className=" admintimeline col-lg-5 col-sm-12 col-md-12 mt-3">
-            <h1 className="text-center admintableheader">Employee Worklogs</h1>
+       <Reports/>
+        
+        <div className=" rowStyle row">
+          <div className=" admintimeline">
+            <h1 className="text-center admintableheader"> Worklogs</h1>
             <div className="searchbarplacement">
               <img
                 src={require("../../../assests/images/redSearch2.png").default}
@@ -97,16 +77,26 @@ function AdminPanel() {
                         return val;
                       }
                     })
-                    .map((numList, i) => (
-                      <li key={i}>
-                        {numList[0]} has Worked on {numList[1]} at {numList[3]}
-                        <br/>
-                        Task : {numList[2]}
-                        <br />
-                        Duration : {numList[5]}
-                        <br/>
-                      </li>
-                    ))}
+                    .map((numList, i) => {
+                     if(i%2==0){ return(<li className="table_data_oddli" key={i}>
+                     {numList[0]} has Worked on {numList[1]} at {numList[3]}
+                     <br/>
+                     Task : {numList[2]}
+                     <br />
+                     Duration : {numList[5]}
+                     <br/>
+                   </li>)}else{ 
+                     return(<li className="table_data_evenli" key={i}>
+                     {numList[0]} has Worked on {numList[1]} at {numList[3]}
+                     <br/>
+                     Task : {numList[2]}
+                     <br />
+                     Duration : {numList[5]}
+                     <br/>
+                   </li>)
+                   }
+                     
+            })}
                 </ul>
               </div>
             ) : (
@@ -114,8 +104,8 @@ function AdminPanel() {
                 <h2 className="text-center">No Records Found</h2>
               </div>
             )}
-          </div>
-          <div className="col-lg-4 col-sm-12 timelinetext mt-3 overdueprojectadmin">
+          </div> 
+ {/*          <div className="col-lg-4 col-sm-12 timelinetext mt-3 overdueprojectadmin">
             {overdueprojects > 0 ? (
               <div className="row">
                 <div className="col-3 text-center">
@@ -179,15 +169,16 @@ function AdminPanel() {
               </div>
             )}
             
-          </div>
+          </div> */}
           
         </div>
         <div>
-          <Reports/>
+         
         </div>
         
       </div>
-    </div>
+      </div>
+ 
   );
 }
 

@@ -240,7 +240,7 @@ animation: {
         />       
         </div>
         </div>
-        <div>
+        <div className="mainreportsProjectsTable">
 
         <table className="reportsProjectsTable">
           
@@ -255,27 +255,46 @@ animation: {
                         </tr>                      
                         
                         {data.map((member, index) => {
-                          
-
-return (
+                          if(index%2==0){return (
   
 
-                                <tr className="reportstable_data_odd" key={index}>
+                            <tr className="reportstable_data_odd" key={index}>
 
-                                    <td className="reportstable_data_column">{member.id}</td>
-                                    <td className="reportstable_data_column">{member.name}</td>
-                                    <td className="reportstable_data_column">{member.position}</td>
-                                    <td className="reportstable_data_column">{member.email}</td>
-                                    <td className="reportstable_data_column">
-                                                <div
-                                                    className="reportsmoreButton"
-                                                    onClick ={()=>this.clickMore(member)}
-                                                >
-                                                    More
-                                                </div>
-                                            </td>
-                                </tr>
-                         ) })} 
+                                <td className="reportstable_data_column">{member.id}</td>
+                                <td className="reportstable_data_column">{member.name}</td>
+                                <td className="reportstable_data_column">{member.position}</td>
+                                <td className="reportstable_data_column">{member.email}</td>
+                                <td className="reportstable_data_column">
+                                            <div
+                                                className="reportsmoreButton"
+                                                onClick ={()=>this.clickMore(member)}
+                                            >
+                                                More
+                                            </div>
+                                        </td>
+                            </tr>
+                     )}else{return (
+  
+
+                      <tr className="reportstable_data_even" key={index}>
+
+                          <td className="reportstable_data_column">{member.id}</td>
+                          <td className="reportstable_data_column">{member.name}</td>
+                          <td className="reportstable_data_column">{member.position}</td>
+                          <td className="reportstable_data_column">{member.email}</td>
+                          <td className="reportstable_data_column">
+                                      <div
+                                          className="reportsmoreButton"
+                                          onClick ={()=>this.clickMore(member)}
+                                      >
+                                          More
+                                      </div>
+                                  </td>
+                      </tr>
+               )}
+                          
+
+ })} 
                     </table>
 
           </div>

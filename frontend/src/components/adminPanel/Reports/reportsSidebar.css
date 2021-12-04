@@ -26,13 +26,12 @@
     -ms-transform: translate(-50%, -50%)
   }
   
-  .container:hover .image {
-    opacity: 0.3;
+  
+  .container{
+  margin-top: 20px;
   }
   
-  .container:hover .middle {
-    opacity: 1;
-  }
+  
   
   .usersidebartext {
     background-color: #190e44;
@@ -47,8 +46,9 @@
 /******************************* SIDE BAR ***********************************/
 .reportsSideBarComponent {
     position: absolute;
-    top: 00px;
+    top: 0px;
     right :0px;
+    height: 100%;
     bottom: 0px;
     width : 18%;
     z-index: -1;

@@ -217,10 +217,10 @@ class AdminNavbar extends Component{
                             <span className="hiddenMenuSpan">{this.state.name}</span>
                         </h4>
                         <ul>
-                            <li className="hiddenMenuListItem">
+                            {/* <li className="hiddenMenuListItem">
                                 <img className="hiddenMenuIcon" src={require('../../../assests/images/notifications.png').default}/>
                                 <h7 className="hiddenMenuListItemText">Notofications</h7>
-                            </li>
+                            </li> */}
                             <li className="hiddenMenuListItem">
                                 <img className="hiddenMenuIcon" src={require('../../../assests/images/logout.png').default}/>
                                 <h7 className="hiddenMenuListItemText" onClick={this.logOut.bind(this)}>Logout</h7>

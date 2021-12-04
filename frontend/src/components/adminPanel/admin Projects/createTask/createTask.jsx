@@ -32,7 +32,8 @@ const TITLE = 'Create Task'
 //style classes
 const paperStyle = {
   padding: "50px 20px",
-  width: "700px",
+  width: "80%",
+  marginTop:"5%",
   margin: "20px auto",
   backgroundColor: "#2f3640",
   opacity: 0.8,
@@ -512,22 +513,27 @@ export default class Createtask extends React.Component {
             <div>
               <Grid>
                 <Paper elevation={20} style={paperStyle}>
-                  {!submitted ?
-                    <div>
-                      <button type="button" class="buttonsubmitclear" onClick={this.clearForm}>C L E A R</button>
-                      <a href="http://localhost:3000/projects#">
-                        <button class="closebuttonactualproject">
-                          C L O S E
-                        </button>
-                      </a>
+                 
+               
 
-                    </div> : null
+                  <Grid align="left">
+                  
+                    <div>
+                    <div style={{marginLeft:"90%"}}>
+                  {!submitted || error ?
+                    <button
+                      class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
+                      C L E A R
+                    </button> : null
                   }
 
 
-
-                  <Grid align="left">
-                    <div>
+                  {/* <a href="http://localhost:3000/projects#">
+                    <button class="closebuttonactualproject">
+                      C L O S E
+                    </button>
+                  </a> */}
+                </div>
                       <Avatar style={avatarStyle}>
                         <AddCircleOutlineOutlinedIcon
                           fontSize="large"
@@ -539,7 +545,7 @@ export default class Createtask extends React.Component {
                     <h1 style={{color:'white'}}>MANAGE TASKS</h1>
                     <Typography variant="caption">
                       {!submitted ?
-                        <p>
+                        <p style={{color:'white'}}>
                           Please use this form to create tasks
                           <br />
                           All fields are required.
@@ -550,7 +556,7 @@ export default class Createtask extends React.Component {
                   <Grid>
                     {!showgrid ? (
                       <FormControl fullWidth label="" minWidth="300px">
-                        <InputLabel>Project List</InputLabel>
+                        <InputLabel style={{color:'#a4b0be'}}>Project List</InputLabel>
                         <Select
                           value={selectedProject.name}
                           MenuProps={MenuProps}
@@ -566,20 +572,20 @@ export default class Createtask extends React.Component {
                     ) : null}
 
                     {missingdata ? (
-                      <div>
+                      <div style={{color:'white'}}>
                         Reqired Data is missing.
                         <br />
                       </div>
                     ) : null}
                     {submitted ? (
-                      <div>
+                      <div style={{color:'white'}}>
                         Task Added Successfully
                         <br />
                       </div>
                     ) : null}
                     {showcustomoption && !showgrid ? (
                       <FormControl class="marginedit">
-                        <FormLabel>Method you need to follow</FormLabel>
+                        <FormLabel style={{color:'white'}}>Method you need to follow</FormLabel>
                         <RadioGroup
                           style={radioStyle}
                           color="primary"
@@ -587,12 +593,12 @@ export default class Createtask extends React.Component {
                           value={customValue}
                           onChange={this.setModel}
                         >
-                          <FormControlLabel
+                          <FormControlLabel style={{color:'white'}}
                             value="Custom"
                             control={<Radio />}
                             label="Same task for all employees"
                           />
-                          <FormControlLabel
+                          <FormControlLabel style={{color:'white'}}
                             value="Unique"
                             control={<Radio />}
                             label="Unique task for each employee"

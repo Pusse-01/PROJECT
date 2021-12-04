@@ -21,7 +21,7 @@
     z-index: -1;
     padding: 10px;
     display: grid;
-    grid-template-rows: 10% 50% 40%;
+    grid-template-rows: 10% 40% 40%;
 }
 
 .clientsTitle{
@@ -53,9 +53,7 @@
     padding: 10px;
 }
 
-.addClientsComponents::-webkit-scrollbar{
-    display: none;
-}
+
 
 .hrTitleText{
     color: #a4b0be;
@@ -118,12 +116,14 @@
 .clients_table_view{
     overflow: scroll;
     margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .clients_table_view::-webkit-scrollbar{
     display: none;
 }
 .clientsTable{
-    margin-top: 10px;
+    margin-top: 50px;
     align-items: center;
     width: 100%;
 }
@@ -212,7 +212,7 @@
     display: none;
 }
 .clients_sidebar_client{
-    height: 250px;
+    height: 220px;
     width:90%;
     margin-left: 5%;
     margin-bottom: 30px;
@@ -220,6 +220,7 @@
     padding-top: 10px;
     padding-left: 10px;
     overflow: scroll;
+    border-radius: 20px;
 }
 #clients_sidebar_client0 {
     box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);
@@ -242,15 +243,15 @@
 .clients_sidebar_client_name{
     color:#a4b0be;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 5px;
     font-size: 15px;
     font-weight: bolder;
 }
 .clients_sidebar_client_title{
     color:#a4b0be;
     text-align: center;
-    padding-top: 10px;
-    font-size: 20px;
+    padding-top: 5px;
+    font-size: 2vh;
     font-weight: bolder;
     border-bottom: 1px solid #a4b0be;
     border-radius: 30px;
@@ -258,7 +259,7 @@
 .clients_sidebar_client_email{
     color:red;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 5px;
     font-size: 15px;
     font-weight: bolder;
 }

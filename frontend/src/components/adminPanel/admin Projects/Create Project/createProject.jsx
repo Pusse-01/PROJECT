@@ -26,15 +26,17 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Helmet } from 'react-helmet'
+import { color } from "@mui/system";
 
 const TITLE = 'Create Project'
 
 const paperStyle = {
   padding: "50px 20px",
-  width: "700px",
+  width: "80%",
   margin: "20px auto",
+  marginTop:"5%",
   backgroundColor: "#2f3640",
-  color: "#000000",
+  color: "white",
   opacity: 0.8,
 };
 const avatarStyle = {
@@ -52,6 +54,12 @@ const MenuProps = {
     },
   },
 };
+const styles = {
+  floatingLabelFocusStyle: {
+      color: "white"
+  }
+}
+
 
 class Createproject extends React.Component {
   constructor(props) {
@@ -306,11 +314,15 @@ class Createproject extends React.Component {
         <Helmet>
           <title>{TITLE}</title>
         </Helmet>
-        <form>
-          <div>
-            <Grid>
+        <form >
+          <div >
+            <Grid >
               <Paper elevation={20} style={paperStyle}>
-                <div>
+              
+                <Grid align="left">
+                
+                  <div>
+                  <div style={{marginLeft:"90%"}}>
                   {!submitted || error ?
                     <button
                       class="buttonsubmitclearproject" type='button' onClick={this.clearForm}>
@@ -319,14 +331,12 @@ class Createproject extends React.Component {
                   }
 
 
-                  <a href="http://localhost:3000/projects#">
+                  {/* <a href="http://localhost:3000/projects#">
                     <button class="closebuttonactualproject">
                       C L O S E
                     </button>
-                  </a>
+                  </a> */}
                 </div>
-                <Grid align="left">
-                  <div>
                     <Avatar style={avatarStyle}>
                       <AddCircleOutlineOutlinedIcon
                         fontSize="large"
@@ -337,7 +347,7 @@ class Createproject extends React.Component {
 
                   <h1 class='h1project'>CREATE PROJECT</h1>
                   <Typography variant="caption">
-                    {!submitted || error ? <p>Please fill this from to create a project</p>
+                    {!submitted || error ? <p className="fc">Please fill this from to create a project</p>
                       : null}
 
                   </Typography>
@@ -351,48 +361,68 @@ class Createproject extends React.Component {
                 {!error ? <Grid>
 
                   <TextField
+                  InputLabelProps={{
+                    style: {
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      width: '100%',
+                      color: '#a4b0be'
+                    } }}
+
+                  
+
                   fullWidth
                   label="Project Name"
+                  
                   value={this.state.projectname}
                   onChange={this.setProjectname}
+                  
                 ></TextField>
                 {sameName ? <div><h5>Project name already exits.</h5></div> : null}
                 <FormControl class="marginedit">
-
-                  <FormLabel>Project Status</FormLabel>
+                  
+                  <h6 className="fc">Project Status</h6>
+                
                   <RadioGroup row value={category} onChange={this.setCategory}>
                     <FormControlLabel
+                    className="fc"
                       value="Pending"
                       control={<Radio />}
                       label="Pending"
                     />
                     <FormControlLabel
+                    className="fc"
                       value="Not Started"
                       control={<Radio />}
                       label="Not Started"
                     />
                     <FormControlLabel
+                    className="fc"
                       value="On going"
                       control={<Radio />}
                       label="On going"
                     />
                     <FormControlLabel
+                    className="fc"
                       value="Completed"
                       control={<Radio />}
                       label="Completed"
                     />
                     <FormControlLabel
+                    className="fc"
                       value="Over due"
                       control={<Radio />}
                       label="Over due"
                     />
                   </RadioGroup>
                 </FormControl>
-                <FormControl fullWidth label="" minWidth="300px">
-                  <InputLabel>Project Contributers</InputLabel>
+                <FormControl 
+                className="fc" fullWidth label="" minWidth="300px">
+                  <InputLabel style={{color:'#a4b0be'}}>Project Contributers</InputLabel>
 
 
-                  <Select value={''} MenuProps={MenuProps} onChange={this.setSelectedContributor}>
+                  <Select style={{color:'#a4b0be'}} value={''} MenuProps={MenuProps} onChange={this.setSelectedContributor}>
                     {employees.map((employeename, index) => (
                       <MenuItem key={index} value={index}>
                         {employeename.username}
@@ -410,7 +440,7 @@ class Createproject extends React.Component {
 
 
                 <FormControl fullWidth label="admin" minWidth="300px">
-                  <InputLabel>Project Managers</InputLabel>
+                  <InputLabel style={{color:'#a4b0be'}}>Project Managers</InputLabel>
                   <Select value={''}
                     MenuProps={MenuProps}
                     onChange={this.setSelectedManagers}
@@ -431,9 +461,16 @@ class Createproject extends React.Component {
                   ))}
                 </FormControl>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} InputLabelProps={{
+                      style: {
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        width: '100%',
+                        color: '#a4b0be'
+                      } }}>
                   <KeyboardDatePicker
-                    color="primary"
+                    
                     variant="inline"
                     inputvarient="outlined"
                     label="End Date"
@@ -451,6 +488,14 @@ class Createproject extends React.Component {
                 >
                   <div>
                     <TextField
+                     InputLabelProps={{
+                      style: {
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        width: '100%',
+                        color: '#a4b0be'
+                      } }}
                       fullWidth
                       label="Project Description"
                       id="outlined-multiline-flexible"

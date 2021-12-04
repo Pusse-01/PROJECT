@@ -71,6 +71,7 @@
   z-index: 21;
   position: absolute;
   border: 0px;
+  font-weight: bold;
 }
 .marginedit{
   margin:20px;
@@ -89,14 +90,15 @@
   }
   .buttonsubmitclearproject{
     color:#262c30;
-    position: absolute;
     top: 120px;
-    left: 54%;
+    
     padding: 0px;
     background-color: transparent;
     color: rgb(190, 33, 33);
     z-index: 21;
     border: 0px;
+    right: 0px;
+    font-weight: bold;
   }
 
   .h1{
@@ -183,4 +185,28 @@
   }
   .ring1{
     left:45%
+  }
+  .fc{
+    color: #a4b0be;
+  }
+  .mainc{
+    width: 70%;
+    background-color: white;
+  }
+  .Mu{
+    font: inherit;
+    color: white;
+    width: 100%;
+    border: 0;
+    height: 1.1876em;
+    margin: 0;
+    display: block;
+    padding: 6px 0 7px;
+    min-width: 0;
+    background: none;
+    box-sizing: content-box;
+    animation-name: mui-auto-fill-cancel;
+    letter-spacing: inherit;
+    animation-duration: 10ms;
+    -webkit-tap-highlight-color: transparent;
   }

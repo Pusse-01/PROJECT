@@ -158,11 +158,29 @@ render(){
     return (
         <div className = "reportsMainComponent">
         <Sidebar data={this.state.data}/> 
+        <div className="userChart">         
+        
+        
+       
+        <div >   
+        <h3 className ="name">Projects</h3>      
+        <Doughnut      
+          data={chart1}
+          options={chart1.options}
+        /></div>
+        <div>
+        <h3 className= "name">Tasks</h3>
+        <Doughnut 
+          data={chart2}
+          options={chart2.options}
+        />       
+        </div>
+        </div>
         {data.map((data) => {
         return (
             <div className="reportTable">
-                <div className="col-sm-12 col-md-4 mt-5   ms-md-5 mr-md-5">
-                    <h4 className="text-center bg theader"> Projects Assigned</h4>
+                <div className="col-sm-12 ">
+                    <h4 className="text-center bg theader hc"> Projects Assigned</h4>
                 <div>
 
                     <table className="table table-dark table-striped table-bordered">
@@ -182,8 +200,8 @@ render(){
                         <td className="reportstable_data_column">{userProjects.id}</td>
                         <td className="reportstable_data_column">{userProjects.name}</td>
                         <td className="reportstable_data_column">{data.position}</td>
-                        <td className="reportstable_data_column">{userProjects.status}</td>
-                        <td className="reportstable_data_column">{userProjects.overdue}</td>
+                        <td className="reportstable_data_column">{userProjects.projectStatus}</td>
+                        <td className="reportstable_data_column">{userProjects.overdue.substring(0,10)}</td>
                     </tr>
                             )
                         }
@@ -196,7 +214,7 @@ render(){
                 </div>
                 </div>   
 
-                <div className="col-sm-12 col-md-4 mt-5   ms-md-5 mr-md-5">
+                <div className="col-sm-12  ">
                     <h4 className="text-center bg theader"> Tasks Assigned</h4>
                 <div>
 
@@ -218,7 +236,7 @@ render(){
                         <td className="reportstable_data_column">{userTasks.task_name}</td>
                         <td className="reportstable_data_column">{userTasks.project_name}</td>
                         <td className="reportstable_data_column">{userTasks.task_status}</td>
-                        <td className="reportstable_data_column">{userTasks.due_date}</td>
+                        <td className="reportstable_data_column">{userTasks.due_date.substring(0,10)}</td>
                     </tr>
                             )
                         }
@@ -234,21 +252,7 @@ render(){
             </div>         
             
             )})}
-        <div className="projectsChart">         
-        <div >   
-        <h3 className ="name">Projects</h3>      
-        <Doughnut      
-          data={chart1}
-          options={chart1.options}
-        /></div>
-        <div>
-        <h3 className= "name">Tasks</h3>
-        <Doughnut 
-          data={chart2}
-          options={chart2.options}
-        />       
-        </div>
-        </div>
+      
         </div>
         
                           

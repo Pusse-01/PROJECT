@@ -5,6 +5,7 @@
     padding : 10px;
     display : grid;
     grid-template-columns: 20% 50% 30%;
+
 }
 .logOut{
     color: #57606f;
@@ -80,7 +81,7 @@
 }
 
 .logoContainer{
-    padding: 0;
+    padding-left: 15px;
     margin: 0;
     display: grid;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;

@@ -102,6 +102,7 @@
     background-color:#FF5349;
     border-color: #FF5349;
     color:azure;
+    border-radius: 50px;
 }
 .departments_select:focus{
     outline: none;
@@ -118,7 +119,9 @@
 .departmentsTable{
     margin-top: 10px;
     align-items: center;
-    width: 100%;
+    width: 96%;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 .departments_table_head {
     width : 20%;
@@ -239,6 +242,7 @@
     text-align: center;
     margin: 10px;
     height: 120px;
+    font-size: 20px;
 }
 
 .departments_sidebar_employees_container{
@@ -260,6 +264,8 @@
     background: #1e272e;
     padding-top: 10px;
     padding-left: 10px;
+    border-radius: 20px;
+
 }
 #departments_sidebar_employee0 {
     box-shadow: 0px 0px 10px 1px rgb(250, 12, 4);

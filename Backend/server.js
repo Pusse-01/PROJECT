@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const{route} = require('./routs/calendarTaskBackLogRoute');
@@ -8,6 +9,11 @@ const TaskRouts = require('./routs/taskRouts')
 const DepartmentsRouts = require('./routs/departmentsRouts')
 const DesignationsRouts =  require('./routs/designationsRouts')
 const ClientsRouts = require('./routs/clientRouts')
+const moment = require('moment');
+const nodeCron = require("node-cron");
+
+
+
 
 const app = express();
 
@@ -43,7 +49,6 @@ app.use('/task',TaskRouts)
 app.use('/departments',DepartmentsRouts)
 app.use('/designations',DesignationsRouts)
 app.use('/clients',ClientsRouts)
-
 const URL = config.get("MONGODB_URI");
 
 mongoose.connect(URL, { 
@@ -56,6 +61,44 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("Mongodb Connection success!");
 })
+const t=mongoose.model('tasks',{
+  task_name : {
+      type : String,
+      required: true
+  },
+  due_date : {
+      type : Date,
+      required: true
+  },
+  task_status : {
+      type : String,
+      required: true
+  },
+  project_id : {
+      type : String,
+      required: true
+  },
+  project_name : {
+      type : String,
+      required: true
+  },
+  action : {
+      type : String,
+      required: true
+  },
+  assigned_to : {
+      type : [{type:String,required: true }]
+  }
+});
+
+
+
+nodeCron.schedule('59 23 * * *', async function() {
+  console.log("done")
+  await t.updateMany({task_status:{$ne:"Done"},due_date:{$lt:new Date()}},{$set:{task_status:"Overdue"}}); 
+},
+{scheduled:true,timezone:"Asia/Colombo"});
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`)

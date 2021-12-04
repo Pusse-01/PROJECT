@@ -290,7 +290,6 @@ class Clients extends Component {
                 <Clientsidebar clients={this.state.clients} meetings={this.state.meetings}/>
                 <div className="clientsSubComponent">
                     <div>
-                        <h5 className="clientsTitle">Scroll Horizontally</h5>
                         <h7 className={this.state.errorStyle}>{this.state.errorMessage}</h7>
                     </div>
                     <div className="addClientsComponents">
@@ -504,7 +503,7 @@ class Clients extends Component {
                                             <tr className="clients_table_data_odd" key={index}>
                                                 <td className="clients_table_data_column">{meeting.client_name}</td>
                                                 <td className="clients_table_data_column">{meeting.meeting.venue}</td>
-                                                <td className="clients_table_data_column">{meeting.meeting.date}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.date.substring(0,10)}</td>
                                                 <td className="clients_table_data_column">{meeting.meeting.description}</td>
                                             </tr>
                                         )
@@ -513,7 +512,7 @@ class Clients extends Component {
                                             <tr className="clients_table_data_even" key={index}>
                                                 <td className="clients_table_data_column">{meeting.client_name}</td>
                                                 <td className="clients_table_data_column">{meeting.meeting.venue}</td>
-                                                <td className="clients_table_data_column">{meeting.meeting.date}</td>
+                                                <td className="clients_table_data_column">{meeting.meeting.date.substring(0,10)}</td>
                                                 <td className="clients_table_data_column">{meeting.meeting.description}</td>
                                             </tr>
                                         )

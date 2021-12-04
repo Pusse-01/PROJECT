@@ -260,7 +260,7 @@
 
 #tasksAll{box-shadow: 0px 1px 10px 1px #40739e;}
 #tasksToDo{box-shadow: 0px 1px 10px 1px #eb4d4b;}
-#tasksInProgress{box-shadow: 0px 1px 10px 1px rgb(206, 224, 123);}
+#tasksInProgress{box-shadow: 0px 1px 1px #4834d4;}
 #tasksDone{box-shadow: 0px 1px 10px 1px #535c68;}
 #tasksBugs{box-shadow: 0px 1px 10px 1px #8e44ad;}
 #tasksReview{box-shadow: 0px 1px 10px  1px red;}

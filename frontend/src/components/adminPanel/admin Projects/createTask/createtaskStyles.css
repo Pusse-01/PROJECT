@@ -10,14 +10,15 @@
 
 .buttonsubmitclear{
   color:#262c30;
-  position: absolute;
+  
   top: 120px;
-  left: 54%;
+  left: 80%;
   padding: 0px;
   background-color: transparent;
   color: rgb(190, 33, 33);
   z-index: 21;
   border: 0px;
+  font-weight: bold;
 }
 
 .closebuttonactual {
@@ -179,3 +180,4 @@
   opacity: 1;
   right: 0;
 }
+

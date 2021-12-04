@@ -17,11 +17,11 @@ export default class Sidebar extends Component{
                             if(index%4==0){
                                 client_style = "clients_sidebar_client0"
                             }else if(index%4==1){
-                                client_style = "clients_sidebar_client1"
+                                client_style = "clients_sidebar_client0"
                             }else if(index%4==2){
-                                client_style = "clients_sidebar_client2"
+                                client_style = "clients_sidebar_client0"
                             }else if(index%4==3){
-                                client_style = "clients_sidebar_client3"
+                                client_style = "clients_sidebar_client0"
                             }
                             console.log(client.Projects)
                             return(

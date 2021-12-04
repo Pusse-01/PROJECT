@@ -560,7 +560,14 @@ export default class Viewtasks extends React.Component {
               </TableHead>
               <TableBody>
                 {filterdresult.map((row, index) => {
-                  return <Row key={row.name} row={row}></Row>;
+                  if(index%2==0){
+                    return(
+                      <Row key={row.name} row={row}></Row>
+                    )
+                  }else{
+                    return(<Row style={{backgroundColor:"red"}} key={row.name} row={row}></Row>)
+                  }
+                  
                 })}
               </TableBody>
             </Table>
