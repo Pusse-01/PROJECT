@@ -21,7 +21,6 @@ import { InputBase } from "@material-ui/core";
 import Createtask from "../createTask/createTask"
 import Edittask from "../Edit tasks/edittask"
 import { Helmet } from 'react-helmet'
-import { enGB } from "date-fns/locale";
 
 
 const TITLE = 'Task View'
@@ -113,7 +112,7 @@ class Row extends React.Component {
       <React.Fragment>
         <StyledTableRow key={this.props.key}
           sx={{ "& > *": { borderBottom: "0px", border: "0px" } }}>
-          <TableCell>
+          <TableCell >
             <IconButton
               aria-label="expand row"
               size="small"
@@ -122,23 +121,23 @@ class Row extends React.Component {
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
+          </TableCell >
+          <TableCell style={{color:'white', fontSize:'15px'}} component="th" scope="row">
             {row.name}
           </TableCell>
-          <TableCell align="left">{row.overdue}</TableCell>
+          <TableCell style={{color:'white', fontSize:'15px'}} align="left">{row.overdue}</TableCell>
           {new Date(row.overdue) > Date.now() || row.status === "Completed" ? (
-            <StyledTableCellNotDue align="left">
+            <StyledTableCellNotDue style={{borderBottom:'0px'}} align="left">
               {row.status}
             </StyledTableCellNotDue>
           ) : null}
           {new Date(row.overdue) <= Date.now() && row.status !== "Completed" ? (
-            <StyledTableCellDue align="left" >{row.status}</StyledTableCellDue>
+            <StyledTableCellDue style={{borderBottom:'0px'}} align="left" >{row.status}</StyledTableCellDue>
           ) : null}
 
-          <TableCell align="left">{row.description}</TableCell>
+          <TableCell style={{color:'white', fontSize:'15px'}} align="left">{row.description}</TableCell>
 
-          <TableCell align="left">
+          <TableCell style={{color:'white', fontSize:'15px'}} align="left">
             {row.admins.map((adminsname, index) => (
               <div>
                 {index + 1}.{adminsname}
@@ -166,18 +165,18 @@ class Row extends React.Component {
                 >
                   T A S K&nbsp;&nbsp;  S T A T U S
                 </Typography>
-                <Table size="small" aria-label="stat">
+                <Table size="small" aria-label="stat" >
                   <TableHead>
                     <StyledTableRow>
-                      <TableCell align="left">Task Name</TableCell>
-                      <TableCell align="left">Due Date</TableCell>
-                      <TableCell align="left"></TableCell>
+                      <TableCell align="left" style={{color:'white', fontSize:'15px'}}>Task Name</TableCell>
+                      <TableCell align="left" style={{color:'white', fontSize:'15px'}}>Due Date</TableCell>
+                      <TableCell align="left" style={{color:'white', fontSize:'15px'}}></TableCell>
 
-                      <TableCell align="left" >
+                      <TableCell align="left" style={{color:'white', fontSize:'15px'}}>
                         Status
                       </TableCell>
-                      <TableCell align="center" colSpan={1}>Contributers</TableCell>
-                      <TableCell align="center" colSpan={1}></TableCell>
+                      <TableCell align="center" colSpan={1} style={{color:'white', fontSize:'15px'}}>Contributers</TableCell>
+                      <TableCell align="center" colSpan={1} style={{color:'white', fontSize:'15px'}}></TableCell>
                     </StyledTableRow>
                   </TableHead>
                   <TableBody width="100%" >
@@ -195,10 +194,10 @@ class Row extends React.Component {
                     ) : null}
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
-                        <TableCell align="left">
+                        <TableCell align="left" style={{color:'white', fontSize:'15px'}}>
                           {historyRow.task.substring(0, 50)}{" "}
                         </TableCell>
-                        <TableCell align="left" colSpan={2}>
+                        <TableCell align="left" colSpan={2} style={{color:'white', fontSize:'15px'}}>
                           {historyRow.date}
                         </TableCell>
                         {(historyRow.taskstat === 'Done') ?
@@ -251,7 +250,7 @@ class Row extends React.Component {
                           {historyRow.employee.map((data, index) => (
                             <Box sx={{ margin: 0 }}>
                               <TableRow>
-                                <StyledTableCell align="left" border="none">
+                                <StyledTableCell align="left" border="none" style={{color:'white', fontSize:'15px'}}>
                                   {index + 1}.{data.substring(0, 25)}
                                 </StyledTableCell>
                               </TableRow>
@@ -590,17 +589,17 @@ export default class Viewtasks extends React.Component {
                 <TableHead>
                   <StyledTableRow>
                     <StyledTableCell />
-                    <StyledTableCell>Project Title</StyledTableCell>
-                    <StyledTableCell align="left">Due Date</StyledTableCell>
-                    <StyledTableCell align="left">Status</StyledTableCell>
-                    <StyledTableCell align="left">Description</StyledTableCell>
-                    <StyledTableCell align="left">Admins</StyledTableCell>
+                    <StyledTableCell style={{color:'white', fontSize:'16px'}}>Project Title</StyledTableCell>
+                    <StyledTableCell style={{color:'white', fontSize:'16px'}} align="left">Due Date</StyledTableCell>
+                    <StyledTableCell style={{color:'white', fontSize:'16px'}} align="left">Status</StyledTableCell>
+                    <StyledTableCell style={{color:'white', fontSize:'16px'}} align="left">Description</StyledTableCell>
+                    <StyledTableCell style={{color:'white', fontSize:'16px'}} align="left">Admins</StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
                 <TableBody>
                   {filterdresult.map((row, index) => {
                     
-                      if(index%2==0){
+                      if(index%2===0){
                         return(
                          <Row  key={row.name} row={row} setStateOfParent={this.setStateOfParent} setStateOfParent2={this.setStateOfParent2}></Row>
                         )

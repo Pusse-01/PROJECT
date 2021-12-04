@@ -24,11 +24,10 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormLabel from "@material-ui/core/FormLabel";
 import { Helmet } from 'react-helmet'
-import { color } from "@mui/system";
 
 const TITLE = 'Create Project'
+
 
 const paperStyle = {
   padding: "50px 20px",
@@ -37,6 +36,7 @@ const paperStyle = {
   marginTop:"5%",
   backgroundColor: "#2f3640",
   color: "white",
+
   opacity: 0.8,
 };
 const avatarStyle = {
