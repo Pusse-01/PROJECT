@@ -67,7 +67,7 @@ class Designations extends Component {
                 error_message:"Sorry you can not delete the department as there are employees assigned to it."
             })
         }else{
-            axios.post('http://localhost:8070/departments/deleteDespartment/' ,{department_id:this.state.department.Department._id})
+            axios.post('http://localhost:8070/departments/deleteDepartment' ,{department_id:this.state.department.Department._id})
                 .then((res) => {
                     if (res.status == 200) {
                         this.setState({
@@ -75,6 +75,9 @@ class Designations extends Component {
                             error_message:"Successfully Deleted the department.",
                             employees:[],
                             employeesOfSelectedDes:[]
+                        })
+                        this.props.history.push({
+                            pathname: "/hr/departments"
                         })
                     } else {
                         this.setState({
