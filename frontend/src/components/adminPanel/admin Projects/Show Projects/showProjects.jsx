@@ -619,8 +619,9 @@ export default class ShowProject extends React.Component {
                           style={{ border: "none" }}
                           value={index}
                         >
-                          <TableCell colSpan={4}
+                          <TableCell
                             style={{
+                              width: "20%",
                               border: "none",
                               color: "white",
                               fontSize: "18px",

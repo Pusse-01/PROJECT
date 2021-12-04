@@ -127,12 +127,12 @@ class Row extends React.Component {
           </TableCell>
           <TableCell style={{color:'white', fontSize:'15px'}} align="left">{row.overdue}</TableCell>
           {new Date(row.overdue) > Date.now() || row.status === "Completed" ? (
-            <StyledTableCellNotDue style={{borderBottom:'0px'}} align="left">
+            <StyledTableCellNotDue style={{borderBottom:'0px solid white'}} align="left">
               {row.status}
             </StyledTableCellNotDue>
           ) : null}
           {new Date(row.overdue) <= Date.now() && row.status !== "Completed" ? (
-            <StyledTableCellDue style={{borderBottom:'0px'}} align="left" >{row.status}</StyledTableCellDue>
+            <StyledTableCellDue style={{borderBottom:'0px solid white'}} align="left" >{row.status}</StyledTableCellDue>
           ) : null}
 
           <TableCell style={{color:'white', fontSize:'15px'}} align="left">{row.description}</TableCell>
@@ -195,7 +195,7 @@ class Row extends React.Component {
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
                         <TableCell align="left" style={{color:'white', fontSize:'15px'}}>
-                          {historyRow.task.substring(0, 50)}{" "}
+                          {historyRow.task.substring(0, 30)}{" "}
                         </TableCell>
                         <TableCell align="left" colSpan={2} style={{color:'white', fontSize:'15px'}}>
                           {historyRow.date}

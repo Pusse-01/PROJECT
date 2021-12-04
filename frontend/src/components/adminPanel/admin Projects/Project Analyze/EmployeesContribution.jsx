@@ -30,12 +30,14 @@ export default class AnalyzeProjectEmployees extends React.Component {
       data: [],
       copyData:[],
       length: 0,
+      loading: true,
     };
   }
 
   componentDidMount() {
     this.getEmployees();
   }
+
 
   getEmployees() {
     let tasksemployee = [];
@@ -76,7 +78,6 @@ export default class AnalyzeProjectEmployees extends React.Component {
                     Review++;
                     break;
                   default:
-                    console.log("error");
                 }
                 if (new Date(taskData[j].due_date) < Date.now()) {
                   due = true
@@ -97,10 +98,10 @@ export default class AnalyzeProjectEmployees extends React.Component {
                 ReviewPer = (yAxis[4] / Total) * 100;
               }
               let Status = "";
-              let note = '';
+              let note = 'Have many To dos and Bugs/Issues.';
               if ((yAxis[0] + yAxis[3] < yAxis[2] + yAxis[4] + yAxis[1]) && (!due || yAxis[2])) {
                 Status = "Good";
-                note = 'No due work, not many bugs/issues and Todos.'
+                note = 'No due work, not have many bugs/issues and Todos.'
               } else if ((yAxis[0] + yAxis[1] + yAxis[3] === yAxis[2] + yAxis[4]) && !due) {
                 Status = "Neutral";
                 note = 'No due work,May have some Bugs/Issues and Todos.'
@@ -125,11 +126,17 @@ export default class AnalyzeProjectEmployees extends React.Component {
                 },
               ];
               tasksemployee.push(personTask[0]);
-              if (this.state.length - 1 === i) {
+
+              console.log(tasksemployee[tasksemployee.length - 1], tasksemployee.length)
+              if (this.state.length === tasksemployee.length) {
+              console.log('in'+tasksemployee.length)
+
                 this.setState({
                   data: tasksemployee,
-                  copyData:tasksemployee
+                  copyData:tasksemployee,
+                  loading: false
                 });
+
               }
             });
         }
@@ -158,7 +165,12 @@ export default class AnalyzeProjectEmployees extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, loading } = this.state;
+    if(loading){
+     return(
+      <div style={{marginLeft:'20px'}}>Loading</div>
+     )
+    }
     return (
       <div>
 
