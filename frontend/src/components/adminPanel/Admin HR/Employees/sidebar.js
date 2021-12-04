@@ -64,25 +64,25 @@ class Sidebar extends Component{
                         this.changeMenu("All")
                     }}>
                         <div className="tasksOutCircle"><div className="tasksInnerCircle" id={allInnerStyle}></div></div>
-                        <h6 className="taskElementText">All</h6>
+                        <h6 className="taskElementText">Add Employee</h6>
                     </div>
                     <div className="employeesElement" id={toDoStyle} onClick= {() => {
                         this.changeMenu("To Do")
                     }}>
                         <div className="tasksOutCircle"><div className="tasksInnerCircle" id={toDoInnerStyle}></div></div>
-                        <h6 className="taskElementText">To Do</h6>
+                        <h6 className="taskElementText">Update Password</h6>
                     </div>
                     <div className="employeesElement" id={inProgressStyle} onClick= {() => {
                         this.changeMenu("In Progress")
                     }}>
                         <div className="tasksOutCircle"><div className="tasksInnerCircle" id={inProgressInnerStyle}></div></div>
-                        <h6 className="taskElementText">In Progress</h6>
+                        <h6 className="taskElementText">Update Position</h6>
                     </div>
                     <div className="employeesElement" id={doneStyle} onClick= {() => {
                         this.changeMenu("Done")
                     }}>
                         <div className="tasksOutCircle"><div className="tasksInnerCircle" id={doneInnerStyle}></div></div>
-                        <h6 className="taskElementText">Done</h6>
+                        <h6 className="taskElementText">Delete Account</h6>
                     </div>
                 </div>
             </div>
