@@ -270,7 +270,7 @@ class Row extends React.Component {
                               Delete
                             </button>
 
-                            <button style={{ fontSize: '9px', marginLeft: "0px", marginRight: "220px", backgroundColor: '#2f3640', width: '35px', textAlign: 'center' }}
+                            <button style={{ fontSize: '9px', marginLeft: "0px", marginRight: "240px", backgroundColor: '#2f3640', width: '35px', textAlign: 'center' }}
                               class="taskdeletebutton"
                               value={index}
                               onClick={this.taskEdit}

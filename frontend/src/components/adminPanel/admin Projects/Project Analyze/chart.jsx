@@ -381,28 +381,28 @@ export default class Projectperformancecharts extends React.Component {
               <Grid item style={{ marginLeft: "4%", marginTop: "0px", marginBottom: '10px' }}>
                 <button class="directionButtons"
                   type="button"
-                  style={{ marginLeft: "20px", marginTop: "5px"}}
+                  style={{ marginLeft: "160px", marginTop: "5px" , color:'white'}}
                   onClick={this.gridPageChangetoOne}
                 >
                   Daily Project Activity Chart
                 </button>
                 <button class="directionButtons"
                   type="button"
-                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
+                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px', color:'white' }}
                   onClick={this.gridPageChangetoTwo}
                 >
                   Tasks And There Status
                 </button>
                 <button class="directionButtons"
                   type="button"
-                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
+                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px', color:'white' }}
                   onClick={this.gridPageChangetoThree}
                 >
                   Projects And There Current Status
                 </button>
                 <button class="directionButtons"
                   type="button"
-                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px' }}
+                  style={{ marginLeft: "20px", marginTop: "5px", marginBottom: '10px', color:'white' }}
                   onClick={this.gridPageChangetoFour}
                 >
                   Employee Contribution and performance
@@ -418,8 +418,8 @@ export default class Projectperformancecharts extends React.Component {
             <Plot
               data={this.addTracers()}
               layout={{
-                width: 1100,
-                height: 500,
+                width: 1500,
+                height: 800,
                 title: {
                   text: 'Total Time Spend For Projects In Each Day',
                   font: {
@@ -444,7 +444,7 @@ export default class Projectperformancecharts extends React.Component {
                   },
                 },
                 yaxis: {
-                  range: [0, 30],
+                  range: [0, 120],
                   rangemode: 'tozero',
                   title: {
                     text: 'Time in minutes',
@@ -467,8 +467,8 @@ export default class Projectperformancecharts extends React.Component {
             <Plot
               data={this.Statuschart()}
               layout={{
-                width: 1100,
-                height: 500,
+                width: 1500,
+                height: 800,
                 title: {
                   text: 'All Projects And There Current Status',
                   font: {
@@ -487,8 +487,8 @@ export default class Projectperformancecharts extends React.Component {
             <Plot
               data={this.taskStatus()}
               layout={{
-                width: 1100,
-                height: 500,
+                width: 1500,
+                height: 800,
                 title: {
                   text: 'All Tasks And There Current Status',
                   font: {
