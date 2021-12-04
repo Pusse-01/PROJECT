@@ -79,6 +79,7 @@ export default class Edittask extends React.Component {
                     taskname: data.task_name,
                     selectedProject: data.project_name,
                     endDate: data.due_date,
+                    taskstatus:data.task_status,
                     taskData: data
                 })
             })
@@ -125,15 +126,6 @@ export default class Edittask extends React.Component {
 
     //submit click of the form
     handleClick = (event) => {
-        var temp = [
-            {
-                taskname: this.state.taskname,
-                endDate: this.state.endDate,
-                taskstatus: this.state.taskstatus,
-                description: this.state.description,
-            },
-        ];
-
         //end of getting data
 
 
