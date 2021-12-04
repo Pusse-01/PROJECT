@@ -165,12 +165,8 @@ export default class AnalyzeProjectEmployees extends React.Component {
         <Box style={{ marginLeft: "74%" }}>
           <SearchIcon fontSize="large" htmlColor="#ff0000" />
           <InputBase
-            style={{
-              marginTop: "10px",
-              backgroundColor:'#2f3640',
-              width:'250px'
-            }}
-            placeholder="Search by name....."
+           style={{ backgroundColor: "#2f3640 ", fontSize: '12px', width: '200px',color:'white',borderRadius:"10px" }}
+            placeholder="&ensp;Search by name....."
             onChange={this.filterProjects}
           ></InputBase>
 
@@ -197,24 +193,24 @@ export default class AnalyzeProjectEmployees extends React.Component {
                     </StyledTableRow>
 
                     <StyledTableRow>
-                      <TableCell colSpan={2} style={{ fontSize: '14px', border: "none" }}>
+                      <TableCell colSpan={2} style={{ fontSize: '15px', border: "none", color: "white" }}>
                         Emplyee Performance Status
                       </TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }}>To Do</TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }}>Done</TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }}>In Progress</TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }}>Bugs/Issues</TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }}>Review</TableCell>
-                      <TableCell style={{ fontSize: '12px', border: "none" }} colSpan={1}>Note</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }}>To Do</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }}>Done</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }}>In Progress</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }}>Bugs/Issues</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }}>Review</TableCell>
+                      <TableCell style={{ fontSize: '15px', border: "none", color: "white" }} colSpan={1}>Note</TableCell>
                     </StyledTableRow>
-                    <StyledTableRow >
-                      <TableCell colSpan={2} style={{ fontSize: '12px', width: "100px" }} align="left" >{employee.status}</TableCell>
-                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.ToDoPer).toString()).substring(0, 5)}%</TableCell>
-                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.DonePer).toString()).substring(0, 5)}%</TableCell>
-                      <TableCell style={{ fontSize: '12px', width: "120px" }} align="left">{((employee.InprogressPer).toString()).substring(0, 5)}%</TableCell>
-                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.BugsPe).toString()).substring(0, 5)}%</TableCell>
-                      <TableCell style={{ fontSize: '12px', width: "100px" }} align="left">{((employee.ReviewPer).toString()).substring(0, 5)}%</TableCell>
-                      <TableCell colSpan={1} style={{ fontSize: '12px', width: "350px" }} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
+                    <StyledTableRow > 
+                      <TableCell colSpan={2} style={{ fontSize: '12px', width: "100px", color: "white" }} align="left" >{employee.status}</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px", color: "white" }} align="left">{((employee.ToDoPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px", color: "white" }} align="left">{((employee.DonePer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "120px", color: "white" }} align="left">{((employee.InprogressPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px", color: "white" }} align="left">{((employee.BugsPe).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell style={{ fontSize: '12px', width: "100px", color: "white" }} align="left">{((employee.ReviewPer).toString()).substring(0, 5)}%</TableCell>
+                      <TableCell colSpan={1} style={{ fontSize: '12px', width: "350px", color: "white" }} align="left">{((employee.note).toString()).substring(0, 60)}</TableCell>
                     </StyledTableRow>
                     <TableRow></TableRow>
                   </Table>
@@ -232,6 +228,7 @@ export default class AnalyzeProjectEmployees extends React.Component {
                 backgroundColor: "#2f3640",
                 width: "100%",
                 textAlign: "center",
+                color: "white"
               }}
             >
               End of Rows

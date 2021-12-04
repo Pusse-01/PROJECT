@@ -31,10 +31,10 @@ import Typography from '@material-ui/core/Typography';
 import CalendarTodayTwoTone from '@material-ui/icons/CalendarTodayTwoTone';
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import { indigo, pink, purple, teal, amber, deepOrange } from '@material-ui/core/colors';
+import { indigo, pink, purple, teal, amber, deepOrange,red } from '@material-ui/core/colors';
 
 
-const theme = createTheme({ palette: { type: "dark", primary: indigo } });
+const theme = createTheme({ palette: { type: "dark", primary: red } });
 
 
 //theme style of schedular components
@@ -287,11 +287,6 @@ export default class Demo extends React.PureComponent {
             if (i === response.data.length - 1) {
               this.setState({ lastlog: lastlogdata });
              }
-
-          
-
-
-
           var resourcesData = [
             {
               text: response.data[i].name,
@@ -304,6 +299,7 @@ export default class Demo extends React.PureComponent {
 
       })).then(() => {
         var memberslist = []
+        var idCount =0
         for (let j = 0; j < resources.length; j++) {
           //console.log(resources[j].text);
           axios.get('http://localhost:8070/projects/list/' + resources[j].text) //http://localhost:8070/projects/list/'+userEamil
@@ -316,19 +312,18 @@ export default class Demo extends React.PureComponent {
                 memberslist.push(member[0]);
               }
               var templist = []
-              for (let l = 0; l < memberslist.length; l++) {
-                let copy = false
-                for (let k = l + 1; k < memberslist.length; k++) {
-                  if (memberslist[l].text === memberslist[k].text) {
-                    copy = true
-                    break;
+                for (let l = 0; l < memberslist.length; l++) {
+                  let copy = false
+                  for (let k = l + 1; k < memberslist.length; k++) {
+                    if (memberslist[l].text === memberslist[k].text) {
+                      copy = true
+                      break;
+                    }
+                  }
+                  if (!copy) {
+                    templist.push(memberslist[l])
                   }
                 }
-                if (!copy) {
-                  templist.push(memberslist[l])
-                }
-              }
-
 
               this.setState({
                 resources: [
@@ -526,7 +521,7 @@ export default class Demo extends React.PureComponent {
                                     <h7 className="taskMoreElementEmailcal">{member.note}</h7>
                                 </div>
                             )
-                        }) : <h5 className="taskMore_errorMessage">No members are assigned to the task</h5>
+                        }) : <h5 className="taskMore_errorMessage">No projects have assigned.<br/>Assigned projects will appera here.</h5>
                     }
                 </div>
             </div>
